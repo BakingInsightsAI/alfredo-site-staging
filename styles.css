@@ -44,6 +44,8 @@
     text-decoration:none;font-size:.92rem;font-weight:500;color:var(--ink-60);
     transition:color .15s;
   }
+  /* F11: give the plain nav links a real tap target without resizing the button */
+  .nav-links a:not(.btn){display:inline-block;padding-block:8px;}
   .nav-links a:hover{color:var(--ink);}
   .nav-links a.btn{color:var(--ink);}
   .nav-links a.btn:hover{color:var(--ink);}
@@ -162,28 +164,6 @@
   }
   .section-lede{color:var(--ink-60);max-width:38em;font-size:1.05rem;}
 
-  /* ---------- loop ---------- */
-  .loop{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:56px;position:relative;
-  }
-  @media(max-width:900px){.loop{grid-template-columns:1fr;gap:26px;}}
-  .step{padding:0 22px;position:relative;}
-  .step:not(:last-child)::after{
-    content:"→";position:absolute;right:-8px;top:2px;color:var(--gold);
-    font-size:1.2rem;font-weight:700;
-  }
-  @media(max-width:900px){.step:not(:last-child)::after{content:"↓";right:auto;left:4px;top:auto;bottom:-24px;}}
-  .step-num{
-    font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gold);
-    font-weight:600;display:block;margin-bottom:10px;
-  }
-  .step h3{font-size:1.02rem;font-weight:800;margin-bottom:8px;}
-  .step p{font-size:.88rem;color:var(--ink-60);}
-  .loop-return{
-    margin-top:44px;text-align:center;font-size:.85rem;color:var(--ink-60);
-  }
-  .loop-return .mono{color:var(--wine);}
-
   /* ---------- pillars ---------- */
   .pillars{background:#fff;border-top:1px solid var(--ink-12);border-bottom:1px solid var(--ink-12);}
   .pillar-grid{
@@ -198,11 +178,6 @@
   .pillar h3{font-size:1.15rem;font-weight:800;margin-bottom:10px;letter-spacing:-.01em;}
   .pillar p{font-size:.92rem;color:var(--ink-60);}
 
-  /* ---------- honesty (ink band) ---------- */
-  .honesty{background:linear-gradient(135deg,var(--wine-deep),var(--wine));color:var(--cream);position:relative;overflow:hidden;}
-  .honesty::after{content:"";position:absolute;pointer-events:none;top:-120px;right:-90px;width:260px;height:260px;border-radius:50%;border:36px solid rgba(217,164,65,.14);}
-  .honesty .kicker{color:var(--champagne);}
-  .honesty .section-lede{color:var(--cream-70);}
   .promise-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px 48px;margin-top:56px;}
   @media(max-width:800px){.promise-grid{grid-template-columns:1fr;}}
   .promise{border-top:2px solid var(--wine);padding-top:22px;}
@@ -305,7 +280,7 @@
   .cta-actions{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
   @media(max-width:800px){.cta-actions{align-items:stretch;}}
   .cta-actions .btn{text-align:center;}
-  .cta-fine{font-size:.78rem;color:rgba(251,246,239,.6);}
+  .cta-fine{font-size:.78rem;color:var(--cream-70);}
 
   /* ---------- footer ---------- */
   footer{padding:44px 0 56px;border-top:1px solid var(--ink-12);}
@@ -413,15 +388,13 @@
 .founding .btn:hover{background:var(--wine-deep);color:var(--cream);}
 
 /* ---------- v2.26 surface rule: gold lives on light, cream lives on wine ---------- */
-/* wine and wine-gradient bands: .cta-box (all CTA bands + the pilot form band),
-   .manifesto-hero and .honesty (gradient bands). The gold .founding band is not
+/* wine and wine-gradient bands: .cta-box (all CTA bands + the pilot form band)
+   and .manifesto-hero (gradient band). The gold .founding band is not
    in any of these containers, so its ink button is untouched. */
 .cta-box .btn,
-.manifesto-hero .btn,
-.honesty .btn{background:var(--cream);color:var(--wine);}
+.manifesto-hero .btn{background:var(--cream);color:var(--wine);}
 .cta-box .btn:hover,
-.manifesto-hero .btn:hover,
-.honesty .btn:hover{background:var(--champagne);color:var(--ink);}
+.manifesto-hero .btn:hover{background:var(--champagne);color:var(--ink);}
 
 /* ---------- v2.32 a11y utilities ---------- */
 .sr-only{
