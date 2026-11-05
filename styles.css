@@ -438,3 +438,17 @@
 }
 /* wide tables stay inside the viewport on small screens */
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+/* ---------- staging preview only: never promote to production ---------- */
+:root{--staging-bar:24px;}
+.staging-bar{
+  position:fixed;top:0;left:0;right:0;z-index:150;
+  height:var(--staging-bar);line-height:var(--staging-bar);
+  background:var(--ink);color:var(--cream);
+  font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;
+  letter-spacing:.06em;text-align:center;
+  pointer-events:none;user-select:none;
+}
+body{padding-top:var(--staging-bar);}
+nav{top:var(--staging-bar);}
+.skip-link:focus{top:calc(var(--staging-bar) + 12px);}
