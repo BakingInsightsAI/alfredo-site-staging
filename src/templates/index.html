@@ -1,457 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>alfredo · weekly recommendations from your own POS data</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<meta name="theme-color" content="#000000">
-<meta name="description" content="Alfredo reads your own POS data every week and hands you a short, ranked list of small changes worth trying, then measures what actually happened.">
-<script>
-  /* Set the theme and the js flag before paint: no flash of the wrong theme,
-     and nothing is hidden for a reveal unless JS is actually running. */
-  (function () {
-    var d = document.documentElement;
-    d.classList.add('js');
-    var t = null;
-    try { t = localStorage.getItem('alfredo-theme'); } catch (e) {}
-    if (t !== 'light' && t !== 'dark') {
-      t = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-    }
-    d.setAttribute('data-theme', t);
-    var m = null;
-    try { m = localStorage.getItem('alfredo-motion'); } catch (e) {}
-    if (m === 'paused') d.setAttribute('data-motion', 'paused');
-    var mc = document.querySelector('meta[name="theme-color"]');
-    if (mc) mc.setAttribute('content', t === 'light' ? '#fbf6ef' : '#000000');
-  })();
-</script>
-<link rel="stylesheet" href="v3.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Nunito:wght@900&display=swap" rel="stylesheet">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="staging-bar" aria-hidden="true">STAGING PREVIEW. Not the live site.</div>
-<a class="skip" href="#main">Skip to content</a>
-<div class="progress" id="progress" aria-hidden="true"></div>
+{% block content %}
+<section class="story" id="story" aria-labelledby="storyHeading">
+  <div class="stage">
+    <div class="glow a" aria-hidden="true"></div>
+    <div class="glow b" aria-hidden="true"></div>
+    <canvas id="storyCanvas" aria-hidden="true"></canvas>
 
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="wordmark" href="index.html">alfredo<span class="dot">·</span></a>
-    <ul class="nav-links">
-      <li><a href="product.html">Product</a></li>
-      <li><a href="honesty.html">Our numbers rule</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="pilot.html">Work with us</a></li>
-    </ul>
-    <div class="nav-cta">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
-        <span class="knob" aria-hidden="true"></span>
-        <span class="ico moon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></span>
-        <span class="ico sun" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
-      </button>
-      <button class="motion-toggle" id="motionToggle" type="button" aria-label="Pause animation" aria-pressed="false">
-        <svg class="pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-        <svg class="play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-      </button>
-      <a class="login" href="https://app.bakinginsightsai.com">Log in</a>
-      <a class="btn btn-primary btn-sm" href="pilot.html#pilot">Request a demo</a>
+    <div class="hero-h" id="heroH">
+      <h1 class="story-h1">{{ home.hero.heading }}</h1>
+      <p>{{ home.hero.lede }}</p>
+      <div class="ctas">
+        <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+        <a class="pill pill-glass" href="#storyHeading" id="storyJump">See a week with Alfredo</a>
+      </div>
+    </div>
+
+    <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
+
+    {%- for c in home.captions %}
+    <p class="cap" data-a="{{ c.a }}" data-b="{{ c.b }}">{{ c.line }}{% if c.note %}<small>{{ c.note }}</small>{% endif %}</p>
+    {%- endfor %}
+
+    <div class="cards">
+      {%- for c in home.cards %}
+      <article class="card glass">
+        <div class="k"><span>{{ c.kind }}</span><span class="sample">Sample</span></div>
+        <h3>{{ c.title }}</h3>
+        {%- if c.trial %}
+        <p class="price" id="trialPrice">$6.99</p>
+        <div class="bars" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar miss"></span><span class="bar"></span>
+        </div>
+        <div class="bar-labels" aria-hidden="true">
+          <span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span>
+        </div>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+
+    <p class="verdict" id="verdict"><b>{{ home.verdict.word }}</b><span>{{ home.verdict.note }}</span></p>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap">
+    <h2 class="big center">{{ home.tuesday.heading }}</h2>
+    <p class="sub center">{{ home.tuesday.sub }}</p>
+    <div class="tiles">
+      {%- for t in home.tuesday.tiles %}
+      <div class="tile{% if t.get('ours') %} ours{% endif %} reveal">
+        <h3>{{ t.name }}</h3>
+        <span>{{ t.body }}</span>
+      </div>
+      {%- endfor %}
+    </div>
+    <div class="photos">
+      {%- for caption in home.photos %}
+      <div class="ph"><em>{{ caption }}</em></div>
+      {%- endfor %}
     </div>
   </div>
-</header>
+</section>
 
-<main id="main" tabindex="-1">
-
-  <!-- ===================== HERO ===================== -->
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow reveal"><span class="pip"></span>For independent food and beverage · Patent pending</div>
-          <h1 class="reveal">The in house consultant for your
-            <span class="rot" id="rot" aria-hidden="true"><span class="on">pricing.</span><span>promotions.</span><span>menu.</span><span>operations.</span></span><span class="sr-only">pricing, promotions, menu, and operations.</span>
-          </h1>
-          <p class="lede reveal">Every week Alfredo reads your own transaction data and hands you a short list of small changes worth trying, the way a good consultant would. Then it measures what actually happened.</p>
-          <div class="hero-ctas reveal">
-            <a class="btn btn-gold" href="pilot.html#pilot">Request a demo</a>
-            <a class="btn btn-ghost" href="product.html">See how it works</a>
-          </div>
-          <p class="hero-note reveal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Works with your existing POS system. No new hardware, nothing to install.</p>
-        </div>
-
-        <div class="reveal">
-          <div class="live-board" role="img" aria-label="Sample weekly board. Four sample recommendations ranked by what they are worth: a Mozzarella Sticks price change, a Loaded Nachos and House IPA pairing, a Copper Pint competitive signal, and Tuesday early dinner staffing.">
-            <div class="lb-head">
-              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              Weekly board
-              <span class="wk" id="lbWeek">WEEK 14 · SAMPLE</span>
-            </div>
-            <ul class="lb-list" id="lbList"></ul>
-            <div class="lb-foot">
-              <span class="pulse-dot"><i></i>Ranked from your POS</span>
-              <span>Ranked by $/wk</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rows">
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8a2 2 0 0 0 2 2v8M11 3v8M15 3c-1.5 2-1.5 7 0 9v9"/></svg></span><span><b>Restaurants</b><span class="sub">Menu, pricing, covers</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11v4a5.5 5.5 0 0 1-11 0V4ZM10.5 13.5V20M7 20h7M16 6h2a2 2 0 0 1 0 4h-2"/></svg></span><span><b>Bars and brewpubs</b><span class="sub">Pairings, food attach</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></svg></span><span><b>Cafes</b><span class="sub">Dayparts, add ons</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20v-6a7 7 0 0 1 14 0v6M12 4v3"/></svg></span><span><b>Bakeries</b><span class="sub">Recipe cost to price</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16V7h12v9M14 10h4l4 4v2h-8"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg></span><span><b>Food trucks</b><span class="sub">Locations, menu mix</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="row reveal" href="product.html"><span class="ricon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg></span><span><b>Multi location groups</b><span class="sub">One board per location</span></span><svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
+<section class="dark">
+  <div class="glow a" aria-hidden="true"></div>
+  <div class="glow b" aria-hidden="true"></div>
+  <div class="wrap">
+    <h2 class="big center">{{ home.numbers.heading }}</h2>
+    <p class="sub center">{{ home.numbers.sub }}</p>
+    <div class="facts">
+      {%- for f in home.numbers.facts %}
+      <div><b>{{ f.name }}</b><span>{{ f.body }}</span></div>
+      {%- endfor %}
     </div>
-  </section>
-
-  <!-- ===================== TICKER ===================== -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track" id="ticker"></div>
+    <div class="pricecard glass">
+      {%- for r in home.numbers.price_rows %}
+      <div class="row"><span>{{ r.label }}</span>{% if r.get('quiet') %}<span>{{ r.value }}</span>{% else %}<b>{{ r.value }}</b>{% endif %}</div>
+      {%- endfor %}
+      <p class="free">{{ home.numbers.free }}</p>
+      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    </div>
   </div>
-
-  <!-- ===================== SPLIT SHOWCASE ===================== -->
-  <section id="product">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="pip"></span>Work the way you already work</div>
-        <h2 class="split-words">Ask anything. Try one thing. Know if it worked.</h2>
-      </div>
-      <div class="split reveal">
-        <div class="cell">
-          <div class="stage">
-            <span class="sample-flag">Sample conversation</span>
-            <div class="phone" aria-hidden="true">
-              <div class="chat" id="chat"></div>
-              <div class="composer">
-                <span class="typed" id="typed"></span>
-                <div class="row2">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                  <span class="send" id="send"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="caption">
-            <h3>Ask Alfredo, in plain language</h3>
-            <p>A chat panel inside every tab. Ask how the week is going and get answers from your own data.</p>
-          </div>
-        </div>
-        <div class="cell">
-          <div class="stage">
-            <span class="sample-flag">Sample</span>
-            <div class="trials" id="trials" role="img" aria-label="Sample trials panel. Two trials running, one returned the verdict worked, one returned the verdict no effect.">
-              <div class="ttl"><span>Trials</span><span class="verdict v-run">2 RUNNING</span></div>
-              <div class="trial"><div class="tr-top"><span class="tr-name">Mozzarella Sticks $7.49</span><span class="verdict v-run">WK 3/4</span></div><div class="bar"><i data-w="75"></i></div><div class="tr-meta"><span>+$71.20 so far</span><span>cushion 7.2%</span></div></div>
-              <div class="trial"><div class="tr-top"><span class="tr-name">Nachos with House IPA nudge</span><span class="verdict v-run">WK 1/4</span></div><div class="bar"><i data-w="25"></i></div><div class="tr-meta"><span>87 shared baskets</span><span>unproven</span></div></div>
-              <div class="trial"><div class="tr-top"><span class="tr-name">Wings price test</span><span class="verdict v-win">WORKED</span></div><div class="bar"><i data-w="100"></i></div><div class="tr-meta"><span>measured 4 wks</span><span>kept</span></div></div>
-              <div class="trial"><div class="tr-top"><span class="tr-name">Dessert upsell script</span><span class="verdict v-null">NO EFFECT</span></div><div class="bar"><i data-w="100"></i></div><div class="tr-meta"><span>measured 4 wks</span><span>reverted</span></div></div>
-            </div>
-          </div>
-          <div class="caption">
-            <h3>Every trial gets a verdict</h3>
-            <p>Low risk, reversible changes measured over weeks. Worked, no effect, or backfired, in plain words.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WHAT THE BOARD IS ===================== -->
-  <section id="approach" style="padding-top: 24px;">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="pip"></span>What you get</div>
-        <h2 class="split-words">Not a dashboard. A weekly to do list that grades itself.</h2>
-        <p class="lede">Four kinds of recommendations, one ranked list. Every one you try comes back with an honest verdict: worked, no effect, or backfired.</p>
-      </div>
-      <div class="types">
-        <div class="type reveal">
-          <span class="tag t-p" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
-          <h3>Pricing</h3>
-          <p>Where a small change to what you charge is worth more than it costs you in volume.</p>
-        </div>
-        <div class="type reveal">
-          <span class="tag t-pos" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-          <h3>Promotions</h3>
-          <p>Which pairings and nudges your own baskets say are worth putting in front of guests.</p>
-        </div>
-        <div class="type reveal">
-          <span class="tag t-c" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3>Positioning</h3>
-          <p>What the venues around you are becoming known for, before it costs you regulars.</p>
-        </div>
-        <div class="type reveal">
-          <span class="tag t-o" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-          <h3>Operations</h3>
-          <p>Where your hours, dayparts and staffing are out of step with when guests actually arrive.</p>
-        </div>
-      </div>
-      <div class="verdict-strip reveal">
-        <span class="lead">Every trial ends one of three ways:</span>
-        <span class="verdict v-win">WORKED</span>
-        <span class="verdict v-null">NO EFFECT</span>
-        <span class="verdict v-back">BACKFIRED</span>
-        <span>Kept, dropped, or reversed. You see which, in plain words.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== SAMPLE BOARD CAROUSEL ===================== -->
-  <section style="padding-top: 24px;">
-    <div class="wrap">
-      <div class="car-head">
-        <div class="section-head reveal">
-          <div class="eyebrow"><span class="pip"></span>A sample weekly board</div>
-          <h2>Small, specific, measurable.</h2>
-        </div>
-        <div class="car-btns">
-          <button class="car-btn" id="carPrev" type="button" aria-label="Previous card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
-          <button class="car-btn" id="carNext" type="button" aria-label="Next card"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </div>
-    </div>
-    <div class="carousel" id="carousel" tabindex="0" role="group" aria-label="Sample recommendations. Scroll horizontally, or use the left and right arrow keys.">
-      <article class="rec">
-        <div class="rec-top"><span class="chip c1">1 · Pricing</span><span class="sample">Sample</span></div>
-        <h3>Raise Mozzarella Sticks from $6.99 to $7.49</h3>
-        <p>They move about 290 orders a week and demand barely flinches at 50 cents. The engine estimates the bump costs about 2% of volume and still comes out well ahead on net revenue.</p>
-        <div class="stats"><span class="stat"><em>Volume</em>290/wk</span><span class="stat"><em>If holds</em>+$98.41/wk</span><span class="stat"><em>Cushion</em>7.2%</span></div>
-        <div class="foot">Low risk · reversible in under 15 minutes · measured over 4 weeks</div>
-      </article>
-      <article class="rec">
-        <div class="rec-top"><span class="chip c2">2 · Positioning</span><span class="sample">Sample</span></div>
-        <h3>Cross promote Loaded Nachos with House IPA</h3>
-        <p>The pairing runs at 3.1x lift across 87 shared baskets, and about 340 beverage only tables settle every week. A server nudge could turn some of those into food attached checks.</p>
-        <div class="stats"><span class="stat"><em>Lift</em>3.1x</span><span class="stat"><em>Shared baskets</em>87</span><span class="stat warn">⚠ See assumptions</span></div>
-        <div class="foot">Flagged unproven by the engine itself until a trial says otherwise. That flag is Alfredo working.</div>
-      </article>
-      <article class="rec">
-        <div class="rec-top"><span class="chip c3">3 · Competitive signal</span><span class="sample">Sample</span></div>
-        <h3>The Copper Pint is getting famous for its wings</h3>
-        <p>31 of their last 44 reviews mention the wings, and the pattern is building. Labeled as an observation of what their customers are saying, not a recommendation.</p>
-        <div class="stats"><span class="stat"><em>Signal</em>Building</span><span class="stat">31 of 44 reviews</span></div>
-        <div class="foot">Alfredo watches what the customers of nearby venues keep saying, before it costs you regulars.</div>
-      </article>
-      <article class="rec">
-        <div class="rec-top"><span class="chip c4">4 · Operations</span><span class="sample">Sample</span></div>
-        <h3>Move happy hour from 4 to 5pm on weekdays</h3>
-        <p>Weekday covers between 4 and 5pm are thin, while 5 to 6pm runs near capacity at full price. Shifting the window keeps the discount where it fills seats instead of where it discounts guests who would come anyway.</p>
-        <div class="stats"><span class="stat"><em>Daypart</em>4 to 6pm</span><span class="stat"><em>Covers checked</em>12 wks</span><span class="stat warn">⚠ See assumptions</span></div>
-        <div class="foot">Reversible next week · measured over 4 weeks</div>
-      </article>
-    </div>
-    <div class="car-dots" id="carDots" aria-hidden="true"></div>
-    <p class="board-note">Sample board. Illustrative items and numbers, built the same way the engine builds real ones. Your board comes from your own data, and real recommendations vary. <a href="product.html#measured">See what a finished trial looks like →</a></p>
-  </section>
-
-  <!-- ===================== BENTO FEATURES ===================== -->
-  <section>
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="pip"></span>What Alfredo does</div>
-        <h2 class="split-words">Every analytics tool shows you what happened. Alfredo tells you what to do about it.</h2>
-      </div>
-      <div class="bento">
-        <div class="bcard w4 reveal">
-          <div class="ficon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg></div>
-          <h3>The menu lab</h3>
-          <p>A working copy of your menu you can experiment on, where any edit becomes a small, measured trial in four clicks. Share recipe costs and Alfredo connects what each dish costs to make with what it sells for.</p>
-          <a class="link-arrow" href="product.html#menu">Menu and margins <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <div class="visual-wrap">
-            <span class="sample-flag">Sample</span>
-            <div class="mini-menu" role="img" aria-label="Sample menu lab. Mozzarella Sticks edited from $6.99 to $7.49, alongside House Burger at $14.00 and Loaded Nachos at $11.50.">
-              <div class="mm-row"><span>House Burger</span><span class="old"></span><span class="new">$14.00</span></div>
-              <div class="mm-row editing"><span>Mozzarella Sticks</span><span class="old">$6.99</span><span class="new">↑ $7.49</span></div>
-              <div class="mm-row"><span>Loaded Nachos</span><span class="old"></span><span class="new">$11.50</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="bcard w2 reveal">
-          <div class="ficon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
-          <h3>Competitive intel</h3>
-          <p>Who is around you, what they charge, what their customers keep saying.</p>
-          <a class="link-arrow" href="product.html#intel">Guests and competition <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <div class="visual-wrap">
-            <span class="sample-flag">Sample</span>
-            <div class="radar" role="img" aria-label="Sample competitive map. Your venue at the centre with nearby sample venues around it, including The Copper Pint, Corner Bistro and Main St Tacos.">
-              <div class="rings"></div><div class="sweep"></div>
-              <div class="pin you" style="left:50%;top:50%"><span>You</span></div>
-              <div class="pin" style="left:24%;top:30%"><span>Copper Pint</span></div>
-              <div class="pin" style="left:72%;top:68%"></div>
-              <div class="pin" style="left:78%;top:24%"></div>
-              <div class="pin" style="left:12%;top:18%"></div>
-              <div class="pin" style="left:36%;top:14%"></div>
-              <div class="pin" style="left:58%;top:20%"></div>
-              <div class="pin" style="left:88%;top:42%"></div>
-              <div class="pin" style="left:64%;top:36%"><span>Corner Bistro</span></div>
-              <div class="pin" style="left:16%;top:58%"><span>Main St Tacos</span></div>
-              <div class="pin" style="left:32%;top:76%"></div>
-              <div class="pin" style="left:9%;top:84%"></div>
-              <div class="pin" style="left:46%;top:84%"></div>
-              <div class="pin" style="left:58%;top:62%"></div>
-              <div class="pin" style="left:82%;top:84%"></div>
-              <div class="pin" style="left:92%;top:62%"></div>
-              <div class="pin" style="left:68%;top:90%"></div>
-              <div class="pin" style="left:28%;top:46%"></div>
-              <div class="pin" style="left:86%;top:12%"></div>
-            </div>
-          </div>
-        </div>
-        <div class="bcard w3 reveal">
-          <div class="ficon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 9h6M7 13h10M7 17h4"/></svg></div>
-          <h3>The weekly board</h3>
-          <p>Pricing, promotions, positioning, and operations, ranked by what they are worth, each with evidence attached.</p>
-          <a class="link-arrow" href="product.html#board">The weekly board <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </div>
-        <div class="bcard w3 reveal">
-          <div class="ficon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></div>
-          <h3>Ask Alfredo</h3>
-          <p>Photograph a competitor menu and get it matched against your own sales, or just ask how the week is going.</p>
-          <a class="link-arrow" href="product.html#chat">Ask Alfredo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <div class="sparks" aria-hidden="true"><i style="height:40%;animation-delay:-.2s"></i><i style="height:62%;animation-delay:-.6s"></i><i style="height:48%;animation-delay:-1s"></i><i style="height:80%;animation-delay:-.4s"></i><i style="height:55%;animation-delay:-1.4s"></i><i class="hi" style="height:100%;animation-delay:-.8s"></i><i style="height:70%;animation-delay:-1.8s"></i></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== THE DIFFERENCE ===================== -->
-  <section id="honesty" style="padding-top: 0;">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="pip"></span>The difference</div>
-        <h2>“Why is Tuesday slow?”</h2>
-      </div>
-      <div class="diff-wrap reveal">
-        <div class="diff-tabs" role="tablist" aria-label="Three ways to answer">
-          <button class="diff-tab" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" type="button">A dashboard</button>
-          <button class="diff-tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" type="button">A consultant</button>
-          <button class="diff-tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" type="button"><span class="wordmark">alfredo<span class="dot">·</span></span></button>
-        </div>
-        <div class="diff-panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0" tabindex="0">
-          <div><p class="q">Hands you charts.</p><p>And leaves the interpretation to you.</p></div>
-          <div class="diff-art fake-chart" aria-hidden="true"><i style="height:60%"></i><i style="height:42%"></i><i style="height:78%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:70%"></i><i style="height:84%"></i></div>
-        </div>
-        <div class="diff-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0" hidden>
-          <div><p class="q">Hands you a ten slide deck.</p><p>Too much information for a simple question.</p></div>
-          <div class="diff-art fake-deck" aria-hidden="true"><div><span style="width:60%"></span><span></span><span style="width:80%"></span></div><div><span style="width:50%"></span><span></span></div><div><span style="width:40%"></span><span></span><span style="width:70%"></span><span style="width:55%"></span></div></div>
-        </div>
-        <div class="diff-panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" tabindex="0" hidden>
-          <div><p class="q">Tells you what, why, and how to fix it.</p><p>All in one place. And then it checks whether the fix worked.</p></div>
-          <div class="diff-art answer"><dl class="al"><dt>What</dt><dd>Tuesday dinner covers are below your recent average.</dd><dt>Why</dt><dd>The drop sits in one daypart, with evidence attached.</dd><dt>Fix</dt><dd>One small, reversible trial to try this week.</dd><dt>Check</dt><dd>Measured over 4 weeks, then a verdict.</dd></dl></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WORKS WITH ===================== -->
-  <section>
-    <div class="wrap">
-      <div class="section-head center reveal">
-        <div class="eyebrow"><span class="pip"></span>Nothing new to buy</div>
-        <h2 class="split-words">Works with what you already have.</h2>
-        <p class="lede">You already run the kitchen, the floor, the schedule, and the books. You should not need a statistics degree to understand your own business.</p>
-      </div>
-    </div>
-    <div class="marquee reveal" role="img" aria-label="Alfredo works for restaurants, bars and brewpubs, cafes, bakeries, food trucks and multi location groups, using the POS you already run.">
-      <div class="mq-track" id="mq1"></div>
-    </div>
-    <div class="marquee rev reveal" aria-hidden="true">
-      <div class="mq-track" id="mq2"></div>
-    </div>
-    <div class="wrap">
-      <div class="zero">
-        <div class="reveal">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
-          <h3>Zero install</h3>
-          <p>Alfredo connects to the POS you already run. Nothing to install at the register and no retraining for your staff.</p>
-        </div>
-        <div class="reveal">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          <h3>One place for everything</h3>
-          <p>Your sales, your menu, your guests, and your competitive picture in one view, instead of five tabs and a spreadsheet.</p>
-        </div>
-        <div class="reveal">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8-4.3-4.1 5.9-.9L12 3Z"/></svg>
-          <h3>Insights on top</h3>
-          <p>Not another dashboard to check. Alfredo reads the data for you and hands you the recommendations worth trying.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== WHERE WE ARE ===================== -->
-  <section style="padding-top: 0;">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="pip"></span>Where we are</div>
-        <h2>Early, and honest about it.</h2>
-      </div>
-      <div class="status reveal">
-        <div>
-          <div class="counter"><span data-count="14">14</span> <span class="u">locations</span></div>
-          <div class="live"><i aria-hidden="true"></i>Live in production</div>
-          <p>Tested with a brewpub and live across a 14 location restaurant chain: real transactions, live weekly boards, real trials with real verdicts.</p>
-        </div>
-        <div>
-          <div class="counter"><span data-count="4">4</span> <span class="u">clicks to a trial</span></div>
-          <div class="live g"><i aria-hidden="true"></i>Patent pending</div>
-          <p>Alfredo is patent pending with the USPTO.</p>
-        </div>
-        <div>
-          <div class="counter"><span data-count="0">0</span> <span class="u">inflated numbers</span></div>
-          <div class="live w"><i aria-hidden="true"></i>Pilot seats open</div>
-          <p>We are onboarding a small number of independents as design partners. <a href="pilot.html#pilot">How we work with you →</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== FAQ ===================== -->
-  <section style="padding-top: 0;" id="faq">
-    <div class="wrap faq">
-      <div class="section-head reveal" style="margin-bottom:0">
-        <div class="eyebrow"><span class="pip"></span>FAQ</div>
-        <h2>Questions, answered straight.</h2>
-      </div>
-      <div class="reveal">
-        <details><summary>Which POS systems does Alfredo work with?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>Alfredo works with the POS you already run. Tell us which one, and we will tell you honestly whether yours is ready yet.</p></div></details>
-        <details><summary>Do I need to install anything?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>No. No new hardware, nothing to install at the register, and no retraining for your staff. Alfredo connects to the POS you already run.</p></div></details>
-        <details><summary>Will Alfredo tell me to overhaul my menu?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>No drastic changes. You know your business better than any outsider ever will. Alfredo hands you small, low cost changes, helps you try them, and stacks incremental gains that hold up over time.</p></div></details>
-        <details><summary>What happens when the data is not there?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>We do not inflate numbers. We do not estimate around gaps. If the data is not there, the number is not there either.</p></div></details>
-        <details><summary>Who is Alfredo for?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>Independent food and beverage businesses: restaurants, bars, cafes, bakeries, and food trucks, from single locations to multi location groups.</p></div></details>
-        <details><summary>Is it actually live?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="ans"><p>Yes. Tested with a brewpub and live across a 14 location restaurant chain, with real transactions, live weekly boards, and real trials with real verdicts.</p></div></details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== CTA ===================== -->
-  <section style="padding-top: 0;">
-    <div class="wrap">
-      <div class="cta reveal">
-        <h2 class="split-words">Run Alfredo on your data. Judge it by its verdicts.</h2>
-        <p class="lede">Pilot partners get the full platform on their own POS data, direct access to the founder, and pricing that reflects being early.</p>
-        <a class="btn btn-gold" href="pilot.html#pilot">Request a demo</a>
-        <p class="hero-note" style="justify-content:center;margin:22px auto 0">From single locations to multi location groups, with nothing new to install.</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="wrap foot-inner">
-    <a class="wordmark" href="index.html">alfredo<span class="dot">·</span></a>
-    <nav aria-label="Footer">
-      <a href="product.html">Product</a><a href="honesty.html">Our numbers rule</a><a href="pricing.html">Pricing</a><a href="pilot.html">Work with us</a><a href="https://app.bakinginsightsai.com">Log in</a>
-    </nav>
-    <small>© 2026 Alfredo, a BakingInsights AI product · patent pending · we do not inflate numbers</small>
-  </div>
-</footer>
-
-<script src="v3.js" defer></script>
-</body>
-</html>
+</section>
+{% endblock %}
