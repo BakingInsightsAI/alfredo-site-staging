@@ -86,24 +86,99 @@
   story.classList.add('pinned');
 
   var dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0;
-  var LABELS = ['Wings', 'House IPA', 'Nachos', 'Burger', 'Fries', 'Lager',
-                'Mozzarella Sticks', 'Tacos', 'Stout', 'Cider', 'Pizza', 'Pilsner'];
-  var N = 36, chips = [];
+  /* 36 items, each used once. Phones show the first 18. */
+  var LABELS = [
+    'Wings', 'House IPA', 'Nachos', 'Burger', 'Fries', 'Lager',
+    'Mozzarella Sticks', 'Tacos', 'Stout', 'Cider', 'Pizza', 'Pilsner',
+    'Caesar Salad', 'Pretzel', 'Brownie', 'Sliders', 'Margarita', 'Old Fashioned',
+    'Espresso', 'Calamari', 'Quesadilla', 'Wheat Ale', 'Onion Rings', 'Cheesecake',
+    'Mac and Cheese', 'Club Sandwich', 'Hazy IPA', 'Lemonade', 'Fish Tacos', 'Flatbread',
+    'Sour Ale', 'Chicken Tenders', 'Porter', 'Iced Tea', 'Hummus Plate', 'Garlic Fries'
+  ];
+  var chips = [];
   function rnd(seed) { var x = Math.sin(seed * 999.7) * 43758.5; return x - Math.floor(x); }
-  for (var i = 0; i < N; i++) {
+  for (var i = 0; i < LABELS.length; i++) {
     chips.push({
-      label: LABELS[i % LABELS.length],
+      label: LABELS[i],
       sx: rnd(i + 1), sy: rnd(i + 7), speed: 14 + rnd(i + 3) * 22,
-      group: i % 3, ox: rnd(i + 11) - .5, oy: rnd(i + 17) - .5, w: 0
+      tw: 0, col: 0, row: 0, group: 0, slot: 0
     });
+  }
+
+  /* Layout is measured, not guessed, so labels never collide. */
+  var LAY = { font: 13, count: 36, cols: 9, colW: 0, rowH: 30, gridX: 0, gridY: 0,
+              clusterRowH: 22, clusterX: [], clusterY: [], perCluster: 12 };
+
+  function widest(n, font) {
+    ctx.font = '500 ' + font + 'px Geist, sans-serif';
+    var max = 0;
+    for (var i = 0; i < n; i++) max = Math.max(max, ctx.measureText(chips[i].label).width);
+    return max;
   }
 
   function measure() {
     W = canvas.clientWidth; H = canvas.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.font = '500 13px Geist, sans-serif';
-    chips.forEach(function (c) { c.w = ctx.measureText(c.label).width + 22; });
+
+    var phone = W < 760;
+    LAY.count = phone ? 18 : LABELS.length;
+    var avail = W - 32;
+
+    /* column width comes from the widest rendered label plus 16px;
+       on a phone the font drops a step rather than letting three columns collide */
+    LAY.font = 13;
+    LAY.cols = phone ? 3 : 9;
+    LAY.colW = widest(LAY.count, LAY.font) + 16;
+    while (phone && LAY.colW * LAY.cols > avail && LAY.font > 10) {
+      LAY.font -= 1;
+      LAY.colW = widest(LAY.count, LAY.font) + 16;
+    }
+    if (!phone) {
+      LAY.cols = Math.max(3, Math.min(9, Math.floor(avail / LAY.colW)));
+    }
+    if (LAY.colW * LAY.cols > avail) LAY.colW = avail / LAY.cols;
+
+    LAY.rowH = Math.max(phone ? 30 : 26, LAY.font * 2);
+    var rows = Math.ceil(LAY.count / LAY.cols);
+    var gw = LAY.colW * LAY.cols, gh = LAY.rowH * rows;
+    LAY.gridX = (W - gw) / 2;
+    LAY.gridY = Math.min(Math.max(H * 0.34, H * 0.56 - gh / 2), H * 0.95 - gh);
+
+    /* clusters: a plain stacked column each, so nothing inside one touches */
+    LAY.perCluster = Math.ceil(LAY.count / 3);
+    LAY.clusterRowH = Math.max(phone ? 21 : 22, LAY.font * 1.7);
+    var ch = LAY.perCluster * LAY.clusterRowH;
+    LAY.clusterX = []; LAY.clusterY = [];
+    if (phone) {
+      var bandTop = H * 0.30, bandH = H * 0.62;
+      var gap = Math.max(20, (bandH - 3 * ch) / 2);
+      if (3 * ch + 2 * gap > bandH) {
+        LAY.clusterRowH = Math.max(16, (bandH - 2 * 20) / 3 / LAY.perCluster);
+        ch = LAY.perCluster * LAY.clusterRowH;
+        gap = 20;
+      }
+      for (var k = 0; k < 3; k++) {
+        LAY.clusterX.push(W / 2);
+        LAY.clusterY.push(bandTop + ch / 2 + k * (ch + gap));
+      }
+    } else {
+      for (var k2 = 0; k2 < 3; k2++) {
+        LAY.clusterX.push(W * (0.26 + 0.24 * k2));
+        LAY.clusterY.push(H * 0.58);
+      }
+    }
+
+    /* fixed slots, assigned once per measure so positions are deterministic */
+    ctx.font = '500 ' + LAY.font + 'px Geist, sans-serif';
+    for (var m = 0; m < chips.length; m++) {
+      var c = chips[m];
+      c.tw = ctx.measureText(c.label).width;
+      c.col = m % LAY.cols;
+      c.row = Math.floor(m / LAY.cols);
+      c.group = m % 3;
+      c.slot = Math.floor(m / 3);
+    }
   }
   measure();
   addEventListener('resize', measure, { passive: true });
@@ -116,16 +191,13 @@
   /* during the hero the chips stay in a quiet band near the bottom,
      well clear of the headline */
   function bandPos(c, t) { return [((c.sx * (W + 300) + t * c.speed) % (W + 300)) - 150, H * (.78 + .16 * c.sy)]; }
-  function gridPos(i) {
-    var cols = W < 700 ? 4 : 9, rows = Math.ceil(N / cols);
-    var gw = Math.min(W * .8, 900), gh = H * .3, col = i % cols, row = Math.floor(i / cols);
-    return [(W - gw) / 2 + gw * (col + .5) / cols, H * .42 + gh * (row + .5) / rows];
+  function gridPos(c) {
+    return [LAY.gridX + LAY.colW * (c.col + .5), LAY.gridY + LAY.rowH * (c.row + .5)];
   }
   function clusterPos(c) {
-    var cx = W < 760 ? W * .5 : W * (.26 + .24 * c.group);
-    var cy = W < 760 ? H * (.4 + .16 * c.group) : H * .58;
-    var R = Math.min(W, H) * .09;
-    return [cx + c.ox * R * 2, cy + c.oy * R * 1.3, cx, cy];
+    var cx = LAY.clusterX[c.group], cy = LAY.clusterY[c.group];
+    var top = cy - (LAY.perCluster * LAY.clusterRowH) / 2;
+    return [cx, top + LAY.clusterRowH * (c.slot + .5), cx, cy];
   }
 
   var heroH = document.getElementById('heroH');
@@ -142,10 +214,10 @@
     var total = story.offsetHeight - window.innerHeight;
     return total > 0 ? Math.max(0, Math.min(1, -box.top / total)) : 0;
   }
-  function roundRect(x, y, w, h, r) {
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
-  }
+  /* the boxes of the labels drawn in the last frame, so the overlap rule
+     can be checked from outside instead of taken on trust */
+  var boxes = [];
+  window.__storyLabelBoxes = function () { return boxes.slice(); };
 
   var running = false, rafId = 0;
 
@@ -158,24 +230,51 @@
 
     ctx.clearRect(0, 0, W, H);
     var toGrid = seg(p, .16, .32), toCluster = seg(p, .36, .52), fadeChips = seg(p, .56, .66);
+    boxes.length = 0;
     if (fadeChips < 1) {
-      ctx.font = '500 13px Geist, sans-serif';
+      ctx.font = '500 ' + LAY.font + 'px Geist, sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      for (var i = 0; i < N; i++) {
-        var c = chips[i], f = bandPos(c, t), g = gridPos(i), k = clusterPos(c);
-        var x = mix(mix(mix(f[0], g[0], toGrid), k[0], toCluster), k[2], fadeChips);
-        var y = mix(mix(mix(f[1], g[1], toGrid), k[1], toCluster), k[3], fadeChips);
-        var hot = toCluster > .5 && c.group === 0;
-        ctx.globalAlpha = (1 - fadeChips) * (p < .1 ? .45 : mix(.45, .9, toGrid));
-        roundRect(x - c.w / 2, y - 14, c.w, 28, 14);
-        ctx.fillStyle = hot ? 'rgba(217,164,65,.9)' : 'rgba(255,255,255,.07)';
-        ctx.fill();
-        ctx.strokeStyle = hot ? 'rgba(246,223,166,.9)' : 'rgba(255,255,255,.16)';
-        ctx.lineWidth = 1; ctx.stroke();
-        if (fadeChips < .4) {
-          ctx.fillStyle = hot ? '#1D1D1F' : 'rgba(245,245,247,.82)';
-          ctx.fillText(c.label, x, y + .5);
+      ctx.globalAlpha = (1 - fadeChips) * (p < .1 ? .8 : 1);
+
+      var lh = LAY.font * 1.24, pad = 4;
+      for (var i = 0; i < LAY.count; i++) {
+        var c = chips[i], f = bandPos(c, t), g = gridPos(c), k = clusterPos(c);
+        boxes.push({
+          label: c.label,
+          x: mix(mix(mix(f[0], g[0], toGrid), k[0], toCluster), k[2], fadeChips) - c.tw / 2,
+          y: mix(mix(mix(f[1], g[1], toGrid), k[1], toCluster), k[3], fadeChips) - lh / 2,
+          w: c.tw, h: lh,
+          hot: toCluster > .5 && c.group === 0
+        });
+      }
+
+      /* Keep labels off each other while they are in flight between stages.
+         The grid and the clusters are laid out so nothing touches, so this is
+         a no op once a stage has settled. It is weighted by the transition so
+         the flow band under the headline is left exactly as it was. */
+      var strength = Math.min(1, toGrid * 3) * (1 - fadeChips);
+      if (strength > 0.02) {
+        for (var pass = 0; pass < 14; pass++) {
+          var moved = false;
+          for (var a = 0; a < boxes.length; a++) {
+            for (var b2 = a + 1; b2 < boxes.length; b2++) {
+              var A = boxes[a], B = boxes[b2];
+              var ox = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x) + pad;
+              var oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y) + pad;
+              if (ox <= 0 || oy <= 0) continue;
+              var shift = (oy / 2) * strength + 0.25;
+              if (A.y < B.y) { A.y -= shift; B.y += shift; } else { A.y += shift; B.y -= shift; }
+              moved = true;
+            }
+          }
+          if (!moved) break;
         }
+      }
+
+      for (var d = 0; d < boxes.length; d++) {
+        var bx = boxes[d];
+        ctx.fillStyle = bx.hot ? '#D9A441' : 'rgba(245,245,247,.55)';
+        ctx.fillText(bx.label, bx.x + bx.w / 2, bx.y + bx.h / 2);
       }
       ctx.globalAlpha = 1;
     }
