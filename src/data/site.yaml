@@ -42,7 +42,7 @@ pages:
   - key: pricing
     template: pricing.html
     output: pricing.html
-    legacy: true
+    legacy: false
     title: "Alfredo, pricing"
     description: "One flat price, published right here. Alfredo costs $300 a month for a single location. The first 10 businesses get their first 6 months free."
 

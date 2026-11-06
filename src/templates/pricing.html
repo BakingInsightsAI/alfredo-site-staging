@@ -1,120 +1,68 @@
 {% extends "base.html" %}
-{% block head %}
-<style>
-  .legacy-body .price-card .big{font-size:2.5rem;line-height:1.05;margin-bottom:12px;}
-  @media(max-width:800px){.legacy-body .price-card .big{font-size:2.1rem;}}
-  .legacy-body .founding{
-    background:var(--gold);color:var(--ink);border-radius:24px;padding:52px 56px;
-  }
-  @media(max-width:800px){.legacy-body .founding{padding:36px 28px;}}
-  .legacy-body .founding h2{
-    font-family:'Nunito',sans-serif;font-size:clamp(1.5rem,2.7vw,2.1rem);font-weight:900;
-    letter-spacing:-.02em;line-height:1.15;margin-bottom:16px;max-width:20em;
-  }
-  .legacy-body .founding p{font-size:1rem;max-width:44em;}
-  .legacy-body .faq-q{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;}
-  .legacy-body .compare-close{margin-top:34px;}
-</style>
-{% endblock %}
+{% set p = pages.pricing %}
+
 {% block content %}
-<div class="legacy-body">
-
-<section style="padding-top:64px;padding-bottom:0;">
+<section class="dark">
+  <div class="glow a" aria-hidden="true"></div>
   <div class="wrap">
-    <span class="kicker">Pricing</span>
-    <h1 class="section-title">One flat price. Published right here.</h1>
-    <p class="section-lede">Analytics companies make you call sales to find out what the tool costs. We think that is a strange way to start an honest relationship. So here is the number.</p>
-  </div>
-</section>
-
-<section style="padding-top:52px;padding-bottom:0;">
-  <div class="wrap">
-    <div class="founding">
-      <h2>The first 10 businesses get their first 6 months free.</h2>
-      <p>Regardless of how many locations you run. Founding partners get direct access to the founder and a real say in what gets built next. After the 6 months, standard pricing applies, and you can leave anytime before that with nothing owed. When the 10 seats are gone, they are gone. We built Alfredo because independent operators deserve the same intelligence the big chains pay analysts for. The free months exist so the first ten can judge Alfredo by its verdicts before paying a dollar.</p>
+    <p class="eyebrow">{{ p.eyebrow }}</p>
+    <h1 class="big">{{ p.heading }}</h1>
+    <p class="sub">{{ p.lede }}</p>
+    <div class="pricecard glass founding">
+      <h2 class="founding-h">{{ p.founding_heading }}</h2>
+      <p>{{ p.founding_body }}</p>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0;">
+<section class="light">
   <div class="wrap">
-    <div class="status-grid">
-      <div class="stat-card price-card">
-        <div class="big">$300 <span class="mango-txt">per month</span></div>
-        <p>Single location. Per business, not per user. Every feature included: the weekly board, the menu lab, customer intelligence, competitive intel, and Ask Alfredo. No setup fee, no implementation project, no training package, no annual contract.</p>
+    <h2 class="sr-only">What Alfredo costs</h2>
+    <div class="tiles">
+      {%- for t in p.tiers %}
+      <div class="tile reveal">
+        <p class="tier"><b>{{ t.price }}</b> <span>{{ t.unit }}</span></p>
+        <span>{{ t.body }}</span>
       </div>
-      <div class="stat-card price-card">
-        <div class="big">$500 <span class="mango-txt">per month</span></div>
-        <p>Two locations, everything included, one combined view across both rooms.</p>
-      </div>
-      <div class="stat-card price-card">
-        <div class="big">3+ <span class="mango-txt">locations</span></div>
-        <p>Larger groups are priced by conversation, not by formula. Get in touch and we will give you a straight number.</p>
-      </div>
+      {%- endfor %}
     </div>
   </div>
 </section>
 
-<section class="pillars">
+<section class="tint">
   <div class="wrap">
-    <span class="kicker">For comparison</span>
-    <h2 class="section-title">What the alternatives cost.</h2>
-    <div class="status-grid">
-      <div class="stat-card">
-        <div class="big">A BI platform</div>
-        <p>Starts around $30,000 a year before implementation, and you still have to build the dashboards and draw your own conclusions.</p>
-      </div>
-      <div class="stat-card">
-        <div class="big">A back office suite</div>
-        <p>Runs $330 to $750 per location per month. Good at invoices and accounting. It tells you what you spent, not what to try next.</p>
-      </div>
-      <div class="stat-card">
-        <div class="big">A consultant</div>
-        <p>Thousands for a one time report that starts going stale the day it is delivered.</p>
-      </div>
+    <p class="eyebrow">{{ p.compare_eyebrow }}</p>
+    <h2 class="big">{{ p.compare_heading }}</h2>
+    <div class="tiles">
+      {%- for c in p.compare %}
+      <div class="tile reveal"><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>
+      {%- endfor %}
     </div>
-    <p class="section-lede compare-close">Alfredo connects to the POS you already run and tells you what to try next. Then it tells you whether it worked. No implementation project. No analyst to hire. No quote to request.</p>
+    <p class="sub wide">{{ p.compare_close }}</p>
   </div>
 </section>
 
-<section>
+<section class="light">
   <div class="wrap">
-    <span class="kicker">Questions</span>
-    <h2 class="section-title">The things operators ask first.</h2>
-    <div class="pillar-grid">
-      <div class="stat-card">
-        <h3 class="faq-q">Which POS systems does Alfredo support?</h3>
-        <p>Toast and Clover today. If you run a different system, get in touch and we will tell you honestly whether yours is ready yet.</p>
-      </div>
-      <div class="stat-card">
-        <h3 class="faq-q">Is there a contract?</h3>
-        <p>Month to month. Leave whenever you want. We would rather earn the next month than lock you into it.</p>
-      </div>
-      <div class="stat-card">
-        <h3 class="faq-q">What counts as a location?</h3>
-        <p>A physical place of business: one restaurant, one taproom, one truck. The number of registers or terminals inside it does not matter. A restaurant with three registers is still one location.</p>
-      </div>
-      <div class="stat-card">
-        <h3 class="faq-q">Does Alfredo know what my dishes cost to make?</h3>
-        <p>If you share your recipe and ingredient costs, yes: Alfredo connects them to your sales and adds margin intelligence on top, at no extra charge. If you do not have cost data, everything else works without it.</p>
-      </div>
+    <p class="eyebrow">{{ p.faq_eyebrow }}</p>
+    <h2 class="big">{{ p.faq_heading }}</h2>
+    <div class="faq">
+      {%- for f in p.faq %}
+      <details>
+        <summary>{{ f.q }}<span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>{{ f.a }}</p></div>
+      </details>
+      {%- endfor %}
     </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="wrap">
-    <div class="cta-box">
-      <div>
-        <h2>Take one of the 10 seats.</h2>
-        <p>Founding partner seats go to businesses that want to shape the tool, not just use it.</p>
-      </div>
-      <div class="cta-actions">
-        <a class="btn mango" href="pilot.html#pilot">Request a demo</a>
-      </div>
-    </div>
+<section class="dark">
+  <div class="glow b" aria-hidden="true"></div>
+  <div class="wrap center-block">
+    <h2 class="big center">{{ p.cta_heading }}</h2>
+    <p class="sub center">{{ p.cta_body }}</p>
+    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
   </div>
 </section>
-
-</div>
 {% endblock %}
