@@ -1,663 +1,366 @@
 {% extends "base.html" %}
-{% block head %}
-<style>/* hub question cards */
-  
-  .legacy-body .faq-q{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;}
-  .legacy-body .card-go{
-    display:inline-block;margin-top:14px;
-    font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;
-    color:var(--wine);background:none;border:none;padding:0;cursor:pointer;text-align:left;
-  }
-  .legacy-body .card-go:hover{text-decoration:underline;}/* tab bar */
-  
-  .legacy-body .tabbar{
-    position:sticky;top:0;z-index:40;background:var(--cream);
-    border-bottom:1px solid var(--ink-12);
-    display:flex;gap:4px;overflow-x:auto;
-    max-width:var(--max);margin:0 auto;padding:0 28px;
-  }
-  .legacy-body .tab{
-    flex:0 0 auto;background:none;border:none;cursor:pointer;
-    font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;color:var(--ink-60);
-    padding:16px 14px;border-bottom:3px solid transparent;white-space:nowrap;
-  }
-  .legacy-body .tab:hover{color:var(--ink);}
-  .legacy-body .tab.on{color:var(--wine);border-bottom-color:var(--gold);}
-  .legacy-body .tab:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;border-radius:4px;}
-  .legacy-body .panel [id]{scroll-margin-top:72px;}/* next question strip */
-  
-  .legacy-body .next-strip{border-top:1px solid var(--ink-12);padding:40px 0;}
-  .legacy-body .next-q-label{
-    display:flex;align-items:center;gap:10px;font-weight:600;font-size:.88rem;
-    color:var(--wine);text-transform:none;letter-spacing:normal;margin-bottom:14px;
-  }
-  .legacy-body .next-q-label::before{content:"";width:26px;height:4px;border-radius:2px;background:var(--gold);flex:0 0 auto;}
-  .legacy-body .next-q{
-    font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(1.15rem,2vw,1.5rem);
-    line-height:1.2;color:var(--ink);background:none;border:none;padding:0;cursor:pointer;
-    display:inline-flex;align-items:baseline;gap:10px;text-align:left;
-  }
-  .legacy-body .next-q:hover{color:var(--wine);}
-  .legacy-body .next-q .arw{display:inline-block;transition:transform .15s;}
-  .legacy-body .next-q:hover .arw{transform:translateX(4px);}
-</style>
-{% endblock %}
+
 {% block content %}
-<div class="legacy-body">
-
-<section style="padding-top:64px;">
+<section class="dark product-hero">
+  <div class="glow a" aria-hidden="true"></div>
+  <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
-    <span class="kicker">Product</span>
-    <h1 class="section-title">Three questions Alfredo answers every week.</h1>
-    <p class="section-lede">Alfredo is one assistant with three standing jobs. Each one answers a question you already ask yourself.</p>
+    <p class="eyebrow">Product</p>
+    <h1 class="big">Three questions Alfredo answers every week.</h1>
+    <p class="sub">Alfredo is one assistant with three standing jobs. Each one answers a question you already ask yourself.</p>
   </div>
 </section>
 
-<div class="tabbar" role="tablist" aria-label="Product sections">
-  <button class="tab on" id="tab-overview" role="tab" data-t="overview" aria-controls="p-overview" aria-selected="true" tabindex="0">Overview</button>
-  <button class="tab" id="tab-board" role="tab" data-t="board" aria-controls="p-board" aria-selected="false" tabindex="-1">The weekly board</button>
-  <button class="tab" id="tab-menu" role="tab" data-t="menu" aria-controls="p-menu" aria-selected="false" tabindex="-1">Menu and margins</button>
-  <button class="tab" id="tab-intel" role="tab" data-t="intel" aria-controls="p-intel" aria-selected="false" tabindex="-1">Guests and competition</button>
+<div class="tabbar-wrap">
+  <div class="wrap">
+    <div class="tabbar" role="tablist" aria-label="Product sections">
+      {%- for t in product.tabs %}
+      <button class="tab{% if loop.first %} on{% endif %}" id="tab-{{ t.key }}" role="tab" type="button"
+              data-t="{{ t.key }}" aria-controls="p-{{ t.key }}"
+              aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}">{{ t.label }}</button>
+      {%- endfor %}
+    </div>
+  </div>
 </div>
 
+<!-- ============================ OVERVIEW ============================ -->
 <div class="panel" id="p-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
-
-<section class="pillars" style="padding-top:0;">
-  <div class="wrap">
-    <h2 class="sr-only">Three questions Alfredo answers</h2>
-    <div class="status-grid">
-      <div class="stat-card">
-        <h3 class="faq-q">What should I do this week, and how do I know it worked?</h3>
-        <p>The weekly board ranks recommendations from your own data, and every one you try comes back with an honest verdict: worked, no effect, or backfired.</p>
-        <button class="card-go" type="button" data-go="board">Explore the weekly board →</button>
-      </div>
-      <div class="stat-card">
-        <h3 class="faq-q">Is my menu making me money?</h3>
-        <p>The menu lab lets you test changes safely, and cost intelligence connects what each dish costs to make with what it sells for.</p>
-        <button class="card-go" type="button" data-go="menu">Explore menu and margins →</button>
-      </div>
-      <div class="stat-card">
-        <h3 class="faq-q">Who is in my room, and what is happening on my street?</h3>
-        <p>Customer intelligence finds your confirmed guests and regulars from data you already have. Competitive intel watches the venues around you.</p>
-        <button class="card-go" type="button" data-go="intel">Explore guests and competition →</button>
+  <section class="dark">
+    <div class="glow b" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="big">Three questions Alfredo answers</h2>
+      <div class="tiles">
+        {%- for q in product.questions %}
+        <div class="tile glass reveal">
+          <h3>{{ q.q }}</h3>
+          <span>{{ q.a }}</span>
+          <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
+        </div>
+        {%- endfor %}
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="chat" class="pillars" style="background:var(--cream);border:none;">
-  <div class="wrap intel-inner">
-    <div>
-      <span class="kicker">Ask Alfredo</span>
-      <h2 class="section-title">Got a question? Just ask.</h2>
-      <p class="section-lede">A chat panel lives inside every tab. Ask how the week is going, why a number moved, or what to try next, and Alfredo answers in plain language from your own data. Every chart and every recommendation has an ask button right next to it.</p>
-      <p class="section-lede" style="margin-top:16px;">And when your data cannot answer something, Alfredo says so instead of guessing. Same rule everywhere.</p>
-      <p class="section-lede" style="margin-top:16px;">Ask it cost questions too, like how profitable an item really is. It answers from your own data and shows the queries it ran to get there. If it cannot verify a number, it says so instead of estimating.</p>
+  <section class="dark" id="chat">
+    <div class="glow a" aria-hidden="true"></div>
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Ask Alfredo</p>
+        <h2 class="big">Got a question? Just ask.</h2>
+        <p class="sub">A chat panel lives inside every tab. Ask how the week is going, why a number moved, or what to try next, and Alfredo answers in plain language from your own data. Every chart and every recommendation has an ask button right next to it.</p>
+        <p class="sub">And when your data cannot answer something, Alfredo says so instead of guessing. Same rule everywhere.</p>
+        <p class="sub">Ask it cost questions too, like how profitable an item really is. It answers from your own data and shows the queries it ran to get there. If it cannot verify a number, it says so instead of estimating.</p>
+      </div>
+      <div class="chatcard glass">
+        <div class="chat-head">
+          <span class="chat-title"><i class="chat-dot" aria-hidden="true"></i>Alfredo</span>
+          <span class="sample">sample conversation, sample data</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+          <p class="msg bot">Morning. Ask me anything about the business, or tap one of these to see how I answer.</p>
+        </div>
+        <div class="chat-chips" id="chatChips">
+          {%- for c in product.chat_chips %}
+          <button class="chip-q" type="button" data-a="{{ c.a }}">{{ c.q }}</button>
+          {%- endfor %}
+        </div>
+        <p class="chat-input">Ask about your business</p>
+      </div>
     </div>
-    <div class="chatcard" aria-label="Sample conversation with Alfredo">
-      <div class="chat-head">
-        <span class="chat-title"><span class="chat-dot"></span>Alfredo</span>
-        <span class="sample-tag">sample conversation · sample data</span>
-      </div>
-      <div class="chat-body" id="chatBody">
-        <div class="msg bot">Morning. Ask me anything about the business, or tap one of these to see how I answer.</div>
-      </div>
-      <div class="chat-chips" id="chatChips">
-        <button class="chip-q" data-q="How am I doing this week?" data-a="Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.">How am I doing this week?</button>
-        <button class="chip-q" data-q="What are my best sellers?" data-a="Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list ranked by profit instead of popularity?">What are my best sellers?</button>
-        <button class="chip-q" data-q="What do you recommend?" data-a="Three recommendations on this week's board: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?">What do you recommend?</button>
-      </div>
-      <div class="chat-input">Ask about your business<span class="chat-cursor">|</span></div>
+  </section>
+
+  <section class="light">
+    <div class="wrap">
+      <p class="sub">Nothing new to buy: Alfredo connects to your existing POS system. <a class="textlink" href="pricing.html">Pricing</a></p>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <p class="section-lede">Nothing new to buy: Alfredo connects to your existing POS system. <a class="more" href="pricing.html">Pricing →</a></p>
-  </div>
-</section>
-
+  </section>
 </div>
 
-<div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0">
+<!-- ============================ BOARD ============================ -->
+<div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0" hidden>
+  <section class="light" id="board">
+    <div class="wrap">
+      <p class="eyebrow">How Alfredo works</p>
+      <h2 class="big">It hands you the recommendation, then grades it.</h2>
+      <p class="sub">Dashboards show you charts and leave the thinking to you. Alfredo reads your existing POS system and hands you a short list of recommendations worth trying. When you try one, it measures what actually happened and tells you straight whether it worked.</p>
+      <p class="sub">No new hardware, nothing to install, no staff retraining. Alfredo connects to the POS system you already run.</p>
+    </div>
+  </section>
 
-<section id="board" style="padding-top:64px;">
-  <div class="wrap">
-    <span class="kicker">How Alfredo works</span>
-    <h2 class="section-title">It hands you the recommendation, then grades it.</h2>
-    <p class="section-lede">Dashboards show you charts and leave the thinking to you. Alfredo reads your POS, hands you a short ranked list of recommendations worth trying, and when you try one, it measures what actually happened and gets smarter about your business. Suggest, try, verdict, repeat.</p>
-    <p class="section-lede" style="margin-top:16px;">No new hardware, nothing to install, no staff retraining. Alfredo connects to the POS system you already run.</p>
-
-    <div class="viz-grid" style="margin-top:56px;">
-      <div class="vizcard" id="measured">
-        <div class="radius-title">
+  <section class="dark">
+    <div class="glow a" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="vizcard glass" id="measured">
+        <div class="viz-head">
           <h3>What "measured" actually looks like</h3>
-          <span class="sample-tag">sample data</span>
+          <span class="sample">sample data</span>
         </div>
-        <div class="card-top" style="margin-top:6px;">
-          <span class="chip teal">Marked done · Pricing</span>
+        <p class="viz-tags"><span class="chip">Marked done</span><span class="chip">Pricing</span></p>
+        <p class="viz-title">Raise House Lager from $6.50 to $7.00</p>
+        <p class="viz-note">Projected +$11.40/wk if it holds. Here is what the weeks actually said:</p>
+        <div class="weekbars" id="weekbars" aria-hidden="true">
+          <span class="wb ok" style="--h:78%"></span>
+          <span class="wb ok" style="--h:92%"></span>
+          <span class="wb low" style="--h:46%"></span>
+          <span class="wb none" style="--h:30%"></span>
         </div>
-        <h3 style="font-size:1.02rem;font-weight:800;margin:8px 0 4px;">Raise House Lager from $6.50 to $7.00</h3>
-        <p style="font-size:.85rem;color:var(--ink-60);">Projected +$11.40/wk if it holds. Here is what the weeks actually said:</p>
-        <div class="trackrow">
-          <div class="wk good">W1</div>
-          <div class="wk good">W2</div>
-          <div class="wk bad">W3</div>
-          <div class="wk good">W4</div>
-        </div>
-        <p class="track-legend">green: on target · red: below · gray: not enough data that week</p>
-        <div class="outcome">
-          <span class="mono">Measured: +$9.80/wk attributable</span>
-          <small>Compared against a control item, with what you would have made anyway subtracted out. Measured under projection, and the board says so.</small>
-        </div>
+        <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
+        <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
+        <p class="viz-result">Measured: +$9.80/wk attributable</p>
+        <p class="viz-note">Compared against a control item, with what you would have made anyway subtracted out. Measured under projection, and the board says so.</p>
       </div>
 
-      <div class="vizcard">
-        <div class="radius-title">
+      <div class="vizcard glass">
+        <div class="viz-head">
           <h3>Every change ends in a verdict</h3>
-          <span class="sample-tag">sample data</span>
+          <span class="sample">sample data</span>
         </div>
-        <div class="nopeek">While a test is running, no interim results are shown. Checking results mid test inflates false positives, so Alfredo does not allow it.</div>
-        <div class="card-top">
-          <span class="chip hollow">Menu trial · completed</span>
+        <p class="nopeek">While a test is running, no interim results are shown. Checking results mid test inflates false positives, so Alfredo does not allow it.</p>
+        <p class="viz-tags"><span class="chip">Menu trial</span><span class="chip">completed</span></p>
+        <p class="viz-title">Reprice Garlic Fries from $5.50 to $6.50</p>
+        <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
+          <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
         </div>
-        <h3 style="font-size:1.02rem;font-weight:800;margin:8px 0 4px;">Reprice Garlic Fries from $5.50 to $6.50</h3>
-        <div class="verdict-strip">
-          <span class="vbadge worked">Worked</span>
-          <span class="vbadge noeffect">No effect</span>
-          <span class="vbadge backfired on">Backfired</span>
-        </div>
-        <p style="font-size:.85rem;color:var(--ink-60);">Units fell 22% and net revenue came out $41/wk below baseline. The dollar jump was too big for this item.</p>
-        <p class="rollback"><strong>Rolled back to $5.50.</strong> The engine logged the miss, and next week's pricing suggestions learned from it. A tool that cannot say backfired cannot be trusted when it says worked.</p>
+        <p class="viz-note">Units fell 22% and net revenue came out $41/wk below baseline. The dollar jump was too big for this item.</p>
+        <p class="viz-result bad">Rolled back to $5.50.</p>
+        <p class="viz-note">The miss is on the record where you can see it. A tool that cannot say backfired cannot be trusted when it says worked.</p>
       </div>
     </div>
+  </section>
 
-    <div class="assure">
-      <h3>Small, careful, and the same menu for everyone.</h3>
-      <p>A trial in Alfredo is one item, one change, for a set number of weeks. Every guest sees the same menu; results are compared against your own history and a control item, never against your customers. If a change backfires, it rolls back in minutes, and the board says so. This is how you were already improving your menu, just measured honestly.</p>
+  <section class="light">
+    <div class="wrap">
+      <h3 class="big small">Small, careful, and the same menu for everyone.</h3>
+      <p class="sub">A trial in Alfredo is one item, one change, for a set number of weeks. Every guest sees the same menu; results are compared against your own history and a control item, never against your customers. If a change backfires, it rolls back in minutes, and the board says so. This is how you were already improving your menu, just measured honestly.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="pillars">
-  <div class="wrap">
-    <span class="kicker">What lands on your board</span>
-    <h2 class="section-title">Four kinds of recommendations, one ranked list.</h2>
-    <div class="pillar-grid">
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--wine)"></div>
-        <h3>Pricing</h3>
-        <p>Which items can carry a price move, which cannot, and a built in way to prove it on one item before you commit the whole menu.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--gold)"></div>
-        <h3>Promotions</h3>
-        <p>Bundles and pairings pulled from your real baskets, with the co order evidence attached. Not your best seller. The pairing you would not have guessed.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--champagne)"></div>
-        <h3>Positioning</h3>
-        <p>Where each item sits on your menu and in your market: highlight the hidden gems, dim the underperformers, watch the gaps your competitors leave open.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--ink)"></div>
-        <h3>Operations</h3>
-        <p>Table time, dayparts, happy hour economics, item availability. Where the floor and the data disagree, you find out early.</p>
+  <section class="tint">
+    <div class="wrap">
+      <p class="eyebrow">What lands on your board</p>
+      <h2 class="big">Four kinds of recommendations, one short list.</h2>
+      <div class="tiles four">
+        {%- for t in product.board_types %}
+        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
+        {%- endfor %}
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="next-strip">
-  <div class="wrap">
-    <p class="next-q-label">Next question</p>
-    <button class="next-q" type="button" data-go="menu">Is my menu making me money? <span class="arw">→</span></button>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <div class="cta-box">
-      <div>
-        <h2>See it on your own data.</h2>
-        <p>Run Alfredo on your own POS data and judge it by its verdicts.</p>
-      </div>
-      <div class="cta-actions">
-        <a class="btn mango" href="pilot.html#pilot">Request a demo</a>
-      </div>
+  <section class="dark">
+    <div class="glow b" aria-hidden="true"></div>
+    <div class="wrap center-block">
+      <p class="eyebrow">Next question</p>
+      <button class="nextq" type="button" data-go="menu">Is my menu making me money?</button>
+      <h2 class="big center">See it on your own data.</h2>
+      <p class="sub center">Run Alfredo on your own POS data and judge it by its verdicts.</p>
+      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
-  </div>
-</section>
-
+  </section>
 </div>
 
-<div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0">
-
-<section id="menulab">
-  <div class="wrap">
-    <span class="kicker">The menu lab</span>
-    <h2 class="section-title">Your menu is a draft. Treat it like one.</h2>
-    <p class="section-lede">Menu Advisor is a working copy of your menu you can experiment on. Drag items, highlight, dim, badge, reprice, build bundles. Every suggestion arrives with its evidence, and any edit can become a small, measured trial in four clicks.</p>
-    <div class="pillar-grid" style="margin-top:52px;">
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--wine)"></div>
-        <h3>Suggestions with receipts</h3>
-        <p>Up to ten at a time, each carrying its evidence: co order lift, competitor prices, margin math, verbatim lines from your own reviews.</p>
+<!-- ============================ MENU ============================ -->
+<div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0" hidden>
+  <section class="light" id="menulab">
+    <div class="wrap">
+      <p class="eyebrow">The menu lab</p>
+      <h2 class="big">Your menu is a draft. Treat it like one.</h2>
+      <p class="sub">Menu Advisor is a working copy of your menu you can experiment on. Drag items, highlight, dim, badge, reprice, build bundles. Every suggestion arrives with its evidence, and any edit can become a small, measured trial in four clicks.</p>
+      <div class="tiles">
+        {%- for t in product.menulab_tiles %}
+        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
+        {%- endfor %}
       </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--gold)"></div>
-        <h3>Four clicks to a fair trial</h3>
-        <p>Pick the item, pick the change, pick a control, pick a duration. The AI proposes control items and shows its match score. You decide.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--champagne)"></div>
-        <h3>An honest scoreboard</h3>
-        <p>Your edits tally into estimated impact, and the scoreboard keeps estimates and measured results clearly apart. They never blend.</p>
-      </div>
-      <div class="pillar" style="border-style:dashed;">
-        <div class="pillar-dot" style="background:var(--ink)"></div>
-        <h3><span class="chip sun" style="margin-right:8px;">On the roadmap</span>Live on your digital menu</h3>
-        <p>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</p>
+      <div class="tile roadmap reveal">
+        <p class="eyebrow">On the roadmap</p>
+        <h3>Live on your digital menu</h3>
+        <span>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</span>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="cost">
-  <div class="wrap">
-    <span class="kicker">Cost intelligence</span>
-    <h2 class="section-title">You know what you sold. Do you know what you made?</h2>
-    <p class="section-lede">For businesses that share their recipe and ingredient costs, Alfredo adds a second layer: it connects what each dish costs to make with what it sells for, turning sales analytics into margin intelligence.</p>
-    <div class="pillar-grid">
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--wine)"></div>
-        <h3>Where each dish's money goes</h3>
-        <p>Click any item and see its cost ingredient by ingredient: which single ingredient dominates, what packaging adds, and when each cost was last confirmed. Every cost carries its date, so you always know how fresh the number is.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--gold)"></div>
-        <h3>The worry list, before the worry</h3>
-        <p>Alfredo ranks the ingredients that drive your menu wide costs, shows what a 10 percent price rise in each would cost you per month, and tracks how volatile each has been over the past year.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--champagne)"></div>
-        <h3>Where costs rose but prices did not</h3>
-        <p>The repricing queue finds items whose ingredient costs climbed while menu prices stood still, quantifies the weekly margin bleed, and feeds the worst cases into the weekly board. It shows the mirror too: where costs fell and margins quietly improved.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background:var(--ink)"></div>
-        <h3>It audits the data itself</h3>
-        <p>Items selling below cost, suspicious entries, stale costs, sudden spikes. On day one with a real client's cost data, Alfredo flagged a 1,370 times data entry error. It asked the operator instead of silently fixing it. Every finding is a question you confirm or dismiss.</p>
+  <section class="dark" id="cost">
+    <div class="glow a" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">Cost intelligence</p>
+      <h2 class="big">You know what you sold. Do you know what you made?</h2>
+      <p class="sub">For businesses that share their recipe and ingredient costs, Alfredo adds a second layer: it connects what each dish costs to make with what it sells for, turning sales analytics into margin intelligence.</p>
+      <div class="tiles two">
+        {%- for t in product.cost_tiles %}
+        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
+        {%- endfor %}
       </div>
     </div>
-    <div class="assure" style="margin-top:34px;">
-      <h3>Does your website still match your till?</h3>
-      <p>Prices change at the till and the website never hears about it, or the other way around. Customers see one price and pay another, and nobody notices because cross checking them is nobody's job. Alfredo compares your published menu against what customers actually pay and flags every gap with the evidence: in real client data it found website prices that had been stale for months, one off by 40 to 50 percent, and one website price the till had never started charging. It never changes a price anywhere. It flags; you decide.</p>
-    </div>
-    <p class="section-lede" style="margin-top:34px;">With cost data connected, every recommendation on the board argues from real margins: a price change shows cost, price, and margin so you can see it is safe; a promotion states what the giveaway costs and the exact volume needed to break even; a cross sell states the margin each attachment adds. The same add on data doubles as menu development evidence: which extras your guests already vote for with their orders, and what each one earns, for when you are deciding what to build next. Alfredo recommends and measures. You decide.</p>
-  </div>
-</section>
+  </section>
 
-<section class="next-strip">
-  <div class="wrap">
-    <p class="next-q-label">Next question</p>
-    <button class="next-q" type="button" data-go="intel">Who is in my room, and what is happening on my street? <span class="arw">→</span></button>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <div class="cta-box">
-      <div>
-        <h2>Run it on your own menu.</h2>
-        <p>Connect your recipe and ingredient costs and see your own margins on the board.</p>
+  <section class="light">
+    <div class="wrap">
+      <div class="tile drift">
+        <h3>Does your website still match your till?</h3>
+        <span>Prices change at the till and the website never hears about it, or the other way around. Customers see one price and pay another, and nobody notices because cross checking them is nobody's job. Alfredo compares your published menu against what customers actually pay and flags every gap with the evidence: in real client data it found website prices that had been stale for months, one off by 40 to 50 percent, and one website price the till had never started charging. It never changes a price anywhere. It flags; you decide.</span>
       </div>
-      <div class="cta-actions">
-        <a class="btn mango" href="pilot.html#pilot">Request a demo</a>
-      </div>
+      <p class="sub wide">With cost data connected, every recommendation on the board argues from real margins: a price change shows cost, price, and margin so you can see it is safe; a promotion states what the giveaway costs and the exact volume needed to break even; a cross sell states the margin each attachment adds. The same add on data doubles as menu development evidence: which extras your guests already vote for with their orders, and what each one earns, for when you are deciding what to build next. Alfredo recommends and measures. You decide.</p>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section class="dark">
+    <div class="glow b" aria-hidden="true"></div>
+    <div class="wrap center-block">
+      <p class="eyebrow">Next question</p>
+      <button class="nextq" type="button" data-go="intel">Who is in my room, and what is happening on my street?</button>
+      <h2 class="big center">Run it on your own menu.</h2>
+      <p class="sub center">Connect your recipe and ingredient costs and see your own margins on the board.</p>
+      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    </div>
+  </section>
 </div>
 
-<div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0">
+<!-- ============================ INTEL ============================ -->
+<div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0" hidden>
+  <section class="light" id="regulars">
+    <div class="wrap">
+      <p class="eyebrow">Customer intelligence</p>
+      <h2 class="big">Your regulars, found in your own data.</h2>
+      <p class="sub">Alfredo works out who your confirmed guests and regulars are from the data you already have: your loyalty program if you run one, and the transaction data itself if you do not. Either way, no new app to launch and no sign up sheet at the host stand. See who keeps the lights on, how regulars differ from occasional visitors, and which patterns deserve a nudge.</p>
+      <p class="sub">And in keeping with the numbers rule: only confirmed guests are counted. Alfredo never inflates the panel with estimated crowd sizes.</p>
 
-<section id="regulars">
-  <div class="wrap intel-inner">
-    <div>
-      <span class="kicker">Customer intelligence</span>
-      <h2 class="section-title">Your regulars, found in your own data.</h2>
-      <p class="section-lede">Alfredo works out who your confirmed guests and regulars are from the data you already have: your loyalty program if you run one, and the transaction data itself if you do not. Either way, no new app to launch and no sign up sheet at the host stand. See who keeps the lights on, how regulars differ from occasional visitors, and which patterns deserve a nudge.</p>
-      <p class="section-lede" style="margin-top:16px;">And in keeping with the numbers rule: only confirmed guests are counted. Alfredo never inflates the panel with estimated crowd sizes.</p>
-    </div>
-    <div class="vizcard" aria-label="Regulars vs occasional guests comparison">
-      <div class="radius-title">
-        <h3>Regulars vs occasional guests</h3>
-        <span class="sample-tag">sample data</span>
-      </div>
-      <div class="ci-kpis">
-        <div class="ci-kpi"><span class="mono">412</span><span>confirmed guests</span></div>
-        <div class="ci-kpi"><span class="mono">78</span><span>regulars (5+ visit days)</span></div>
-        <div class="ci-kpi"><span class="mono">31%</span><span>repeat rate</span></div>
-      </div>
-      <div class="ci-row">
-        <div class="ci-row-label">Average visits</div>
-        <div class="ci-bars">
-          <div class="ci-bar"><div class="bar reg" style="width:82%;"></div>8.4</div>
-          <div class="ci-bar"><div class="bar occ" style="width:16%;"></div>1.6</div>
-        </div>
-      </div>
-      <div class="ci-row">
-        <div class="ci-row-label">Average check</div>
-        <div class="ci-bars">
-          <div class="ci-bar"><div class="bar reg" style="width:70%;"></div>$42</div>
-          <div class="ci-bar"><div class="bar occ" style="width:52%;"></div>$31</div>
-        </div>
-      </div>
-      <div class="ci-row">
-        <div class="ci-row-label">Share of tracked revenue</div>
-        <div class="ci-bars">
-          <div class="ci-bar"><div class="bar reg" style="width:58%;"></div>34%</div>
-          <div class="ci-bar"><div class="bar occ" style="width:38%;"></div>22%</div>
-        </div>
-      </div>
-      <div class="ci-legend">
-        <span><span class="sw" style="background:var(--wine);"></span>Regulars</span>
-        <span><span class="sw" style="background:var(--gold);"></span>Occasional</span>
-      </div>
-      <div class="radius-foot">A small group of regulars usually carries an outsized share of revenue. Alfredo shows you exactly who and how, from the data you already have.</div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="vizcard" style="margin-top:22px;">
-      <div class="radius-title">
-        <h3>Your guests, sorted into segments you can name</h3>
-        <span class="sample-tag">sample data</span>
-      </div>
-      <p style="font-size:.85rem;color:var(--ink-60);">Alfredo groups your confirmed guests by how they actually behave: when they come, what they order, how they spend. You rename the segments in your own words, because you know your room better than any algorithm.</p>
-      <div class="seg-grid">
-        <div class="seg">
-          <div class="seg-name">The Friday night crowd <span class="seg-pencil">✎</span></div>
-          <div class="seg-stats"><span class="mono">124 guests</span><span class="mono">$47 avg check</span><span class="mono">3.1 visits</span></div>
-          <p>Weekend evenings, bigger tables, beverage forward orders.</p>
-        </div>
-        <div class="seg">
-          <div class="seg-name">Lunch break locals <span class="seg-pencil">✎</span></div>
-          <div class="seg-stats"><span class="mono">96 guests</span><span class="mono">$22 avg check</span><span class="mono">5.8 visits</span></div>
-          <p>Weekday middays, fast turns, high repeat frequency.</p>
-        </div>
-        <div class="seg">
-          <div class="seg-name">Slow sippers <span class="seg-pencil">✎</span></div>
-          <div class="seg-stats"><span class="mono">58 guests</span><span class="mono">$29 avg check</span><span class="mono">6.4 visits</span></div>
-          <p>Long dwell, beverage only checks. Your best nudge candidates.</p>
-        </div>
-        <div class="seg">
-          <div class="seg-name">Big table hosts <span class="seg-pencil">✎</span></div>
-          <div class="seg-stats"><span class="mono">34 guests</span><span class="mono">$118 avg check</span><span class="mono">2.2 visits</span></div>
-          <p>Group organizers. Fewer visits, the largest checks in the house.</p>
-        </div>
-      </div>
-      <div class="radius-foot">Segments are built from behavior, and the names are yours to edit. One click on any segment asks Alfredo what to do about it.</div>
-    </div>
-  </div>
-</section>
-
-<section id="intel">
-  <div class="wrap">
-    <span class="kicker">Competitive intel</span>
-    <h2 class="section-title">Know your block like you own it.</h2>
-    <p class="section-lede">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board. Walking past a competitor? Photograph their menu, upload it, and see it matched item by item against your own sales.</p>
-
-    <div class="statstrip" aria-label="Sample competitive metrics">
-      <div class="ministat"><div class="ministat-num">36</div><div class="ministat-label">venues tracked in your area</div></div>
-      <div class="ministat"><div class="ministat-num">8 of 36</div><div class="ministat-label">open past midnight: your late night edge</div></div>
-      <div class="ministat"><div class="ministat-num">+1.1</div><div class="ministat-label">your service score vs market average</div></div>
-      <div class="ministat"><div class="ministat-num">1 click</div><div class="ministat-label">from any competitor row to a full menu scan</div></div>
-    </div>
-
-    <div class="viz-grid">
       <div class="vizcard">
-        <div class="radius-title">
+        <div class="viz-head">
+          <h3>Regulars vs occasional guests</h3>
+          <span class="sample">sample data</span>
+        </div>
+        <div class="bignums">
+          <div><b>412</b><span>confirmed guests</span></div>
+          <div><b>78</b><span>regulars (5+ visit days)</span></div>
+          <div><b>31%</b><span>repeat rate</span></div>
+        </div>
+        <div class="cmp" id="regularsCmp">
+          <div class="cmp-row"><span class="cmp-label">Average visits</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>8.4</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:19%"></i><em>1.6</em></span></div>
+          <div class="cmp-row"><span class="cmp-label">Average check</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>$42</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:74%"></i><em>$31</em></span></div>
+          <div class="cmp-row"><span class="cmp-label">Share of tracked revenue</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
+          <p class="cmp-key"><span class="swatch a" aria-hidden="true"></span>Regulars<span class="swatch b" aria-hidden="true"></span>Occasional</p>
+        </div>
+        <p class="viz-note">A small group of regulars usually carries an outsized share of revenue. Alfredo shows you exactly who and how, from the data you already have.</p>
+      </div>
+
+      <div class="vizcard">
+        <div class="viz-head">
+          <h3>Your guests, sorted into segments you can name</h3>
+          <span class="sample">sample data</span>
+        </div>
+        <p class="viz-note">Alfredo groups your confirmed guests by how they actually behave: when they come, what they order, how they spend. You rename the segments in your own words, because you know your room better than any algorithm.</p>
+        <div class="tiles four seg">
+          {%- for s in product.segments %}
+          <div class="tile">
+            <h4>{{ s.name }}</h4>
+            <p class="segstats">{{ s.guests }}<br>{{ s.check }}<br>{{ s.visits }}</p>
+            <span>{{ s.body }}</span>
+          </div>
+          {%- endfor %}
+        </div>
+        <p class="viz-note">Segments are built from behavior, and the names are yours to edit. One click on any segment asks Alfredo what to do about it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark" id="intel">
+    <div class="glow a" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">Competitive intel</p>
+      <h2 class="big">Know your block like you own it.</h2>
+      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board. Walking past a competitor? Photograph their menu, upload it, and see it matched item by item against your own sales.</p>
+
+      <div class="bignums four">
+        {%- for s in product.intel_stats %}
+        <div><b>{{ s.n }}</b><span>{{ s.label }}</span></div>
+        {%- endfor %}
+      </div>
+
+      <div class="vizcard glass radar-card">
+        <div class="viz-head">
           <h3>Sentiment radar: you vs your market</h3>
-          <span class="sample-tag">sample data</span>
+          <span class="sample">sample data</span>
         </div>
-        <svg viewBox="-85 0 465 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radar chart comparing your review scores to competitor average">
-          <g stroke="#E4E0D8" fill="none" stroke-width="1">
-            <polygon points="150,40 245.1,109.1 208.8,220.9 91.2,220.9 54.9,109.1"/>
-            <polygon points="150,65 221.3,116.8 194.1,200.7 105.9,200.7 78.7,116.8"/>
-            <polygon points="150,90 197.6,124.6 179.4,180.5 120.6,180.5 102.5,124.6"/>
-            <polygon points="150,115 173.8,132.3 164.7,160.2 135.3,160.2 126.2,132.3"/>
-            <line x1="150" y1="140" x2="150" y2="40"/>
-            <line x1="150" y1="140" x2="245.1" y2="109.1"/>
-            <line x1="150" y1="140" x2="208.8" y2="220.9"/>
-            <line x1="150" y1="140" x2="91.2" y2="220.9"/>
-            <line x1="150" y1="140" x2="54.9" y2="109.1" stroke-dasharray="3 3"/>
-          </g>
-          <polygon points="150,56 222.3,116.5 197,204.7 103,204.7" fill="#D9A441" fill-opacity="0.13" stroke="#D9A441" stroke-width="2"/>
-          <polygon points="150,44 243.2,109.7 199.4,208 97.1,212.8" fill="#6E2C3E" fill-opacity="0.18" stroke="#6E2C3E" stroke-width="2.5"/>
-          <text x="150" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#241A1D">Food 4.8</text>
-          <text x="252" y="105" text-anchor="start" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#241A1D">Service 4.9</text>
-          <text x="214" y="238" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#241A1D">Value 4.2</text>
-          <text x="88" y="238" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#241A1D">Speed 4.5</text>
-          <text x="48" y="100" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-style="italic" fill="rgba(36,26,29,.45)">Ambiance</text>
-          <text x="48" y="113" text-anchor="end" font-family="Inter,sans-serif" font-size="9" font-style="italic" fill="rgba(36,26,29,.45)">n=3 · not enough mentions</text>
-          <g font-family="Inter,sans-serif" font-size="10">
-            <rect x="88" y="248" width="10" height="10" rx="2" fill="#6E2C3E"/>
-            <text x="103" y="257" fill="#241A1D">You</text>
-            <rect x="138" y="248" width="10" height="10" rx="2" fill="#D9A441"/>
-            <text x="153" y="257" fill="#241A1D">Market avg</text>
-          </g>
-        </svg>
-        <div class="radius-foot">Scores are read out of your market's actual reviews. Dimensions without enough mentions stay faded until the data earns them. Even here, no number without evidence.</div>
+        <div class="radar-wrap">
+          <svg id="radar" viewBox="0 0 200 200" role="img"
+               aria-label="Sample sentiment radar. Your scores against the market average on Food, Service, Value and Speed. The Ambiance axis is faded because there are not enough mentions.">
+            <g class="radar-grid" aria-hidden="true">
+              {%- for f in [0.25, 0.5, 0.75, 1.0] %}
+              <polygon points="{% for a in product.radar.axes %}{{ (product.radar.cx + product.radar.r * f * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * f * a.uy) | round(2) }} {% endfor %}"></polygon>
+              {%- endfor %}
+              {%- for a in product.radar.axes %}
+              <line x1="{{ product.radar.cx }}" y1="{{ product.radar.cy }}"
+                    x2="{{ (product.radar.cx + product.radar.r * a.ux) | round(2) }}" y2="{{ (product.radar.cy + product.radar.r * a.uy) | round(2) }}"
+                    class="{% if a.get('faded') %}faded{% endif %}"></line>
+              {%- endfor %}
+            </g>
+            <polygon class="radar-market" points="{% for a in product.radar.axes %}{% if not a.get('faded') %}{{ (product.radar.cx + product.radar.r * a.market * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * a.market * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
+            <polygon class="radar-you" points="{% for a in product.radar.axes %}{% if not a.get('faded') %}{{ (product.radar.cx + product.radar.r * a.you * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * a.you * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
+            {%- for a in product.radar.axes %}
+            <text class="radar-label{% if a.get('faded') %} faded{% endif %}"
+                  x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}"
+                  y="{{ (product.radar.cy + (product.radar.r + 14) * a.uy) | round(2) }}"
+                  text-anchor="{% if a.ux > 0.2 %}start{% elif a.ux < -0.2 %}end{% else %}middle{% endif %}"
+                  dominant-baseline="middle">{{ a.name }}{% if a.get('note') %} ({{ a.note }}){% endif %}</text>
+            {%- endfor %}
+          </svg>
+          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Market average</p>
+        </div>
+        <p class="viz-note">Scores are read out of your market's actual reviews. Dimensions without enough mentions stay faded until the data earns them. Even here, no number without evidence.</p>
       </div>
 
-      <div class="vizcard">
-        <div class="radius-title">
+      <div class="vizcard glass">
+        <div class="viz-head">
           <h3>When your market is busy, hour by hour</h3>
-          <span class="sample-tag">sample data</span>
+          <span class="sample">sample data</span>
         </div>
-        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heatmap of market busy times by day and hour">
-          <g font-family="Inter,sans-serif" font-size="10" fill="rgba(36,26,29,.6)">
-            <text x="34" y="42" text-anchor="end">Mon</text><text x="34" y="66" text-anchor="end">Tue</text><text x="34" y="90" text-anchor="end">Wed</text><text x="34" y="114" text-anchor="end">Thu</text><text x="34" y="138" text-anchor="end">Fri</text><text x="34" y="162" text-anchor="end">Sat</text><text x="34" y="186" text-anchor="end">Sun</text>
-            <text x="55" y="20" text-anchor="middle">3p</text><text x="87" y="20" text-anchor="middle">4p</text><text x="119" y="20" text-anchor="middle">5p</text><text x="151" y="20" text-anchor="middle">6p</text><text x="183" y="20" text-anchor="middle">7p</text><text x="215" y="20" text-anchor="middle">8p</text><text x="247" y="20" text-anchor="middle">9p</text><text x="279" y="20" text-anchor="middle">10p</text>
-          </g>
-          <g>
-            <rect x="42" y="30" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="74" y="30" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="106" y="30" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="138" y="30" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="170" y="30" width="26" height="18" rx="3" fill="#E8C274"/><rect x="202" y="30" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="234" y="30" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="266" y="30" width="26" height="18" rx="3" fill="#F7EFE4"/>
-            <rect x="42" y="54" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="74" y="54" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="106" y="54" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="138" y="54" width="26" height="18" rx="3" fill="#E8C274"/><rect x="170" y="54" width="26" height="18" rx="3" fill="#E8C274"/><rect x="202" y="54" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="234" y="54" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="266" y="54" width="26" height="18" rx="3" fill="#F7EFE4"/>
-            <rect x="42" y="78" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="74" y="78" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="106" y="78" width="26" height="18" rx="3" fill="#E8C274"/><rect x="138" y="78" width="26" height="18" rx="3" fill="#E8C274"/><rect x="170" y="78" width="26" height="18" rx="3" fill="#D9A441"/><rect x="202" y="78" width="26" height="18" rx="3" fill="#E8C274"/><rect x="234" y="78" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="266" y="78" width="26" height="18" rx="3" fill="#F7EFE4"/>
-            <rect x="42" y="102" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="74" y="102" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="106" y="102" width="26" height="18" rx="3" fill="#E8C274"/><rect x="138" y="102" width="26" height="18" rx="3" fill="#D9A441"/><rect x="170" y="102" width="26" height="18" rx="3" fill="#D9A441"/><rect x="202" y="102" width="26" height="18" rx="3" fill="#E8C274"/><rect x="234" y="102" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="266" y="102" width="26" height="18" rx="3" fill="#F0D9A6"/>
-            <rect x="42" y="126" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="74" y="126" width="26" height="18" rx="3" fill="#E8C274"/><rect x="106" y="126" width="26" height="18" rx="3" fill="#D9A441"/><rect x="138" y="126" width="26" height="18" rx="3" fill="#D9A441"/><rect x="170" y="126" width="26" height="18" rx="3" fill="#6E2C3E"/><rect x="202" y="126" width="26" height="18" rx="3" fill="#6E2C3E"/><rect x="234" y="126" width="26" height="18" rx="3" fill="#D9A441"/><rect x="266" y="126" width="26" height="18" rx="3" fill="#D9A441"/>
-            <rect x="42" y="150" width="26" height="18" rx="3" fill="#E8C274"/><rect x="74" y="150" width="26" height="18" rx="3" fill="#D9A441"/><rect x="106" y="150" width="26" height="18" rx="3" fill="#D9A441"/><rect x="138" y="150" width="26" height="18" rx="3" fill="#D9A441"/><rect x="170" y="150" width="26" height="18" rx="3" fill="#6E2C3E"/><rect x="202" y="150" width="26" height="18" rx="3" fill="#6E2C3E"/><rect x="234" y="150" width="26" height="18" rx="3" fill="#D9A441"/><rect x="266" y="150" width="26" height="18" rx="3" fill="#D9A441"/>
-            <rect x="42" y="174" width="26" height="18" rx="3" fill="#E8C274"/><rect x="74" y="174" width="26" height="18" rx="3" fill="#D9A441"/><rect x="106" y="174" width="26" height="18" rx="3" fill="#D9A441"/><rect x="138" y="174" width="26" height="18" rx="3" fill="#E8C274"/><rect x="170" y="174" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="202" y="174" width="26" height="18" rx="3" fill="#F0D9A6"/><rect x="234" y="174" width="26" height="18" rx="3" fill="#F7EFE4"/><rect x="266" y="174" width="26" height="18" rx="3" fill="#F7EFE4"/>
-          </g>
-          <g font-family="Inter,sans-serif" font-size="10" fill="rgba(36,26,29,.6)">
-            <text x="42" y="212">Quiet</text>
-            <rect x="76" y="204" width="14" height="9" rx="2" fill="#F7EFE4"/><rect x="92" y="204" width="14" height="9" rx="2" fill="#F0D9A6"/><rect x="108" y="204" width="14" height="9" rx="2" fill="#E8C274"/><rect x="124" y="204" width="14" height="9" rx="2" fill="#D9A441"/><rect x="140" y="204" width="14" height="9" rx="2" fill="#D9A441"/><rect x="156" y="204" width="14" height="9" rx="2" fill="#6E2C3E"/>
-            <text x="178" y="212">Busy</text>
-          </g>
-        </svg>
-        <div class="radius-foot">Built from public busy times data across your whole market, then compared against your own volume. The gap between the two is where your money is hiding.</div>
+        <div class="heat" id="heat" role="img" aria-label="Sample heat map of how busy the market is by hour across the week."></div>
+        <p class="viz-note">Built from public busy times data across your whole market, then compared against your own volume. The gap between the two is where your money is hiding.</p>
       </div>
+
+      <div class="vizcard glass">
+        <div class="viz-head">
+          <h3>Menu Scanner: their photo, matched to your numbers</h3>
+          <span class="sample">sample data</span>
+        </div>
+        <p class="viz-note">Upload a photo of a competitor menu. Alfredo reads it, matches items against your own, and shows its confidence on every pairing. You confirm or dismiss each one before anything else happens.</p>
+        <div class="table-scroll">
+          <table class="match-table">
+            <thead><tr><th>Their item</th><th>Your item</th><th>Match</th><th>Gap</th><th>Action</th></tr></thead>
+            <tbody>
+              {%- for r in product.scanner %}
+              <tr>
+                <td>{{ r.theirs }}<span class="mono">{{ r.theirprice }}</span></td>
+                <td>{{ r.yours }}<span class="mono">{{ r.yourprice }}</span></td>
+                <td><span class="conf {{ r.level }}">{{ r.match }}</span></td>
+                <td>{{ r.gap }}</td>
+                <td>{{ r.action }}</td>
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+        <p class="viz-note">"Try this price" only appears on matches you have confirmed, and only when the competitor price came from a published menu, never an estimate.</p>
+      </div>
+
+      <p class="cap-line">Also inside the Competitive tab:</p>
+      <ul class="cap-list">
+        {%- for item in product.also_inside %}
+        <li>{{ item }}</li>
+        {%- endfor %}
+      </ul>
     </div>
+  </section>
 
-    <div class="vizcard" style="margin-top:22px;">
-      <div class="radius-title">
-        <h3>Menu Scanner: their photo, matched to your numbers</h3>
-        <span class="sample-tag">sample data</span>
-      </div>
-      <p style="font-size:.85rem;color:var(--ink-60);">Upload a photo of a competitor menu. Alfredo reads it, matches items against your own, and shows its confidence on every pairing. You confirm or dismiss each one before anything else happens.</p>
-      <div class="table-scroll">
-      <table class="match-table">
-        <thead>
-          <tr><th>Their item</th><th>Your item</th><th>Match</th><th>Gap</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Smash Burger · <span class="mono">$13.50</span></td>
-            <td>House Burger · <span class="mono">$11.00</span></td>
-            <td><span class="conf">92%</span></td>
-            <td>You are $2.50 under</td>
-            <td><button class="mini-btn" type="button">Try this price</button></td>
-          </tr>
-          <tr>
-            <td>Loaded Tots · <span class="mono">$9.00</span></td>
-            <td>Tater Tots · <span class="mono">$8.00</span></td>
-            <td><span class="conf">87%</span></td>
-            <td>You are $1.00 under</td>
-            <td><span style="font-size:.76rem;color:var(--wine);font-weight:600;">✓ confirmed</span></td>
-          </tr>
-          <tr>
-            <td>Chicken Sando · <span class="mono">$12.00</span></td>
-            <td>Crispy Chicken · <span class="mono">$12.50</span></td>
-            <td><span class="conf low">64%</span></td>
-            <td>Needs your review</td>
-            <td><span class="review-icons">👍 👎</span></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="radius-foot">"Try this price" only appears on matches you have confirmed, and only when the competitor price came from a published menu, never an estimate.</div>
+  <section class="dark">
+    <div class="glow b" aria-hidden="true"></div>
+    <div class="wrap center-block">
+      <p class="eyebrow">Next question</p>
+      <button class="nextq" type="button" data-go="board">What should I do this week, and how do I know it worked?</button>
+      <h2 class="big center">Meet your regulars.</h2>
+      <p class="sub center">Run Alfredo on your own data and see who keeps the lights on.</p>
+      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
-
-    <p class="cap-line">Also inside the Competitive tab:</p>
-    <div class="cap-list">
-      <span class="cap">AI written SWOT from your market's reviews</span>
-      <span class="cap">Interactive competitor map</span>
-      <span class="cap">Census demographics per trade area</span>
-      <span class="cap">Nightlife spillover score</span>
-      <span class="cap">Extended hours revenue scenarios</span>
-      <span class="cap">Price tier positioning</span>
-      <span class="cap">One click competitor menu scan</span>
-    </div>
-  </div>
-</section>
-
-<section class="next-strip">
-  <div class="wrap">
-    <p class="next-q-label">Next question</p>
-    <button class="next-q" type="button" data-go="board">What should I do this week, and how do I know it worked? <span class="arw">→</span></button>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <div class="cta-box">
-      <div>
-        <h2>Meet your regulars.</h2>
-        <p>Run Alfredo on your own data and see who keeps the lights on.</p>
-      </div>
-      <div class="cta-actions">
-        <a class="btn mango" href="pilot.html#pilot">Request a demo</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+  </section>
 </div>
-
-</div>
-{% endblock %}
-{% block scripts %}
-<script>
-(function () {
-  var names = ['overview','board','menu','intel'];
-  var panels = {};
-  names.forEach(function (n) { panels[n] = document.getElementById('p-' + n); });
-  var tabs = [].slice.call(document.querySelectorAll('.tab'));
-  var bar = document.querySelector('.tabbar');
-
-  var map = {
-    '#overview': 'overview', '#chat': 'overview',
-    '#board': 'board', '#measured': 'board',
-    '#menu': 'menu', '#menulab': 'menu', '#cost': 'menu',
-    '#intel': 'intel', '#regulars': 'intel'
-  };
-
-  // apply the visual switch only; never touches history
-  function apply(name, doScroll) {
-    if (!panels[name]) { name = 'overview'; }
-    names.forEach(function (n) { panels[n].style.display = (n === name) ? '' : 'none'; });
-    tabs.forEach(function (t) {
-      var on = t.getAttribute('data-t') === name;
-      t.classList.toggle('on', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.setAttribute('tabindex', on ? '0' : '-1');
-    });
-    if (doScroll) { bar.scrollIntoView({ block: 'start' }); }
-    return name;
-  }
-
-  // user initiated: add a history entry so the back button walks the tabs
-  function go(name) {
-    var n = apply(name, true);
-    history.pushState({ tab: n }, '', '#' + n);
-  }
-
-  tabs.forEach(function (t) {
-    t.addEventListener('click', function () { go(t.getAttribute('data-t')); });
-  });
-
-  // manual activation: arrows move focus only, Enter/Space activate the focused tab
-  bar.addEventListener('keydown', function (e) {
-    var i = tabs.indexOf(document.activeElement);
-    if (i < 0) { return; }
-    var n = null;
-    if (e.key === 'ArrowRight') { n = (i + 1) % tabs.length; }
-    else if (e.key === 'ArrowLeft') { n = (i - 1 + tabs.length) % tabs.length; }
-    else if (e.key === 'Home') { n = 0; }
-    else if (e.key === 'End') { n = tabs.length - 1; }
-    if (n === null) { return; }
-    e.preventDefault();
-    tabs[n].focus();
-  });
-  [].slice.call(document.querySelectorAll('[data-go]')).forEach(function (b) {
-    b.addEventListener('click', function () { go(b.getAttribute('data-go')); });
-  });
-
-  // back and forward: switch without adding an entry
-  window.addEventListener('popstate', function (e) {
-    var n = (e.state && e.state.tab) || map[window.location.hash] || 'overview';
-    apply(n, true);
-  });
-
-  // initial load: open the right tab, seed this entry, then honour an inner id
-  var h = window.location.hash;
-  var initial = apply(map[h] || 'overview', false);
-  history.replaceState({ tab: initial }, '', window.location.href);
-  if (h.length > 1) {
-    var el = document.getElementById(h.slice(1));
-    if (el) { el.scrollIntoView({ block: 'start' }); }
-  }
-})();
-
-/* --- */
-
-(function(){
-  var body = document.getElementById('chatBody');
-  var chips = document.querySelectorAll('.chip-q');
-  chips.forEach(function(chip){
-    chip.addEventListener('click', function(){
-      if (chip.disabled) return;
-      chip.disabled = true;
-      var u = document.createElement('div');
-      u.className = 'msg user';
-      u.textContent = chip.dataset.q;
-      body.appendChild(u);
-      var t = document.createElement('div');
-      t.className = 'msg bot typing';
-      t.textContent = 'Alfredo is thinking';
-      body.appendChild(t);
-      t.scrollIntoView({block:'nearest'});
-      setTimeout(function(){
-        t.classList.remove('typing');
-        t.textContent = chip.dataset.a;
-        t.scrollIntoView({block:'nearest'});
-      }, 900);
-    });
-  });
-})();
-</script>
 {% endblock %}

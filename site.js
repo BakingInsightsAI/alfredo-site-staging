@@ -235,3 +235,125 @@
     });
   }
 })();
+
+/* =====================================================================
+   Product page: tabs, chat demo, and the visuals that draw once in view.
+   Exits quietly on every other page.
+   ===================================================================== */
+(function () {
+  'use strict';
+  var A = window.Alfredo;
+  var bar = document.querySelector('.tabbar');
+  if (!bar) return;
+
+  var tabs = A.$$('.tab', bar);
+  var names = tabs.map(function (t) { return t.getAttribute('data-t'); });
+  var panels = {};
+  names.forEach(function (n) { panels[n] = document.getElementById('p-' + n); });
+
+  /* an inner id deep links to the tab that contains it */
+  var inner = {
+    chat: 'overview', overview: 'overview',
+    board: 'board', measured: 'board',
+    menu: 'menu', menulab: 'menu', cost: 'menu',
+    intel: 'intel', regulars: 'intel'
+  };
+
+  function apply(name, doScroll) {
+    if (!panels[name]) name = names[0];
+    names.forEach(function (n) {
+      var on = n === name;
+      panels[n].hidden = !on;
+    });
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-t') === name;
+      t.classList.toggle('on', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('tabindex', on ? '0' : '-1');
+    });
+    if (doScroll) bar.scrollIntoView({ block: 'start', behavior: A.reduce ? 'auto' : 'smooth' });
+    refreshVisuals();
+    return name;
+  }
+
+  function go(name) {
+    var n = apply(name, true);
+    history.pushState({ tab: n }, '', '#' + n);
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { go(t.getAttribute('data-t')); });
+    /* manual activation: arrows move focus only, Enter or Space activates */
+    t.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n === null) return;
+      e.preventDefault();
+      tabs[n].focus();
+    });
+  });
+
+  A.$$('[data-go]').forEach(function (b) {
+    b.addEventListener('click', function () { go(b.getAttribute('data-go')); });
+  });
+
+  window.addEventListener('popstate', function (e) {
+    var name = (e.state && e.state.tab) || inner[(location.hash || '').slice(1)] || names[0];
+    apply(name, false);
+  });
+
+  /* ---------------------------------------------------- chat demo */
+  var chips = A.$$('#chatChips .chip-q'), body = document.getElementById('chatBody');
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      var q = document.createElement('p'); q.className = 'msg me'; q.textContent = c.textContent.trim();
+      var a = document.createElement('p'); a.className = 'msg bot'; a.textContent = c.getAttribute('data-a');
+      body.appendChild(q); body.appendChild(a);
+      while (body.children.length > 5) body.removeChild(body.firstElementChild);
+    });
+  });
+
+  /* ------------------------------------- heat map, built from sample data */
+  var heat = document.getElementById('heat');
+  if (heat && !heat.childElementCount) {
+    var frag = document.createDocumentFragment();
+    for (var d = 0; d < 7; d++) {
+      for (var h = 0; h < 14; h++) {
+        var peak = (h > 4 && h < 8) ? .55 : (h > 9 ? .85 : .25);
+        var weekend = (d >= 4) ? 1.15 : .85;
+        var v = Math.max(.04, Math.min(1, peak * weekend * (0.72 + ((d * 7 + h) % 5) * 0.07)));
+        var cell = document.createElement('i');
+        cell.style.setProperty('--v', v.toFixed(2));
+        frag.appendChild(cell);
+      }
+    }
+    heat.appendChild(frag);
+  }
+
+  /* --------------------------- visuals that draw once, when first seen */
+  var drawn = [];
+  function watch(el, cls) {
+    if (!el || drawn.indexOf(el) !== -1) return;
+    drawn.push(el);
+    A.onceInView(el, function () { el.classList.add(cls); }, 0.3);
+  }
+  function refreshVisuals() {
+    /* only observe what is currently visible; a hidden panel has no box */
+    watch(document.getElementById('weekbars'), 'drawn');
+    watch(document.getElementById('regularsCmp'), 'drawn');
+    watch(document.getElementById('radar'), 'drawn');
+  }
+
+  /* ---------------------------------------------------- initial state */
+  var frag2 = (location.hash || '').slice(1);
+  var start = inner[frag2] || names[0];
+  apply(start, false);
+  history.replaceState({ tab: start }, '', location.hash || '#' + start);
+  if (frag2 && frag2 !== start) {
+    var target = document.getElementById(frag2);
+    if (target) setTimeout(function () { target.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
+  }
+})();

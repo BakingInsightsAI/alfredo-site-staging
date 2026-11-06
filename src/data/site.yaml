@@ -28,7 +28,7 @@ pages:
   - key: product
     template: product.html
     output: product.html
-    legacy: true
+    legacy: false
     title: "Alfredo, product"
     description: "One assistant, three standing jobs: the weekly board, your menu and margins, your guests and competition."
 
