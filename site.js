@@ -357,3 +357,39 @@
     if (target) setTimeout(function () { target.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
   }
 })();
+
+/* =====================================================================
+   Demo request form. The form works as plain HTML with no JavaScript at
+   all; this only upgrades it to submit in place and report the outcome.
+   ===================================================================== */
+(function () {
+  'use strict';
+  var form = document.getElementById('demo-form');
+  if (!form || !window.fetch) return;
+  var status = document.getElementById('form-status');
+  var button = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.className = '';
+    status.textContent = 'Sending your request';
+    button.disabled = true;
+
+    fetch(form.action, { method: 'POST', body: new FormData(form) })
+      .then(function (res) { return res.json().catch(function () { return { success: res.ok }; }); })
+      .then(function (data) {
+        if (data && data.success) {
+          status.className = 'ok';
+          status.textContent = 'Thank you. Your request is in, and we will come back to you shortly.';
+          form.reset();
+        } else {
+          throw new Error('rejected');
+        }
+      })
+      .catch(function () {
+        status.className = 'bad';
+        status.textContent = 'That did not go through. Please try again, or email us and we will pick it up from there.';
+      })
+      .then(function () { button.disabled = false; });
+  });
+})();

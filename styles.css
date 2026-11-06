@@ -494,3 +494,69 @@ section.dark .cap-line { color: #A1A1A6; }
 .segstats { color: var(--accent); font-size: .85rem; line-height: 1.5; margin: 6px 0 8px; }
 .tiles.seg { margin-top: 20px; }
 .tiles.seg h4 { font-weight: 600; font-size: 1rem; letter-spacing: -.01em; }
+
+/* =====================================================================
+   Numbers rule, pricing and work with us
+   ===================================================================== */
+.manifesto { padding: 110px 0 96px; }
+.manifesto .sub { margin-top: 20px; max-width: 44em; }
+
+.quotecard { padding: 28px; }
+.quotecard .viz-note { max-width: none; }
+.enginequote {
+  margin: 16px 0; padding: 18px 20px; border-left: 3px solid var(--gold);
+  background: rgba(217,164,65,.1); border-radius: 0 14px 14px 0;
+  font-size: 1.05rem; font-weight: 500; color: var(--champ);
+}
+.gloss { color: #B8B3AF; font-size: .95rem; margin-bottom: 14px; }
+.tiles.quotes { grid-template-columns: 1fr 1fr; }
+@media (max-width: 900px) { .tiles.quotes { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------ pricing */
+.founding { max-width: none; margin-top: 44px; }
+.founding-h { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -.03em; margin-bottom: 14px; max-width: 22em; }
+.founding p { color: #CFCAC6; max-width: 58em; }
+.tier { margin-bottom: 10px; }
+.tier b { font-size: 2.6rem; font-weight: 600; letter-spacing: -.04em; }
+.tier span { color: var(--accent); font-weight: 500; font-size: 1rem; }
+
+/* ---------------------------------------------------------------- FAQ */
+.faq { margin-top: 36px; max-width: 760px; }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq details:first-of-type { border-top: 1px solid var(--rule); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 22px 0; display: flex;
+  justify-content: space-between; align-items: center; gap: 20px;
+  font-size: 1.05rem; font-weight: 500; letter-spacing: -.01em; min-height: 44px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .pm { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1px solid var(--rule); position: relative; transition: transform .3s var(--ease); }
+.faq summary .pm::before, .faq summary .pm::after { content: ""; position: absolute; left: 50%; top: 50%; background: currentColor; border-radius: 2px; }
+.faq summary .pm::before { width: 10px; height: 1.5px; transform: translate(-50%, -50%); }
+.faq summary .pm::after { width: 1.5px; height: 10px; transform: translate(-50%, -50%); }
+.faq details[open] summary .pm { transform: rotate(45deg); }
+.faq .ans p { margin: 0 0 22px; color: var(--soft); max-width: 60ch; }
+
+/* ------------------------------------------------------- pilot / form */
+.formcard { padding: 28px; }
+.demo-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+@media (max-width: 700px) { .demo-form { grid-template-columns: 1fr; } }
+.demo-form label {
+  display: flex; flex-direction: column; gap: 7px;
+  font-size: .86rem; font-weight: 500; color: #E6E2DF;
+}
+.demo-form .full { grid-column: 1 / -1; }
+.demo-form input, .demo-form select, .demo-form textarea {
+  font: inherit; font-size: .95rem; color: #1D1D1F; background: #F5F5F7;
+  border: 1px solid rgba(255,255,255,.22); border-radius: 12px;
+  padding: 12px 13px; width: 100%; min-height: 44px;
+}
+.demo-form textarea { resize: vertical; min-height: 84px; }
+.demo-form input::placeholder, .demo-form textarea::placeholder { color: #6E6E73; }
+.demo-form input:focus-visible, .demo-form select:focus-visible, .demo-form textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.demo-form button[type="submit"] { grid-column: 1 / -1; justify-self: start; }
+.demo-form button[disabled] { opacity: .6; cursor: default; }
+#form-status { grid-column: 1 / -1; font-size: .92rem; color: #E6E2DF; margin: 0; }
+#form-status:empty { display: none; }
+#form-status.ok { color: #7FD3A0; }
+#form-status.bad { color: #F0968B; }

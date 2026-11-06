@@ -35,7 +35,7 @@ pages:
   - key: honesty
     template: honesty.html
     output: honesty.html
-    legacy: true
+    legacy: false
     title: "Alfredo, our numbers rule"
     description: "We do not inflate numbers. If the data is not there, the number is not there either."
 
