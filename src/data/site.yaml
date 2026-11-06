@@ -1,0 +1,54 @@
+# Site wide configuration. Copy lives here so layout edits never touch wording.
+
+staging: true          # staging only: banner, noindex, robots.txt, test form subject
+form_subject: "STAGING TEST demo request"
+web3forms_key: "6ce52bfe-d286-44ff-992c-bb7565c31fb6"
+app_url: "https://app.bakinginsightsai.com"
+
+footer_line: "© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
+
+nav:
+  - { label: "Product",          href: "product.html" }
+  - { label: "Our numbers rule", href: "honesty.html" }
+  - { label: "Pricing",          href: "pricing.html" }
+  - { label: "Work with us",     href: "pilot.html" }
+
+cta:
+  label: "Request a demo"
+  href: "pilot.html#pilot"
+
+pages:
+  - key: index
+    template: index.html
+    output: index.html
+    legacy: false
+    title: "Alfredo, the in house consultant your business never had"
+    description: "Every week Alfredo reads your own sales and hands you a short list of small changes worth trying. Then it tells you honestly whether each one worked."
+
+  - key: product
+    template: product.html
+    output: product.html
+    legacy: true
+    title: "Alfredo, product"
+    description: "One assistant, three standing jobs: the weekly board, your menu and margins, your guests and competition."
+
+  - key: honesty
+    template: honesty.html
+    output: honesty.html
+    legacy: true
+    title: "Alfredo, our numbers rule"
+    description: "We do not inflate numbers. If the data is not there, the number is not there either."
+
+  - key: pricing
+    template: pricing.html
+    output: pricing.html
+    legacy: true
+    title: "Alfredo, pricing"
+    description: "One flat price, published right here. Alfredo costs $300 a month for a single location. The first 10 businesses get their first 6 months free."
+
+  - key: pilot
+    template: pilot.html
+    output: pilot.html
+    legacy: true
+    title: "Alfredo, work with us"
+    description: "How Alfredo works with pilot partners: we start by listening, your reputation is data, and the platform is shaped to fit your business."

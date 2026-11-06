@@ -2,53 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>alfredo · our numbers rule</title>
+<title>Alfredo, our numbers rule</title>
+<meta name="description" content="We do not inflate numbers. If the data is not there, the number is not there either.">
+<meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="We do not inflate numbers. If the data is not there, the number is not there either. How Alfredo is built to never guess: no invented figures, pending means pending, honest verdicts, no peeking.">
-<link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="legacy.css">
 <style>
-  .manifesto-hero{
+  .legacy-body .manifesto-hero{
     background:linear-gradient(135deg,var(--wine-deep),var(--wine));color:var(--cream);
     padding:96px 0 88px;position:relative;overflow:hidden;
   }
-  .manifesto-hero::after{
+  .legacy-body .manifesto-hero::after{
     content:"";position:absolute;pointer-events:none;top:-120px;right:-90px;
     width:260px;height:260px;border-radius:50%;border:36px solid rgba(217,164,65,.14);
   }
-  .manifesto-hero .kicker{color:var(--champagne);}
-  .manifesto-hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;max-width:16em;}
-  .manifesto-hero .section-lede{color:var(--cream-70);margin-top:20px;}
-  .example-card{
+  .legacy-body .manifesto-hero .kicker{color:var(--champagne);}
+  .legacy-body .manifesto-hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;max-width:16em;}
+  .legacy-body .manifesto-hero .section-lede{color:var(--cream-70);margin-top:20px;}
+  .legacy-body .example-card{
     background:#fff;border:1px solid var(--ink-12);border-radius:16px;padding:26px;
     box-shadow:0 6px 24px rgba(36,26,29,.06);max-width:560px;margin-top:36px;
   }
 </style>
+
 </head>
-<body>
+<body class="page-honesty">
+<p class="staging-bar">Staging preview. Not the live site.</p>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="staging-bar" aria-hidden="true">STAGING PREVIEW. Not the live site.</div>
-<a class="skip-link sr-only" href="#main">Skip to content</a>
-
-<nav aria-label="Main">
-  <div class="nav-inner">
-    <a class="wordmark" href="index.html">alfredo<span class="dot">·</span></a>
-    <ul class="nav-links">
-      <li><a href="product.html">Product</a></li>
-      <li><a href="honesty.html" class="active">Our numbers rule</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="pilot.html">Work with us</a></li>
-      <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
-      <li><a class="btn" href="pilot.html#pilot">Request a demo</a></li>
-    </ul>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="honesty.html" aria-current="page">Our numbers rule</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="pilot.html">Work with us</a></li>
+        <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
+      </ul>
+    </nav>
+    <a class="pill pill-gold pill-sm nav-cta" href="pilot.html#pilot">Request a demo</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
   </div>
-</nav>
+</header>
 
 <main id="main" tabindex="-1">
+
+<div class="legacy-body">
 
 <section class="manifesto-hero">
   <div class="wrap">
@@ -111,14 +121,24 @@
   </div>
 </section>
 
+</div>
+
 </main>
 
 <footer>
-  <div class="foot-inner">
-    <a class="wordmark" href="index.html" style="font-size:1.2rem;">alfredo<span class="dot">·</span></a>
-    <p>© 2026 Alfredo, a BakingInsights AI product · patent pending · we do not inflate numbers</p>
+  <div class="wrap foot-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav aria-label="Footer">
+      <a href="product.html">Product</a>
+      <a href="honesty.html">Our numbers rule</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="pilot.html">Work with us</a>
+      <a href="https://app.bakinginsightsai.com">Log in</a>
+    </nav>
+    <small>© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers.</small>
   </div>
 </footer>
 
+<script src="site.js" defer></script>
 </body>
 </html>

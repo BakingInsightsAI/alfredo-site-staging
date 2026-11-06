@@ -1,0 +1,33 @@
+name: build check
+
+# The site is rendered from src/templates by build.py and the output is
+# committed so GitHub Pages can serve it directly. This job fails if the two
+# have drifted apart, which is what used to let a nav edit miss a page.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rendered-output-matches-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build dependencies
+        run: python -m pip install --quiet jinja2 pyyaml
+
+      - name: Check rendered output is in sync with the templates
+        run: python build.py --check
+
+      - name: Show the drift if there is any
+        if: failure()
+        run: |
+          python build.py
+          git --no-pager diff --stat
+          git --no-pager diff

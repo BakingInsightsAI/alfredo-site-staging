@@ -2,51 +2,61 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>alfredo · pricing</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<title>Alfredo, pricing</title>
 <meta name="description" content="One flat price, published right here. Alfredo costs $300 a month for a single location. The first 10 businesses get their first 6 months free.">
-<link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="legacy.css">
 <style>
-  .price-card .big{font-size:2.5rem;line-height:1.05;margin-bottom:12px;}
-  @media(max-width:800px){.price-card .big{font-size:2.1rem;}}
-  .founding{
+  .legacy-body .price-card .big{font-size:2.5rem;line-height:1.05;margin-bottom:12px;}
+  @media(max-width:800px){.legacy-body .price-card .big{font-size:2.1rem;}}
+  .legacy-body .founding{
     background:var(--gold);color:var(--ink);border-radius:24px;padding:52px 56px;
   }
-  @media(max-width:800px){.founding{padding:36px 28px;}}
-  .founding h2{
+  @media(max-width:800px){.legacy-body .founding{padding:36px 28px;}}
+  .legacy-body .founding h2{
     font-family:'Nunito',sans-serif;font-size:clamp(1.5rem,2.7vw,2.1rem);font-weight:900;
     letter-spacing:-.02em;line-height:1.15;margin-bottom:16px;max-width:20em;
   }
-  .founding p{font-size:1rem;max-width:44em;}
-  .faq-q{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;}
-  .compare-close{margin-top:34px;}
+  .legacy-body .founding p{font-size:1rem;max-width:44em;}
+  .legacy-body .faq-q{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;}
+  .legacy-body .compare-close{margin-top:34px;}
 </style>
+
 </head>
-<body>
+<body class="page-pricing">
+<p class="staging-bar">Staging preview. Not the live site.</p>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="staging-bar" aria-hidden="true">STAGING PREVIEW. Not the live site.</div>
-<a class="skip-link sr-only" href="#main">Skip to content</a>
-
-<nav aria-label="Main">
-  <div class="nav-inner">
-    <a class="wordmark" href="index.html">alfredo<span class="dot">·</span></a>
-    <ul class="nav-links">
-      <li><a href="product.html">Product</a></li>
-      <li><a href="honesty.html">Our numbers rule</a></li>
-      <li><a href="pricing.html" class="active">Pricing</a></li>
-      <li><a href="pilot.html">Work with us</a></li>
-      <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
-      <li><a class="btn" href="pilot.html#pilot">Request a demo</a></li>
-    </ul>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="honesty.html">Our numbers rule</a></li>
+        <li><a href="pricing.html" aria-current="page">Pricing</a></li>
+        <li><a href="pilot.html">Work with us</a></li>
+        <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
+      </ul>
+    </nav>
+    <a class="pill pill-gold pill-sm nav-cta" href="pilot.html#pilot">Request a demo</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
   </div>
-</nav>
+</header>
 
 <main id="main" tabindex="-1">
+
+<div class="legacy-body">
 
 <section style="padding-top:64px;padding-bottom:0;">
   <div class="wrap">
@@ -145,14 +155,24 @@
   </div>
 </section>
 
+</div>
+
 </main>
 
 <footer>
-  <div class="foot-inner">
-    <a class="wordmark" href="index.html" style="font-size:1.2rem;">alfredo<span class="dot">·</span></a>
-    <p>© 2026 Alfredo, a BakingInsights AI product · patent pending · we do not inflate numbers</p>
+  <div class="wrap foot-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav aria-label="Footer">
+      <a href="product.html">Product</a>
+      <a href="honesty.html">Our numbers rule</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="pilot.html">Work with us</a>
+      <a href="https://app.bakinginsightsai.com">Log in</a>
+    </nav>
+    <small>© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers.</small>
   </div>
 </footer>
 
+<script src="site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block head %}
+<style>/* demo request band: stack heading above a full width form */
+  
+  .legacy-body #pilot .cta-box{grid-template-columns:1fr;gap:28px;align-items:start;}
+  .legacy-body .demo-form{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;}
+  @media(max-width:700px){.legacy-body .demo-form{grid-template-columns:1fr;}}
+  .legacy-body .demo-form label{
+    display:flex;flex-direction:column;gap:6px;
+    font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;color:var(--cream);
+  }
+  .legacy-body .demo-form .full{grid-column:1/-1;}
+  .legacy-body .demo-form input, .legacy-body .demo-form select, .legacy-body .demo-form textarea{
+    font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);
+    background:var(--cream);border:1px solid rgba(251,246,239,.35);border-radius:10px;
+    padding:12px 13px;width:100%;
+  }
+  .legacy-body .demo-form textarea{resize:vertical;min-height:72px;}
+  .legacy-body .demo-form input:focus, .legacy-body .demo-form select:focus, .legacy-body .demo-form textarea:focus{
+    outline:2px solid var(--gold);outline-offset:1px;
+  }
+  .legacy-body .demo-form input::placeholder, .legacy-body .demo-form textarea::placeholder{color:rgba(36,26,29,.45);}
+  .legacy-body .demo-form button[type="submit"]{grid-column:1/-1;justify-self:start;}
+  .legacy-body .demo-form button[disabled]{opacity:.6;cursor:default;}
+  .legacy-body #form-status{grid-column:1/-1;font-size:.85rem;color:var(--cream);}
+  .legacy-body #form-status:empty{display:none;}
+  .legacy-body .form-done{font-size:1rem;font-weight:600;color:var(--cream);}
+</style>
+{% endblock %}
+{% block content %}
+<div class="legacy-body">
+
+<section style="padding-top:64px;">
+  <div class="wrap">
+    <span class="kicker">How we work</span>
+    <h1 class="section-title">A platform shaped to your business, not the average one.</h1>
+    <p class="section-lede">Every venue runs differently, so Alfredo starts by learning yours. This is not a consultant who visits once, drops a binder, and disappears. We work alongside you, and the platform keeps measuring after the conversation ends. Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today.</p>
+    <div class="status-grid">
+      <div class="stat-card">
+        <div class="big">We start by <span class="mango-txt">listening</span></div>
+        <p>Onboarding begins with an intake questionnaire: your history, your goals, what you have already tried, what makes your floor different. Recommendations are tuned to your business, not a category average. Onboarding does not require new hardware, new software, or staff retraining. You connect your POS and Alfredo does the rest.</p>
+      </div>
+      <div class="stat-card">
+        <div class="big">Your reputation <span class="mango-txt">is data</span></div>
+        <p>What the public says about you and the venues around you feeds the engine. If your regulars love the service and your neighbor's fries are suddenly famous, your weekly board knows.</p>
+      </div>
+      <div class="stat-card">
+        <div class="big">Shaped <span class="mango-txt">to fit</span></div>
+        <p>The dashboard configures per venue: a brewery gets a tap room, a bar gets a bar program, and we are open to customization where your needs do not match the default. Early partners shape the roadmap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Who built it</h2>
+    <p class="section-lede">Alfredo was built by a founder with a decade of experience turning data and consumer behavior into growth strategy for companies, and by a multi location restaurant owner who partnered on the design from the first week. Every feature started as a real question that owner needed answered about his own rooms: which price to move, which pairing to push, which competitor was pulling regulars. The product was shaped around the way a restaurant is actually run, not around the way analytics software is usually sold. When you join as a pilot partner, you work directly with the founder, and your questions shape what gets built next.</p>
+  </div>
+</section>
+
+<section class="pillars">
+  <div class="wrap">
+    <span class="kicker">Where we are</span>
+    <h2 class="section-title">Early, and honest about it.</h2>
+    <p class="section-lede">We built Alfredo because independent operators deserve the same intelligence the big chains pay analysts for, without hiring one or becoming one. We would rather tell you exactly where Alfredo stands than imply a scale we have not reached.</p>
+    <div class="status-grid">
+      <div class="stat-card">
+        <div class="big">Live in <span class="mango-txt">production</span></div>
+        <p>Tested with a brewpub and live across a 14 location restaurant chain: real transactions, live weekly boards, real trials with real verdicts.</p>
+      </div>
+      <div class="stat-card">
+        <div class="big">Patent <span class="mango-txt">pending</span></div>
+        <p>Alfredo is patent pending with the USPTO.</p>
+      </div>
+      <div class="stat-card">
+        <div class="big">Pilot <span class="mango-txt">seats open</span></div>
+        <p>We are onboarding a small number of independents as design partners. Early operators get founder access and shape the roadmap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="pilot">
+  <div class="wrap">
+    <div class="cta-box">
+      <div>
+        <h2>Run Alfredo on your data. Judge it by its verdicts.</h2>
+        <p>Pilot partners get the full platform on their own POS data, direct access to the founder, and pricing that reflects being early. If the boards do not earn their keep, the data will say so. That is the whole point.</p>
+      </div>
+      <div>
+        <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demo-form">
+          <input type="hidden" name="access_key" value="6ce52bfe-d286-44ff-992c-bb7565c31fb6">
+          <input type="hidden" name="subject" value="STAGING TEST demo request">
+          <input type="hidden" name="from_name" value="Alfredo website">
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
+
+          <label>Name
+            <input type="text" name="name" required autocomplete="name" placeholder="Your name">
+          </label>
+          <label>Business name
+            <input type="text" name="business" required autocomplete="organization" placeholder="Your restaurant, bar, cafe, or truck">
+          </label>
+          <label>Email
+            <input type="email" name="email" required autocomplete="email" spellcheck="false" placeholder="you@yourbusiness.com">
+          </label>
+          <label>POS system
+            <select name="pos" required>
+              <option value="" disabled selected>Select your POS</option>
+              <option>Toast</option>
+              <option>Clover</option>
+              <option>Square</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Locations
+            <select name="locations" required>
+              <option value="" disabled selected>How many locations</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3 or more</option>
+            </select>
+          </label>
+          <label class="full">Anything you want us to know (optional)
+            <textarea name="message" rows="3" placeholder="Optional"></textarea>
+          </label>
+          <button type="submit" class="btn mango">Request a demo</button>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+        <p class="cta-fine" style="margin-top:14px;">Works with your existing POS system, from single locations to multi location groups.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+{% endblock %}
