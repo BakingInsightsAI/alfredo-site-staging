@@ -412,7 +412,12 @@
           <h3>When your market is busy, hour by hour</h3>
           <span class="sample">sample data</span>
         </div>
-        <div class="heat" id="heat" role="img" aria-label="Sample heat map of how busy the market is by hour across the week."></div>
+        <div class="heatwrap">
+          <div class="heat-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+          <div class="heat" id="heat" role="img" aria-label="Sample heat map of how busy the market is, by hour from 10am to 11pm, across the seven days of the week."></div>
+          <div class="heat-hours" aria-hidden="true"><span>10am</span><span>2pm</span><span>6pm</span><span>10pm</span></div>
+          <p class="heat-key" aria-hidden="true"><span>quieter</span><i class="heat-ramp"></i><span>busier</span></p>
+        </div>
         <p class="viz-note">Built from public busy times data across your whole market, then compared against your own volume. The gap between the two is where your money is hiding.</p>
       </div>
 
