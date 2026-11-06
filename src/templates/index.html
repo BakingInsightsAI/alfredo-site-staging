@@ -24,7 +24,7 @@
 
     <div class="cards">
       {%- for c in home.cards %}
-      <article class="card glass">
+      <article class="card glass tactile">
         <div class="k"><span>{{ c.kind }}</span><span class="sample">Sample</span></div>
         <h3>{{ c.title }}</h3>
         {%- if c.trial %}
@@ -50,7 +50,7 @@
     <p class="sub center">{{ home.tuesday.sub }}</p>
     <div class="tiles">
       {%- for t in home.tuesday.tiles %}
-      <div class="tile{% if t.get('ours') %} ours{% endif %} reveal">
+      <div class="tile{% if t.get('ours') %} ours tactile{% endif %} reveal">
         <h3>{{ t.name }}</h3>
         <span>{{ t.body }}</span>
       </div>
@@ -75,7 +75,7 @@
       <div><b>{{ f.name }}</b><span>{{ f.body }}</span></div>
       {%- endfor %}
     </div>
-    <div class="pricecard glass">
+    <div class="pricecard glass tactile">
       {%- for r in home.numbers.price_rows %}
       <div class="row"><span>{{ r.label }}</span>{% if r.get('quiet') %}<span>{{ r.value }}</span>{% else %}<b>{{ r.value }}</b>{% endif %}</div>
       {%- endfor %}

@@ -31,7 +31,7 @@
       <h2 class="big">Three questions Alfredo answers</h2>
       <div class="tiles">
         {%- for q in product.questions %}
-        <div class="tile glass reveal">
+        <div class="tile glass tactile reveal">
           <h3>{{ q.q }}</h3>
           <span>{{ q.a }}</span>
           <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
@@ -51,7 +51,7 @@
         <p class="sub">And when your data cannot answer something, Alfredo says so instead of guessing. Same rule everywhere.</p>
         <p class="sub">Ask it cost questions too, like how profitable an item really is. It answers from your own data and shows the queries it ran to get there. If it cannot verify a number, it says so instead of estimating.</p>
       </div>
-      <div class="chatcard glass">
+      <div class="chatcard glass tactile">
         <div class="chat-head">
           <span class="chat-title"><i class="chat-dot" aria-hidden="true"></i>Alfredo</span>
           <span class="sample">sample conversation, sample data</span>

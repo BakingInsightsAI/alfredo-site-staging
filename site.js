@@ -85,7 +85,9 @@
 
   story.classList.add('pinned');
 
+  var TAU = Math.PI * 2;
   var dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0;
+
   /* 36 items, each used once. Phones show the first 18. */
   var LABELS = [
     'Wings', 'House IPA', 'Nachos', 'Burger', 'Fries', 'Lager',
@@ -95,25 +97,48 @@
     'Mac and Cheese', 'Club Sandwich', 'Hazy IPA', 'Lemonade', 'Fish Tacos', 'Flatbread',
     'Sour Ale', 'Chicken Tenders', 'Porter', 'Iced Tea', 'Hummus Plate', 'Garlic Fries'
   ];
-  var chips = [];
+
+  /* three depth layers: far, mid, near. Larger reads as nearer, drifts
+     faster, and parallaxes with the scroll rather than against it. */
+  var DEPTH = [
+    { font: 11, alpha: 0.35, blur: 1.5, drift: 0.6, par: -7 },
+    { font: 13, alpha: 0.55, blur: 0,   drift: 1.0, par: 0 },
+    { font: 16, alpha: 0.80, blur: 0,   drift: 1.5, par: 9 }
+  ];
+  var blurFar = true;   /* soft far layer; the first thing dropped if frames get tight */
+
   function rnd(seed) { var x = Math.sin(seed * 999.7) * 43758.5; return x - Math.floor(x); }
+
+  var chips = [];
   for (var i = 0; i < LABELS.length; i++) {
     chips.push({
       label: LABELS[i],
-      sx: rnd(i + 1), sy: rnd(i + 7), speed: 14 + rnd(i + 3) * 22,
-      tw: 0, col: 0, row: 0, group: 0, slot: 0
+      /* depth must not track the cluster, or one whole cluster ends up on a
+         single layer and the gold group is always the small faint one */
+      d: (Math.floor(i / 3) + i) % 3,
+      /* layered sines with a different period per item, so nothing moves
+         in lockstep and no two paths repeat */
+      f1: 0.05 + rnd(i + 1) * 0.07, p1: rnd(i + 2) * TAU, a1: 14 + rnd(i + 3) * 16,
+      f2: 0.11 + rnd(i + 4) * 0.13, p2: rnd(i + 5) * TAU, a2: 5 + rnd(i + 6) * 8,
+      f3: 0.04 + rnd(i + 7) * 0.06, p3: rnd(i + 8) * TAU, a3: 9 + rnd(i + 9) * 12,
+      f4: 0.09 + rnd(i + 10) * 0.12, p4: rnd(i + 11) * TAU, a4: 4 + rnd(i + 12) * 6,
+      tw: 0, hx: 0, hy: 0, cx: 0, cy: 0, group: 0, slot: 0
     });
   }
 
-  /* Layout is measured, not guessed, so labels never collide. */
-  var LAY = { font: 13, count: 36, cols: 9, colW: 0, rowH: 30, gridX: 0, gridY: 0,
-              clusterRowH: 22, clusterX: [], clusterY: [], perCluster: 12 };
+  var LAY = { count: 36, perCluster: 12, clusterRowH: 22, clusterX: [], clusterY: [] };
 
-  function widest(n, font) {
-    ctx.font = '500 ' + font + 'px Geist, sans-serif';
-    var max = 0;
-    for (var i = 0; i < n; i++) max = Math.max(max, ctx.measureText(chips[i].label).width);
-    return max;
+  /* a small seeded generator so the cloud is organic but identical each load */
+  function seeded(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+
+  /* the headline block in canvas coordinates, padded, or null before layout */
+  function heroBox() {
+    var el = document.getElementById('heroH');
+    if (!el) return null;
+    var r = el.getBoundingClientRect(), c = canvas.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    var pad = 18;
+    return { x: r.left - c.left - pad, y: r.top - c.top - pad, w: r.width + pad * 2, h: r.height + pad * 2 };
   }
 
   function measure() {
@@ -123,61 +148,78 @@
 
     var phone = W < 760;
     LAY.count = phone ? 18 : LABELS.length;
-    var avail = W - 32;
 
-    /* column width comes from the widest rendered label plus 16px;
-       on a phone the font drops a step rather than letting three columns collide */
-    LAY.font = 13;
-    LAY.cols = phone ? 3 : 9;
-    LAY.colW = widest(LAY.count, LAY.font) + 16;
-    while (phone && LAY.colW * LAY.cols > avail && LAY.font > 10) {
-      LAY.font -= 1;
-      LAY.colW = widest(LAY.count, LAY.font) + 16;
+    for (var m = 0; m < chips.length; m++) {
+      var c = chips[m];
+      ctx.font = '500 ' + DEPTH[c.d].font + 'px Geist, sans-serif';
+      c.tw = ctx.measureText(c.label).width;
+      c.group = m % 3;
+      c.slot = Math.floor(m / 3);
     }
-    if (!phone) {
-      LAY.cols = Math.max(3, Math.min(9, Math.floor(avail / LAY.colW)));
+
+    /* ---- hero: scattered across the field, but never over the words.
+           The headline, lede and buttons are measured and treated as an
+           obstacle, so labels sit around them instead of on top. ---- */
+    var hb = heroBox();
+    var r1 = seeded(7331);
+    for (var h = 0; h < LAY.count; h++) {
+      var ch = chips[h];
+      var got = false;
+      for (var tryN = 0; tryN < 160 && !got; tryN++) {
+        var x = 24 + r1() * Math.max(40, W - 48);
+        var y = H * 0.16 + r1() * H * 0.80;
+        var halfW = ch.tw / 2 + 10, halfH = DEPTH[ch.d].font * 0.9;
+        if (hb && x + halfW > hb.x && x - halfW < hb.x + hb.w &&
+                  y + halfH > hb.y && y - halfH < hb.y + hb.h) continue;
+        ch.hx = x; ch.hy = y; got = true;
+      }
+      if (!got) { ch.hx = 24 + r1() * Math.max(40, W - 48); ch.hy = H * 0.88 + r1() * H * 0.1; }
     }
-    if (LAY.colW * LAY.cols > avail) LAY.colW = avail / LAY.cols;
 
-    LAY.rowH = Math.max(phone ? 30 : 26, LAY.font * 2);
-    var rows = Math.ceil(LAY.count / LAY.cols);
-    var gw = LAY.colW * LAY.cols, gh = LAY.rowH * rows;
-    LAY.gridX = (W - gw) / 2;
-    LAY.gridY = Math.min(Math.max(H * 0.34, H * 0.56 - gh / 2), H * 0.95 - gh);
+    /* ---- stage two: a loose organic cloud, placed by rejection sampling
+           so that no two labels can land on top of each other ---- */
+    var r2 = seeded(20260211);
+    var ccx = W / 2, ccy = H * 0.52;
+    var rx = Math.min(W * 0.46, 540), ry = Math.max(H * 0.17, 120);
+    var placed = [];
+    var pad = 10;
+    for (var k = 0; k < LAY.count; k++) {
+      var c2 = chips[k], lh = DEPTH[c2.d].font * 1.3;
+      var ok = false;
+      for (var attempt = 0; attempt < 900 && !ok; attempt++) {
+        var grow = 1 + Math.floor(attempt / 150) * 0.12;
+        var ang = r2() * TAU, rad = Math.sqrt(r2());
+        var x = ccx + Math.cos(ang) * rx * rad * grow;
+        var y = ccy + Math.sin(ang) * ry * rad * grow;
+        var bx = x - c2.tw / 2 - pad / 2, by = y - lh / 2 - pad / 2;
+        var bw = c2.tw + pad, bh = lh + pad;
+        if (bx < 16 || bx + bw > W - 16) continue;
+        var clash = false;
+        for (var q = 0; q < placed.length; q++) {
+          var o = placed[q];
+          if (bx < o.x + o.w && o.x < bx + bw && by < o.y + o.h && o.y < by + bh) { clash = true; break; }
+        }
+        if (!clash) { placed.push({ x: bx, y: by, w: bw, h: bh }); c2.cx = x; c2.cy = y; ok = true; }
+      }
+      if (!ok) { c2.cx = ccx; c2.cy = ccy; }
+    }
 
-    /* clusters: a plain stacked column each, so nothing inside one touches */
+    /* ---- stage three: three stacked clusters ---- */
     LAY.perCluster = Math.ceil(LAY.count / 3);
-    LAY.clusterRowH = Math.max(phone ? 21 : 22, LAY.font * 1.7);
-    var ch = LAY.perCluster * LAY.clusterRowH;
+    LAY.clusterRowH = phone ? 21 : 24;
+    var clusterH = LAY.perCluster * LAY.clusterRowH;
     LAY.clusterX = []; LAY.clusterY = [];
     if (phone) {
       var bandTop = H * 0.30, bandH = H * 0.62;
-      var gap = Math.max(20, (bandH - 3 * ch) / 2);
-      if (3 * ch + 2 * gap > bandH) {
-        LAY.clusterRowH = Math.max(16, (bandH - 2 * 20) / 3 / LAY.perCluster);
-        ch = LAY.perCluster * LAY.clusterRowH;
+      var gap = Math.max(20, (bandH - 3 * clusterH) / 2);
+      if (3 * clusterH + 2 * gap > bandH) {
+        LAY.clusterRowH = Math.max(16, (bandH - 40) / 3 / LAY.perCluster);
+        clusterH = LAY.perCluster * LAY.clusterRowH;
         gap = 20;
       }
-      for (var k = 0; k < 3; k++) {
-        LAY.clusterX.push(W / 2);
-        LAY.clusterY.push(bandTop + ch / 2 + k * (ch + gap));
-      }
+      for (var p1 = 0; p1 < 3; p1++) { LAY.clusterX.push(W / 2); LAY.clusterY.push(bandTop + clusterH / 2 + p1 * (clusterH + gap)); }
     } else {
-      for (var k2 = 0; k2 < 3; k2++) {
-        LAY.clusterX.push(W * (0.26 + 0.24 * k2));
-        LAY.clusterY.push(H * 0.58);
-      }
-    }
-
-    /* fixed slots, assigned once per measure so positions are deterministic */
-    ctx.font = '500 ' + LAY.font + 'px Geist, sans-serif';
-    for (var m = 0; m < chips.length; m++) {
-      var c = chips[m];
-      c.tw = ctx.measureText(c.label).width;
-      c.col = m % LAY.cols;
-      c.row = Math.floor(m / LAY.cols);
-      c.group = m % 3;
-      c.slot = Math.floor(m / 3);
+      for (var p2 = 0; p2 < 3; p2++) { LAY.clusterX.push(W * (0.26 + 0.24 * p2)); LAY.clusterY.push(H * 0.58); }
     }
   }
   measure();
@@ -188,17 +230,27 @@
   var seg = function (p, a, b) { return ease((p - a) / (b - a)); };
   var mix = function (a, b, t) { return a + (b - a) * t; };
 
-  /* during the hero the chips stay in a quiet band near the bottom,
-     well clear of the headline */
-  function bandPos(c, t) { return [((c.sx * (W + 300) + t * c.speed) % (W + 300)) - 150, H * (.78 + .16 * c.sy)]; }
-  function gridPos(c) {
-    return [LAY.gridX + LAY.colW * (c.col + .5), LAY.gridY + LAY.rowH * (c.row + .5)];
+  function heroPos(c, t) {
+    return [
+      c.hx + (Math.sin(t * c.f1 + c.p1) * c.a1 + Math.sin(t * c.f2 + c.p2) * c.a2) * DEPTH[c.d].drift,
+      c.hy + (Math.cos(t * c.f3 + c.p3) * c.a3 + Math.sin(t * c.f4 + c.p4) * c.a4) * DEPTH[c.d].drift
+    ];
+  }
+  function cloudPos(c, t) {
+    return [
+      c.cx + Math.sin(t * c.f1 * 0.6 + c.p1) * 5 * DEPTH[c.d].drift,
+      c.cy + Math.cos(t * c.f3 * 0.6 + c.p3) * 4 * DEPTH[c.d].drift
+    ];
   }
   function clusterPos(c) {
     var cx = LAY.clusterX[c.group], cy = LAY.clusterY[c.group];
     var top = cy - (LAY.perCluster * LAY.clusterRowH) / 2;
     return [cx, top + LAY.clusterRowH * (c.slot + .5), cx, cy];
   }
+
+  /* ---------------------------------------------- tilt, shared with cards */
+  var tilt = { x: 0, y: 0 };
+  window.__alfredoTilt = tilt;
 
   var heroH = document.getElementById('heroH');
   var caps = A.$$('.cap', story);
@@ -208,73 +260,131 @@
   var bars = A.$$('.card .bar', story);
   var glowA = story.querySelector('.glow.a'), glowB = story.querySelector('.glow.b');
   var BAR_H = [.72, .8, .42, .86];
+  var CARD_Z = [.96, 1.0, .98];
 
   function progress() {
     var box = story.getBoundingClientRect();
     var total = story.offsetHeight - window.innerHeight;
     return total > 0 ? Math.max(0, Math.min(1, -box.top / total)) : 0;
   }
-  /* the boxes of the labels drawn in the last frame, so the overlap rule
-     can be checked from outside instead of taken on trust */
+
+  /* boxes drawn in the last frame, so the overlap rule can be checked from
+     outside instead of taken on trust */
   var boxes = [];
   window.__storyLabelBoxes = function () { return boxes.slice(); };
 
-  var running = false, rafId = 0;
+  var running = false, rafId = 0, frames = 0, fpsT0 = 0;
+  window.__storyFrames = function () { return frames; };
 
   function frame(now) {
     if (!running) return;
+    frames++;
     var t = now / 1000, p = progress();
 
-    glowA.style.transform = 'translate(' + (Math.sin(t * .15) * 40 + p * 120) + 'px,' + (Math.cos(t * .12) * 30) + 'px)';
-    glowB.style.transform = 'translate(' + (Math.cos(t * .1) * 40 - p * 100) + 'px,' + (Math.sin(t * .13) * 30) + 'px)';
+    /* ambient: the glows breathe and drift whether or not anyone scrolls */
+    var sA = 1.04 + 0.04 * Math.sin(t * TAU / 9);
+    var sB = 1.04 + 0.04 * Math.sin(t * TAU / 13 + 2.1);
+    glowA.style.transform = 'translate(' + (Math.sin(t * .15) * 40 + p * 120) + 'px,' + (Math.cos(t * .12) * 30) + 'px) scale(' + sA.toFixed(4) + ')';
+    glowB.style.transform = 'translate(' + (Math.cos(t * .1) * 40 - p * 100) + 'px,' + (Math.sin(t * .13) * 30) + 'px) scale(' + sB.toFixed(4) + ')';
 
     ctx.clearRect(0, 0, W, H);
-    var toGrid = seg(p, .16, .32), toCluster = seg(p, .36, .52), fadeChips = seg(p, .56, .66);
-    boxes.length = 0;
-    if (fadeChips < 1) {
-      ctx.font = '500 ' + LAY.font + 'px Geist, sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.globalAlpha = (1 - fadeChips) * (p < .1 ? .8 : 1);
+    var toCloud = seg(p, .16, .32), toCluster = seg(p, .36, .52), fade = seg(p, .56, .66);
 
-      var lh = LAY.font * 1.24, pad = 4;
+    boxes.length = 0;
+    if (fade < 1) {
+      var scrollPar = (p - 0.3) * 40;
       for (var i = 0; i < LAY.count; i++) {
-        var c = chips[i], f = bandPos(c, t), g = gridPos(c), k = clusterPos(c);
+        var c = chips[i], D = DEPTH[c.d];
+        var f = heroPos(c, t), g = cloudPos(c, t), k = clusterPos(c);
+        var par = D.par * (scrollPar / 40) + tilt.x * D.par * 0.5;
+        var parY = tilt.y * D.par * 0.3;
+        var lh = D.font * 1.3;
         boxes.push({
-          label: c.label,
-          x: mix(mix(mix(f[0], g[0], toGrid), k[0], toCluster), k[2], fadeChips) - c.tw / 2,
-          y: mix(mix(mix(f[1], g[1], toGrid), k[1], toCluster), k[3], fadeChips) - lh / 2,
+          label: c.label, d: c.d,
+          x: mix(mix(mix(f[0], g[0], toCloud), k[0], toCluster), k[2], fade) + par - c.tw / 2,
+          y: mix(mix(mix(f[1], g[1], toCloud), k[1], toCluster), k[3], fade) + parY - lh / 2,
           w: c.tw, h: lh,
           hot: toCluster > .5 && c.group === 0
         });
       }
 
-      /* Keep labels off each other while they are in flight between stages.
-         The grid and the clusters are laid out so nothing touches, so this is
-         a no op once a stage has settled. It is weighted by the transition so
-         the flow band under the headline is left exactly as it was. */
-      var strength = Math.min(1, toGrid * 3) * (1 - fadeChips);
-      if (strength > 0.02) {
-        for (var pass = 0; pass < 14; pass++) {
-          var moved = false;
-          for (var a = 0; a < boxes.length; a++) {
-            for (var b2 = a + 1; b2 < boxes.length; b2++) {
-              var A = boxes[a], B = boxes[b2];
-              var ox = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x) + pad;
-              var oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y) + pad;
-              if (ox <= 0 || oy <= 0) continue;
-              var shift = (oy / 2) * strength + 0.25;
-              if (A.y < B.y) { A.y -= shift; B.y += shift; } else { A.y += shift; B.y -= shift; }
-              moved = true;
-            }
+      /* the headline keeps its own space while it is on screen */
+      var shield = 1 - seg(p, .05, .14);
+      if (shield > 0.01) {
+        var hbox = heroBox();
+        if (hbox) {
+          for (var s1 = 0; s1 < boxes.length; s1++) {
+            var S = boxes[s1];
+            if (S.x + S.w < hbox.x || S.x > hbox.x + hbox.w ||
+                S.y + S.h < hbox.y || S.y > hbox.y + hbox.h) continue;
+            var up = (S.y + S.h) - hbox.y, down = (hbox.y + hbox.h) - S.y;
+            var left = (S.x + S.w) - hbox.x, right = (hbox.x + hbox.w) - S.x;
+            var m = Math.min(up, down, left, right);
+            if (m === up) S.y -= up * shield;
+            else if (m === down) S.y += down * shield;
+            else if (m === left) S.x -= left * shield;
+            else S.x += right * shield;
           }
-          if (!moved) break;
         }
       }
 
-      for (var d = 0; d < boxes.length; d++) {
-        var bx = boxes[d];
-        ctx.fillStyle = bx.hot ? '#D9A441' : 'rgba(245,245,247,.55)';
-        ctx.fillText(bx.label, bx.x + bx.w / 2, bx.y + bx.h / 2);
+      /* keep labels off each other at every stage and in flight between them */
+      var padSep = 4;
+      for (var pass = 0; pass < 14; pass++) {
+        var moved = false;
+        for (var a = 0; a < boxes.length; a++) {
+          for (var b2 = a + 1; b2 < boxes.length; b2++) {
+            var A1 = boxes[a], B1 = boxes[b2];
+            var ox = Math.min(A1.x + A1.w, B1.x + B1.w) - Math.max(A1.x, B1.x) + padSep;
+            var oy = Math.min(A1.y + A1.h, B1.y + B1.h) - Math.max(A1.y, B1.y) + padSep;
+            if (ox <= 0 || oy <= 0) continue;
+            var shift = oy / 2 + 0.25;
+            if (A1.y < B1.y) { A1.y -= shift; B1.y += shift; } else { A1.y += shift; B1.y -= shift; }
+            moved = true;
+          }
+        }
+        if (!moved) break;
+      }
+
+      /* Draw back to front, one font change per layer.
+         The far layer is softened and the gold halo is drawn by stacking a
+         few cheap offset passes. Canvas filter blur and shadowBlur both look
+         better, but they cost roughly twenty times the frame budget on a
+         throttled phone, so the fps floor wins. */
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      var HALO = [[0, 0, 3.2], [0, 0, 2.1], [1.1, 0, 1.4], [-1.1, 0, 1.4], [0, 1.1, 1.4], [0, -1.1, 1.4]];
+      var SOFT = [[0, 0], [-0.9, -0.6], [0.9, 0.6], [0.9, -0.6], [-0.9, 0.6]];
+      for (var layer = 0; layer < 3; layer++) {
+        var D2 = DEPTH[layer];
+        ctx.font = '500 ' + D2.font + 'px Geist, sans-serif';
+        var soft = (layer === 0 && blurFar);
+        for (var n = 0; n < boxes.length; n++) {
+          var bx = boxes[n];
+          if (bx.d !== layer) continue;
+          var cxp = bx.x + bx.w / 2, cyp = bx.y + bx.h / 2;
+          var base = D2.alpha * (1 - fade);
+          if (bx.hot) {
+            ctx.fillStyle = '#D9A441';
+            for (var hq = 0; hq < HALO.length; hq++) {
+              ctx.globalAlpha = base * 0.1;
+              ctx.font = '500 ' + (D2.font + HALO[hq][2]) + 'px Geist, sans-serif';
+              ctx.fillText(bx.label, cxp + HALO[hq][0], cyp + HALO[hq][1]);
+            }
+            ctx.font = '500 ' + D2.font + 'px Geist, sans-serif';
+            ctx.globalAlpha = base;
+            ctx.fillText(bx.label, cxp, cyp);
+          } else if (soft) {
+            ctx.fillStyle = '#F5F5F7';
+            for (var sq = 0; sq < SOFT.length; sq++) {
+              ctx.globalAlpha = base / 2.6;
+              ctx.fillText(bx.label, cxp + SOFT[sq][0], cyp + SOFT[sq][1]);
+            }
+          } else {
+            ctx.fillStyle = '#F5F5F7';
+            ctx.globalAlpha = base;
+            ctx.fillText(bx.label, cxp, cyp);
+          }
+        }
       }
       ctx.globalAlpha = 1;
     }
@@ -283,24 +393,34 @@
     heroH.style.opacity = 1 - heroOut;
     heroH.style.transform = 'translateY(calc(-50% - ' + (heroOut * 50) + 'px))';
 
-    caps.forEach(function (el) {
-      el.classList.toggle('on', p >= +el.dataset.a && p < +el.dataset.b);
-    });
+    caps.forEach(function (el) { el.classList.toggle('on', p >= +el.dataset.a && p < +el.dataset.b); });
 
     var cardsIn = seg(p, .6, .7), focus = seg(p, .75, .81), vIn = seg(p, .88, .95);
-    cards.forEach(function (el, i) {
-      var d = Math.max(0, Math.min(1, cardsIn * 1.4 - i * .2));
-      el.style.opacity = d * (i === 0 ? 1 : 1 - focus) * (1 - vIn);
-      el.style.transform = 'translateY(' + ((1 - d) * 40) + 'px) scale(' + ((.96 + .04 * d) * (i === 0 ? 1 + focus * .1 : 1)) + ')';
-      if (i === 0) el.classList.toggle('focus', focus > .3);
+    cards.forEach(function (el, idx) {
+      var d = Math.max(0, Math.min(1, cardsIn * 1.4 - idx * .2));
+      var op = d * (idx === 0 ? 1 : 1 - focus) * (1 - vIn);
+      /* These cards carry a backdrop filter and two gradient layers. Writing
+         to them costs far more in style and paint than the whole canvas, so
+         only write when the value has actually moved, and never while the
+         card is invisible. */
+      var z = mix(CARD_Z[idx], 1, d);
+      var scale = z * (idx === 0 ? 1 + focus * .1 : 1);
+      var ty2 = (1 - d) * 40;
+      var key = op.toFixed(3) + '|' + scale.toFixed(3) + '|' + ty2.toFixed(1);
+      if (el._k !== key) {
+        el._k = key;
+        el.style.opacity = op;
+        el.style.transform = op === 0 ? 'none'
+          : 'translateY(' + ty2.toFixed(1) + 'px) scale(' + scale.toFixed(4) + ')';
+      }
+      if (op > 0.6 && !el.dataset.sheen) { el.dataset.sheen = '1'; el.classList.add('sheen'); }
+      if (idx === 0) el.classList.toggle('focus', focus > .3);
     });
     if (cards.length) cards[0].parentNode.style.gap = (16 * (1 - focus)) + 'px';
 
     if (focus > .3 && price) {
       price.textContent = '$' + (6.99 + .5 * seg(p, .77, .82)).toFixed(2);
-      bars.forEach(function (b, i) {
-        b.style.height = (BAR_H[i] * 100 * seg(p, .8 + i * .015, .85 + i * .015)) + '%';
-      });
+      bars.forEach(function (bb, bi) { bb.style.height = (BAR_H[bi] * 100 * seg(p, .8 + bi * .015, .85 + bi * .015)) + '%'; });
     }
 
     verdict.style.opacity = vIn;
@@ -309,28 +429,23 @@
     rafId = requestAnimationFrame(frame);
   }
 
-  function start() { if (!running) { running = true; rafId = requestAnimationFrame(frame); } }
+  function start() { if (!running) { running = true; frames = 0; fpsT0 = performance.now(); rafId = requestAnimationFrame(frame); } }
   function stop() { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
 
-  /* the canvas does no work while the story is off screen */
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) start(); else stop();
     }, { threshold: 0 }).observe(story);
-  } else {
-    start();
-  }
+  } else { start(); }
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) stop(); else if (story.getBoundingClientRect().bottom > 0) start();
   });
 
-  /* the second hero button walks the visitor into the sequence */
   var jump = document.getElementById('storyJump');
   if (jump) {
     jump.addEventListener('click', function (e) {
       e.preventDefault();
-      var target = story.offsetTop + (story.offsetHeight - window.innerHeight) * .2;
-      window.scrollTo({ top: target, behavior: 'smooth' });
+      window.scrollTo({ top: story.offsetTop + (story.offsetHeight - window.innerHeight) * .2, behavior: 'smooth' });
     });
   }
 })();
@@ -491,4 +606,162 @@
       })
       .then(function () { button.disabled = false; });
   });
+})();
+
+/* =====================================================================
+   v3.1b  Tilt, tactile glass, the headline reveal and the fact dividers.
+   Every piece exits quietly if its markup is absent or the visitor asked
+   for reduced motion.
+   ===================================================================== */
+(function () {
+  'use strict';
+  var A = window.Alfredo;
+  if (!A) return;
+
+  /* ---------------------------------------------------------- tilt source */
+  var tilt = window.__alfredoTilt || (window.__alfredoTilt = { x: 0, y: 0 });
+  var MAX = 3;                       /* degrees */
+  var interacted = false;
+  ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (ev) {
+    addEventListener(ev, function once() {
+      interacted = true;
+      removeEventListener(ev, once);
+    }, { passive: true, once: true });
+  });
+
+  if (!A.reduce) {
+    /* desktop: lean toward the pointer */
+    addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      tilt.x = (e.clientX / innerWidth - .5) * 2;
+      tilt.y = (e.clientY / innerHeight - .5) * 2;
+    }, { passive: true });
+
+    /* phones: follow device orientation once the visitor has touched the
+       page. No permission is requested; where it is required and absent,
+       the event simply never fires and this stays at zero. */
+    if (window.DeviceOrientationEvent) {
+      addEventListener('deviceorientation', function (e) {
+        if (!interacted || e.gamma == null || e.beta == null) return;
+        tilt.x = Math.max(-1, Math.min(1, e.gamma / 30));
+        tilt.y = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+      }, { passive: true });
+    }
+  }
+
+  /* ------------------------------------------------------- tactile glass */
+  var cards = A.$$('.tactile');
+  if (cards.length && !A.reduce) {
+    cards.forEach(function (card) {
+      if (card.classList.contains('nav')) return;
+
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      }, { passive: true });
+      card.addEventListener('pointerleave', function () {
+        card.style.setProperty('--mx', '50%');
+        card.style.setProperty('--my', '0%');
+      }, { passive: true });
+
+      var press = function () { card.classList.add('pressed'); };
+      var release = function () { card.classList.remove('pressed'); };
+      card.addEventListener('pointerdown', press, { passive: true });
+      ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach(function (ev) {
+        card.addEventListener(ev, release, { passive: true });
+      });
+
+      /* one sheen, the first time the card is seen. The story cards get
+         theirs from the story itself, when they fade in. */
+      if (!card.closest('.story')) {
+        A.onceInView(card, function () { card.classList.add('sheen'); }, 0.25);
+      }
+    });
+
+    /* Tilt is event driven, never per frame. These cards carry a backdrop
+       filter, and writing to them every frame forces the blur to be redone
+       every frame, which costs more than everything else on the page put
+       together. */
+    var outside = cards.filter(function (c) { return !c.closest('.story') && !c.classList.contains('nav'); });
+    outside.forEach(function (c) {
+      c.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = c.getBoundingClientRect();
+        c.style.setProperty('--tx', (((e.clientX - r.left) / r.width - .5) * 2 * MAX).toFixed(2) + 'deg');
+        c.style.setProperty('--ty', (((e.clientY - r.top) / r.height - .5) * -2 * MAX).toFixed(2) + 'deg');
+      }, { passive: true });
+      c.addEventListener('pointerleave', function () {
+        c.style.setProperty('--tx', '0deg');
+        c.style.setProperty('--ty', '0deg');
+      }, { passive: true });
+    });
+    if (window.DeviceOrientationEvent && outside.length) {
+      var lastT = 0;
+      addEventListener('deviceorientation', function () {
+        var now = performance.now();
+        if (now - lastT < 100) return;          /* at most ten writes a second */
+        lastT = now;
+        outside.forEach(function (c) {
+          c.style.setProperty('--tx', (tilt.x * MAX).toFixed(2) + 'deg');
+          c.style.setProperty('--ty', (tilt.y * -MAX).toFixed(2) + 'deg');
+        });
+      }, { passive: true });
+    }
+  }
+
+  /* ------------------------------------------ the headline, on first paint */
+  var hero = document.querySelector('.hero-h');
+  var h1 = document.querySelector('.story-h1');
+  if (h1 && hero && !A.reduce) {
+    var source = h1.textContent.trim();
+
+    function splitIntoLines() {
+      h1.innerHTML = source.split(/\s+/).map(function (w) {
+        return '<span class="probe">' + w + '</span>';
+      }).join(' ');
+      var probes = A.$$('.probe', h1), lines = [], top = null, cur = [];
+      probes.forEach(function (sp) {
+        var y = sp.offsetTop;
+        if (top === null || Math.abs(y - top) < 4) { cur.push(sp.textContent); top = top === null ? y : top; }
+        else { lines.push(cur); cur = [sp.textContent]; top = y; }
+      });
+      if (cur.length) lines.push(cur);
+      h1.innerHTML = lines.map(function (words, i) {
+        return '<span class="line"><span class="line-in" style="transition-delay:' + (i * 90) + 'ms">' +
+               words.join(' ') + '</span></span>';
+      }).join(' ');
+    }
+
+    splitIntoLines();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        h1.classList.add('revealed');
+        hero.classList.add('revealed');
+      });
+    });
+
+    var rt;
+    addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () {
+        var was = h1.classList.contains('revealed');
+        splitIntoLines();
+        if (was) { h1.classList.add('revealed'); }
+      }, 180);
+    }, { passive: true });
+  }
+
+  /* --------------------------------- the numbers rule dividers, one sweep */
+  var facts = document.querySelector('.facts');
+  if (facts) {
+    if (A.reduce) {
+      facts.classList.add('drawn');
+    } else {
+      A.$$('div', facts).forEach(function (row, i) {
+        row.style.setProperty('--d', (i * 80) + 'ms');
+      });
+      A.onceInView(facts, function () { facts.classList.add('drawn'); }, 0.2);
+    }
+  }
 })();
