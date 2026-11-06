@@ -49,6 +49,6 @@ pages:
   - key: pilot
     template: pilot.html
     output: pilot.html
-    legacy: true
+    legacy: false
     title: "Alfredo, work with us"
     description: "How Alfredo works with pilot partners: we start by listening, your reputation is data, and the platform is shaped to fit your business."
