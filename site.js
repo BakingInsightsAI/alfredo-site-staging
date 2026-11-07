@@ -122,7 +122,12 @@
       f2: 0.11 + rnd(i + 4) * 0.13, p2: rnd(i + 5) * TAU, a2: 5 + rnd(i + 6) * 8,
       f3: 0.04 + rnd(i + 7) * 0.06, p3: rnd(i + 8) * TAU, a3: 9 + rnd(i + 9) * 12,
       f4: 0.09 + rnd(i + 10) * 0.12, p4: rnd(i + 11) * TAU, a4: 4 + rnd(i + 12) * 6,
-      tw: 0, hx: 0, hy: 0, cx: 0, cy: 0, group: 0, slot: 0
+      tw: 0, hx: 0, hy: 0, cx: 0, cy: 0, group: 0, slot: 0,
+      /* where the label is actually drawn this frame */
+      px: 0, py: 0, seeded: false,
+      /* how far the collision passes moved this label away from where the
+         choreography asked for it, carried between frames */
+      ox: 0, oy: 0
     });
   }
 
@@ -141,8 +146,16 @@
     return { x: r.left - c.left - pad, y: r.top - c.top - pad, w: r.width + pad * 2, h: r.height + pad * 2 };
   }
 
+  var lastW = 0, lastH = 0, fontsReady = false;
+
   function measure() {
-    W = canvas.clientWidth; H = canvas.clientHeight;
+    var nw = canvas.clientWidth, nh = canvas.clientHeight;
+    /* A phone address bar sliding away changes the height by about 60 to
+       110px and must not relayout the whole field mid scroll. */
+    if (lastW === nw && Math.abs(nh - lastH) < 120 && lastW !== 0) return;
+    lastW = nw; lastH = nh;
+    W = nw; H = nh;
+    for (var rs = 0; rs < chips.length; rs++) { chips[rs].ox = 0; chips[rs].oy = 0; chips[rs].seeded = false; }
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -165,15 +178,20 @@
     for (var h = 0; h < LAY.count; h++) {
       var ch = chips[h];
       var got = false;
+      /* keep the whole word on the canvas: the seed is a centre, so the
+         usable range has to be inset by half the text, not by a fixed
+         margin, or the longest labels hang off the right edge */
+      var hw = ch.tw / 2 + 12;
+      var loX = hw, hiX = Math.max(hw + 1, W - hw);
       for (var tryN = 0; tryN < 160 && !got; tryN++) {
-        var x = 24 + r1() * Math.max(40, W - 48);
+        var x = loX + r1() * (hiX - loX);
         var y = H * 0.16 + r1() * H * 0.80;
         var halfW = ch.tw / 2 + 10, halfH = DEPTH[ch.d].font * 0.9;
         if (hb && x + halfW > hb.x && x - halfW < hb.x + hb.w &&
                   y + halfH > hb.y && y - halfH < hb.y + hb.h) continue;
         ch.hx = x; ch.hy = y; got = true;
       }
-      if (!got) { ch.hx = 24 + r1() * Math.max(40, W - 48); ch.hy = H * 0.88 + r1() * H * 0.1; }
+      if (!got) { ch.hx = loX + r1() * (hiX - loX); ch.hy = H * 0.88 + r1() * H * 0.1; }
     }
 
     /* ---- stage two: a loose organic cloud, placed by rejection sampling
@@ -221,25 +239,50 @@
     } else {
       for (var p2 = 0; p2 < 3; p2++) { LAY.clusterX.push(W * (0.26 + 0.24 * p2)); LAY.clusterY.push(H * 0.58); }
     }
-  }
-  measure();
-  addEventListener('resize', measure, { passive: true });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
-  var ease = function (t) { t = Math.max(0, Math.min(1, t)); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+    /* ---- which row each label takes in its cluster ----
+       Taking rows in list order makes labels trade places on the way in: one
+       starting low in the cloud is sent to the top row while its neighbour
+       goes the other way, and they have to pass through each other. Handing
+       out rows in the order they already stand in means nobody crosses
+       anybody, which is far better than detecting the crossing afterwards
+       and pushing them apart in a hurry. Grouping is untouched, so the
+       clusters keep their meaning and their colour. */
+    for (var gi = 0; gi < 3; gi++) {
+      var mem = [];
+      for (var mi = 0; mi < LAY.count; mi++) if (chips[mi].group === gi) mem.push(chips[mi]);
+      mem.sort(function (a, b) { return a.cy - b.cy; });
+      for (var si = 0; si < mem.length; si++) mem[si].slot = si;
+    }
+  }
+  /* Text widths are only meaningful once the webfont is in. Until then the
+     canvas draws nothing at all, rather than boxes at the wrong size that
+     jump when the font lands. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { fontsReady = true; lastW = 0; measure(); });
+  } else {
+    fontsReady = true; measure();
+  }
+  addEventListener('resize', measure, { passive: true });
+
+  /* smootherstep: zero rate of change at both ends, so every gather lands
+     softly instead of arriving with velocity */
+  var ease = function (t) { t = Math.max(0, Math.min(1, t)); return t * t * t * (t * (t * 6 - 15) + 10); };
   var seg = function (p, a, b) { return ease((p - a) / (b - a)); };
   var mix = function (a, b, t) { return a + (b - a) * t; };
 
-  function heroPos(c, t) {
+  function heroPos(c, t, drift) {
+    var m = DEPTH[c.d].drift * drift;
     return [
-      c.hx + (Math.sin(t * c.f1 + c.p1) * c.a1 + Math.sin(t * c.f2 + c.p2) * c.a2) * DEPTH[c.d].drift,
-      c.hy + (Math.cos(t * c.f3 + c.p3) * c.a3 + Math.sin(t * c.f4 + c.p4) * c.a4) * DEPTH[c.d].drift
+      c.hx + (Math.sin(t * c.f1 + c.p1) * c.a1 + Math.sin(t * c.f2 + c.p2) * c.a2) * m,
+      c.hy + (Math.cos(t * c.f3 + c.p3) * c.a3 + Math.sin(t * c.f4 + c.p4) * c.a4) * m
     ];
   }
-  function cloudPos(c, t) {
+  function cloudPos(c, t, drift) {
+    var m = DEPTH[c.d].drift * drift;
     return [
-      c.cx + Math.sin(t * c.f1 * 0.6 + c.p1) * 5 * DEPTH[c.d].drift,
-      c.cy + Math.cos(t * c.f3 * 0.6 + c.p3) * 4 * DEPTH[c.d].drift
+      c.cx + Math.sin(t * c.f1 * 0.6 + c.p1) * 5 * m,
+      c.cy + Math.cos(t * c.f3 * 0.6 + c.p3) * 4 * m
     ];
   }
   function clusterPos(c) {
@@ -262,7 +305,10 @@
   var BAR_H = [.72, .8, .42, .86];
   var CARD_Z = [.96, 1.0, .98];
 
-  function progress() {
+  /* Scroll only ever writes a target. The value the stages read is eased
+     toward it, so a coarse or jumpy scroll cannot move anything abruptly. */
+  var smoothP = null;
+  function targetProgress() {
     var box = story.getBoundingClientRect();
     var total = story.offsetHeight - window.innerHeight;
     return total > 0 ? Math.max(0, Math.min(1, -box.top / total)) : 0;
@@ -276,10 +322,17 @@
   var running = false, rafId = 0, frames = 0, fpsT0 = 0;
   window.__storyFrames = function () { return frames; };
 
+  var lastNow = 0;
   function frame(now) {
     if (!running) return;
     frames++;
-    var t = now / 1000, p = progress();
+    var dt = lastNow ? Math.min(32, now - lastNow) / 1000 : 1 / 60;
+    lastNow = now;
+    var t = now / 1000;
+    var target = targetProgress();
+    if (smoothP === null) smoothP = target;
+    smoothP += (target - smoothP) * 0.12;
+    var p = smoothP;
 
     /* ambient: the glows breathe and drift whether or not anyone scrolls */
     var sA = 1.04 + 0.04 * Math.sin(t * TAU / 9);
@@ -291,25 +344,41 @@
     var toCloud = seg(p, .16, .32), toCluster = seg(p, .36, .52), fade = seg(p, .56, .66);
 
     boxes.length = 0;
-    if (fade < 1) {
+    if (fade < 1 && fontsReady) {
       var scrollPar = (p - 0.3) * 40;
+      /* drift fades out as the items gather, and comes back only when they
+         return to the open field */
+      var drift = 1 - toCloud;
+
+      /* ---- 1. where every label wants to be this frame ----
+         These are targets, not positions. Nothing is drawn from them. */
       for (var i = 0; i < LAY.count; i++) {
         var c = chips[i], D = DEPTH[c.d];
-        var f = heroPos(c, t), g = cloudPos(c, t), k = clusterPos(c);
+        var f = heroPos(c, t, drift), g = cloudPos(c, t, drift), k = clusterPos(c);
         var par = D.par * (scrollPar / 40) + tilt.x * D.par * 0.5;
         var parY = tilt.y * D.par * 0.3;
         var lh = D.font * 1.3;
+        var tx2 = mix(mix(mix(f[0], g[0], toCloud), k[0], toCluster), k[2], fade) + par;
+        var ty2 = mix(mix(mix(f[1], g[1], toCloud), k[1], toCluster), k[3], fade) + parY;
         boxes.push({
-          label: c.label, d: c.d,
-          x: mix(mix(mix(f[0], g[0], toCloud), k[0], toCluster), k[2], fade) + par - c.tw / 2,
-          y: mix(mix(mix(f[1], g[1], toCloud), k[1], toCluster), k[3], fade) + parY - lh / 2,
-          w: c.tw, h: lh,
+          label: c.label, d: c.d, i: i,
+          /* start from last frame's answer so the passes below refine a near
+             solution instead of untangling the whole field from scratch,
+             which fourteen passes cannot always finish */
+          x: tx2 + c.ox - c.tw / 2, y: ty2 + c.oy - lh / 2,
+          w: c.tw, h: lh, rx: tx2, ry: ty2,
           hot: toCluster > .5 && c.group === 0
         });
       }
 
+      /* ---- 2. shape the targets so they do not collide ----
+         Both solvers below run on the targets alone. Correcting a drawn
+         position instead would leave the spring pulling an item back into
+         the thing it was just pushed out of, and the pair would trade
+         pixels for as long as the story was on screen. */
+
       /* the headline keeps its own space while it is on screen */
-      var shield = 1 - seg(p, .05, .14);
+      var shield = (1 - seg(p, .05, .14)) * Math.max(0, 1 - fade * 3);
       if (shield > 0.01) {
         var hbox = heroBox();
         if (hbox) {
@@ -328,8 +397,11 @@
         }
       }
 
-      /* keep labels off each other at every stage and in flight between them */
-      var padSep = 4;
+      /* keep labels off each other at every stage and in flight between them.
+         The push is proportional to the depth of the overlap with no fixed
+         floor, so it falls to nothing as the gap closes and the pass settles
+         instead of hunting. */
+      var padSep = 4, sepFade = Math.max(0, 1 - fade * 3);
       for (var pass = 0; pass < 14; pass++) {
         var moved = false;
         for (var a = 0; a < boxes.length; a++) {
@@ -338,12 +410,59 @@
             var ox = Math.min(A1.x + A1.w, B1.x + B1.w) - Math.max(A1.x, B1.x) + padSep;
             var oy = Math.min(A1.y + A1.h, B1.y + B1.h) - Math.max(A1.y, B1.y) + padSep;
             if (ox <= 0 || oy <= 0) continue;
-            var shift = oy / 2 + 0.25;
-            if (A1.y < B1.y) { A1.y -= shift; B1.y += shift; } else { A1.y += shift; B1.y -= shift; }
+            /* As the items converge on the cluster centres they necessarily
+               overlap. Pushing back then would fight the gather, so
+               separation relaxes as they arrive. They are fading out at that
+               point and the overlap is not visible. */
+            var shift = oy * 0.5 * 0.6 * sepFade;
+            /* Which way to push is decided by which label sits higher. Two
+               that are level disagree about that from one frame to the next,
+               and the answer swings by twice the push every time they swap:
+               that flip, multiplied through fourteen passes, is what used to
+               fling a label across the stage. Close to level the decision is
+               handed to a fixed order instead, blended in as they converge,
+               so the direction is continuous through the crossing and the
+               same two labels always resolve the same way. */
+            var dyc = (A1.y + A1.h / 2) - (B1.y + B1.h / 2);
+            var blend = Math.min(1, Math.abs(dyc) / 8);
+            var dir = (dyc >= 0 ? 1 : -1) * blend + (A1.i < B1.i ? 1 : -1) * (1 - blend);
+            A1.y += dir * shift; B1.y -= dir * shift;
             moved = true;
           }
         }
         if (!moved) break;
+      }
+
+      /* ---- 3. apply the correction, rationed ----
+         A label follows the choreography itself exactly, with no lag at all,
+         so two of them can never drift into each other merely because one
+         was given further to travel this frame. The only part held back is
+         the correction above, and only when it changes abruptly: a
+         relaxation pass reverses which way it pushes a pair the moment they
+         draw level, and writing that straight to the screen is what used to
+         fling a label across the stage.
+
+         The ration is an absolute distance, not a speed. A frame that ran
+         long must not be allowed to carry a proportionally larger step,
+         because what reads as a glitch is the distance moved on screen, not
+         the distance per second. Eight pixels is the point found by
+         measurement: below it labels start overlapping because separation
+         can no longer keep up with the gather, and above it the step
+         becomes visible. */
+      for (var sp = 0; sp < boxes.length; sp++) {
+        var Bx = boxes[sp], c2 = chips[Bx.i];
+        var wantX = (Bx.x + Bx.w / 2) - Bx.rx;
+        var wantY = (Bx.y + Bx.h / 2) - Bx.ry;
+        if (!c2.seeded) { c2.ox = wantX; c2.oy = wantY; c2.seeded = true; }
+        var RATE = Math.min(8 * (dt * 60), 8);
+        var rdx = wantX - c2.ox, rdy = wantY - c2.oy;
+        var rd = Math.sqrt(rdx * rdx + rdy * rdy);
+        if (rd > RATE) { var rk = RATE / rd; c2.ox += rdx * rk; c2.oy += rdy * rk; }
+        else { c2.ox = wantX; c2.oy = wantY; }
+        c2.px = Bx.rx + c2.ox;
+        c2.py = Bx.ry + c2.oy;
+        Bx.x = c2.px - Bx.w / 2;
+        Bx.y = c2.py - Bx.h / 2;
       }
 
       /* Draw back to front, one font change per layer.
@@ -394,7 +513,6 @@
     heroH.style.transform = 'translateY(calc(-50% - ' + (heroOut * 50) + 'px))';
 
     caps.forEach(function (el) { el.classList.toggle('on', p >= +el.dataset.a && p < +el.dataset.b); });
-
     var cardsIn = seg(p, .6, .7), focus = seg(p, .75, .81), vIn = seg(p, .88, .95);
     cards.forEach(function (el, idx) {
       var d = Math.max(0, Math.min(1, cardsIn * 1.4 - idx * .2));
@@ -429,7 +547,13 @@
     rafId = requestAnimationFrame(frame);
   }
 
-  function start() { if (!running) { running = true; frames = 0; fpsT0 = performance.now(); rafId = requestAnimationFrame(frame); } }
+  function start() {
+    if (running) return;
+    running = true; frames = 0; lastNow = 0;
+    smoothP = targetProgress();     /* no catch up sweep when coming back */
+    fpsT0 = performance.now();
+    rafId = requestAnimationFrame(frame);
+  }
   function stop() { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
 
   if ('IntersectionObserver' in window) {
