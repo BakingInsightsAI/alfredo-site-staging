@@ -27,6 +27,28 @@
     }
   };
 
+  /* A region that scrolls sideways has to be reachable without a mouse.
+     The strip hides its scrollbar, so without this there was no way to
+     reach the photographs past the first except by dragging. The focus
+     stop is added only while the region actually overflows, so at the
+     widths where the strip is a plain grid there is no stop that does
+     nothing when you land on it. */
+  function scrollRegions() {
+    $$('.photos').forEach(function (el) {
+      if (el.scrollWidth > el.clientWidth + 1) {
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'group');
+        el.setAttribute('aria-label', 'Photographs, scrolls sideways');
+      } else {
+        el.removeAttribute('tabindex');
+        el.removeAttribute('role');
+        el.removeAttribute('aria-label');
+      }
+    });
+  }
+  scrollRegions();
+  addEventListener('resize', scrollRegions, { passive: true });
+
   /* ---------------------------------------------------------- mobile nav */
   var toggle = $('#navToggle'), links = $('#navLinks');
   if (toggle && links) {

@@ -354,6 +354,13 @@ footer small { margin-left: auto; font-size: .8rem; }
 .tabbar-wrap { position: sticky; top: calc(var(--bar) + 56px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule); }
 .tabbar { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .tabbar::-webkit-scrollbar { display: none; }
+/* On a phone the four labels are wider than the screen, and with the
+   scrollbar hidden there was nothing to show that the fourth one existed:
+   it simply sat off the right edge. Wrapping shows all four at once. */
+@media (max-width: 760px) {
+  .tabbar { display: grid; grid-template-columns: 1fr 1fr; overflow-x: visible; column-gap: 16px; row-gap: 0; }
+  .tabbar .tab { text-align: left; }
+}
 .tab {
   flex: none; border: 0; background: none; cursor: pointer; white-space: nowrap;
   padding: 16px 14px; font-size: .92rem; font-weight: 500; color: var(--soft);
