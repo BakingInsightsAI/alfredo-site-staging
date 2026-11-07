@@ -156,6 +156,13 @@ body:has(.staging-bar) { --bar: calc(26px + env(safe-area-inset-top, 0px)); padd
 
 /* ----------------------------------------------------------- sections */
 section { padding: 104px 0; }
+/* 104px above and below is a quarter of a phone screen spent on nothing
+   before the first word. The band narrows with the screen so the rhythm
+   between sections reads the same at both sizes rather than measuring the
+   same. The story sets its own height and is left alone. */
+@media (max-width: 760px) {
+  section:not(.story) { padding: 72px 0; }
+}
 section.light { background: var(--bg); color: var(--text); }
 section.tint { background: var(--surface); color: var(--text); }
 section.dark {
@@ -197,7 +204,7 @@ section.dark .wrap { position: relative; z-index: 1; }
 .tiles.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 860px) { .tiles, .tiles.two, .tiles.four { grid-template-columns: 1fr; } }
 .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 24px; padding: 30px 28px; }
-.tile b, .tile h3 { display: block; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px; letter-spacing: -.02em; }
+.tile b, .tile h3 { display: block; font-weight: 600; font-size: 1.1rem; line-height: 1.3; margin-bottom: 8px; letter-spacing: -.02em; }
 .tile span, .tile p { color: var(--soft); display: block; }
 .tile.ours { background: linear-gradient(160deg, #2A1218, #120A0D); color: #F5F5F7; border-color: transparent; }
 .tile.ours span, .tile.ours p { color: #D8CFC9; }
@@ -216,17 +223,24 @@ section.dark .tile { background: #111013; border-color: rgba(255, 255, 255, .12)
 
 /* sample label, required on every illustrative visual */
 .sample {
-  display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: 0;
+  /* 11.5px was below the point where small text stays comfortable, and this
+     label is the one every illustrative visual is required to carry */
+  display: inline-block; font-size: .78rem; font-weight: 500; letter-spacing: 0;
   color: var(--soft); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px;
 }
 section.dark .sample, .glass .sample { color: #C9C4C0; border-color: rgba(255, 255, 255, .22); }
 
 /* -------------------------------------------------------- facts table */
 .facts { max-width: 760px; margin: 48px auto 0; }
-.facts > div { display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; border-top: 1px solid var(--rule); }
+/* Two columns on a shared grid rather than a row pushed apart, so the
+   descriptions start on one line down the page instead of each one ending
+   wherever its last word falls. Ranging them right left "guess." and
+   "restaurant chain." stranded on a line of their own against a ragged
+   left edge, which is the edge the eye returns to. */
+.facts > div { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 11fr); gap: 24px; padding: 20px 0; border-top: 1px solid var(--rule); }
 .facts b { font-weight: 600; }
-.facts span { color: var(--soft); text-align: right; max-width: 24em; }
-@media (max-width: 560px) { .facts > div { flex-direction: column; gap: 4px; } .facts span { text-align: left; } }
+.facts span { color: var(--soft); max-width: 46ch; }
+@media (max-width: 560px) { .facts > div { grid-template-columns: 1fr; gap: 4px; } }
 
 /* ------------------------------------------------------- pricing card */
 .pricecard { max-width: 640px; margin: 48px auto 0; padding: 34px; }
@@ -237,7 +251,9 @@ section.dark .sample, .glass .sample { color: #C9C4C0; border-color: rgba(255, 2
 .pricecard .pill { margin-top: 18px; }
 
 /* ------------------------------------------------------------- footer */
-footer { background: var(--bg); color: var(--soft); font-size: .84rem; padding: 34px 0; border-top: 1px solid var(--rule); }
+/* The footer sat on 34px against sections breathing at 104, so it read as
+   something that fell off the end of the page rather than the end of it. */
+footer { background: var(--bg); color: var(--soft); font-size: .84rem; padding: 56px 0 44px; border-top: 1px solid var(--rule); }
 .foot-inner { display: flex; align-items: center; gap: 18px 28px; flex-wrap: wrap; }
 .foot-inner .wordmark { color: var(--text); font-size: 1rem; }
 footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -358,8 +374,15 @@ footer small { margin-left: auto; font-size: .8rem; }
    scrollbar hidden there was nothing to show that the fourth one existed:
    it simply sat off the right edge. Wrapping shows all four at once. */
 @media (max-width: 760px) {
-  .tabbar { display: grid; grid-template-columns: 1fr 1fr; overflow-x: visible; column-gap: 16px; row-gap: 0; }
-  .tabbar .tab { text-align: left; }
+  /* start, not stretch: a button centres its own label, so against a row
+     made taller by a label that wrapped, the single line ones floated and
+     the four stopped reading as one row */
+  .tabbar { display: grid; grid-template-columns: 1fr 1fr; align-items: start; overflow-x: visible; column-gap: 16px; row-gap: 0; }
+  /* As grid cells the tabs no longer need side padding to separate them, and
+     the longest label needs the room: at 14px either side it ran past its
+     own column. Wrapping keeps it inside, and the rule under the open tab
+     now measures its column rather than its text. */
+  .tabbar .tab { text-align: left; padding-left: 0; padding-right: 0; white-space: normal; }
 }
 .tab {
   flex: none; border: 0; background: none; cursor: pointer; white-space: nowrap;
@@ -418,7 +441,8 @@ section.dark .chip, .glass .chip { color: var(--gold-soft); }
 .wb.none { background: rgba(255,255,255,.18); }
 @media (prefers-reduced-motion: reduce) { .wb { height: var(--h); transition: none; } }
 .weeklabels { display: flex; gap: 10px; margin-top: 8px; }
-.weeklabels span { flex: 1; text-align: center; font-size: .72rem; color: #B8B3AF; }
+/* these are read as data, so they clear the same floor as the label above */
+.weeklabels span { flex: 1; text-align: center; font-size: .78rem; color: #B8B3AF; }
 
 .verdicts { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 6px; }
 .vd { font-size: .82rem; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--rule); color: var(--soft); }
