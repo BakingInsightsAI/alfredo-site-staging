@@ -5,7 +5,6 @@
   <div class="stage">
     <div class="glow a" aria-hidden="true"></div>
     <div class="glow b" aria-hidden="true"></div>
-    <canvas id="storyCanvas" aria-hidden="true"></canvas>
 
     <div class="hero-h" id="heroH">
       <h1 class="story-h1">{{ home.hero.heading }}</h1>
@@ -18,29 +17,68 @@
 
     <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
 
-    {%- for c in home.captions %}
-    <p class="cap" data-a="{{ c.a }}" data-b="{{ c.b }}">{{ c.line }}{% if c.note %}<small>{{ c.note }}</small>{% endif %}</p>
-    {%- endfor %}
+    <div class="scene" id="scene">
+      <div class="caps">
+        {%- for c in home.captions %}
+        <p class="cap" data-a="{{ c.a }}" data-b="{{ c.b }}">{{ c.line }}{% if c.note %}<small>{{ c.note }}</small>{% endif %}</p>
+        {%- endfor %}
+      </div>
 
-    <div class="cards">
-      {%- for c in home.cards %}
-      <article class="card glass tactile">
-        <div class="k"><span>{{ c.kind }}</span><span class="sample">Sample</span></div>
-        <h3>{{ c.title }}</h3>
-        {%- if c.trial %}
-        <p class="price" id="trialPrice">$6.99</p>
-        <div class="bars" aria-hidden="true">
-          <span class="bar"></span><span class="bar"></span><span class="bar miss"></span><span class="bar"></span>
+      {#- The wrapper carries the entrance, because the card itself already
+          owns its transform for the tilt and the two would overwrite each
+          other. The card is one picture to a screen reader: the label says
+          what the whole markup amounts to, so the rows are not read out one
+          by one in the order an animation happens to reach them. #}
+      <div class="menu-wrap" id="menuWrap">
+      <div class="menu glass tactile" id="menu" role="img" aria-label="{{ home.menu.aria }}">
+        <span class="scanline" id="scan" aria-hidden="true"></span>
+        <header>
+          <b>{{ home.menu.title }}</b>
+          <span class="sample">sample</span>
+        </header>
+        {%- for g in home.menu.groups %}
+        {#- a label inside a picture, not a heading in the document: the
+            card is one image to a screen reader, and as an h4 after the
+            story's h2 it also skipped a level #}
+        <p class="grp">{{ g.name }}</p>
+        {%- for r in g.rows %}
+        <div class="row{% if r.get('moves') %} moved{% endif %}"{% if r.get('key') %} id="row-{{ r.key }}"{% endif %}>
+          <span class="flash" aria-hidden="true"></span>
+          {%- if r.get('ring') %}<span class="ring" id="ring" aria-hidden="true"></span>{% endif %}
+          <span class="nm">{{ r.name }}</span>
+          {%- if r.get('note') %}<span class="note" id="note-{{ r.key }}">{{ r.note }}</span>{% endif %}
+          {%- if r.get('count') %}<span class="ct" data-n="{{ r.count }}">{{ r.count }} {{ home.menu.unit }}</span>{% endif %}
+          {#- the amount is its own box so that the line drawn through it is
+              the width of the figure, not the width of the column #}
+          <span class="pr{% if r.get('wide') %} wide{% endif %}"><span class="amt">{{ r.price }}
+            {%- if r.get('new') %}<span class="strike" id="strike-{{ r.key }}" aria-hidden="true"></span>{% endif %}</span>
+            {%- if r.get('new') %}<span class="new" id="new-{{ r.key }}">{{ r.new }}</span>{% endif %}
+          </span>
         </div>
-        <div class="bar-labels" aria-hidden="true">
-          <span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span>
+        {%- if g.get('slot_after') == r.get('key') %}
+        <div class="slot" id="slot">
+          <div class="row"><span class="nm">{{ home.menu.moved_name }}</span><span class="tag">{{ home.menu.pair_tag }}</span></div>
         </div>
         {%- endif %}
-      </article>
-      {%- endfor %}
-    </div>
+        {%- endfor %}
+        {%- endfor %}
 
-    <p class="verdict" id="verdict"><b>{{ home.verdict.word }}</b><span>{{ home.verdict.note }}</span></p>
+        <div class="weeks" id="weeks" aria-hidden="true">
+          {%- for miss in home.menu.weeks %}
+          <span class="wk{% if miss %} miss{% endif %}"></span>
+          {%- endfor %}
+        </div>
+
+        <div class="mover" id="mover" aria-hidden="true">
+          <span class="nm">{{ home.menu.moved_name }}</span><span class="tag">{{ home.menu.pair_tag }}</span>
+        </div>
+
+        <div class="stamp" id="stamp" aria-hidden="true">
+          <b>{{ home.verdict.word }}</b><small>{{ home.verdict.note }}</small>
+        </div>
+      </div>
+      </div>
+    </div>
   </div>
 </section>
 

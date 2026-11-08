@@ -43,7 +43,6 @@
   <div class="stage">
     <div class="glow a" aria-hidden="true"></div>
     <div class="glow b" aria-hidden="true"></div>
-    <canvas id="storyCanvas" aria-hidden="true"></canvas>
 
     <div class="hero-h" id="heroH">
       <h1 class="story-h1">The in house consultant your business never had.</h1>
@@ -55,35 +54,88 @@
     </div>
 
     <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
-    <p class="cap" data-a=".16" data-b=".36">Every order you ring is already data.<small>Your existing POS system. Nothing to install.</small></p>
-    <p class="cap" data-a=".36" data-b=".56">Alfredo reads all of it, every week.<small>So you do not have to.</small></p>
-    <p class="cap" data-a=".56" data-b=".74">Then hands you a short list worth trying.<small>Small, low cost, reversible.</small></p>
-    <p class="cap" data-a=".74" data-b=".88">You pick one.<small>Four weeks, one item, the same menu for every guest.</small></p>
-    <p class="cap" data-a=".88" data-b="1.01">And you get an honest answer.</p>
 
-    <div class="cards">
-      <article class="card glass tactile">
-        <div class="k"><span>Pricing</span><span class="sample">Sample</span></div>
-        <h3>Raise Mozzarella Sticks from $6.99 to $7.49</h3>
-        <p class="price" id="trialPrice">$6.99</p>
-        <div class="bars" aria-hidden="true">
-          <span class="bar"></span><span class="bar"></span><span class="bar miss"></span><span class="bar"></span>
+    <div class="scene" id="scene">
+      <div class="caps">
+        <p class="cap" data-a=".12" data-b=".30">Every order you ring is already data.<small>Your existing POS system. Nothing to install.</small></p>
+        <p class="cap" data-a=".30" data-b=".46">Alfredo reads all of it, every week.<small>So you do not have to.</small></p>
+        <p class="cap" data-a=".46" data-b=".70">Then marks up what is worth trying.<small>Small, low cost, reversible.</small></p>
+        <p class="cap" data-a=".70" data-b=".85">You pick one.<small>Four weeks, one item, the same menu for every guest.</small></p>
+        <p class="cap" data-a=".85" data-b="1.01">And you get an honest answer.</p>
+      </div>
+      <div class="menu-wrap" id="menuWrap">
+      <div class="menu glass tactile" id="menu" role="img" aria-label="Sample menu marked up with four suggestions: raise Mozzarella Sticks from 6.99 to 7.49 dollars, dim the Calamari, pair Loaded Nachos with House IPA, and move weekday happy hour from 4 to 6pm to 5 to 7pm. The price change is picked, tracked for four weeks, and marked worked.">
+        <span class="scanline" id="scan" aria-hidden="true"></span>
+        <header>
+          <b>Menu</b>
+          <span class="sample">sample</span>
+        </header>
+        <p class="grp">Starters</p>
+        <div class="row" id="row-mozz">
+          <span class="flash" aria-hidden="true"></span><span class="ring" id="ring" aria-hidden="true"></span>
+          <span class="nm">Mozzarella Sticks</span><span class="ct" data-n="290">290 a wk</span>
+          <span class="pr"><span class="amt">$6.99<span class="strike" id="strike-mozz" aria-hidden="true"></span></span><span class="new" id="new-mozz">$7.49</span>
+          </span>
         </div>
-        <div class="bar-labels" aria-hidden="true">
-          <span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span>
+        <div class="row moved" id="row-nachos">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">Loaded Nachos</span><span class="ct" data-n="164">164 a wk</span>
+          <span class="pr"><span class="amt">$11.00</span>
+          </span>
         </div>
-      </article>
-      <article class="card glass tactile">
-        <div class="k"><span>Pairing</span><span class="sample">Sample</span></div>
-        <h3>Suggest Loaded Nachos with every House IPA</h3>
-      </article>
-      <article class="card glass tactile">
-        <div class="k"><span>Operations</span><span class="sample">Sample</span></div>
-        <h3>Start weekday happy hour at 5 instead of 4</h3>
-      </article>
+        <div class="row" id="row-fries">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">Garlic Fries</span><span class="ct" data-n="212">212 a wk</span>
+          <span class="pr"><span class="amt">$5.50</span>
+          </span>
+        </div>
+        <div class="row" id="row-cal">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">Calamari</span><span class="note" id="note-cal">Dim it</span><span class="ct" data-n="38">38 a wk</span>
+          <span class="pr"><span class="amt">$12.00</span>
+          </span>
+        </div>
+        <p class="grp">On tap</p>
+        <div class="row" id="row-ipa">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">House IPA</span><span class="ct" data-n="410">410 a wk</span>
+          <span class="pr"><span class="amt">$7.00</span>
+          </span>
+        </div>
+        <div class="slot" id="slot">
+          <div class="row"><span class="nm">Loaded Nachos</span><span class="tag">Pair with House IPA</span></div>
+        </div>
+        <div class="row" id="row-lager">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">House Lager</span><span class="ct" data-n="355">355 a wk</span>
+          <span class="pr"><span class="amt">$6.50</span>
+          </span>
+        </div>
+        <p class="grp">Happy hour</p>
+        <div class="row" id="row-hh">
+          <span class="flash" aria-hidden="true"></span>
+          <span class="nm">Weekdays</span>
+          <span class="pr wide"><span class="amt">4 to 6pm<span class="strike" id="strike-hh" aria-hidden="true"></span></span><span class="new" id="new-hh">5 to 7pm</span>
+          </span>
+        </div>
+
+        <div class="weeks" id="weeks" aria-hidden="true">
+          <span class="wk"></span>
+          <span class="wk"></span>
+          <span class="wk miss"></span>
+          <span class="wk"></span>
+        </div>
+
+        <div class="mover" id="mover" aria-hidden="true">
+          <span class="nm">Loaded Nachos</span><span class="tag">Pair with House IPA</span>
+        </div>
+
+        <div class="stamp" id="stamp" aria-hidden="true">
+          <b>Worked.</b><small>Or no effect. Or backfired.</small>
+        </div>
+      </div>
+      </div>
     </div>
-
-    <p class="verdict" id="verdict"><b>Worked.</b><span>Or no effect. Or backfired. Whichever it is, you hear it straight.</span></p>
   </div>
 </section>
 
