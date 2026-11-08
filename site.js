@@ -49,6 +49,68 @@
   scrollRegions();
   addEventListener('resize', scrollRegions, { passive: true });
 
+  /* ----------------------------------------------- what is pinned on top */
+  /* The bar heights are measured rather than assumed: the nav wraps at some
+     widths and the staging banner is not always there. Anything that sticks
+     directly below them reads --pinned-top, so there is never a strip
+     between the two for the page to scroll through. */
+  (function () {
+    var root = document.documentElement;
+    var pinned = $$('.staging-bar, .nav');
+    var sticky = $('.tabbar-wrap');
+    if (!pinned.length && !sticky) return;
+
+    function update() {
+      var bottom = 0;
+      pinned.forEach(function (el) {
+        var cs = getComputedStyle(el);
+        if (cs.position !== 'fixed' && cs.position !== 'sticky') return;
+        if (cs.display === 'none' || cs.visibility === 'hidden') return;
+        var r = el.getBoundingClientRect();
+        /* a bar that has slid up out of the way counts for what is left */
+        if (r.height && r.bottom > bottom) bottom = r.bottom;
+      });
+      bottom = Math.max(0, Math.round(bottom));
+      root.style.setProperty('--pinned-top', bottom + 'px');
+      if (sticky) root.style.setProperty('--sticky-h', Math.round(sticky.getBoundingClientRect().height) + 'px');
+    }
+
+    update();
+
+    /* The page jumps to an anchor on load using the heights declared in the
+       stylesheet, and the per page scripts land inner anchors a frame or
+       two later. Both of those happen before the webfont arrives, and the
+       reflow when it does moves the target out from under the bars again.
+       This is the last word on where an anchor sits. */
+    function reland() {
+      if (location.hash.length < 2) return;
+      var target = null;
+      try { target = document.querySelector(location.hash); } catch (e) {}
+      if (target) target.scrollIntoView();
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        update();
+        requestAnimationFrame(function () { requestAnimationFrame(reland); });
+      });
+    } else {
+      requestAnimationFrame(function () { requestAnimationFrame(reland); });
+    }
+
+    if ('ResizeObserver' in window) {
+      var ro = new ResizeObserver(update);
+      pinned.forEach(function (el) { ro.observe(el); });
+      if (sticky) ro.observe(sticky);
+    }
+    addEventListener('resize', update, { passive: true });
+    addEventListener('orientationchange', update);
+    /* the mobile menu opening makes the bar taller */
+    var navToggle = $('#navToggle');
+    if (navToggle) navToggle.addEventListener('click', function () { setTimeout(update, 60); });
+    /* exposed so that a bar which later learns to hide on scroll can say so */
+    window.__alfredoPinned = update;
+  })();
+
   /* ------------------------------------------------------- light and dark */
   /* The head already set data-theme if this visitor has chosen one, so by
      the time this runs the right theme is painted. All that is left is to

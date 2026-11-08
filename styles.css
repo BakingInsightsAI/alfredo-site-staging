@@ -72,6 +72,7 @@
   --nav-mark: var(--gold);   /* the dot is gold in both themes */
   --nav-link: rgba(29, 29, 31, .86);
   --nav-link-on: #000000;
+  --sticky-bg: rgba(250, 246, 239, .92);
   --stagebar-bg: #EFE2E4;
   --stagebar-ink: #4A1D2A;
 
@@ -159,6 +160,7 @@
     --nav-mark: var(--champ);
     --nav-link: rgba(245, 245, 247, .92);
     --nav-link-on: #FFFFFF;
+    --sticky-bg: rgba(0, 0, 0, .92);
     --stagebar-bg: #1A1416;
     --stagebar-ink: #F5F5F7;
 
@@ -235,6 +237,7 @@
     --nav-mark: var(--champ);
     --nav-link: rgba(245, 245, 247, .92);
     --nav-link-on: #FFFFFF;
+    --sticky-bg: rgba(0, 0, 0, .92);
     --stagebar-bg: #1A1416;
     --stagebar-ink: #F5F5F7;
 
@@ -308,7 +311,18 @@ a, button, summary, [tabindex] { touch-action: manipulation; -webkit-tap-highlig
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
-[id] { scroll-margin-top: calc(var(--bar) + 76px); }
+/* --pinned-top is the bottom of everything pinned at the top of the
+   window, and --sticky-h the height of a bar sticking directly below it.
+   Both are written by the script from live measurements, so a bar that
+   changes height, wraps onto two rows, or moves is followed rather than
+   guessed at. The fallbacks are the values those elements have at rest. */
+/* The browser performs a hash jump on load, before the script has had a
+   chance to measure anything, so the resting height of a bar that sticks
+   below the chrome is declared here as well. The script refines it, and
+   re-lands the anchor if the measured value differs. */
+:root { --pinned-top: calc(var(--bar) + 56px); --sticky-h: 0px; }
+:root:has(.tabbar-wrap) { --sticky-h: 57px; }
+[id] { scroll-margin-top: calc(var(--pinned-top) + var(--sticky-h) + 16px); }
 
 .skip {
   position: absolute; left: -999px; top: calc(var(--bar) + 8px); z-index: 60;
@@ -465,6 +479,7 @@ section.feature {
   --glass-shadow: 0 30px 60px -30px rgba(0, 0, 0, .75);
   --glass-solid: rgba(58, 22, 32, .95);
   --card-shadow: 0 24px 50px -30px rgba(0, 0, 0, .7);
+  --sticky-bg: rgba(58, 22, 32, .92);
   --tac-hi: rgba(255, 255, 255, .30); --tac-deep: rgba(0, 0, 0, .8);
   --tac-edge: rgba(0, 0, 0, .4); --tac-reflect: rgba(255, 255, 255, .12);
   --tac-sheen: rgba(255, 255, 255, .22); --lift: rgba(0, 0, 0, .75);
@@ -592,8 +607,8 @@ footer small { margin-left: auto; font-size: .8rem; }
    scroll position no longer has to stand in for a playhead. */
 .story .hero-h {
   text-align: center; padding: 92px 24px 76px; max-width: 1080px; margin: 0 auto;
-  min-height: calc(100vh - var(--bar) - 56px);
-  min-height: calc(100svh - var(--bar) - 56px);
+  min-height: calc(100vh - var(--pinned-top));
+  min-height: calc(100svh - var(--pinned-top));
   display: grid; align-content: center;
 }
 .story-h1 { font-weight: 600; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -.035em; max-width: 13ch; margin: 0 auto; }
@@ -601,12 +616,16 @@ footer small { margin-left: auto; font-size: .8rem; }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* ---- the scene: what is being said, beside what it is being said about ---- */
+/* The film is centred in the window, and the block is kept short enough
+   that the centring alone clears the pinned bars. Insetting it by the bar
+   height instead skewed the centring and pushed the controls off the
+   bottom of a short phone by about as much as it gained at the top. */
 .scene {
   max-width: 1080px; margin: 0 auto; padding: 0 24px 90px;
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
   min-height: 86vh; min-height: 86svh; align-content: center;
 }
-@media (max-width: 860px) { .scene { grid-template-columns: 1fr; gap: 26px; } }
+@media (max-width: 860px) { .scene { grid-template-columns: 1fr; gap: 24px; padding-bottom: 56px; } }
 .caps { position: relative; }
 @media (max-width: 860px) { .caps { text-align: center; } }
 .cap {
@@ -786,7 +805,17 @@ footer small { margin-left: auto; font-size: .8rem; }
 .product-hero { padding: 96px 0 72px; }
 .product-hero .sub { margin-top: 18px; }
 
-.tabbar-wrap { position: sticky; top: calc(var(--bar) + 56px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule); }
+/* Flush against the pinned bar above it at every scroll position. The
+   fill is the page at 92 percent over a blur, so a line of text passing
+   under it is a smear of colour rather than something you can read. */
+.tabbar-wrap {
+  position: sticky; top: var(--pinned-top); z-index: 20;
+  background: var(--sticky-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--rule);
+}
+@supports not (backdrop-filter: blur(1px)) { .tabbar-wrap { background: var(--bg); } }
 .tabbar { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .tabbar::-webkit-scrollbar { display: none; }
 /* On a phone the four labels are wider than the screen, and with the
@@ -1085,7 +1114,12 @@ section.dark .cap-line { color: var(--band-soft); }
 }
 
 /* the nav is a slab too, but it is never pressed and never sheens */
-.nav.tactile { isolation: auto; box-shadow: inset 0 1px 0 0 var(--tac-hi), inset 0 -1px 0 0 var(--tac-edge); transform: none; }
+/* .tactile sets position relative and lands after .nav at the same
+   specificity, so since v3.1b it had quietly won and the bar scrolled away
+   with the page. Everything else was written for a pinned bar: the hero
+   subtracts its height, anchors leave room for it, and the product tab bar
+   offsets itself below it. */
+.nav.tactile { isolation: auto; position: fixed; box-shadow: inset 0 1px 0 0 var(--tac-hi), inset 0 -1px 0 0 var(--tac-edge); transform: none; }
 .nav.tactile::before, .nav.tactile::after { display: none; }
 
 /* ---- the first second: the headline rises out of a clipped mask ---- */
@@ -1131,4 +1165,19 @@ section.dark .cap-line { color: var(--band-soft); }
   .js .facts > div { border-top-color: var(--rule); }
   .js .facts > div::before { display: none; }
   .tile.ours { transform: none; }
+}
+
+/* ---- short windows ----
+   A short window is the binding constraint is the binding constraint, not a narrow one: on a 667px
+   phone the bars take 83px and the film has to fit in what is left. The
+   rows, the caption box and the gaps all come in a notch. */
+@media (max-height: 720px) and (max-width: 860px) {
+  .scene { gap: 14px; padding-bottom: 22px; }
+  .menu { --rh: 28px; padding: 13px 15px 11px; }
+  .menu .grp { margin: 9px 0 2px; }
+  .cap { font-size: clamp(1.25rem, 3.2vw, 2rem); }
+  .cap small { margin-top: 6px; }
+  .js .story.film .caps { height: 5em; }
+  .weeks { margin-top: 8px; }
+  .controls { margin-top: 9px; }
 }
