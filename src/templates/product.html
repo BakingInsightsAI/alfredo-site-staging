@@ -28,7 +28,10 @@
   <section class="dark">
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="big">Three questions Alfredo answers</h2>
+      {#- The page heading above the tabs already says this. The heading
+          stays for a screen reader, because without it the cards below are
+          h3 directly under the page h1 and the level is skipped. #}
+      <h2 class="sr-only">Three questions Alfredo answers</h2>
       <div class="tiles">
         {%- for q in product.questions %}
         <div class="tile glass tactile reveal">
@@ -268,7 +271,7 @@
     <div class="wrap">
       <p class="eyebrow">Competitive intel</p>
       <h2 class="big">Know your block like you own it.</h2>
-      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board. Walking past a competitor? Photograph their menu, upload it, and see it matched item by item against your own sales.</p>
+      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board.</p>
 
       <div class="bignums four">
         {%- for s in product.intel_stats %}
@@ -325,19 +328,17 @@
 
       <div class="vizcard glass">
         <div class="viz-head">
-          <h3>Menu Scanner: their photo, matched to your numbers</h3>
+          <h3>Menu Scanner</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-note">Upload a photo of a competitor menu. Alfredo reads it, matches items against your own, and shows its confidence on every pairing. You confirm or dismiss each one before anything else happens.</p>
         <div class="table-scroll">
           <table class="match-table">
-            <thead><tr><th>Their item</th><th>Your item</th><th>Match</th><th>Gap</th><th>Action</th></tr></thead>
+            <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
             <tbody>
               {%- for r in product.scanner %}
               <tr>
                 <td>{{ r.theirs }}<span class="mono">{{ r.theirprice }}</span></td>
                 <td>{{ r.yours }}<span class="mono">{{ r.yourprice }}</span></td>
-                <td><span class="conf {{ r.level }}">{{ r.match }}</span></td>
                 <td>{{ r.gap }}</td>
                 <td>{{ r.action }}</td>
               </tr>
@@ -345,7 +346,7 @@
             </tbody>
           </table>
         </div>
-        <p class="viz-note">"Try this price" only appears on matches you have confirmed, and only when the competitor price came from a published menu, never an estimate.</p>
+        <p class="viz-note">"Try this price" only appears on items you have confirmed, and only when the competitor price is published.</p>
       </div>
 
       <p class="cap-line">Also inside the Competitive tab:</p>

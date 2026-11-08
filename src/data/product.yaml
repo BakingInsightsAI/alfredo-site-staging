@@ -44,7 +44,7 @@ menulab_tiles:
   - name: "Suggestions with receipts"
     body: "Up to ten at a time, each carrying its evidence: co order lift, competitor prices, margin math, verbatim lines from your own reviews."
   - name: "Four clicks to a fair trial"
-    body: "Pick the item, pick the change, pick a control, pick a duration. The AI proposes control items and shows its match score. You decide."
+    body: "Pick the item, pick the change, pick a control, pick a duration. Alfredo proposes control items. You decide."
   - name: "An honest scoreboard"
     body: "Your edits tally into estimated impact, and the scoreboard keeps estimates and measured results clearly apart. They never blend."
 
@@ -82,9 +82,9 @@ radar:
     - { name: "Ambiance", you: 0.0, market: 0.0, ux: -0.9511, uy: -0.309, faded: true, note: "not enough mentions" }
 
 scanner:
-  - { theirs: "Smash Burger", theirprice: "$13.50", yours: "House Burger",   yourprice: "$11.00", match: "92%", level: "high", gap: "You are $2.50 under", action: "Try this price" }
-  - { theirs: "Loaded Tots",  theirprice: "$9.00",  yours: "Tater Tots",     yourprice: "$8.00",  match: "87%", level: "high", gap: "You are $1.00 under", action: "Confirmed" }
-  - { theirs: "Chicken Sando", theirprice: "$12.00", yours: "Crispy Chicken", yourprice: "$12.50", match: "64%", level: "low",  gap: "Needs your review", action: "Review" }
+  - { theirs: "Smash Burger", theirprice: "$13.50", yours: "House Burger",   yourprice: "$11.00", gap: "You are $2.50 under", action: "Try this price" }
+  - { theirs: "Loaded Tots",  theirprice: "$9.00",  yours: "Tater Tots",     yourprice: "$8.00",  gap: "You are $1.00 under", action: "Confirmed" }
+  - { theirs: "Chicken Sando", theirprice: "$12.00", yours: "Crispy Chicken", yourprice: "$12.50",  gap: "Needs your review", action: "Review" }
 
 also_inside:
   - "AI written SWOT from your market's reviews"

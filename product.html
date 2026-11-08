@@ -90,7 +90,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <section class="dark">
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="big">Three questions Alfredo answers</h2>
+      <h2 class="sr-only">Three questions Alfredo answers</h2>
       <div class="tiles">
         <div class="tile glass tactile reveal">
           <h3>What should I do this week, and how do I know it worked?</h3>
@@ -239,7 +239,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
       <p class="sub">Menu Advisor is a working copy of your menu you can experiment on. Drag items, highlight, dim, badge, reprice, build bundles. Every suggestion arrives with its evidence, and any edit can become a small, measured trial in four clicks.</p>
       <div class="tiles">
         <div class="tile reveal"><h3>Suggestions with receipts</h3><span>Up to ten at a time, each carrying its evidence: co order lift, competitor prices, margin math, verbatim lines from your own reviews.</span></div>
-        <div class="tile reveal"><h3>Four clicks to a fair trial</h3><span>Pick the item, pick the change, pick a control, pick a duration. The AI proposes control items and shows its match score. You decide.</span></div>
+        <div class="tile reveal"><h3>Four clicks to a fair trial</h3><span>Pick the item, pick the change, pick a control, pick a duration. Alfredo proposes control items. You decide.</span></div>
         <div class="tile reveal"><h3>An honest scoreboard</h3><span>Your edits tally into estimated impact, and the scoreboard keeps estimates and measured results clearly apart. They never blend.</span></div>
       </div>
       <div class="tile roadmap reveal">
@@ -353,7 +353,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="wrap">
       <p class="eyebrow">Competitive intel</p>
       <h2 class="big">Know your block like you own it.</h2>
-      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board. Walking past a competitor? Photograph their menu, upload it, and see it matched item by item against your own sales.</p>
+      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board.</p>
 
       <div class="bignums four">
         <div><b>36</b><span>venues tracked in your area</span></div>
@@ -440,39 +440,35 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
       <div class="vizcard glass">
         <div class="viz-head">
-          <h3>Menu Scanner: their photo, matched to your numbers</h3>
+          <h3>Menu Scanner</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-note">Upload a photo of a competitor menu. Alfredo reads it, matches items against your own, and shows its confidence on every pairing. You confirm or dismiss each one before anything else happens.</p>
         <div class="table-scroll">
           <table class="match-table">
-            <thead><tr><th>Their item</th><th>Your item</th><th>Match</th><th>Gap</th><th>Action</th></tr></thead>
+            <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
             <tbody>
               <tr>
                 <td>Smash Burger<span class="mono">$13.50</span></td>
                 <td>House Burger<span class="mono">$11.00</span></td>
-                <td><span class="conf high">92%</span></td>
                 <td>You are $2.50 under</td>
                 <td>Try this price</td>
               </tr>
               <tr>
                 <td>Loaded Tots<span class="mono">$9.00</span></td>
                 <td>Tater Tots<span class="mono">$8.00</span></td>
-                <td><span class="conf high">87%</span></td>
                 <td>You are $1.00 under</td>
                 <td>Confirmed</td>
               </tr>
               <tr>
                 <td>Chicken Sando<span class="mono">$12.00</span></td>
                 <td>Crispy Chicken<span class="mono">$12.50</span></td>
-                <td><span class="conf low">64%</span></td>
                 <td>Needs your review</td>
                 <td>Review</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="viz-note">"Try this price" only appears on matches you have confirmed, and only when the competitor price came from a published menu, never an estimate.</p>
+        <p class="viz-note">"Try this price" only appears on items you have confirmed, and only when the competitor price is published.</p>
       </div>
 
       <p class="cap-line">Also inside the Competitive tab:</p>

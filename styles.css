@@ -540,7 +540,7 @@ section.dark .tile { background: var(--band-surface); border-color: var(--band-r
 .sample {
   /* 11.5px was below the point where small text stays comfortable, and this
      label is the one every illustrative visual is required to carry */
-  display: inline-block; font-size: .78rem; font-weight: 500; letter-spacing: 0;
+  display: inline-block; font-size: .78rem; font-weight: 500; letter-spacing: 0; white-space: nowrap;
   color: var(--soft); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px;
 }
 section.dark .sample, .glass .sample { color: var(--band-body); border-color: var(--band-rule); }
@@ -967,15 +967,35 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 @media (prefers-reduced-motion: reduce) { .js .radar-you, .js .radar-market { opacity: 1 !important; transform: none !important; } }
 
 /* -------------------------------------------------------------- heat */
-.heatwrap { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; margin-top: 18px; align-items: center; }
-.heat-days { display: grid; grid-template-rows: repeat(7, 1fr); gap: 3px; font-size: .68rem; color: var(--band-dim); text-align: right; }
+/* One row height shared by the labels and the cells, so a day name cannot
+   drift away from its own row. The column was centred before, which packed
+   the seven names into the middle of a column as tall as the chart. Square
+   cells made the chart as deep as it was wide; wide and shallow ones keep
+   it compact and leave the labels room to be read. */
+.heatwrap {
+  --hr: 28px;
+  display: grid; grid-template-columns: auto 1fr; gap: 8px 10px;
+  margin-top: 18px; align-items: start;
+}
+.heat-days {
+  display: grid; grid-template-rows: repeat(7, var(--hr)); gap: 3px;
+  font-size: .78rem; color: var(--band-dim); text-align: right;
+}
 .heat-days span { display: grid; align-items: center; }
-.heat { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; }
-.heat i { display: block; aspect-ratio: 1; border-radius: 3px; background: rgba(217,164,65,calc(var(--v) * .9 + .06)); }
-.heat-hours { grid-column: 2; display: flex; justify-content: space-between; font-size: .68rem; color: var(--band-dim); }
-.heat-key { grid-column: 2; display: flex; align-items: center; gap: 8px; font-size: .68rem; color: var(--band-dim); }
+.heat { display: grid; grid-template-columns: repeat(14, 1fr); grid-template-rows: repeat(7, var(--hr)); gap: 3px; }
+.heat i { display: block; border-radius: 3px; background: rgba(217,164,65,calc(var(--v) * .9 + .06)); }
+/* the four hour marks sit on the columns they name, 10am, 2pm, 6pm, 10pm */
+.heat-hours {
+  grid-column: 2; display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px;
+  font-size: .78rem; color: var(--band-dim); margin-top: 2px;
+}
+.heat-hours span:nth-child(1) { grid-column: 1 / span 3; }
+.heat-hours span:nth-child(2) { grid-column: 5 / span 3; }
+.heat-hours span:nth-child(3) { grid-column: 9 / span 3; }
+.heat-hours span:nth-child(4) { grid-column: 12 / span 3; text-align: right; }
+.heat-key { grid-column: 2; display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--band-dim); margin-top: 4px; }
 .heat-ramp { flex: 1; max-width: 120px; height: 7px; border-radius: 4px; background: linear-gradient(90deg, rgba(217,164,65,.08), rgba(217,164,65,.94)); }
-@media (max-width: 560px) { .heat-days { font-size: .6rem; } .heat-hours, .heat-key { font-size: .6rem; } }
+@media (max-width: 560px) { .heatwrap { --hr: 22px; gap: 6px 8px; } }
 
 /* ------------------------------------------------------ match table */
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 16px; }
