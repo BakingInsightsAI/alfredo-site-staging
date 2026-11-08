@@ -49,6 +49,72 @@
   scrollRegions();
   addEventListener('resize', scrollRegions, { passive: true });
 
+  /* ------------------------------------------------------- light and dark */
+  /* The head already set data-theme if this visitor has chosen one, so by
+     the time this runs the right theme is painted. All that is left is to
+     describe the button and to handle the press. */
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var mq = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+    var animT = 0;
+
+    function stored() {
+      try { return localStorage.getItem('theme'); } catch (e) { return null; }
+    }
+    function showing() {
+      var t = root.getAttribute('data-theme');
+      if (t === 'light' || t === 'dark') return t;
+      return mq && mq.matches ? 'dark' : 'light';
+    }
+    function describe() {
+      if (!btn) return;
+      var dark = showing() === 'dark';
+      btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    function chrome(theme) {
+      /* the browser's own bar matches whichever theme is pinned */
+      var col = theme === 'dark' ? '#000000' : '#F5F5F7';
+      ['themeColorLight', 'themeColorDark'].forEach(function (id) {
+        var m = document.getElementById(id);
+        if (m) m.setAttribute('content', col);
+      });
+    }
+    function choose(theme) {
+      /* Colours cross fade; nothing about the layout moves, so the class
+         goes on for the length of the fade and comes straight back off. */
+      if (!reduce) {
+        root.classList.add('theme-anim');
+        clearTimeout(animT);
+        animT = setTimeout(function () { root.classList.remove('theme-anim'); }, 320);
+      }
+      root.setAttribute('data-theme', theme);
+      /* If writing fails the switch still works for this visit: the
+         attribute above is what the stylesheet reads. */
+      try { localStorage.setItem('theme', theme); } catch (e) {}
+      chrome(theme);
+      describe();
+    }
+
+    if (stored()) chrome(showing());
+    describe();
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        choose(showing() === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    /* Someone who has never pressed it keeps following their system, so a
+       change there is picked up while the page is open. */
+    if (mq) {
+      var onSystem = function () { if (!stored()) describe(); };
+      if (mq.addEventListener) mq.addEventListener('change', onSystem);
+      else if (mq.addListener) mq.addListener(onSystem);
+    }
+  })();
+
   /* ---------------------------------------------------------- mobile nav */
   var toggle = $('#navToggle'), links = $('#navLinks');
   if (toggle && links) {
