@@ -91,9 +91,11 @@
 })();
 
 /* =====================================================================
-   Homepage scroll story: one week on a sample menu.
-   Exits immediately if #story is absent, or if the visitor asked for
-   reduced motion, in which case the finished menu in styles.css stands.
+   Homepage film: one week on a sample menu.
+   It runs on a clock rather than on the scroll position, so the page
+   scrolls at its own pace and the film plays at its own. Exits immediately
+   if #story is absent, or if the visitor asked for reduced motion, in which
+   case the finished menu in styles.css stands and there are no controls.
    ===================================================================== */
 (function () {
   'use strict';
@@ -104,10 +106,10 @@
   if (!story || A.reduce) return;
 
   var $ = function (id) { return document.getElementById(id); };
-  var menu = $('menu'), menuWrap = $('menuWrap'), scene = $('scene'), heroH = $('heroH');
-  if (!menu || !menuWrap || !scene || !heroH) return;
+  var menu = $('menu'), scene = $('scene');
+  if (!menu || !scene) return;
 
-  story.classList.add('pinned');
+  story.classList.add('film');
 
   var caps = A.$$('.cap', story);
   var cts = A.$$('.ct', menu);
@@ -120,6 +122,10 @@
   var sHH = $('strike-hh'), nHH = $('new-hh'), noteCal = $('note-cal');
   var glowA = story.querySelector('.glow.a'), glowB = story.querySelector('.glow.b');
   var slotRow = slot ? slot.firstElementChild : null;
+
+  var playBtn = $('playBtn'), replayBtn = $('replayBtn');
+  var chaps = A.$$('.chap', story);
+  var fills = chaps.map(function (b) { return b.querySelector('.fill'); });
 
   /* the counts are rendered finished, so the unit comes from the markup
      rather than being spelled a second time here */
@@ -153,47 +159,20 @@
   var mix = function (a, b, t) { return a + (b - a) * t; };
 
   /* ---------------------------------------------------------- measuring */
-  var RH = 38, scanSpan = 0, storyTop = 0, storyH = 0;
-  var lastW = 0, lastH = 0;
+  var RH = 38, scanSpan = 0, lastW = 0, lastH = 0;
 
   function measure(force) {
     var w = window.innerWidth, h = window.innerHeight;
     /* A phone address bar sliding away changes the height by about 60 to
-       110px. Relaying the card out in the middle of a scroll because of it
-       would undo the smoothing, so a height only change that small is
-       ignored. */
+       110px and must not relayout the card in the middle of a scene. */
     if (!force && w === lastW && Math.abs(h - lastH) < 120 && lastW !== 0) return;
     lastW = w; lastH = h;
     RH = parseFloat(getComputedStyle(menu).getPropertyValue('--rh')) || 38;
     scanSpan = Math.max(0, menu.offsetHeight - 46);
-    var box = story.getBoundingClientRect();
-    storyTop = box.top + window.pageYOffset;
-    storyH = story.offsetHeight;
-    read();
-  }
-
-  /* ------------------------------------------------- scroll sets a target */
-  var target = 0, smoothP = null;
-
-  function read() {
-    var total = storyH - window.innerHeight;
-    var p = total > 0 ? (window.pageYOffset - storyTop) / total : 0;
-    target = p < 0 ? 0 : p > 1 ? 1 : p;
   }
 
   /* ------------------------------------------------------------ the film */
   function apply(p) {
-    /* the headline hands over to the scene */
-    var hOut = seg(p, .04, .12);
-    put(heroH, 'opacity', (1 - hOut).toFixed(3));
-    put(heroH, 'transform', 'translateY(calc(-50% - ' + (hOut * 40).toFixed(1) + 'px))');
-    put(heroH, 'pointer-events', hOut > .5 ? 'none' : 'auto');
-
-    var sIn = seg(p, .08, .15);
-    put(scene, 'opacity', sIn.toFixed(3));
-    put(menuWrap, 'transform',
-        'translateY(' + ((1 - sIn) * 40).toFixed(1) + 'px) scale(' + (.96 + .04 * sIn).toFixed(4) + ')');
-
     for (var i = 0; i < caps.length; i++) {
       cls(caps[i], 'on', p >= +caps[i].dataset.a && p < +caps[i].dataset.b);
     }
@@ -272,17 +251,69 @@
     put(stamp, 'transform', 'translate(-50%, -50%) rotate(-6deg) scale(' + (1.3 - .3 * v).toFixed(4) + ')');
   }
 
-  /* ------------------------------------------------------------ the loop */
-  var running = false, rafId = 0, frames = 0;
+  /* --------------------------------------------------------- the playhead */
+  var P0 = 0.12, DUR = 14000;              /* 0.12 to 1 over fourteen seconds */
+  var CH = [0.12, 0.30, 0.46, 0.70, 0.85, 1];
+  var elapsed = 0, playing = false, userPaused = false, ended = false;
+  var onScreen = false, rafId = 0, lastNow = 0, frames = 0;
+  var L = playBtn ? {
+    play: playBtn.getAttribute('data-play') || 'Play',
+    pause: playBtn.getAttribute('data-pause') || 'Pause',
+    replay: playBtn.getAttribute('data-replay') || 'Play again'
+  } : null;
+
   window.__storyFrames = function () { return frames; };
 
+  function progress() { return P0 + (1 - P0) * (elapsed / DUR); }
+
+  function paintChapters(p) {
+    for (var i = 0; i < fills.length; i++) {
+      var a = CH[i], b = CH[i + 1];
+      var f = (p - a) / (b - a);
+      put(fills[i], 'transform', 'scaleX(' + (f < 0 ? 0 : f > 1 ? 1 : f).toFixed(3) + ')');
+      cls(chaps[i], 'now', p >= a && p < b);
+    }
+  }
+
+  function paint() {
+    var p = progress();
+    apply(p);
+    paintChapters(p);
+  }
+
+  function label() {
+    if (!playBtn || !L) return;
+    cls(playBtn, 'is-playing', playing);
+    var want = playing ? L.pause : (ended ? L.replay : L.play);
+    if (playBtn.getAttribute('aria-label') !== want) playBtn.setAttribute('aria-label', want);
+  }
+
+  function tick() {
+    if (!rafId && onScreen) { lastNow = 0; rafId = requestAnimationFrame(frame); }
+  }
+
+  function play() {
+    if (playing) return;
+    playing = true; lastNow = 0; label(); tick();
+  }
+  function pause() {
+    if (!playing) return;
+    playing = false; label();
+  }
+
+  function restart() { elapsed = 0; ended = false; userPaused = false; play(); paint(); tick(); }
+
   function frame(now) {
-    if (!running) return;
+    rafId = 0;
+    if (!onScreen) return;                 /* nothing is drawn off screen */
     frames++;
-    /* Scroll only ever writes a target. The value every stage reads is eased
-       toward it, so a coarse or jumpy scroll cannot move anything abruptly. */
-    smoothP += (target - smoothP) * 0.12;
-    if (Math.abs(target - smoothP) < 0.0002) smoothP = target;
+    var dt = lastNow ? Math.min(100, now - lastNow) : 16.7;
+    lastNow = now;
+
+    if (playing) {
+      elapsed += dt;
+      if (elapsed >= DUR) { elapsed = DUR; playing = false; ended = true; label(); }
+    }
 
     var t = now / 1000;
     var sA = 1.04 + 0.04 * Math.sin(t * 0.698);
@@ -292,46 +323,69 @@
     put(glowB, 'transform', 'translate(' + (Math.cos(t * .1) * 40).toFixed(1) + 'px,' +
         (Math.sin(t * .13) * 30).toFixed(1) + 'px) scale(' + sB.toFixed(4) + ')');
 
-    apply(smoothP);
+    paint();
     rafId = requestAnimationFrame(frame);
   }
 
-  addEventListener('scroll', read, { passive: true });
-  addEventListener('resize', function () { measure(); }, { passive: true });
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { measure(true); });
+  /* ------------------------------------------------------------ controls */
+  if (playBtn) {
+    playBtn.addEventListener('click', function () {
+      if (ended) { restart(); return; }
+      if (playing) { userPaused = true; pause(); }
+      else { userPaused = false; play(); }
+      tick();
+    });
   }
+  if (replayBtn) replayBtn.addEventListener('click', restart);
 
+  chaps.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = +b.getAttribute('data-p');
+      elapsed = Math.max(0, Math.min(DUR, (p - P0) / (1 - P0) * DUR));
+      ended = false; userPaused = false;
+      play(); paint(); tick();
+    });
+  });
+
+  /* ------------------------------------- it starts when it is worth watching */
   measure(true);
-  smoothP = target;
-  apply(smoothP);
+  paint();
+  label();
 
-  /* nothing is drawn while the story is off screen */
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
-      var on = es[0].isIntersecting;
-      if (on && !running) {
-        running = true;
+      var e = es[es.length - 1];
+      var vis = e.isIntersecting && e.intersectionRatio >= 0.55;
+      if (vis === onScreen) return;
+      onScreen = vis;
+      if (onScreen) {
         measure();
-        smoothP = target;          /* no catch up sweep when coming back */
-        rafId = requestAnimationFrame(frame);
-      } else if (!on && running) {
-        running = false;
-        cancelAnimationFrame(rafId);
+        tick();
+        if (!userPaused && !ended) play();
+      } else {
+        /* it waits rather than runs on behind the reader, and whether the
+           reader had paused it is remembered for when it comes back */
+        playing = false; label();
       }
-    }, { threshold: 0 }).observe(story);
+    }, { threshold: [0, 0.25, 0.55, 0.8, 1] }).observe(scene);
   } else {
-    running = true;
-    rafId = requestAnimationFrame(frame);
+    onScreen = true; play(); tick();
   }
 
-  /* the button lands where the menu is whole, not on the next section */
+  addEventListener('resize', function () { measure(); }, { passive: true });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { measure(true); paint(); });
+  }
+
+  /* the button goes to the film and starts it from the top */
   var jump = document.getElementById('storyJump');
   if (jump) {
     jump.addEventListener('click', function (e) {
       e.preventDefault();
-      measure();
-      window.scrollTo({ top: storyTop + (storyH - window.innerHeight) * 0.15, behavior: 'smooth' });
+      elapsed = 0; ended = false; userPaused = false;
+      scene.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (onScreen) play();
+      paint(); tick();
     });
   }
 })();

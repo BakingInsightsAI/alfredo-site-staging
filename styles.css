@@ -277,26 +277,35 @@ footer small { margin-left: auto; font-size: .8rem; }
    Homepage scroll story: one week on a sample menu
    What follows is the DEFAULT, so with no JavaScript, or when the visitor
    has asked for less motion, the page shows the finished marked up menu and
-   all five captions as an ordinary readable sequence. The pinned film is
-   layered on top of it further down, only when .js is present.
+   all five captions as an ordinary readable sequence. The film is layered
+   on top of it further down, only when .js is present.
    ===================================================================== */
 .story {
   background: #000; color: #F5F5F7; position: relative; overflow: clip;
   --text: #F5F5F7; --soft: #A1A1A6; --surface: #111013; --rule: rgba(255,255,255,.12);
-  padding: 96px 0 90px;
+  padding: 0;
 }
 .story .stage { position: relative; }
-.story .hero-h { text-align: center; padding: 0 24px; max-width: 1080px; margin: 0 auto; }
+/* The headline is an ordinary first screen and the film follows it down the
+   page. Nothing is pinned: the film runs on a clock of its own, so the
+   scroll position no longer has to stand in for a playhead. */
+.story .hero-h {
+  text-align: center; padding: 92px 24px 76px; max-width: 1080px; margin: 0 auto;
+  min-height: calc(100vh - var(--bar) - 56px);
+  min-height: calc(100svh - var(--bar) - 56px);
+  display: grid; align-content: center;
+}
 .story-h1 { font-weight: 600; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -.035em; max-width: 13ch; margin: 0 auto; }
 .story .hero-h p { margin: 22px auto 0; max-width: 34em; color: #A1A1A6; font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* ---- the scene: what is being said, beside what it is being said about ---- */
 .scene {
-  max-width: 1080px; margin: 76px auto 0; padding: 0 24px;
+  max-width: 1080px; margin: 0 auto; padding: 0 24px 90px;
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  min-height: 86vh; min-height: 86svh; align-content: center;
 }
-@media (max-width: 860px) { .scene { grid-template-columns: 1fr; gap: 30px; margin-top: 56px; } }
+@media (max-width: 860px) { .scene { grid-template-columns: 1fr; gap: 26px; } }
 .caps { position: relative; }
 @media (max-width: 860px) { .caps { text-align: center; } }
 .cap {
@@ -310,7 +319,44 @@ footer small { margin-left: auto; font-size: .8rem; }
 }
 
 /* ---- the menu ---- */
-.menu-wrap { justify-self: center; width: min(420px, 100%); }
+.player { justify-self: center; width: min(420px, 100%); }
+.menu-wrap { width: 100%; }
+
+/* ---- controls ----
+   Hidden by default. A visitor with no JavaScript, or who asked for less
+   motion, is reading the finished menu rather than watching anything, and a
+   button that drives nothing is worse than no button. */
+.controls { display: none; align-items: center; gap: 10px; margin-top: 14px; }
+.ctl {
+  flex: none; width: 38px; height: 38px; border-radius: 999px; cursor: pointer;
+  display: grid; place-items: center; color: #F5F5F7;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16);
+  transition: background .18s var(--ease), border-color .18s var(--ease);
+}
+.ctl:hover { background: rgba(255, 255, 255, .15); border-color: rgba(255, 255, 255, .26); }
+.ctl svg { width: 17px; height: 17px; display: block; fill: currentColor; }
+.ctl .i-play { display: none; }
+.ctl.is-playing .i-play { display: none; }
+.ctl.is-playing .i-pause { display: block; }
+.ctl:not(.is-playing) .i-pause { display: none; }
+.ctl:not(.is-playing) .i-play { display: block; }
+
+/* Each chapter is a button the height of a finger, with the bar itself a
+   hairline through the middle of it. */
+.chapters { flex: 1; display: flex; gap: 6px; min-width: 0; }
+.chap {
+  flex: 1; min-width: 38px; height: 38px; padding: 0 2px;
+  border: 0; background: none; cursor: pointer; display: grid; align-content: center;
+}
+.chap .track {
+  display: block; height: 3px; border-radius: 2px; overflow: hidden;
+  background: rgba(255, 255, 255, .20); transition: background .18s var(--ease);
+}
+.chap:hover .track { background: rgba(255, 255, 255, .34); }
+.chap .fill {
+  display: block; height: 100%; border-radius: 2px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left center;
+}
 .menu { --rh: 38px; position: relative; border-radius: 26px; padding: 22px 22px 18px; }
 @media (max-width: 860px) { .menu { --rh: 33px; padding: 16px 16px 14px; } }
 .menu > header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 4px; }
@@ -374,63 +420,48 @@ footer small { margin-left: auto; font-size: .8rem; }
 /* =====================================================================
    The film. Only with JavaScript, and only when motion is welcome.
    ===================================================================== */
-.js .story.pinned { height: 560vh; padding: 0; }
-/* lvh is the largest viewport height, so the stage does not resize when a
-   phone address bar slides away mid scroll */
-.js .story.pinned .stage { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; }
-.js .story.pinned .hero-h { position: absolute; left: 0; right: 0; top: 46%; transform: translateY(-50%); z-index: 3; }
-.js .story.pinned .scene {
-  position: absolute; left: 50%; top: 50%; width: 100%;
-  transform: translate(-50%, -50%); margin: 0; opacity: 0;
-}
-.js .story.pinned .caps { height: 9.5em; }
-@media (max-width: 860px) { .js .story.pinned .caps { height: 5.6em; } }
-.js .story.pinned .cap {
+.js .story.film .controls { display: flex; }
+.js .story.film .caps { height: 9.5em; }
+@media (max-width: 860px) { .js .story.film .caps { height: 5.6em; } }
+.js .story.film .cap {
   position: absolute; inset: 0; margin: 0; pointer-events: none;
   opacity: 0; transform: translateY(12px);
   transition: opacity .45s var(--ease), transform .45s var(--ease);
 }
-.js .story.pinned .cap.on { opacity: 1; transform: none; }
+.js .story.film .cap.on { opacity: 1; transform: none; }
 
 /* the card starts clean: every mark below is made during the film */
-.js .story.pinned .strike { transform: scaleX(0); }
-.js .story.pinned .new { opacity: 0; }
-.js .story.pinned .note { opacity: 0; }
-.js .story.pinned .ring { opacity: 0; }
-.js .story.pinned .ct { opacity: 0; }
-.js .story.pinned .slot { height: 0; }
-.js .story.pinned .row.moved { display: flex; }
-.js .story.pinned .weeks { height: 0; opacity: 0; overflow: hidden; }
-.js .story.pinned .wk { background: rgba(255, 255, 255, .12); }
-.js .story.pinned .wk.f { background: #5FC28A; }
-.js .story.pinned .wk.f.miss { background: #E25C4F; }
-.js .story.pinned .mover {
+.js .story.film .strike { transform: scaleX(0); }
+.js .story.film .new { opacity: 0; }
+.js .story.film .note { opacity: 0; }
+.js .story.film .ring { opacity: 0; }
+.js .story.film .ct { opacity: 0; }
+.js .story.film .slot { height: 0; }
+.js .story.film .row.moved { display: flex; }
+.js .story.film .weeks { height: 0; opacity: 0; overflow: hidden; }
+.js .story.film .wk { background: rgba(255, 255, 255, .12); }
+.js .story.film .wk.f { background: #5FC28A; }
+.js .story.film .wk.f.miss { background: #E25C4F; }
+.js .story.film .mover {
   display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none;
   position: absolute; left: 22px; right: 22px; height: var(--rh); font-size: .95rem;
-  /* The row is lifted out of the list and travels over the rows between,
-     so it has to cover them. At a gold tint over nothing it read as two
-     menu lines printed on top of each other rather than one row in hand. */
   background: linear-gradient(180deg, #2A2112, #1C160D);
   border: 1px solid rgba(217, 164, 65, .45);
   border-radius: 9px; padding: 0 8px; margin: 0 -8px;
   box-shadow: 0 14px 28px -12px rgba(0, 0, 0, .85);
 }
-@media (max-width: 860px) { .js .story.pinned .mover { left: 16px; right: 16px; font-size: .86rem; } }
-.js .story.pinned .mover .nm { flex: 1; }
-.js .story.pinned .stamp {
+@media (max-width: 860px) { .js .story.film .mover { left: 16px; right: 16px; font-size: .86rem; } }
+.js .story.film .mover .nm { flex: 1; }
+.js .story.film .stamp {
   position: absolute; left: 50%; top: 50%; margin: 0; width: max-content; max-width: 90%;
   opacity: 0; pointer-events: none;
   transform: translate(-50%, -50%) rotate(-6deg) scale(1.3);
   padding: 10px 26px 14px; border-radius: 20px;
-  /* The card already owns a backdrop filter, and a second one nested inside
-     it does not blur in Chromium: the menu rows stayed legible straight
-     through the panel. The frosting is carried by the panel itself, with
-     the blur left in for engines that do honour it. */
   background: rgba(14, 11, 12, .93); border: 1px solid rgba(217, 164, 65, .5);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
   box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .9);
 }
-.js .story.pinned .stamp b { font-size: clamp(3rem, 8vw, 4.6rem); }
+.js .story.film .stamp b { font-size: clamp(3rem, 8vw, 4.6rem); }
 
 /* ------------------------------------------------------------- photos */
 .photos { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 260px 260px; gap: 18px; margin-top: 52px; }

@@ -39,6 +39,14 @@ menu:
         - { key: "hh", name: "Weekdays", price: "4 to 6pm", new: "5 to 7pm", wide: true }
   weeks: [false, false, true, false]
 
+# labels for the player controls, which carry icons rather than words
+film:
+  play: "Play the film"
+  pause: "Pause the film"
+  replay: "Play from the start"
+  chapters: "Chapters"
+  chapter: "Chapter"
+
 verdict:
   word: "Worked."
   note: "Or no effect. Or backfired."

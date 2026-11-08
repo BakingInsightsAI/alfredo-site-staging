@@ -63,6 +63,7 @@
         <p class="cap" data-a=".70" data-b=".85">You pick one.<small>Four weeks, one item, the same menu for every guest.</small></p>
         <p class="cap" data-a=".85" data-b="1.01">And you get an honest answer.</p>
       </div>
+      <div class="player reveal" id="player">
       <div class="menu-wrap" id="menuWrap">
       <div class="menu glass tactile" id="menu" role="img" aria-label="Sample menu marked up with four suggestions: raise Mozzarella Sticks from 6.99 to 7.49 dollars, dim the Calamari, pair Loaded Nachos with House IPA, and move weekday happy hour from 4 to 6pm to 5 to 7pm. The price change is picked, tracked for four weeks, and marked worked.">
         <span class="scanline" id="scan" aria-hidden="true"></span>
@@ -133,6 +134,49 @@
         <div class="stamp" id="stamp" aria-hidden="true">
           <b>Worked.</b><small>Or no effect. Or backfired.</small>
         </div>
+      </div>
+      </div>
+      <div class="controls" id="controls">
+        <button type="button" class="ctl is-playing" id="playBtn" aria-label="Pause the film"
+                data-play="Play the film" data-pause="Pause the film"
+                data-replay="Play from the start">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="7" y="5" width="3.6" height="14" rx="1.2"></rect>
+            <rect x="13.4" y="5" width="3.6" height="14" rx="1.2"></rect>
+          </svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M8.4 5.1a1 1 0 0 1 1.5-.86l9.1 5.4a1.2 1.2 0 0 1 0 2.06l-9.1 5.4a1 1 0 0 1-1.5-.86z"></path>
+          </svg>
+        </button>
+
+        <div class="chapters" role="group" aria-label="Chapters">
+          <button type="button" class="chap" data-p=".12"
+                  aria-label="Chapter 1, Every order you ring is already data.">
+            <span class="track" aria-hidden="true"><span class="fill"></span></span>
+          </button>
+          <button type="button" class="chap" data-p=".30"
+                  aria-label="Chapter 2, Alfredo reads all of it, every week.">
+            <span class="track" aria-hidden="true"><span class="fill"></span></span>
+          </button>
+          <button type="button" class="chap" data-p=".46"
+                  aria-label="Chapter 3, Then marks up what is worth trying.">
+            <span class="track" aria-hidden="true"><span class="fill"></span></span>
+          </button>
+          <button type="button" class="chap" data-p=".70"
+                  aria-label="Chapter 4, You pick one.">
+            <span class="track" aria-hidden="true"><span class="fill"></span></span>
+          </button>
+          <button type="button" class="chap" data-p=".85"
+                  aria-label="Chapter 5, And you get an honest answer.">
+            <span class="track" aria-hidden="true"><span class="fill"></span></span>
+          </button>
+        </div>
+
+        <button type="button" class="ctl" id="replayBtn" aria-label="Play from the start">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 5.6V2.2a.6.6 0 0 0-1-.44L6.9 5.4a.6.6 0 0 0 0 .9l4.1 3.64a.6.6 0 0 0 1-.44V6.9a5.1 5.1 0 1 1-5.1 5.1.65.65 0 0 0-1.3 0 6.4 6.4 0 1 0 6.4-6.4z"></path>
+          </svg>
+        </button>
       </div>
       </div>
     </div>
