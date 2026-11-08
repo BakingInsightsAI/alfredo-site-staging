@@ -17,7 +17,7 @@
     <h2 class="big">{{ h.promises_heading }}</h2>
     <div class="tiles two">
       {%- for p in h.promises %}
-      <div class="tile reveal"><h3>{{ p.name }}</h3><span>{{ p.body }}</span></div>
+      <div class="tile promise reveal"><h3>{{ p.name }}</h3><span>{{ p.body }}</span></div>
       {%- endfor %}
     </div>
     <p class="sub wide">{{ h.bridge }}</p>
@@ -32,7 +32,9 @@
       {%- for q in h.quotes %}
       <div class="glass quotecard reveal">
         <p class="viz-note">{{ q.intro }}</p>
+        {%- if q.quote %}
         <blockquote class="enginequote">{{ q.quote }}</blockquote>
+        {%- endif %}
         {%- if q.gloss %}
         <p class="gloss">{{ q.gloss }}</p>
         {%- endif %}

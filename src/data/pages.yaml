@@ -15,11 +15,12 @@ honesty:
     - name: "No peeking"
       body: "While a trial is running, the dashboard shows no interim results. Checking mid trial inflates false positives, so Alfredo does not let anyone peek. Including us."
   bridge: "There are tools that report, tools that account, and tools that forecast. There was nothing that recommends, tests, and admits when it is wrong. So we built it."
-  quotes_heading: "The rule, in the engine's own words"
+  quotes_heading: "The rule, in practice"
   quotes:
-    - intro: "When Alfredo suggested a cross promotion to one of our operators, it attached this label to its own idea:"
-      quote: "Very low confidence. Consider an A/B test."
-      gloss: "In plain terms: it is asking you to test the change on a small scale before you roll it out across the menu."
+    # the first card is a paraphrase now, so it carries no quote and no gloss
+    - intro: "When Alfredo suggested a cross promotion to one of our operators, it labeled its own idea very low confidence and suggested trying it small first."
+      quote: ""
+      gloss: ""
       close: "An engine that flags its own weak ideas is the only kind whose strong ideas mean anything."
     - intro: "The same rule applies when the data itself is wrong. On day one with a real client's cost data, Alfredo flagged a 1,370 times data entry error."
       quote: "Flagged for review. Confirm or dismiss."

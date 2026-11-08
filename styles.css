@@ -55,6 +55,7 @@
   /* Gold is kept for accents and fills. As text on a light page it only
      reaches 2.3 to 1, so written gold darkens and wine carries emphasis. */
   --gold-ink: #7A5718;
+  --promise: var(--wine);
   --ok: #176B40;
   --miss: #B3392E;
   --bar-ok-a: #5FC28A;  --bar-ok-b: #3E9A66;
@@ -123,8 +124,8 @@
     --band-bg: #000000;
     --band-surface: #111013;
     --band-text: #F5F5F7;
-    --band-body: var(--band-body);
-    --band-soft: var(--band-soft);
+    --band-body: #CFCAC6;
+    --band-soft: #A1A1A6;
     --band-dim: #8E8E93;
     --band-rule: rgba(255, 255, 255, .12);
     --band-hair: rgba(255, 255, 255, .07);
@@ -143,8 +144,9 @@
     --tac-sheen: rgba(255, 255, 255, .22);
 
     --gold-ink: #D9A441;
-    --ok: var(--ok);
-    --miss: var(--miss);
+    --promise: var(--gold);
+    --ok: #6FD098;
+    --miss: #F0968B;
     --bar-ok-a: #7FD3A0;  --bar-ok-b: #3E9A66;
     --bar-miss-a: #F08A7E; --bar-miss-b: #C2453A;
     --chip-ok: #5FC28A;   --chip-miss: #E25C4F;
@@ -200,8 +202,8 @@
     --band-bg: #000000;
     --band-surface: #111013;
     --band-text: #F5F5F7;
-    --band-body: var(--band-body);
-    --band-soft: var(--band-soft);
+    --band-body: #CFCAC6;
+    --band-soft: #A1A1A6;
     --band-dim: #8E8E93;
     --band-rule: rgba(255, 255, 255, .12);
     --band-hair: rgba(255, 255, 255, .07);
@@ -220,8 +222,9 @@
     --tac-sheen: rgba(255, 255, 255, .22);
 
     --gold-ink: #D9A441;
-    --ok: var(--ok);
-    --miss: var(--miss);
+    --promise: var(--gold);
+    --ok: #6FD098;
+    --miss: #F0968B;
     --bar-ok-a: #7FD3A0;  --bar-ok-b: #3E9A66;
     --bar-miss-a: #F08A7E; --bar-miss-b: #C2453A;
     --chip-ok: #5FC28A;   --chip-miss: #E25C4F;
@@ -1011,6 +1014,14 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 section.dark .cap-line { color: var(--band-soft); }
 .cap-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .cap-list li { border: 1px solid var(--band-rule); border-radius: 999px; padding: 9px 15px; font-size: .86rem; color: var(--band-body); }
+
+/* The four promises are the page in four phrases, so the phrase is the
+   thing you read first and the explanation sits a step behind it. */
+.tile.promise h3 {
+  font-size: 1.5rem; font-weight: 600; line-height: 1.2;
+  letter-spacing: -.03em; margin-bottom: 12px; color: var(--promise);
+}
+.tile.promise span { font-size: .98rem; }
 
 .tile.roadmap { margin-top: 18px; }
 .tile.drift { max-width: none; }
