@@ -1143,6 +1143,18 @@ section.dark .cap-line { color: var(--band-soft); }
   88% { opacity: 1; }
   100% { transform: translateX(130%); opacity: 0; }
 }
+/* The sweep is held at its last frame, so the sheen box rests a card and a
+   third to the right of the card it swept. It is invisible, but it is still
+   a box, and on the one section that does not clip its own contents it made
+   the homepage report itself 417px wider than the window at 390. The cards
+   below hold nothing that is meant to hang over their edges, so they clip to
+   themselves. The film menu and the nav are left alone: the menu lets its
+   verdict stamp scale up past the card, and the nav is fixed, so neither
+   reaches the page's width. */
+.tile.tactile,
+.pricecard.tactile,
+.chatcard.tactile,
+.formcard.tactile { overflow: clip; }
 
 /* the nav is a slab too, but it is never pressed and never sheens */
 /* .tactile sets position relative and lands after .nav at the same
