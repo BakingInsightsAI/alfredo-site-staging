@@ -14,44 +14,48 @@
   --wine: #6E2C3E;
   --wine-deep: #4A1D2A;
 
-  /* page surfaces (light is the default) */
-  --bg: #F5F5F7;
+  /* Page surfaces. The light theme is warm rather than grey: an ivory
+     page, a champagne band to give the page rhythm, and white cards that
+     sit on it with a wine tinted shadow rather than a black one. */
+  --bg: #FAF6EF;
+  --tint: #F3E7D3;
   --surface: #FFFFFF;
   --text: #1D1D1F;
-  --soft: #6E6E73;
-  --rule: rgba(0, 0, 0, .10);
+  --soft: #5C5C61;
+  --rule: rgba(74, 29, 42, .08);
   --accent: var(--wine);
+  --card-shadow: 0 20px 50px -30px rgba(74, 29, 42, .25);
 
   /* The bands that used to be dark whatever the visitor preferred. They are
      a second set of surface tokens rather than a second stylesheet, so every
      component inside them flips with the theme instead of being written
      twice. In light these are the light page with frosted white glass. */
-  --band-bg: #F5F5F7;
+  --band-bg: #FAF6EF;
   --band-surface: #FFFFFF;
   --band-text: #1D1D1F;
   --band-body: #3A3A3C;
   --band-soft: #55555A;
-  --band-dim: #6E6E73;
-  --band-rule: rgba(0, 0, 0, .10);
-  --band-hair: rgba(0, 0, 0, .07);
+  --band-dim: #65656A;
+  --band-rule: rgba(74, 29, 42, .08);
+  --band-hair: rgba(74, 29, 42, .06);
 
   --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .50));
-  --glass-border: rgba(0, 0, 0, .09);
+  --glass-border: rgba(74, 29, 42, .08);
   --glass-hi: rgba(255, 255, 255, .95);
-  --glass-shadow: 0 30px 60px -30px rgba(40, 30, 35, .28);
+  --glass-shadow: 0 20px 50px -30px rgba(74, 29, 42, .25);
   --glass-solid: rgba(252, 252, 253, .96);
 
   --tac-hi: rgba(255, 255, 255, .95);
   --tac-deep: rgba(0, 0, 0, .07);
   --tac-edge: rgba(0, 0, 0, .10);
-  --tac-shadow: 0 30px 60px -30px rgba(40, 30, 35, .28);
+  --tac-shadow: 0 20px 50px -30px rgba(74, 29, 42, .25);
   --tac-reflect: rgba(255, 255, 255, .80);
   --tac-sheen: rgba(255, 255, 255, .70);
 
   /* Gold is kept for accents and fills. As text on a light page it only
      reaches 2.3 to 1, so written gold darkens and wine carries emphasis. */
-  --gold-ink: #8A6420;
-  --ok: #1F7A4D;
+  --gold-ink: #7A5718;
+  --ok: #176B40;
   --miss: #B3392E;
   --bar-ok-a: #5FC28A;  --bar-ok-b: #3E9A66;
   --bar-miss-a: #E0675A; --bar-miss-b: #C2453A;
@@ -61,14 +65,14 @@
   --track: rgba(0, 0, 0, .16);
   --lift: rgba(40, 30, 35, .22);
 
-  --nav-bg: rgba(255, 255, 255, .72);
-  --nav-solid: rgba(255, 255, 255, .97);
+  --nav-bg: rgba(250, 246, 239, .76);
+  --nav-solid: rgba(250, 246, 239, .97);
   --nav-text: #1D1D1F;
   --nav-rule: rgba(0, 0, 0, .10);
-  --nav-mark: var(--wine);
+  --nav-mark: var(--gold);   /* the dot is gold in both themes */
   --nav-link: rgba(29, 29, 31, .86);
   --nav-link-on: #000000;
-  --stagebar-bg: #EDE4E7;
+  --stagebar-bg: #EFE2E4;
   --stagebar-ink: #4A1D2A;
 
   /* the one object that wins stays wine filled in both themes, the way the
@@ -88,11 +92,11 @@
   --field-label: #3A3A3C;
 
   --glow-a: radial-gradient(closest-side,
-    rgba(110,44,62,.14) 0%, rgba(110,44,62,.11) 18%, rgba(110,44,62,.075) 36%,
-    rgba(110,44,62,.04) 54%, rgba(110,44,62,.015) 72%, transparent 88%);
+    rgba(110,44,62,.18) 0%, rgba(110,44,62,.14) 18%, rgba(110,44,62,.095) 36%,
+    rgba(110,44,62,.05) 54%, rgba(110,44,62,.02) 72%, transparent 88%);
   --glow-b: radial-gradient(closest-side,
-    rgba(190,150,60,.20) 0%, rgba(190,150,60,.15) 18%, rgba(190,150,60,.10) 36%,
-    rgba(190,150,60,.055) 54%, rgba(190,150,60,.02) 72%, transparent 88%);
+    rgba(217,164,65,.22) 0%, rgba(217,164,65,.17) 18%, rgba(217,164,65,.115) 36%,
+    rgba(217,164,65,.06) 54%, rgba(217,164,65,.022) 72%, transparent 88%);
 
   --max: 1080px;
   --ease: cubic-bezier(.2, .8, .2, 1);
@@ -107,11 +111,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #000000;
+    --tint: #111013;
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
     --rule: rgba(255, 255, 255, .12);
     --accent: var(--gold);
+    --card-shadow: 0 24px 50px -30px rgba(0, 0, 0, .8);
 
     --band-bg: #000000;
     --band-surface: #111013;
@@ -181,11 +187,13 @@
 }
 :root[data-theme="dark"] {
     --bg: #000000;
+    --tint: #111013;
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
     --rule: rgba(255, 255, 255, .12);
     --accent: var(--gold);
+    --card-shadow: 0 24px 50px -30px rgba(0, 0, 0, .8);
 
     --band-bg: #000000;
     --band-surface: #111013;
@@ -428,7 +436,7 @@ section { padding: 104px 0; }
   section:not(.story) { padding: 72px 0; }
 }
 section.light { background: var(--bg); color: var(--text); }
-section.tint { background: var(--surface); color: var(--text); }
+section.tint { background: var(--tint); color: var(--text); }
 /* Still called dark because of what it is in the dark theme; in the light
    theme it is the same band rendered light. Everything inside reads the
    band tokens, so no component here is written twice. */
@@ -438,6 +446,35 @@ section.dark {
   --rule: var(--band-rule); --surface: var(--band-surface);
 }
 section.dark .sub, section.dark .tile span { color: var(--band-soft); }
+
+/* One band holds its colour through both themes, so the page has a fixed
+   point to measure the others against. Everything inside reads the same
+   band tokens as a dark section, pinned here rather than flipped. */
+section.feature {
+  background: linear-gradient(165deg, #4A1D2A 0%, #34141E 55%, #27101A 100%);
+  color: #F5F5F7; position: relative; overflow: hidden;
+  --band-bg: #3A1620; --band-surface: #46202C;
+  --band-text: #F5F5F7; --band-body: #E8DCDF;
+  --band-soft: #C9B9BE; --band-dim: #AD9AA0;
+  --band-rule: rgba(255, 255, 255, .15); --band-hair: rgba(255, 255, 255, .09);
+  --text: #F5F5F7; --soft: #C9B9BE; --rule: rgba(255, 255, 255, .15);
+  --surface: #46202C; --accent: var(--gold); --gold-ink: var(--gold-soft);
+  --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, .13), rgba(255, 255, 255, .04));
+  --glass-border: rgba(255, 255, 255, .17);
+  --glass-hi: rgba(255, 255, 255, .20);
+  --glass-shadow: 0 30px 60px -30px rgba(0, 0, 0, .75);
+  --glass-solid: rgba(58, 22, 32, .95);
+  --card-shadow: 0 24px 50px -30px rgba(0, 0, 0, .7);
+  --tac-hi: rgba(255, 255, 255, .30); --tac-deep: rgba(0, 0, 0, .8);
+  --tac-edge: rgba(0, 0, 0, .4); --tac-reflect: rgba(255, 255, 255, .12);
+  --tac-sheen: rgba(255, 255, 255, .22); --lift: rgba(0, 0, 0, .75);
+  --track: rgba(255, 255, 255, .22); --gold-wash: rgba(217, 164, 65, .16);
+  --gold-line: rgba(217, 164, 65, .5);
+  --field-label: #E8DCDF; --field-border: rgba(255, 255, 255, .24);
+  --ok: #6FD098; --miss: #F0968B;
+}
+section.feature .wrap { position: relative; z-index: 1; }
+section.feature .sub, section.feature .tile span { color: var(--band-soft); }
 
 .big { font-weight: 600; font-size: clamp(2.1rem, 5vw, 4rem); letter-spacing: -.04em; line-height: 1.05; }
 .big.center { text-align: center; }
@@ -466,7 +503,7 @@ section.dark .wrap { position: relative; z-index: 1; }
 .tiles.two { grid-template-columns: repeat(2, 1fr); }
 .tiles.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 860px) { .tiles, .tiles.two, .tiles.four { grid-template-columns: 1fr; } }
-.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 24px; padding: 30px 28px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 24px; padding: 30px 28px; box-shadow: var(--card-shadow); }
 .tile b, .tile h3 { display: block; font-weight: 600; font-size: 1.1rem; line-height: 1.3; margin-bottom: 8px; letter-spacing: -.02em; }
 .tile span, .tile p { color: var(--soft); display: block; }
 .tile.ours { background: var(--ours-bg); color: var(--ours-text); border-color: transparent; }
@@ -797,8 +834,8 @@ footer small { margin-left: auto; font-size: .8rem; }
 .nextq:hover { border-color: var(--gold); }
 
 /* ------------------------------------------------------------ vizcard */
-.vizcard { border-radius: 24px; padding: 28px; margin-top: 28px; background: var(--surface); border: 1px solid var(--rule); }
-.vizcard.glass { border: 1px solid var(--glass-border); }
+.vizcard { border-radius: 24px; padding: 28px; margin-top: 28px; background: var(--surface); border: 1px solid var(--rule); box-shadow: var(--card-shadow); }
+.vizcard.glass { border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 var(--glass-hi), var(--glass-shadow); }
 .viz-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
 .viz-head h3 { font-weight: 600; font-size: 1.15rem; letter-spacing: -.02em; }
 .viz-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
