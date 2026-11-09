@@ -2,17 +2,18 @@
 
 hero:
   heading: "The in house business consultant you never knew you had."
-  lede: "Every week Alfredo reads your own sales and hands you a short list of small changes worth trying. Then it tells you honestly whether each one worked."
+  lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked."
+  note: "Works with the POS system you already use. Nothing to install."
 
 # The story is a film of one week on a sample menu. Each caption names the
 # stage it belongs to by where the scroll has got to, and the menu below is
 # marked up in the same order a person would read it.
 captions:
-  - { a: ".12", b: ".30",  line: "Every order you ring is already data.", note: "Your existing POS system. Nothing to install." }
-  - { a: ".30", b: ".46",  line: "Alfredo reads all of it, every week.",  note: "So you do not have to." }
-  - { a: ".46", b: ".70",  line: "Then marks up what is worth trying.",   note: "Small, low cost, reversible." }
-  - { a: ".70", b: ".85",  line: "You pick one.",                         note: "Four weeks, one item, the same menu for every guest." }
-  - { a: ".85", b: "1.01", line: "And you get an honest answer.",         note: "" }
+  - { a: ".12", b: ".30",  line: "Every order you ring tells a story.",        note: "Alfredo works with the POS you already use." }
+  - { a: ".30", b: ".46",  line: "Alfredo goes through all of it, every week.", note: "So you do not have to." }
+  - { a: ".46", b: ".70",  line: "Then marks up what is worth trying.",        note: "Small changes, easy to undo." }
+  - { a: ".70", b: ".85",  line: "You pick one.",                              note: "Try it for four weeks." }
+  - { a: ".85", b: "1.01", line: "And you find out if it worked.",             note: "" }
 
 # Every figure here is invented for the illustration, which is why the card
 # carries a sample label and says so to a screen reader as well.
@@ -55,25 +56,41 @@ tuesday:
   heading: "Why is Tuesday slow?"
   sub: "Three ways to ask. Only one gives you an answer you can act on."
   tiles:
-    - { name: "A dashboard", body: "Hands you charts and leaves the interpretation to you." }
-    - { name: "A consultant", body: "Hands you a ten slide deck of findings, too much information for a simple question." }
-    - { name: "Alfredo", body: "Tells you what happened, why it happened, and how you can fix it. Then it checks whether the fix worked.", ours: true }
+    - { name: "A dashboard", body: "Shows you charts and leaves you to figure them out." }
+    - { name: "A consultant", body: "Hands you a ten slide deck when you only had one question." }
+    - { name: "Alfredo", body: "Tells you what happened, why, and what to try. Then it checks whether it worked.", ours: true }
+
+# Three doors into the product page, one per tab. The whole card is the
+# link, so there is nothing small to aim at on a phone.
+looks_at:
+  heading: "What Alfredo looks at"
+  tiles:
+    - name: "What to try this week"
+      body: "A short list of small changes, each one easy to undo."
+      href: "product.html#board"
+    - name: "What your menu really earns"
+      body: "See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting."
+      href: "product.html#menu"
+    - name: "Who walks in, and who is down the street"
+      body: "Know who your regulars are and what they spend, and keep an eye on what the places nearby charge and what their customers say."
+      href: "product.html#intel"
 
 photos:
   - "Photo: bar at the end of service, warm light"
   - "Photo: plates leaving the pass"
   - "Photo: taps and a poured pint"
 
-numbers:
-  heading: "We do not inflate numbers."
-  sub: "If the data is not there, the number is not there either."
-  facts:
-    - { name: "No estimates",     body: "Every figure traces back to your own transactions." }
-    - { name: "Gaps stay visible", body: "Missing data is shown as missing, never filled with a guess." }
-    - { name: "Three verdicts",   body: "Worked, no effect, or backfired." }
-    - { name: "In production",    body: "Tested with a brewpub and live across a 14 location restaurant chain." }
-  price_rows:
-    - { label: "One location",   value: "$300 a month" }
-    - { label: "Two locations",  value: "$500 a month" }
-    - { label: "Three or more",  value: "A straight number on request", quiet: true }
-  free: "The first 10 businesses get their first six months free."
+trust:
+  heading: "We do not make up numbers."
+  body: "If Alfredo does not have the data, it says so instead of guessing. Tested with a brewpub and live across a 14 location restaurant chain."
+  link: "Why you can trust it"
+  href: "honesty.html"
+
+price:
+  body: "$300 a month for one location. The first 10 businesses get their first six months free."
+  link: "See pricing"
+  href: "pricing.html"
+
+closing:
+  heading: "See it on your own restaurant."
+  body: "Request a demo and we will walk you through it, start to finish."

@@ -13,6 +13,7 @@
         <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
         <a class="pill pill-glass" href="#storyHeading" id="storyJump">See a week with Alfredo</a>
       </div>
+      <p class="hero-note">{{ home.hero.note }}</p>
     </div>
 
     <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
@@ -139,24 +140,41 @@
   </div>
 </section>
 
+<section class="tint">
+  <div class="wrap">
+    <h2 class="big center">{{ home.looks_at.heading }}</h2>
+    {#- The whole card is the link rather than a word inside it, so there is
+        nothing small to aim at on a phone. #}
+    <div class="tiles">
+      {%- for t in home.looks_at.tiles %}
+      <a class="tile tilelink reveal" href="{{ t.href }}">
+        <h3>{{ t.name }}</h3>
+        <span>{{ t.body }}</span>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
 <section class="dark">
   <div class="glow a" aria-hidden="true"></div>
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
-    <h2 class="big center">{{ home.numbers.heading }}</h2>
-    <p class="sub center">{{ home.numbers.sub }}</p>
-    <div class="facts">
-      {%- for f in home.numbers.facts %}
-      <div><b>{{ f.name }}</b><span>{{ f.body }}</span></div>
-      {%- endfor %}
+    <h2 class="big">{{ home.trust.heading }}</h2>
+    <p class="sub">{{ home.trust.body }}</p>
+    <p><a class="textlink" href="{{ home.trust.href }}">{{ home.trust.link }}</a></p>
+    <div class="teaser-price">
+      <p class="sub">{{ home.price.body }}</p>
+      <p><a class="textlink" href="{{ home.price.href }}">{{ home.price.link }}</a></p>
     </div>
-    <div class="pricecard glass tactile">
-      {%- for r in home.numbers.price_rows %}
-      <div class="row"><span>{{ r.label }}</span>{% if r.get('quiet') %}<span>{{ r.value }}</span>{% else %}<b>{{ r.value }}</b>{% endif %}</div>
-      {%- endfor %}
-      <p class="free">{{ home.numbers.free }}</p>
-      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-    </div>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap center-block">
+    <h2 class="big center">{{ home.closing.heading }}</h2>
+    <p class="sub center">{{ home.closing.body }}</p>
+    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
   </div>
 </section>
 {% endblock %}
