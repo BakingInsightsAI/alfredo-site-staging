@@ -11,9 +11,13 @@
 <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)" id="themeColorLight">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" id="themeColorDark">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{#- The font is ours now, so there is no third party stylesheet to fetch
+    before the first one can even be requested. One file carries every
+    weight, which is why a single preload covers the regular and the
+    semibold the brief asks for. Fonts are fetched in CORS mode even from
+    our own origin, so the crossorigin attribute is required or the preload
+    is thrown away and fetched again. #}
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 /* Runs before the stylesheet is applied, so the wrong theme is never
    painted and then corrected. Only a visitor who has actually chosen gets
