@@ -11,9 +11,23 @@
   </div>
 </section>
 
+{#- Who built it comes first now: the page is about us before it is about
+    how we work. #}
+<section class="tint">
+  <div class="wrap">
+    <h2 class="big">{{ pilot.built_heading }}</h2>
+    <div class="tiles two">
+      {%- for b in pilot.built %}
+      <div class="tile reveal"><h3>{{ b.name }}</h3><span>{{ b.body }}</span></div>
+      {%- endfor %}
+    </div>
+    <p class="sub wide">{{ pilot.built_close }}</p>
+  </div>
+</section>
+
 <section class="light">
   <div class="wrap">
-    <h2 class="sr-only">How we work with pilot partners</h2>
+    <h2 class="sr-only">{{ pilot.how_heading }}</h2>
     <div class="tiles">
       {%- for h in pilot.how %}
       <div class="tile reveal"><h3>{{ h.name }}</h3><span>{{ h.body }}</span></div>
@@ -24,19 +38,13 @@
 
 <section class="tint">
   <div class="wrap">
-    <h2 class="big">{{ pilot.built_heading }}</h2>
-    <p class="sub wide">{{ pilot.built_body }}</p>
-  </div>
-</section>
-
-<section class="light">
-  <div class="wrap">
     <p class="eyebrow">{{ pilot.where_eyebrow }}</p>
     <h2 class="big">{{ pilot.where_heading }}</h2>
-    <p class="sub">{{ pilot.where_lede }}</p>
+    {#- These three are statements rather than headed cards, so they carry
+        no title and read at the weight of the thing they assert. #}
     <div class="tiles">
       {%- for w in pilot.where %}
-      <div class="tile reveal"><h3>{{ w.name }}</h3><span>{{ w.body }}</span></div>
+      <div class="tile statement reveal"><span>{{ w }}</span></div>
       {%- endfor %}
     </div>
   </div>
@@ -48,7 +56,6 @@
     <div>
       <h2 class="big">{{ pilot.form_heading }}</h2>
       <p class="sub">{{ pilot.form_lede }}</p>
-      <p class="sub">{{ pilot.form_note }}</p>
     </div>
     <div class="glass formcard tactile">
       <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demo-form">
