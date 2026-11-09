@@ -896,6 +896,10 @@ footer small { margin-left: auto; font-size: .8rem; }
 .center-block .pill { margin-top: 24px; }
 .big.small { font-size: clamp(1.6rem, 3vw, 2.4rem); }
 .sub.wide { max-width: 60em; margin-top: 28px; }
+/* The closing thought on the numbers rule page sits below the four
+   promises, so it needs air above it to read as its own idea. */
+.bridge-h { margin-top: 56px; }
+.bridge-h + .sub.wide { margin-top: 14px; }
 
 .textbtn {
   display: inline-block; margin-top: 14px; background: none; border: 0; cursor: pointer;
