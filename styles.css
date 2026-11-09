@@ -1134,6 +1134,14 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .heat-hours span:nth-child(3) { grid-column: 9 / span 3; }
 .heat-hours span:nth-child(4) { grid-column: 12 / span 3; text-align: right; }
 .heat-key { grid-column: 2; display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--band-dim); margin-top: 4px; }
+/* The shape of the week arrives rather than being presented: one column of
+   hours after another, left to right, about 600ms in all. Opacity only. */
+.js #heat i { opacity: 0; }
+.js #heat.drawn i { opacity: 1; transition: opacity .3s linear; transition-delay: calc(var(--col) * 24ms); }
+@media (prefers-reduced-motion: reduce) {
+  .js #heat i { opacity: 1; }
+  .js #heat.drawn i { transition: none; transition-delay: 0s; }
+}
 .heat-ramp { flex: 1; max-width: 120px; height: 7px; border-radius: 4px; background: linear-gradient(90deg, rgba(217,164,65,.08), rgba(217,164,65,.94)); }
 @media (max-width: 560px) { .heatwrap { --hr: 22px; gap: 6px 8px; } }
 
@@ -1159,6 +1167,36 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 /* A card that is one claim and nothing else: no title to read first, so
    the sentence carries the weight itself. */
 .tile.statement span { color: var(--text); font-size: 1.05rem; }
+
+/* Eight of fifty five cards reacted to a press and the rest were furniture.
+   The glass keeps its tilt and its sheen, which are expensive; every other
+   card gets the cheap half of the same idea, a transform and a lift. */
+.js .tile, .js .vizcard, .js .quotecard, .js .faq details {
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.js .tile.press, .js .vizcard.press, .js .quotecard.press, .js .faq details.press {
+  transform: scale(.985);
+}
+.js .tile.press, .js .vizcard.press, .js .quotecard.press { border-color: var(--gold); }
+@media (prefers-reduced-motion: reduce) {
+  .js .tile, .js .vizcard, .js .quotecard, .js .faq details { transition: none; }
+  .js .tile.press, .js .vizcard.press, .js .quotecard.press, .js .faq details.press { transform: none; }
+}
+
+/* Eight of fifty five cards reacted to a press and the rest were furniture.
+   The glass keeps its tilt and its sheen, which are expensive; every other
+   card gets the cheap half of the same idea, a transform and a lift. */
+.js .tile, .js .vizcard, .js .quotecard, .js .faq details {
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.js .tile.press, .js .vizcard.press, .js .quotecard.press, .js .faq details.press {
+  transform: scale(.985);
+}
+.js .tile.press, .js .vizcard.press, .js .quotecard.press { border-color: var(--gold); }
+@media (prefers-reduced-motion: reduce) {
+  .js .tile, .js .vizcard, .js .quotecard, .js .faq details { transition: none; }
+  .js .tile.press, .js .vizcard.press, .js .quotecard.press, .js .faq details.press { transform: none; }
+}
 
 .tile.roadmap { margin-top: 18px; }
 .tile.drift { max-width: none; }

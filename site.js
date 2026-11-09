@@ -213,6 +213,46 @@
     }, { passive: true });
   }
 
+  /* ------------------------------- figures count up once, when first seen */
+  /* The final figure is what the page ships, so a visitor with no script,
+     or one who asked for less motion, reads the number and nothing else
+     happens. The count only ever runs forwards to the value already there. */
+  (function () {
+    var nums = $$('[data-count]');
+    if (!nums.length || reduce) return;
+    nums.forEach(function (el) {
+      var full = el.textContent.trim();
+      var m = full.match(/-?[\d,]*\.?\d+/);
+      if (!m) return;
+      var target = parseFloat(m[0].replace(/,/g, ''));
+      if (!isFinite(target)) return;
+      var before = full.slice(0, m.index), after = full.slice(m.index + m[0].length);
+      var decimals = (m[0].split('.')[1] || '').length;
+      var grouped = m[0].indexOf(',') !== -1;
+      var fmt = function (v) {
+        var s = v.toFixed(decimals);
+        if (grouped) s = s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return before + s + after;
+      };
+      /* the box is sized by the final value so nothing reflows while it runs */
+      el.style.display = 'inline-block';
+      el.style.minWidth = el.getBoundingClientRect().width + 'px';
+      window.Alfredo.onceInView(el, function () {
+        var t0 = 0, DUR = 900;
+        var step = function (now) {
+          if (!t0) t0 = now;
+          var p = Math.min(1, (now - t0) / DUR);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * e);
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = full;
+        };
+        el.textContent = fmt(0);
+        requestAnimationFrame(step);
+      }, 0.4);
+    });
+  })();
+
   /* -------------------------------------------------- reveal once, in view */
   var revealables = $$('.reveal');
   if (revealables.length) {
@@ -627,6 +667,8 @@
         var v = Math.max(.04, Math.min(1, peak * weekend * (0.72 + ((d * 7 + h) % 5) * 0.07)));
         var cell = document.createElement('i');
         cell.style.setProperty('--v', v.toFixed(2));
+        /* the hour is the column, so the week arrives left to right */
+        cell.style.setProperty('--col', h);
         frag.appendChild(cell);
       }
     }
@@ -642,6 +684,7 @@
   }
   function refreshVisuals() {
     /* only observe what is currently visible; a hidden panel has no box */
+    watch(document.getElementById('heat'), 'drawn');
     watch(document.getElementById('weekbars'), 'drawn');
     watch(document.getElementById('regularsCmp'), 'drawn');
     watch(document.getElementById('radar'), 'drawn');
@@ -791,6 +834,42 @@
       }, { passive: true });
     }
   }
+
+  /* ------------------------------------- every card answers the finger */
+  /* The glass cards below take the tilt and the sheen, which are not cheap.
+     Everything else on the site that looks like a card gets the cheap half:
+     it moves under a finger and comes back. A transform and a border, so a
+     press costs a composite and nothing else. */
+  (function () {
+    var plain = A.$$('.tile, .vizcard, .quotecard, .faq details');
+    if (!plain.length) return;
+    plain.forEach(function (card) {
+      var press = function () { card.classList.add('press'); };
+      var release = function () { card.classList.remove('press'); };
+      card.addEventListener('pointerdown', press, { passive: true });
+      ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach(function (ev) {
+        card.addEventListener(ev, release, { passive: true });
+      });
+    });
+  })();
+
+  /* ------------------------------------- every card answers the finger */
+  /* The glass cards below take the tilt and the sheen, which are not cheap.
+     Everything else on the site that looks like a card gets the cheap half:
+     it moves under a finger and comes back. A transform and a border, so a
+     press costs a composite and nothing else. */
+  (function () {
+    var plain = A.$$('.tile, .vizcard, .quotecard, .faq details');
+    if (!plain.length) return;
+    plain.forEach(function (card) {
+      var press = function () { card.classList.add('press'); };
+      var release = function () { card.classList.remove('press'); };
+      card.addEventListener('pointerdown', press, { passive: true });
+      ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach(function (ev) {
+        card.addEventListener(ev, release, { passive: true });
+      });
+    });
+  })();
 
   /* ------------------------------------------------------- tactile glass */
   var cards = A.$$('.tactile');
