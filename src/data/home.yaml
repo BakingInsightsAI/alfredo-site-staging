@@ -81,7 +81,8 @@ photos:
 
 trust:
   heading: "We do not make up numbers."
-  body: "If Alfredo does not have the data, it says so instead of guessing. Tested with a brewpub and live across a 14 location restaurant chain."
+  lead: "If Alfredo does not have the data, it says so instead of guessing."
+  claim: "Tested with a brewpub and live across a 14 location restaurant chain."
   link: "Why you can trust it"
   href: "honesty.html"
 

@@ -517,9 +517,13 @@ h1.big { max-width: 16ch; }
    it gets a wider measure than the one cut for the home page hero. */
 h1.big.wide-h1 { max-width: 26ch; }
 h1.big.center, h2.big.center { margin-inline: auto; }
-.sub { color: var(--soft); max-width: 36em; margin-top: 16px; font-size: 1.1rem; }
+.sub { color: var(--soft); max-width: 32em; margin-top: 16px; font-size: 1.1rem; }
 .sub.center { text-align: center; margin-inline: auto; }
-.eyebrow { font-size: .82rem; font-weight: 500; color: var(--accent); margin-bottom: 14px; letter-spacing: 0; }
+/* Fifteen uses of the accent were on navigational labels: Product,
+   Pricing, Questions, Next question, Where we are. Colour is for the words
+   that sell, so the labels are quiet and the offer, the prices and the
+   deployment claim take what they were spending. */
+.eyebrow { font-size: .82rem; font-weight: 500; color: var(--soft); margin-bottom: 14px; letter-spacing: 0; }
 
 /* glows, dark sections only */
 /* The blur lives on a static child. The parent is what moves and breathes,
@@ -551,6 +555,12 @@ section.dark .wrap { position: relative; z-index: 1; }
 /* The price line sits under the trust promise with a hairline between, so
    the two read as two separate things rather than one paragraph. */
 .teaser-price { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--rule); }
+/* Two 34px headings were landing on one phone screen, so the reader had to
+   choose which one they were reading. The band breathes instead. */
+@media (max-width: 860px) {
+  section.trustband { padding-block: 72px 190px; }
+  section.closeband { padding-block: 190px 72px; }
+}
 .teaser-offer {
   margin-top: 10px; font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 600;
   letter-spacing: -.03em; line-height: 1.12; color: var(--gold-ink); max-width: 18em;
@@ -562,8 +572,14 @@ section.dark .wrap { position: relative; z-index: 1; }
 .tiles.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 860px) { .tiles, .tiles.two, .tiles.four { grid-template-columns: 1fr; } }
 .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 24px; padding: 30px 28px; box-shadow: var(--card-shadow); }
-.tile b, .tile h3 { display: block; font-weight: 600; font-size: 1.1rem; line-height: 1.3; margin-bottom: 8px; letter-spacing: -.02em; }
-.tile span, .tile p { color: var(--soft); display: block; }
+/* A card title set at 1.1rem against 1rem of body is a 1.04 step: the eye
+   has nothing to land on first, which is why every tile grid read as a
+   three way tie. It outranks its own text now. */
+.tile b, .tile h3 { display: block; font-weight: 600; font-size: clamp(1.375rem, 1.9vw, 1.5rem); line-height: 1.22; margin-bottom: 10px; letter-spacing: -.025em; }
+/* In a three column grid the column is the measure; in a full width card,
+   such as the roadmap and website drift cards, there was none, and the line
+   ran to 127 characters on a laptop. */
+.tile span, .tile p { color: var(--soft); display: block; max-width: 32em; }
 .tile.ours { background: var(--ours-bg); color: var(--ours-text); border-color: transparent; }
 .tile.ours span, .tile.ours p { color: var(--ours-body); }
 section.dark .tile { background: var(--band-surface); border-color: var(--band-rule); }
@@ -580,11 +596,12 @@ section.dark .tile { background: var(--band-surface); border-color: var(--band-r
 @supports not (backdrop-filter: blur(1px)) { .glass { background: var(--glass-solid); } }
 
 /* sample label, required on every illustrative visual */
+/* On two screens this label was the second loudest thing in view, because
+   it was the only bordered pill among body text. It keeps its border,
+   because it has to stay visible, and gives up everything else. */
 .sample {
-  /* 11.5px was below the point where small text stays comfortable, and this
-     label is the one every illustrative visual is required to carry */
-  display: inline-block; font-size: .78rem; font-weight: 500; letter-spacing: 0; white-space: nowrap;
-  color: var(--soft); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px;
+  display: inline-block; font-size: .69rem; font-weight: 400; letter-spacing: 0; white-space: nowrap;
+  color: var(--soft); border: 1px solid var(--rule); border-radius: 999px; padding: 2px 8px;
 }
 section.dark .sample, .glass .sample { color: var(--band-body); border-color: var(--band-rule); }
 
@@ -722,7 +739,7 @@ footer small { margin-left: auto; font-size: .8rem; }
 @media (max-width: 380px) {
   .story-h1 { font-size: 2rem; }
 }
-.story .hero-h p { margin: 22px auto 0; max-width: 34em; color: var(--band-soft); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
+.story .hero-h p { margin: 22px auto 0; max-width: 32em; color: var(--band-soft); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* ---- the scene: what is being said, beside what it is being said about ---- */
@@ -962,7 +979,8 @@ footer small { margin-left: auto; font-size: .8rem; }
 .tile-cta { margin-top: 34px; }
 .center-block .pill { margin-top: 24px; }
 .big.small { font-size: clamp(1.6rem, 3vw, 2.4rem); }
-.sub.wide { max-width: 60em; margin-top: 28px; }
+/* 60em ran to 132 characters on a laptop. 65 characters is the measure. */
+.sub.wide { max-width: 32em; margin-top: 28px; }
 /* The closing thought on the numbers rule page sits below the four
    promises, so it needs air above it to read as its own idea. */
 .bridge-h { margin-top: 56px; }
@@ -985,18 +1003,18 @@ footer small { margin-left: auto; font-size: .8rem; }
 .vizcard { border-radius: 24px; padding: 28px; margin-top: 28px; background: var(--surface); border: 1px solid var(--rule); box-shadow: var(--card-shadow); }
 .vizcard.glass { border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 var(--glass-hi), var(--glass-shadow); }
 .viz-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
-.viz-head h3 { font-weight: 600; font-size: 1.15rem; letter-spacing: -.02em; }
+.viz-head h3 { font-weight: 600; font-size: clamp(1.375rem, 1.9vw, 1.5rem); line-height: 1.22; letter-spacing: -.025em; }
 .viz-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .chip { font-size: .74rem; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: var(--gold-wash); color: var(--accent); }
 section.dark .chip, .glass .chip { color: var(--gold-ink); }
 .viz-title { font-weight: 600; font-size: 1.15rem; letter-spacing: -.02em; margin-bottom: 8px; }
-.viz-note { color: var(--soft); font-size: .95rem; margin-top: 12px; max-width: 62ch; }
+.viz-note { color: var(--soft); font-size: .95rem; margin-top: 12px; max-width: 32em; }
 .glass .viz-note, section.dark .viz-note { color: var(--band-soft); }
 .viz-key { color: var(--soft); font-size: .82rem; margin-top: 10px; }
 .glass .viz-key { color: var(--band-soft); }
 .viz-result { font-weight: 600; font-size: 1.05rem; margin-top: 16px; color: var(--ok); }
 .viz-result.bad { color: var(--miss); }
-.nopeek { border-left: 3px solid var(--gold); padding: 10px 0 10px 16px; margin-bottom: 18px; color: var(--soft); font-size: .95rem; max-width: 62ch; }
+.nopeek { border-left: 3px solid var(--gold); padding: 10px 0 10px 16px; margin-bottom: 18px; color: var(--soft); font-size: .95rem; max-width: 32em; }
 .glass .nopeek { color: var(--band-soft); }
 
 /* week bars, they rise once when scrolled into view */
@@ -1144,7 +1162,7 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 
 .tile.roadmap { margin-top: 18px; }
 .tile.drift { max-width: none; }
-.segstats { color: var(--accent); font-size: .85rem; line-height: 1.5; margin: 6px 0 8px; }
+.segstats { color: var(--soft); font-size: .85rem; line-height: 1.5; margin: 6px 0 8px; }
 .tiles.seg { margin-top: 20px; }
 .tiles.seg h4 { font-weight: 600; font-size: 1rem; letter-spacing: -.01em; }
 
@@ -1152,16 +1170,16 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
    Numbers rule, pricing and work with us
    ===================================================================== */
 .manifesto { padding: 110px 0 96px; }
-.manifesto .sub { margin-top: 20px; max-width: 44em; }
+.manifesto .sub { margin-top: 20px; max-width: 32em; }
 
 .quotecard { padding: 28px; }
-.quotecard .viz-note { max-width: none; }
+.quotecard .viz-note { max-width: 32em; }
 .enginequote {
   margin: 16px 0; padding: 18px 20px; border-left: 3px solid var(--gold);
   background: var(--gold-wash); border-radius: 0 14px 14px 0;
   font-size: 1.05rem; font-weight: 500; color: var(--band-text);
 }
-.gloss { color: var(--band-soft); font-size: .95rem; margin-bottom: 14px; }
+.gloss { color: var(--band-soft); font-size: .95rem; margin-bottom: 14px; max-width: 32em; }
 .tiles.quotes { grid-template-columns: 1fr 1fr; }
 @media (max-width: 900px) { .tiles.quotes { grid-template-columns: 1fr; } }
 
@@ -1174,13 +1192,13 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
   font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 600; letter-spacing: -.035em;
   line-height: 1.08; margin-bottom: 16px; max-width: 16em; color: var(--gold-ink);
 }
-.proofline { margin-top: 30px; max-width: 46em; }
-.founding p { color: var(--band-body); max-width: 58em; }
+.proofline { margin-top: 30px; max-width: 46em; color: var(--gold-ink); }
+.founding p { color: var(--band-body); max-width: 32em; }
 /* The name sits above the number so the card says what you are buying
    before it says what it costs. "Let us talk" stands where a figure does,
    so it is set smaller to keep the three cards level. */
 .tier { margin: 2px 0 10px; }
-.tier b { font-size: 2.6rem; font-weight: 600; letter-spacing: -.04em; line-height: 1.05; display: inline-block; }
+.tier b { font-size: 2.6rem; font-weight: 600; letter-spacing: -.04em; line-height: 1.05; display: inline-block; color: var(--gold-ink); }
 .tier b:not(:only-child) ~ span { white-space: nowrap; }
 .tier:has(b:only-child) b { font-size: 1.9rem; }
 .tier span { color: var(--accent); font-weight: 500; font-size: 1rem; }
@@ -1200,7 +1218,7 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .faq summary .pm::before { width: 10px; height: 1.5px; transform: translate(-50%, -50%); }
 .faq summary .pm::after { width: 1.5px; height: 10px; transform: translate(-50%, -50%); }
 .faq details[open] summary .pm { transform: rotate(45deg); }
-.faq .ans p { margin: 0 0 22px; color: var(--soft); max-width: 60ch; }
+.faq .ans p { margin: 0 0 22px; color: var(--soft); max-width: 32em; }
 
 /* ------------------------------------------------------- pilot / form */
 .formcard { padding: 28px; }

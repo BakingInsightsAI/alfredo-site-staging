@@ -7,7 +7,9 @@
   <div class="wrap">
     <p class="eyebrow">{{ pilot.eyebrow }}</p>
     <h1 class="big">{{ pilot.heading }}</h1>
-    <p class="sub">{{ pilot.lede }}</p>
+    {%- for line in pilot.lede %}
+    <p class="sub">{{ line }}</p>
+    {%- endfor %}
   </div>
 </section>
 

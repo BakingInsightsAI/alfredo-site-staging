@@ -2,7 +2,10 @@
 
 eyebrow: "How we work"
 heading: "A platform shaped to your business, not the average one."
-lede: "Every venue runs differently, so Alfredo starts with yours. This is not a consultant who visits once, drops a binder, and disappears. We work alongside you, and the platform keeps measuring after the conversation ends. Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today."
+lede:
+  - "Every venue runs differently, so Alfredo starts with yours."
+  - "This is not a consultant who visits once, drops a binder, and disappears. We work alongside you, and the platform keeps measuring after the conversation ends."
+  - "Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today."
 
 built_heading: "Built by someone who knows numbers, with someone who runs restaurants."
 built:

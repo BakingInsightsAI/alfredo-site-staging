@@ -8,7 +8,9 @@
   <div class="wrap">
     <p class="eyebrow">{{ h.eyebrow }}</p>
     <h1 class="big">{{ h.heading }}</h1>
-    <p class="sub">{{ h.lede }}</p>
+    {%- for line in h.lede %}
+    <p class="sub">{{ line }}</p>
+    {%- endfor %}
   </div>
 </section>
 

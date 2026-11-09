@@ -3,7 +3,9 @@
 honesty:
   eyebrow: "The numbers rule"
   heading: "We do not make up numbers."
-  lede: "Most analytics tools try to impress you with big projected numbers. Alfredo does the opposite. If the data is not there, the number is not there either. Here is the whole promise, in public, so you can hold us to it."
+  lede:
+    - "Most analytics tools try to impress you with big projected numbers. Alfredo does the opposite."
+    - "If the data is not there, the number is not there either. Here is the whole promise, in public, so you can hold us to it."
   promises_heading: "Our four promises"
   promises:
     - name: "No invented figures"
