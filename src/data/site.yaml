@@ -5,50 +5,58 @@ form_subject: "STAGING TEST demo request"
 web3forms_key: "6ce52bfe-d286-44ff-992c-bb7565c31fb6"
 app_url: "https://app.bakinginsightsai.com"
 
-footer_line: "© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
+footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not make up numbers."
 
+# The order is the order of the story: what it does, why you can trust it,
+# who we are, what it costs.
 nav:
-  - { label: "Product",          href: "product.html" }
-  - { label: "Our numbers rule", href: "honesty.html" }
-  - { label: "Pricing",          href: "pricing.html" }
-  - { label: "Work with us",     href: "pilot.html" }
+  - { label: "What it does", href: "product.html" }
+  - { label: "Why trust it", href: "honesty.html" }
+  - { label: "About us",     href: "pilot.html" }
+  - { label: "Pricing",      href: "pricing.html" }
 
 cta:
   label: "Request a demo"
   href: "pilot.html#pilot"
 
+# Every page but the last hands the reader on to the next one. Pricing has
+# no next: its last element is the demo call to action.
 pages:
   - key: index
     template: index.html
     output: index.html
     legacy: false
     title: "Alfredo, the in house business consultant you never knew you had"
-    description: "Every week Alfredo reads your own sales and hands you a short list of small changes worth trying. Then it tells you honestly whether each one worked."
+    description: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked."
+    next: { label: "What Alfredo does for you", href: "product.html" }
 
   - key: product
     template: product.html
     output: product.html
     legacy: false
-    title: "Alfredo, product"
-    description: "One assistant, three standing jobs: the weekly board, your menu and margins, your guests and competition."
+    title: "Alfredo, what it does"
+    description: "Three questions every owner asks: what to change this week, whether the menu is making money, and who is coming in. Alfredo answers them every week."
+    next: { label: "Why you can trust the numbers", href: "honesty.html" }
 
   - key: honesty
     template: honesty.html
     output: honesty.html
     legacy: false
-    title: "Alfredo, our numbers rule"
-    description: "We do not inflate numbers. If the data is not there, the number is not there either."
+    title: "Alfredo, why you can trust the numbers"
+    description: "We do not make up numbers. If the data is not there, the number is not there either. Here is the whole promise, in public."
+    next: { label: "Who is behind Alfredo", href: "pilot.html" }
 
   - key: pricing
     template: pricing.html
     output: pricing.html
     legacy: false
     title: "Alfredo, pricing"
-    description: "One flat price, published right here. Alfredo costs $300 a month for a single location. The first 10 businesses get their first 6 months free."
+    description: "One price, right here. No sales call needed. $300 a month for one location, and the first 10 businesses get their first six months free."
 
   - key: pilot
     template: pilot.html
     output: pilot.html
     legacy: false
-    title: "Alfredo, work with us"
-    description: "How Alfredo works with pilot partners: we start by listening, your reputation is data, and the platform is shaped to fit your business."
+    title: "Alfredo, about us"
+    description: "Built by someone who knows numbers, with someone who runs restaurants. How we work with you, and where we are today."
+    next: { label: "What it costs", href: "pricing.html" }

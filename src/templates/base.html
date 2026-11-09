@@ -67,6 +67,18 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
 <main id="main" tabindex="-1">
 {% block content %}{% endblock %}
+
+{#- The quiet handoff at the foot of the page. Pricing carries no next
+    because its last element is the call to action. The link is the whole
+    line, so it needs no arrow to say where it goes. #}
+{%- if page.get('next') %}
+<section class="nextnav">
+  <div class="wrap">
+    <p class="next-label">Next</p>
+    <a class="nextlink" href="{{ page.next.href }}">{{ page.next.label }}</a>
+  </div>
+</section>
+{%- endif %}
 </main>
 
 <footer>

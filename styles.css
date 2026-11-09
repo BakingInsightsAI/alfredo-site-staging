@@ -571,6 +571,24 @@ section.dark .sample, .glass .sample { color: var(--band-body); border-color: va
 /* ------------------------------------------------------------- footer */
 /* The footer sat on 34px against sections breathing at 104, so it read as
    something that fell off the end of the page rather than the end of it. */
+/* The handoff between pages: a small label, then the next page set large
+   enough to read from across the room. It sits on the page background so it
+   works under whichever band happens to end the page, and the underline is
+   drawn rather than borrowed so it can grow on hover without moving the
+   line. No arrow is appended: the sentence already says where it goes. */
+.nextnav { background: var(--bg); color: var(--text); padding: 60px 0 68px; border-top: 1px solid var(--rule); }
+.next-label { font-size: .82rem; font-weight: 500; color: var(--soft); letter-spacing: 0; margin-bottom: 12px; }
+.nextlink {
+  display: inline-block; max-width: 22ch;
+  font-weight: 600; font-size: clamp(1.7rem, 3.6vw, 2.8rem);
+  line-height: 1.1; letter-spacing: -.035em; text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 0 2px;
+  transition: background-size .3s cubic-bezier(.22, 1, .36, 1), color .2s ease;
+}
+.nextlink:hover, .nextlink:focus-visible { color: var(--accent); background-size: 100% 2px; }
+@media (prefers-reduced-motion: reduce) { .nextlink { transition: none; } }
+
 footer { background: var(--bg); color: var(--soft); font-size: .84rem; padding: 56px 0 44px; border-top: 1px solid var(--rule); }
 .foot-inner { display: flex; align-items: center; gap: 18px 28px; flex-wrap: wrap; }
 .foot-inner .wordmark { color: var(--text); font-size: 1rem; }
