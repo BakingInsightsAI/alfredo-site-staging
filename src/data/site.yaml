@@ -22,7 +22,7 @@ pages:
     template: index.html
     output: index.html
     legacy: false
-    title: "Alfredo, the in house consultant your business never had"
+    title: "Alfredo, the in house business consultant you never knew you had"
     description: "Every week Alfredo reads your own sales and hands you a short list of small changes worth trying. Then it tells you honestly whether each one worked."
 
   - key: product

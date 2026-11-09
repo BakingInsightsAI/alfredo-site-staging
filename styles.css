@@ -614,7 +614,12 @@ footer small { margin-left: auto; font-size: .8rem; }
   min-height: calc(100svh - var(--pinned-top));
   display: grid; align-content: center;
 }
-.story-h1 { font-weight: 600; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -.035em; max-width: 13ch; margin: 0 auto; }
+/* The measure was cut for a 48 character headline. At 56 it set in five
+   lines with "business" and "had." alone, so the measure is wider now.
+   text-wrap: pretty leaves the desktop rag exactly as plain wrapping sets
+   it and only steps in on a phone, where it clears the four character last
+   line. A browser that does not know the property wraps as before. */
+.story-h1 { font-weight: 600; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -.035em; max-width: 16ch; margin: 0 auto; text-wrap: pretty; }
 .story .hero-h p { margin: 22px auto 0; max-width: 34em; color: var(--band-soft); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
