@@ -21,7 +21,10 @@
     <div class="tiles">
       {%- for t in p.tiers %}
       <div class="tile reveal">
-        <p class="tier"><b>{{ t.price }}</b> <span>{{ t.unit }}</span></p>
+        <h3>{{ t.name }}</h3>
+        {#- the third tier is a conversation rather than a number, so it
+            carries no unit after it #}
+        <p class="tier"><b>{{ t.price }}</b>{% if t.get('unit') %} <span>{{ t.unit }}</span>{% endif %}</p>
         <span>{{ t.body }}</span>
       </div>
       {%- endfor %}

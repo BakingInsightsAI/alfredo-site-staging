@@ -1099,8 +1099,13 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .founding { max-width: none; margin-top: 44px; }
 .founding-h { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -.03em; margin-bottom: 14px; max-width: 22em; }
 .founding p { color: var(--band-body); max-width: 58em; }
-.tier { margin-bottom: 10px; }
-.tier b { font-size: 2.6rem; font-weight: 600; letter-spacing: -.04em; }
+/* The name sits above the number so the card says what you are buying
+   before it says what it costs. "Let us talk" stands where a figure does,
+   so it is set smaller to keep the three cards level. */
+.tier { margin: 2px 0 10px; }
+.tier b { font-size: 2.6rem; font-weight: 600; letter-spacing: -.04em; line-height: 1.05; display: inline-block; }
+.tier b:not(:only-child) ~ span { white-space: nowrap; }
+.tier:has(b:only-child) b { font-size: 1.9rem; }
 .tier span { color: var(--accent); font-weight: 500; font-size: 1rem; }
 
 /* ---------------------------------------------------------------- FAQ */
