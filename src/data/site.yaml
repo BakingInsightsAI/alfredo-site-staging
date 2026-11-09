@@ -5,7 +5,7 @@ form_subject: "STAGING TEST demo request"
 web3forms_key: "6ce52bfe-d286-44ff-992c-bb7565c31fb6"
 app_url: "https://app.bakinginsightsai.com"
 
-footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not make up numbers."
+footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
 
 # The order is the order of the story: what it does, why you can trust it,
 # who we are, what it costs.
@@ -26,7 +26,7 @@ pages:
     template: index.html
     output: index.html
     legacy: false
-    title: "Alfredo, the in house business consultant you never knew you had"
+    title: "Alfredo, the in house consultant your business never had"
     description: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked."
     next: { label: "What Alfredo does for you", href: "product.html" }
 

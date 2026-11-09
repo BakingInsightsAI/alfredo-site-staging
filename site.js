@@ -196,6 +196,17 @@
         setOpen(false); toggle.focus();
       }
     });
+    /* Every way out a visitor might reach for. The toggle and the links are
+       above; a phone has no Escape key, so tapping away and scrolling have to
+       work or the menu is a trap. */
+    document.addEventListener('click', function (e) {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      if (e.target.closest('#navLinks') || e.target.closest('#navToggle')) return;
+      setOpen(false);
+    });
+    addEventListener('scroll', function () {
+      if (toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+    }, { passive: true });
     /* a resize back to desktop must not leave the panel in the open state */
     addEventListener('resize', function () {
       if (innerWidth > 860) setOpen(false);
@@ -670,7 +681,12 @@
       })
       .catch(function () {
         status.className = 'bad';
-        status.textContent = 'That did not go through. Please try again, or email us and we will pick it up from there.';
+        status.textContent = 'That did not go through. Please try again, or ';
+        var mail = document.createElement('a');
+        mail.href = 'mailto:contact@bakinginsightsai.com';
+        mail.textContent = 'email us at contact@bakinginsightsai.com';
+        status.appendChild(mail);
+        status.appendChild(document.createTextNode(' and we will pick it up from there.'));
       })
       .then(function () { button.disabled = false; });
   });

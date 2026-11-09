@@ -132,11 +132,16 @@
       </div>
       {%- endfor %}
     </div>
+    {#- The photo row is out until there are photographs to put in it. Three
+        empty frames captioned "Photo: ..." read as images that failed to
+        load, which costs more than leaving the space. Put this back when the
+        shots exist.
     <div class="photos">
       {%- for caption in home.photos %}
       <div class="ph"><em>{{ caption }}</em></div>
       {%- endfor %}
     </div>
+    #}
   </div>
 </section>
 

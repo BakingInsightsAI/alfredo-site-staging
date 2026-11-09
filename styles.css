@@ -66,7 +66,7 @@
   --track: rgba(0, 0, 0, .16);
   --lift: rgba(40, 30, 35, .22);
 
-  --nav-bg: rgba(250, 246, 239, .76);
+  --nav-bg: rgba(250, 246, 239, .92);
   --nav-solid: rgba(250, 246, 239, .97);
   --nav-text: #1D1D1F;
   --nav-rule: rgba(0, 0, 0, .10);
@@ -92,6 +92,10 @@
   --field-ink: #1D1D1F;
   --field-border: rgba(0, 0, 0, .18);
   --field-label: #3A3A3C;
+  /* The field is light in both themes, so its placeholder cannot borrow
+     --soft, which flips with the band behind the card. In the dark theme
+     that put grey on near white at 2.36 to 1. */
+  --field-ph: #5C5C61;
 
   --glow-a: radial-gradient(closest-side,
     rgba(110,44,62,.18) 0%, rgba(110,44,62,.14) 18%, rgba(110,44,62,.095) 36%,
@@ -155,7 +159,7 @@
     --track: rgba(255, 255, 255, .20);
     --lift: rgba(0, 0, 0, .85);
 
-    --nav-bg: rgba(12, 10, 11, .68);
+    --nav-bg: rgba(12, 10, 11, .92);
     --nav-solid: rgba(12, 10, 11, .96);
     --nav-text: #F5F5F7;
     --nav-rule: rgba(255, 255, 255, .10);
@@ -233,7 +237,7 @@
     --track: rgba(255, 255, 255, .20);
     --lift: rgba(0, 0, 0, .85);
 
-    --nav-bg: rgba(12, 10, 11, .68);
+    --nav-bg: rgba(12, 10, 11, .92);
     --nav-solid: rgba(12, 10, 11, .96);
     --nav-text: #F5F5F7;
     --nav-rule: rgba(255, 255, 255, .10);
@@ -409,16 +413,28 @@ body:has(.staging-bar) { --bar: calc(26px + env(safe-area-inset-top, 0px)); padd
 .nav-toggle[aria-expanded="true"] .nav-toggle-bars i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
 @media (max-width: 860px) {
-  .nav-toggle { display: grid; place-items: center; order: 4; }
-  .themetoggle { order: 3; margin-left: auto; }
-  .nav-cta { order: 2; }
+  /* The panel asks for a whole row of its own with flex-basis: 100%, which a
+     flex line that cannot wrap has no way to give it. Without the wrap the
+     line simply overflowed: every link was squeezed into the leftover 53px
+     and the close control was pushed past the right edge of the screen, so
+     the menu could be opened and then not shut. */
+  .nav-inner { flex-wrap: wrap; row-gap: 0; }
+  /* With the row free to wrap, the 24px gaps no longer fit the wordmark, the
+     call to action, the theme switch and the menu button on one line at phone
+     widths, and the menu button dropped to a second row, making the bar 81px
+     instead of 57px on every screen. The gap closes instead. */
+  @media (max-width: 480px) { .nav-inner { gap: 10px; } }
+  .nav-cta { order: 1; }
+  .themetoggle { order: 2; margin-left: auto; }
+  .nav-toggle { display: grid; place-items: center; order: 3; }
   .nav-links {
-    order: 4; flex-basis: 100%; margin-left: 0;
+    order: 4; flex-basis: 100%; width: 100%; margin-left: 0;
     display: none; border-top: 1px solid var(--nav-rule);
   }
   .nav-links.open { display: block; }
   .nav-links ul { flex-direction: column; align-items: stretch; gap: 0; padding: 6px 0 14px; }
-  .nav-links a { padding: 13px 2px; font-size: 1rem; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; width: 100%; padding: 14px 2px; font-size: 1rem; }
 }
 
 /* -------------------------------------------------------------- pills */
@@ -1017,6 +1033,9 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .radar-market { fill: color-mix(in srgb, var(--band-soft) 24%, transparent); stroke: var(--band-soft); stroke-width: 1.2; }
 .radar-you { fill: rgba(217,164,65,.3); stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; }
 .radar-label { font-size: 9px; fill: var(--band-body); font-weight: 500; }
+/* The reason an axis is blank goes on its own line. As one string it ran four
+   times the width of the longest other label and straight off the phone. */
+.radar-note { font-size: 7px; fill: var(--band-dim); font-weight: 400; }
 .radar-label.faded { fill: var(--band-dim); }
 .radar-key { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--band-soft); }
 .radar-key .swatch + .swatch { margin-left: 14px; }
@@ -1149,7 +1168,7 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
   padding: 12px 13px; width: 100%; min-height: 44px;
 }
 .demo-form textarea { resize: vertical; min-height: 84px; }
-.demo-form input::placeholder, .demo-form textarea::placeholder { color: var(--soft); }
+.demo-form input::placeholder, .demo-form textarea::placeholder { color: var(--field-ph); }
 .demo-form input:focus-visible, .demo-form select:focus-visible, .demo-form textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .demo-form button[type="submit"] { grid-column: 1 / -1; justify-self: start; }
 .demo-form button[disabled] { opacity: .6; cursor: default; }
