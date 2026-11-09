@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_minis.html" as minis with context %}
 
 {% block content %}
 <section class="dark product-hero">
@@ -33,10 +34,12 @@
           h3 directly under the page h1 and the level is skipped. #}
       <h2 class="sr-only">Three questions Alfredo answers</h2>
       <div class="tiles">
+        {%- set minimap = {'board': minis.mini_board(), 'menu': minis.mini_plate(), 'intel': minis.mini_radar()} %}
         {%- for q in product.questions %}
         <div class="tile glass tactile reveal">
           <h3>{{ q.q }}</h3>
           <span>{{ q.a }}</span>
+          {{ minimap[q.key] }}
           <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
         </div>
         {%- endfor %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_minis.html" as minis with context %}
 
 {% block content %}
 <section class="story" id="story" aria-labelledby="storyHeading">
@@ -148,12 +149,16 @@
   <div class="wrap">
     <h2 class="big center">{{ home.looks_at.heading }}</h2>
     {#- The whole card is the link rather than a word inside it, so there is
-        nothing small to aim at on a phone. #}
+        nothing small to aim at on a phone. The small visual sits inside that
+        link too, which keeps the card one tap target; it is hidden from a
+        screen reader, which already has the heading and the sentence. #}
     <div class="tiles">
+      {%- set minimap = {'board': minis.mini_board(), 'menu': minis.mini_plate(), 'intel': minis.mini_radar()} %}
       {%- for t in home.looks_at.tiles %}
       <a class="tile tilelink reveal" href="{{ t.href }}">
         <h3>{{ t.name }}</h3>
         <span>{{ t.body }}</span>
+        {{ minimap[t.href.split('#')[1]] }}
       </a>
       {%- endfor %}
     </div>

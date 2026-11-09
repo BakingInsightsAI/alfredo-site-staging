@@ -253,6 +253,13 @@
     });
   })();
 
+  /* the small visuals on the cards, wherever they are */
+  (function () {
+    $$('.mini').forEach(function (m) {
+      window.Alfredo.onceInView(m, function () { m.classList.add('drawn'); }, 0.35);
+    });
+  })();
+
   /* the cost bars are on pricing, so they are watched from here rather
      than from the product page module */
   (function () {
