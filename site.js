@@ -565,6 +565,13 @@
       t.setAttribute('tabindex', on ? '0' : '-1');
     });
     if (doScroll) bar.scrollIntoView({ block: 'start', behavior: A.reduce ? 'auto' : 'smooth' });
+    /* On a phone the bar is one scrolling row, so the tab that is now on has
+       to be brought into it. scrollLeft rather than scrollIntoView, which
+       would take the whole page with it. */
+    var onTab = tabs.filter(function (t) { return t.getAttribute('data-t') === name; })[0];
+    if (onTab && bar.scrollWidth > bar.clientWidth + 1) {
+      bar.scrollLeft = Math.max(0, onTab.offsetLeft - (bar.clientWidth - onTab.offsetWidth) / 2);
+    }
     refreshVisuals();
     return name;
   }
@@ -662,8 +669,60 @@
   var status = document.getElementById('form-status');
   var button = form.querySelector('button[type="submit"]');
 
+  /* The browser's own bubble is the fallback for a visitor with no script.
+     With script, the page says what is missing in the region it already
+     has, which a screen reader hears and a bubble does not. */
+  form.setAttribute('novalidate', '');
+
+  function nameOf(el) {
+    var set = el.closest('fieldset');
+    if (set && set.querySelector('legend')) return set.querySelector('legend').textContent.trim();
+    var lab = el.closest('label');
+    if (lab && lab.childNodes[0] && lab.childNodes[0].nodeValue) return lab.childNodes[0].nodeValue.trim();
+    return el.name;
+  }
+  function clearErrors() {
+    Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid="true"]'),
+      function (el) { el.removeAttribute('aria-invalid'); });
+  }
+  function showErrors() {
+    clearErrors();
+    var missing = [], seen = {};
+    Array.prototype.forEach.call(form.querySelectorAll('input, select, textarea'), function (el) {
+      if (el.type === 'hidden' || el.willValidate === false || el.checkValidity()) return;
+      el.setAttribute('aria-invalid', 'true');
+      var label = nameOf(el);
+      /* the label is left as the form writes it, so POS system does not
+         come back as pos system */
+      if (!seen[label]) { seen[label] = 1; missing.push(label); }
+    });
+    if (!missing.length) return false;
+    status.className = 'bad';
+    status.textContent = missing.length === 1
+      ? 'One thing is still missing: ' + missing[0] + '.'
+      : 'A few things are still missing: ' + missing.join(', ') + '.';
+    var first = form.querySelector('[aria-invalid="true"]');
+    if (first) first.focus();
+    return true;
+  }
+  form.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t && t.getAttribute && t.getAttribute('aria-invalid') && t.checkValidity()) {
+      t.removeAttribute('aria-invalid');
+    }
+  });
+  form.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t && t.name === 'locations') {
+      Array.prototype.forEach.call(form.querySelectorAll('[name="locations"]'),
+        function (el) { el.removeAttribute('aria-invalid'); });
+    }
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (showErrors()) return;
+    clearErrors();
     status.className = '';
     status.textContent = 'Sending your request';
     button.disabled = true;

@@ -29,14 +29,13 @@ honesty:
       close: "Numbers that get quietly changed are numbers you cannot trust."
   cta_heading: "Hold us to it."
   cta_body: "Run Alfredo on your own data and judge it by its verdicts. That is the whole point."
-  cta_link: "See how we work with pilot partners"
 
 pricing:
   eyebrow: "Pricing"
   heading: "One price, right here. No sales call needed."
   lede: "Most software makes you talk to sales just to find out what it costs. Here is the number."
   founding_heading: "The first 10 businesses get their first six months free."
-  founding_body: "However many locations you run. You also get a direct line to the founder and a say in what we build next. After six months, regular pricing starts, and you can leave anytime before that without owing a thing. When the 10 spots are gone, they are gone."
+  founding_body: "However many locations you run. Regular pricing starts after six months, and you can leave anytime before that without owing a thing."
   tiers:
     - name: "One location"
       price: "$300"
@@ -49,6 +48,8 @@ pricing:
     - name: "Three or more"
       price: "Let us talk"
       body: "We will give you a straight number, not a sales pitch."
+  proof: "Tested with a brewpub and live across a 14 location restaurant chain."
+  proof_link: "Why you can trust it"
   compare_eyebrow: "For comparison"
   compare_heading: "What the alternatives cost."
   compare:

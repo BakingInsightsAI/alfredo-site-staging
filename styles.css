@@ -537,8 +537,6 @@ section.dark .wrap { position: relative; z-index: 1; }
 
 /* The line under the hero buttons: quiet, and the last thing read before
    the film starts. */
-.hero-note { margin-top: 20px; color: var(--band-dim); font-size: .92rem; }
-
 /* A card that is itself a link. The heading carries the accent so the card
    reads as somewhere to go without an arrow stuck on the end of it. */
 .tile.tilelink { display: block; color: inherit; text-decoration: none; }
@@ -553,6 +551,10 @@ section.dark .wrap { position: relative; z-index: 1; }
 /* The price line sits under the trust promise with a hairline between, so
    the two read as two separate things rather than one paragraph. */
 .teaser-price { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--rule); }
+.teaser-offer {
+  margin-top: 10px; font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 600;
+  letter-spacing: -.03em; line-height: 1.12; color: var(--gold-ink); max-width: 18em;
+}
 
 /* -------------------------------------------------------------- tiles */
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
@@ -679,12 +681,47 @@ footer small { margin-left: auto; font-size: .8rem; }
   min-height: calc(100svh - var(--pinned-top));
   display: grid; align-content: center;
 }
+/* On a phone the hero was told to fill the window, which put the menu card
+   128px below the fold: the first screen a visitor ever saw was a headline
+   and two buttons with no product in it. The hero takes the room it needs
+   here instead, and the card's header and first row come up with it. */
+@media (max-width: 860px) {
+  /* The bars are fixed, so the page begins behind them: without the
+     min-height that used to centre this block, the top of the headline has
+     to be pushed clear of them by hand. */
+  .story .hero-h { min-height: 0; padding: calc(var(--pinned-top) + 18px) 24px 4px; }
+  .story .hero-h p { margin-top: 16px; }
+  .story .ctas { margin-top: 22px; }
+  .scene { min-height: 0; padding-bottom: 40px; }
+}
+/* A phone that is only 667 tall has to give up something, and it is the
+   air around the hero rather than the card. */
+@media (max-height: 720px) and (max-width: 860px) {
+  .story .hero-h { padding: calc(var(--pinned-top) + 4px) 24px 0; }
+  .story .hero-h p { margin-top: 10px; font-size: .95rem; }
+  .story .ctas { margin-top: 12px; gap: 10px; }
+  /* A 667 tall phone has about 580px of page under the bars. The caption
+     steps down a size so the card header still clears the fold. */
+  .cap { font-size: clamp(1.05rem, 3.2vw, 2rem); }
+  .js .story.film .caps { height: 3.7em; }
+}
 /* The measure was cut for a 48 character headline. At 56 it set in five
    lines with "business" and "had." alone, so the measure is wider now.
    text-wrap: pretty leaves the desktop rag exactly as plain wrapping sets
    it and only steps in on a phone, where it clears the four character last
    line. A browser that does not know the property wraps as before. */
 .story-h1 { font-weight: 600; font-size: clamp(2.5rem, 7vw, 5.4rem); line-height: 1.04; letter-spacing: -.035em; max-width: 16ch; margin: 0 auto; text-wrap: pretty; }
+/* Three lines rather than four on a phone, which is 42px of the screen the
+   menu card needs. The measure is the column here, not the 16ch, so the type
+   size is what decides where it breaks. */
+@media (max-width: 480px) {
+  .story-h1 { font-size: 2.2rem; }
+}
+/* A 360px column takes the headline back to four lines, so it steps down
+   once more at the narrowest phones still in common use. */
+@media (max-width: 380px) {
+  .story-h1 { font-size: 2rem; }
+}
 .story .hero-h p { margin: 22px auto 0; max-width: 34em; color: var(--band-soft); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
@@ -882,7 +919,7 @@ footer small { margin-left: auto; font-size: .8rem; }
    fill is the page at 92 percent over a blur, so a line of text passing
    under it is a smear of colour rather than something you can read. */
 .tabbar-wrap {
-  position: sticky; top: var(--pinned-top); z-index: 20;
+  position: sticky; top: var(--pinned-top); z-index: 20; isolation: isolate;
   background: var(--sticky-bg);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
@@ -895,15 +932,19 @@ footer small { margin-left: auto; font-size: .8rem; }
    scrollbar hidden there was nothing to show that the fourth one existed:
    it simply sat off the right edge. Wrapping shows all four at once. */
 @media (max-width: 760px) {
-  /* start, not stretch: a button centres its own label, so against a row
-     made taller by a label that wrapped, the single line ones floated and
-     the four stopped reading as one row */
-  .tabbar { display: grid; grid-template-columns: 1fr 1fr; align-items: start; overflow-x: visible; column-gap: 16px; row-gap: 0; }
-  /* As grid cells the tabs no longer need side padding to separate them, and
-     the longest label needs the room: at 14px either side it ran past its
-     own column. Wrapping keeps it inside, and the rule under the open tab
-     now measures its column rather than its text. */
-  .tabbar .tab { text-align: left; padding-left: 0; padding-right: 0; white-space: normal; }
+  /* The two by two grid above showed all four labels at once, and charged
+     135px of an 844px screen for it: a quarter of the phone was chrome on
+     every tab. One row costs 57px. The objection to a row was that a hidden
+     scrollbar left nothing to say the fourth tab existed, so the bar now
+     fades out at its right edge and the open tab is scrolled into view. */
+  .tabbar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 2px; }
+  .tabbar .tab { white-space: nowrap; flex: 0 0 auto; padding-left: 12px; padding-right: 12px; }
+  .tabbar .tab::after { left: 12px; right: 12px; }
+  .tabbar-wrap::after {
+    content: ""; position: absolute; right: 0; top: 0; bottom: 1px; width: 44px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), var(--sticky-bg) 72%);
+  }
 }
 .tab {
   flex: none; border: 0; background: none; cursor: pointer; white-space: nowrap;
@@ -918,6 +959,7 @@ footer small { margin-left: auto; font-size: .8rem; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
 .center-block { text-align: center; }
+.tile-cta { margin-top: 34px; }
 .center-block .pill { margin-top: 24px; }
 .big.small { font-size: clamp(1.6rem, 3vw, 2.4rem); }
 .sub.wide { max-width: 60em; margin-top: 28px; }
@@ -1125,7 +1167,14 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 
 /* ------------------------------------------------------------ pricing */
 .founding { max-width: none; margin-top: 44px; }
-.founding-h { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -.03em; margin-bottom: 14px; max-width: 22em; }
+/* The free months are the strongest sentence on the site and were set
+   smaller than the word "Pricing" above them. They read at the scale of the
+   figure they are worth now. */
+.founding-h {
+  font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 600; letter-spacing: -.035em;
+  line-height: 1.08; margin-bottom: 16px; max-width: 16em; color: var(--gold-ink);
+}
+.proofline { margin-top: 30px; max-width: 46em; }
 .founding p { color: var(--band-body); max-width: 58em; }
 /* The name sits above the number so the card says what you are buying
    before it says what it costs. "Let us talk" stands where a figure does,
@@ -1170,6 +1219,27 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .demo-form textarea { resize: vertical; min-height: 84px; }
 .demo-form input::placeholder, .demo-form textarea::placeholder { color: var(--field-ph); }
 .demo-form input:focus-visible, .demo-form select:focus-visible, .demo-form textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.demo-form .pillset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.demo-form .pillset legend {
+  padding: 0; font-size: .86rem; font-weight: 500; color: var(--field-label); margin-bottom: 7px;
+}
+.demo-form .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.demo-form .pills label { display: inline-flex; position: relative; gap: 0; }
+.demo-form .pills input {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+  opacity: 0; min-height: 0; padding: 0; border: 0; cursor: pointer;
+}
+.demo-form .pills span {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 60px; padding: 10px 18px; border-radius: 999px;
+  border: 1px solid var(--field-border); background: var(--field-bg); color: var(--field-ink);
+  font-size: .95rem; transition: background-color .16s var(--ease), border-color .16s var(--ease);
+}
+.demo-form .pills input:checked + span { background: var(--gold); border-color: var(--gold); color: #1D1D1F; font-weight: 500; }
+.demo-form .pills input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.demo-form .pills input:hover + span { border-color: var(--gold); }
+.form-reassure { grid-column: 1 / -1; margin: 2px 0 0; font-size: .92rem; color: var(--field-label); }
+.demo-form [aria-invalid="true"], .demo-form [aria-invalid="true"] + span { border-color: var(--miss); }
 .demo-form button[type="submit"] { grid-column: 1 / -1; justify-self: start; }
 .demo-form button[disabled] { opacity: .6; cursor: default; }
 #form-status { grid-column: 1 / -1; font-size: .92rem; color: var(--field-label); margin: 0; }
@@ -1297,12 +1367,12 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
    phone the bars take 83px and the film has to fit in what is left. The
    rows, the caption box and the gaps all come in a notch. */
 @media (max-height: 720px) and (max-width: 860px) {
-  .scene { gap: 14px; padding-bottom: 22px; }
+  .scene { gap: 10px; padding-bottom: 22px; }
   .menu { --rh: 28px; padding: 13px 15px 11px; }
   .menu .grp { margin: 9px 0 2px; }
   .cap { font-size: clamp(1.25rem, 3.2vw, 2rem); }
   .cap small { margin-top: 6px; }
-  .js .story.film .caps { height: 5em; }
+  .js .story.film .caps { height: 4.4em; }
   .weeks { margin-top: 8px; }
   .controls { margin-top: 9px; }
 }

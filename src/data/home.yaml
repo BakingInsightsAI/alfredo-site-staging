@@ -2,8 +2,7 @@
 
 hero:
   heading: "The in house consultant your business never had."
-  lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked."
-  note: "Works with the POS system you already use. Nothing to install."
+  lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
 
 # The story is a film of one week on a sample menu. Each caption names the
 # stage it belongs to by where the scroll has got to, and the menu below is
@@ -87,7 +86,8 @@ trust:
   href: "honesty.html"
 
 price:
-  body: "$300 a month for one location. The first 10 businesses get their first six months free."
+  body: "$300 a month for one location."
+  offer: "The first 10 businesses get their first six months free."
   link: "See pricing"
   href: "pricing.html"
 

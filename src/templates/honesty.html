@@ -43,6 +43,9 @@
       </div>
       {%- endfor %}
     </div>
+    {#- The quotation above is the high point of this page, so the ask goes
+        directly under it rather than two sections later. #}
+    <p class="tile-cta"><a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
   </div>
 </section>
 
@@ -50,7 +53,9 @@
   <div class="wrap center-block">
     <h2 class="big center">{{ h.cta_heading }}</h2>
     <p class="sub center">{{ h.cta_body }}</p>
-    <p><a class="textlink" href="pilot.html">{{ h.cta_link }}</a></p>
+    {#- This used to be a text link to the about page, which is where the
+        next link below already goes. #}
+    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
   </div>
 </section>
 {% endblock %}

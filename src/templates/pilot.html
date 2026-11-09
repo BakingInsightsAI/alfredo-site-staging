@@ -82,17 +82,22 @@
             <option>Other</option>
           </select>
         </label>
-        <label>Locations
-          <select name="locations" required>
-            <option value="" disabled selected>How many locations</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3 or more</option>
-          </select>
-        </label>
+        {#- Three taps became one: a dropdown costs a tap to open and a tap
+            to choose, and there are only three answers. #}
+        <fieldset class="pillset">
+          <legend>Locations</legend>
+          <div class="pills">
+            <label><input type="radio" name="locations" value="1" required><span>1</span></label>
+            <label><input type="radio" name="locations" value="2"><span>2</span></label>
+            <label><input type="radio" name="locations" value="3 or more"><span>3 or more</span></label>
+          </div>
+        </fieldset>
         <label class="full">Anything you want us to know (optional)
           <textarea name="message" rows="3" placeholder="Optional"></textarea>
         </label>
+        {#- What happens next, where the thumb already is, rather than above
+            a form that is taller than the screen. #}
+        <p class="form-reassure">{{ pilot.form_reassure }}</p>
         <button type="submit" class="pill pill-gold">{{ site.cta.label }}</button>
         <p id="form-status" role="status" aria-live="polite"></p>
       </form>
