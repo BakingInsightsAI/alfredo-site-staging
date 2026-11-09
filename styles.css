@@ -1231,6 +1231,83 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
   line-height: 1.08; margin-bottom: 16px; max-width: 16em; color: var(--gold-ink);
 }
 .proofline { margin-top: 30px; max-width: 46em; color: var(--gold-ink); }
+
+/* Three text cards stated three sums and left the reader to hold them in
+   their head. Two of them are really comparable once both are monthly, so
+   those two are drawn on one scale and the third stays a sentence. */
+/* One plate taken apart: price, what it costs, what is left. The columns
+   are the argument, so they line up and the figures are tabular. */
+/* Try it: one row, two choices, and the same four week bars and verdict
+   chips the cards around it use. Nothing new is claimed; the two outcomes
+   are the two samples already printed on this tab. */
+.tryit { margin-bottom: 26px; }
+.tryit-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--band-hair);
+}
+.tryit-name { font-weight: 500; }
+.tryit-price { display: inline-flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+.tryit-price .amt { position: relative; }
+.tryit-price .amt.struck::after {
+  content: ""; position: absolute; left: -2px; right: -2px; top: 50%;
+  height: 1.5px; background: var(--miss); border-radius: 2px;
+}
+.tryit-new { color: var(--gold-ink); font-weight: 600; }
+.tryit-choices { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.tryit-btn[disabled] { opacity: .5; cursor: default; }
+.tryit-btn[aria-pressed="true"] { border-color: var(--gold); }
+.tryit-out { margin-top: 22px; }
+.tryit-out .weekbars { margin-top: 0; }
+#tryitAgain { margin-top: 14px; }
+
+.plate-card { margin-bottom: 40px; }
+.plate { margin-top: 4px; }
+.plate-cols, .plate-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, minmax(56px, auto));
+  gap: 10px 14px; align-items: baseline; padding: 11px 0;
+}
+.plate-cols { padding: 0 0 6px; font-size: .76rem; color: var(--band-dim); border-bottom: 1px solid var(--band-hair); }
+.plate-row { border-bottom: 1px solid var(--band-hair); }
+.plate-row:last-child { border-bottom: 0; }
+.plate-n { text-align: right; font-variant-numeric: tabular-nums; }
+.plate-row.dish .plate-name, .plate-row.dish .plate-n { font-weight: 500; }
+.plate-row.add .plate-name { padding-left: 14px; color: var(--band-soft); }
+.plate-row.add .plate-name::before { content: "+"; margin-left: -14px; padding-right: 6px; color: var(--band-dim); }
+.plate-row.add .plate-n { color: var(--band-soft); }
+.plate-row.total { border-top: 1px solid var(--band-rule); padding-top: 14px; font-weight: 600; }
+.plate-n.cost { color: var(--band-dim); }
+.plate-n.make { color: var(--gold-ink); font-weight: 600; }
+@media (max-width: 520px) {
+  .plate-cols, .plate-row { grid-template-columns: minmax(0, 1fr) repeat(3, minmax(44px, auto)); gap: 8px 8px; font-size: .92rem; }
+  .plate-cols { font-size: .7rem; }
+}
+
+.costbars { margin-top: 40px; display: grid; gap: 26px; max-width: 48em; }
+.costbar-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 14px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.costbar-name { font-weight: 600; font-size: 1.05rem; letter-spacing: -.02em; }
+.costbar-track {
+  position: relative; height: 18px; border-radius: 9px;
+  background: var(--rule); overflow: hidden;
+}
+.costbar-fill {
+  position: absolute; top: 0; bottom: 0; left: var(--from); border-radius: 9px;
+  width: 0; background: var(--soft); opacity: .5;
+}
+.costbar.ours .costbar-fill { background: var(--gold); opacity: 1; }
+.js #costbars.drawn .costbar-fill { width: calc(var(--to) - var(--from)); transition: width .7s var(--ease); }
+.costbar-figure { font-weight: 600; font-size: .98rem; letter-spacing: -.01em; white-space: nowrap; }
+.costbar.ours .costbar-figure { color: var(--gold-ink); }
+.costbar-note { margin-top: 8px; color: var(--soft); font-size: .92rem; max-width: 32em; }
+section.dark .costbar-note, section.tint .costbar-note { color: var(--band-soft); }
+@media (prefers-reduced-motion: reduce) {
+  .js #costbars .costbar-fill { width: calc(var(--to) - var(--from)); }
+  .js #costbars.drawn .costbar-fill { transition: none; }
+}
+/* With no script at all the bars are drawn rather than empty. */
+html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
 .founding p { color: var(--band-body); max-width: 32em; }
 /* The name sits above the number so the card says what you are buying
    before it says what it costs. "Let us talk" stands where a figure does,

@@ -39,11 +39,23 @@
   <div class="wrap">
     <p class="eyebrow">{{ p.compare_eyebrow }}</p>
     <h2 class="big">{{ p.compare_heading }}</h2>
-    <div class="tiles">
-      {%- for c in p.compare %}
-      <div class="tile reveal"><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>
+    {#- Two bars on one monthly scale, with the figures printed on them. The
+        widths come from the numbers above, so the drawing cannot drift from
+        the text. #}
+    <div class="costbars" id="costbars" role="img"
+         aria-label="What the alternatives cost each month: a big data platform about $2,500, back office software $330 to $750 per location, Alfredo $300.">
+      {%- for c in p.compare_bars %}
+      <div class="costbar{% if c.get('ours') %} ours{% endif %}">
+        <p class="costbar-head"><span class="costbar-name">{{ c.name }}</span><b class="costbar-figure">{{ c.figure }}</b></p>
+        <div class="costbar-track">
+          <span class="costbar-fill"
+                style="--from: {{ (100 * (c.low if c.get('high') else 0) / p.compare_scale) | round(2) }}%; --to: {{ (100 * (c.get('high') or c.low) / p.compare_scale) | round(2) }}%"></span>
+        </div>
+        <p class="costbar-note">{{ c.note }}</p>
+      </div>
       {%- endfor %}
     </div>
+    <p class="sub">{{ p.compare_line }}</p>
     <p class="sub wide">{{ p.compare_close }}</p>
   </div>
 </section>

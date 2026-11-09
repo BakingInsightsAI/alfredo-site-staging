@@ -253,6 +253,13 @@
     });
   })();
 
+  /* the cost bars are on pricing, so they are watched from here rather
+     than from the product page module */
+  (function () {
+    var bars = $('#costbars');
+    if (bars) window.Alfredo.onceInView(bars, function () { bars.classList.add('drawn'); }, 0.3);
+  })();
+
   /* -------------------------------------------------- reveal once, in view */
   var revealables = $$('.reveal');
   if (revealables.length) {
@@ -287,6 +294,23 @@
   var $ = function (id) { return document.getElementById(id); };
   var menu = $('menu'), scene = $('scene');
   if (!menu || !scene) return;
+
+  /* Everything below is set up when the film is near the window rather than
+     at load. site.js is deferred already, so this is about the work, not the
+     fetch: measuring the card, wiring the controls and taking the first
+     frame all happen while the visitor is still reading the hero. The margin
+     is generous, so the film is always ready before it is reached. */
+  if ('IntersectionObserver' in window) {
+    var startObs = new IntersectionObserver(function (es) {
+      if (!es[es.length - 1].isIntersecting) return;
+      startObs.disconnect();
+      build();
+    }, { rootMargin: '400px 0px' });
+    startObs.observe(scene);
+  } else {
+    build();
+  }
+  function build() {
 
   story.classList.add('film');
 
@@ -567,6 +591,7 @@
       paint(); tick();
     });
   }
+  }
 })();
 
 /* =====================================================================
@@ -644,6 +669,84 @@
     var name = (e.state && e.state.tab) || inner[(location.hash || '').slice(1)] || names[0];
     apply(name, false);
   });
+
+  /* ------------------------------------------- try it on the sample */
+  /* Both outcomes are the two samples printed either side of this card, so
+     pressing a button shows the visitor a result that is already on the
+     page rather than inventing one. With no script the choices are not
+     rendered as anything a visitor can press and the cards above still
+     carry both results. */
+  (function () {
+    var card = document.getElementById('tryit');
+    if (!card) return;
+    var choices = document.getElementById('tryitChoices');
+    var out = document.getElementById('tryitOut');
+    var bars = document.getElementById('tryitBars');
+    var newPrice = document.getElementById('tryitNew');
+    var oldPrice = document.getElementById('tryitPrice');
+    var line = document.getElementById('tryitLine');
+    var verdicts = document.getElementById('tryitVerdicts');
+    var say = document.getElementById('tryitSay');
+    var again = document.getElementById('tryitAgain');
+
+    function reset() {
+      out.hidden = true;
+      bars.innerHTML = ''; bars.classList.remove('drawn');
+      newPrice.hidden = true; newPrice.textContent = '';
+      oldPrice.classList.remove('struck');
+      line.textContent = '';
+      say.textContent = '';
+      A.$$('.vd', verdicts).forEach(function (v) { v.classList.remove('on'); });
+      A.$$('.tryit-btn', choices).forEach(function (b) { b.disabled = false; b.setAttribute('aria-pressed', 'false'); });
+    }
+
+    function run(btn) {
+      reset();
+      var weeks = btn.getAttribute('data-weeks').split(',');
+      var kinds = (btn.getAttribute('data-kinds') || '').split(',');
+      var verdict = btn.getAttribute('data-verdict');
+      var text = btn.getAttribute('data-line');
+      btn.setAttribute('aria-pressed', 'true');
+      A.$$('.tryit-btn', choices).forEach(function (b) { b.disabled = true; });
+      oldPrice.classList.add('struck');
+      newPrice.textContent = btn.getAttribute('data-new');
+      newPrice.hidden = false;
+      out.hidden = false;
+
+      weeks.forEach(function (h, i) {
+        var s = document.createElement('span');
+        var v = parseInt(h, 10);
+        s.className = 'wb ' + (kinds[i] || 'ok');
+        s.style.setProperty('--h', v + '%');
+        s.style.transitionDelay = (i * 90) + 'ms';
+        bars.appendChild(s);
+      });
+      /* the bars already know how to grow: .weekbars.drawn is the same rule
+         the measured card uses, and it is already inert under reduced
+         motion, so there is no second mechanism to keep in step */
+      requestAnimationFrame(function () { bars.classList.add('drawn'); });
+
+      var land = function () {
+        A.$$('.vd', verdicts).forEach(function (v) {
+          v.classList.toggle('on', v.textContent.trim() === verdict);
+        });
+        line.textContent = text;
+        line.classList.toggle('bad', verdict === 'Backfired');
+        say.textContent = verdict + '. ' + text;
+      };
+      if (A.reduce) land(); else setTimeout(land, 640);
+    }
+
+    A.$$('.tryit-btn', choices).forEach(function (b) {
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { run(b); });
+    });
+    if (again) again.addEventListener('click', function () {
+      reset();
+      var first = choices.querySelector('.tryit-btn');
+      if (first) first.focus();
+    });
+  })();
 
   /* ---------------------------------------------------- chat demo */
   var chips = A.$$('#chatChips .chip-q'), body = document.getElementById('chatBody');

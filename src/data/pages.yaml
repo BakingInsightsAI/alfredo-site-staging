@@ -54,13 +54,26 @@ pricing:
   proof_link: "Why you can trust it"
   compare_eyebrow: "For comparison"
   compare_heading: "What the alternatives cost."
-  compare:
+  # Only the two figures that are really comparable are drawn, both put on a
+  # monthly basis so one scale holds them. A consultant is a one off fee, so
+  # it stays a line of text rather than a bar pretending to be monthly.
+  compare_scale: 2500
+  compare_bars:
     - name: "A big data platform"
-      body: "Starts around $30,000 a year, and you still need someone to build the reports."
+      figure: "about $2,500 a month"
+      note: "From around $30,000 a year, and you still need someone to build the reports."
+      low: 2500
     - name: "Back office software"
-      body: "$330 to $750 per location a month. Great for invoices and books. It tells you what you spent, not what to try next."
-    - name: "A consultant"
-      body: "Thousands for one report that is out of date the day you get it."
+      figure: "$330 to $750 a month, per location"
+      note: "Great for invoices and books. It tells you what you spent, not what to try next."
+      low: 330
+      high: 750
+    - name: "Alfredo"
+      figure: "$300 a month"
+      note: "Everything included, one location."
+      low: 300
+      ours: true
+  compare_line: "A consultant is thousands for one report that is out of date the day you get it, so it is not on this scale."
   compare_close: "Alfredo works with the POS you already use, tells you what to try next, and then tells you whether it worked."
   faq_eyebrow: "Questions"
   faq_heading: "The things operators ask first."

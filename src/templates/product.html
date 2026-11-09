@@ -109,6 +109,38 @@
         <p class="viz-result">Four weeks later: about <b data-count>$9.80</b> more a week, after what you would have made anyway.</p>
       </div>
 
+      {#- The visitor makes the choice this tab is describing. Both outcomes
+          are the samples from the two cards around it, so nothing new is
+          claimed, and the label says so before anything is pressed. #}
+      <div class="vizcard glass tryit" id="tryit">
+        <div class="viz-head">
+          <h3>{{ product.tryit.heading }}</h3>
+          <span class="sample">{{ product.tryit.label }}</span>
+        </div>
+        <p class="tryit-row">
+          <span class="tryit-name">{{ product.tryit.item }}</span>
+          <span class="tryit-price"><span class="amt" id="tryitPrice">{{ product.tryit.price }}</span><span class="tryit-new" id="tryitNew" hidden></span></span>
+        </p>
+        <div class="tryit-choices" id="tryitChoices">
+          {%- for o in product.tryit.options %}
+          <button type="button" class="pill pill-glass tryit-btn" data-k="{{ o.key }}"
+                  data-new="{{ o.new }}" data-weeks="{{ o.weeks | join(',') }}" data-kinds="{{ o.kinds | join(',') }}"
+                  data-verdict="{{ o.verdict }}" data-line="{{ o.line }}">{{ o.button }}</button>
+          {%- endfor %}
+        </div>
+        <div class="tryit-out" id="tryitOut" hidden>
+          <div class="weekbars" id="tryitBars" aria-hidden="true"></div>
+          <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
+          <div class="verdicts" id="tryitVerdicts" role="group" aria-label="Verdict for this sample trial">
+            <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd">Backfired</span>
+          </div>
+          <p class="viz-result" id="tryitLine"></p>
+          <button type="button" class="textbtn" id="tryitAgain">{{ product.tryit.again }}</button>
+        </div>
+        <p class="viz-note">{{ product.tryit.prompt }}</p>
+        <p class="sr-only" id="tryitSay" role="status" aria-live="polite"></p>
+      </div>
+
       <div class="vizcard glass">
         <div class="viz-head">
           <h3>Every change ends in a verdict</h3>
@@ -162,6 +194,40 @@
     <div class="wrap">
       <h2 class="big">Is your menu making you money?</h2>
       <p class="sub">See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</p>
+
+      {#- The tab asked a question about money and then showed none. This is
+          one plate, taken apart. Every figure is invented for the
+          illustration, which is why the card says so. #}
+      <div class="vizcard plate-card">
+        <div class="viz-head">
+          <h3>One plate, taken apart</h3>
+          <span class="sample">sample data</span>
+        </div>
+        <div class="plate" role="img" aria-label="{{ product.plate.aria }}">
+          <p class="plate-cols" aria-hidden="true"><span></span><span>price</span><span>costs you</span><span>you make</span></p>
+          <p class="plate-row dish">
+            <span class="plate-name">{{ product.plate.dish }}</span>
+            <span class="plate-n">{{ product.plate.price }}</span>
+            <span class="plate-n cost">{{ product.plate.cost }}</span>
+            <span class="plate-n make">{{ product.plate.make }}</span>
+          </p>
+          {%- for a in product.plate.addons %}
+          <p class="plate-row add">
+            <span class="plate-name">{{ a.name }}</span>
+            <span class="plate-n">{{ a.price }}</span>
+            <span class="plate-n cost">{{ a.cost }}</span>
+            <span class="plate-n make">{{ a.make }}</span>
+          </p>
+          {%- endfor %}
+          <p class="plate-row total">
+            <span class="plate-name">{{ product.plate.total_label }}</span>
+            <span class="plate-n">{{ product.plate.total_price }}</span>
+            <span class="plate-n cost">{{ product.plate.total_cost }}</span>
+            <span class="plate-n make">{{ product.plate.total_make }}</span>
+          </p>
+        </div>
+        <p class="viz-note">{{ product.plate.note }}</p>
+      </div>
       <div class="tiles">
         {%- for c in product.menu_cards %}
         <div class="tile reveal"{% if c.get('anchor') %} id="{{ c.anchor }}"{% endif %}><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>

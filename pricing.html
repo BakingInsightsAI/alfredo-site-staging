@@ -97,11 +97,34 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <div class="wrap">
     <p class="eyebrow">For comparison</p>
     <h2 class="big">What the alternatives cost.</h2>
-    <div class="tiles">
-      <div class="tile reveal"><h3>A big data platform</h3><span>Starts around $30,000 a year, and you still need someone to build the reports.</span></div>
-      <div class="tile reveal"><h3>Back office software</h3><span>$330 to $750 per location a month. Great for invoices and books. It tells you what you spent, not what to try next.</span></div>
-      <div class="tile reveal"><h3>A consultant</h3><span>Thousands for one report that is out of date the day you get it.</span></div>
+    <div class="costbars" id="costbars" role="img"
+         aria-label="What the alternatives cost each month: a big data platform about $2,500, back office software $330 to $750 per location, Alfredo $300.">
+      <div class="costbar">
+        <p class="costbar-head"><span class="costbar-name">A big data platform</span><b class="costbar-figure">about $2,500 a month</b></p>
+        <div class="costbar-track">
+          <span class="costbar-fill"
+                style="--from: 0.0%; --to: 100.0%"></span>
+        </div>
+        <p class="costbar-note">From around $30,000 a year, and you still need someone to build the reports.</p>
+      </div>
+      <div class="costbar">
+        <p class="costbar-head"><span class="costbar-name">Back office software</span><b class="costbar-figure">$330 to $750 a month, per location</b></p>
+        <div class="costbar-track">
+          <span class="costbar-fill"
+                style="--from: 13.2%; --to: 30.0%"></span>
+        </div>
+        <p class="costbar-note">Great for invoices and books. It tells you what you spent, not what to try next.</p>
+      </div>
+      <div class="costbar ours">
+        <p class="costbar-head"><span class="costbar-name">Alfredo</span><b class="costbar-figure">$300 a month</b></p>
+        <div class="costbar-track">
+          <span class="costbar-fill"
+                style="--from: 0.0%; --to: 12.0%"></span>
+        </div>
+        <p class="costbar-note">Everything included, one location.</p>
+      </div>
     </div>
+    <p class="sub">A consultant is thousands for one report that is out of date the day you get it, so it is not on this scale.</p>
     <p class="sub wide">Alfredo works with the POS you already use, tells you what to try next, and then tells you whether it worked.</p>
   </div>
 </section>

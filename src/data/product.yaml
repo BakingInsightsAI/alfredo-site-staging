@@ -38,6 +38,53 @@ board_types:
   - name: "How you run the floor"
     body: "Happy hour times, busy and slow hours, and how long tables stay."
 
+# The two outcomes a visitor can pick on the this week tab. They mirror the
+# two cards above them: the 50 cent move is the House Lager that worked, the
+# dollar move is the Garlic Fries that did not. Every figure is invented for
+# the illustration and the card says so.
+tryit:
+  label: "Sample. Try it."
+  heading: "Pick a change and see how the four weeks go"
+  item: "House Lager"
+  price: "$6.50"
+  prompt: "Nothing here is about your own business. These are the same two sample results as the cards above."
+  again: "Start again"
+  options:
+    - key: "worked"
+      button: "Raise 50 cents"
+      new: "$7.00"
+      weeks: [78, 92, 70, 84]
+      # green is on target, red is below. The key under the card above says
+      # so, and a falling week is below, not missing.
+      kinds: ["ok", "ok", "ok", "ok"]
+      verdict: "Worked"
+      line: "Four weeks later: about $9.80 more a week, after what you would have made anyway."
+    - key: "backfired"
+      button: "Raise one dollar"
+      new: "$7.50"
+      weeks: [64, 38, 30, 26]
+      kinds: ["low", "low", "low", "low"]
+      verdict: "Backfired"
+      line: "Orders fell away and the week came out behind. It went back to $6.50 in minutes, and the board said so."
+
+# One plate, broken down. Every figure here is invented for the illustration,
+# which is why the card carries a sample label. The sums are consistent:
+# price minus cost is what you make, on each line and on the total.
+plate:
+  dish: "House Burger"
+  price: "$11.00"
+  cost: "$4.10"
+  make: "$6.90"
+  addons:
+    - { name: "Add bacon", price: "$2.00", cost: "$0.70", make: "$1.30" }
+    - { name: "Add fries", price: "$3.50", cost: "$1.15", make: "$2.35" }
+  total_label: "Plate with both"
+  total_price: "$16.50"
+  total_cost: "$5.95"
+  total_make: "$10.55"
+  note: "The dish is not the whole story. The two add ons are 35 percent of what this plate makes."
+  aria: "Sample plate breakdown. House Burger sells for 11 dollars, costs 4 dollars 10 to make, and makes 6 dollars 90. Add bacon sells for 2 dollars, costs 70 cents, makes 1 dollar 30. Add fries sells for 3 dollars 50, costs 1 dollar 15, makes 2 dollars 35. The plate with both sells for 16 dollars 50, costs 5 dollars 95, and makes 10 dollars 55."
+
 # The first card carries the cost anchor, because a link to #cost is a link
 # to the breakdown of what a dish costs you.
 menu_cards:
