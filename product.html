@@ -61,8 +61,8 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
     <p class="eyebrow">Product</p>
-    <h1 class="big">Three questions Alfredo answers every week.</h1>
-    <p class="sub">Alfredo is one assistant with three standing jobs. Each one answers a question you already ask yourself.</p>
+    <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
+    <p class="sub">One assistant, three questions you already ask yourself.</p>
   </div>
 </section>
 
@@ -74,13 +74,13 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
               aria-selected="true" tabindex="0">Overview</button>
       <button class="tab" id="tab-board" role="tab" type="button"
               data-t="board" aria-controls="p-board"
-              aria-selected="false" tabindex="-1">The weekly board</button>
+              aria-selected="false" tabindex="-1">This week</button>
       <button class="tab" id="tab-menu" role="tab" type="button"
               data-t="menu" aria-controls="p-menu"
-              aria-selected="false" tabindex="-1">Menu and margins</button>
+              aria-selected="false" tabindex="-1">Your menu</button>
       <button class="tab" id="tab-intel" role="tab" type="button"
               data-t="intel" aria-controls="p-intel"
-              aria-selected="false" tabindex="-1">Guests and competition</button>
+              aria-selected="false" tabindex="-1">Your guests and neighbors</button>
     </div>
   </div>
 </div>
@@ -93,19 +93,19 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
       <h2 class="sr-only">Three questions Alfredo answers</h2>
       <div class="tiles">
         <div class="tile glass tactile reveal">
-          <h3>What should I do this week, and how do I know it worked?</h3>
-          <span>The weekly board is a short list of recommendations from your own data, and every one you try comes back with an honest verdict: worked, no effect, or backfired.</span>
-          <button class="textbtn" type="button" data-go="board">Explore the weekly board</button>
+          <h3>What should I change this week, and did it work?</h3>
+          <span>Alfredo hands you a short list of small changes worth trying. Try one, and it tells you honestly whether it worked, did nothing, or backfired.</span>
+          <button class="textbtn" type="button" data-go="board">See this week</button>
         </div>
         <div class="tile glass tactile reveal">
           <h3>Is my menu making me money?</h3>
-          <span>The menu lab lets you test changes safely, and cost intelligence connects what each dish costs to make with what it sells for.</span>
-          <button class="textbtn" type="button" data-go="menu">Explore menu and margins</button>
+          <span>See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</span>
+          <button class="textbtn" type="button" data-go="menu">See your menu</button>
         </div>
         <div class="tile glass tactile reveal">
-          <h3>Who is in my room, and what is happening on my street?</h3>
-          <span>Customer intelligence finds your confirmed guests and regulars from data you already have. Competitive intel watches the venues around you.</span>
-          <button class="textbtn" type="button" data-go="intel">Explore guests and competition</button>
+          <h3>Who is coming in, and what is happening down the street?</h3>
+          <span>Know who your regulars are and what they spend. Keep an eye on what nearby places charge and what their customers keep saying.</span>
+          <button class="textbtn" type="button" data-go="intel">See your guests and neighbors</button>
         </div>
       </div>
     </div>
@@ -116,10 +116,8 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="wrap split">
       <div>
         <p class="eyebrow">Ask Alfredo</p>
-        <h2 class="big">Got a question? Just ask.</h2>
-        <p class="sub">A chat panel lives inside every tab. Ask how the week is going, why a number moved, or what to try next, and Alfredo answers in plain language from your own data. Every chart and every recommendation has an ask button right next to it.</p>
-        <p class="sub">And when your data cannot answer something, Alfredo says so instead of guessing. Same rule everywhere.</p>
-        <p class="sub">Ask it cost questions too, like how profitable an item really is. It answers from your own data and shows the queries it ran to get there. If it cannot verify a number, it says so instead of estimating.</p>
+        <h2 class="big">Ask it anything.</h2>
+        <p class="sub">Ask how the week went, why Friday was slower, or what to try next. Alfredo answers in plain words, from your own numbers. If it does not know, it says so.</p>
       </div>
       <div class="chatcard glass tactile">
         <div class="chat-head">
@@ -131,8 +129,8 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         </div>
         <div class="chat-chips" id="chatChips">
           <button class="chip-q" type="button" data-a="Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.">How am I doing this week?</button>
-          <button class="chip-q" type="button" data-a="Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list ranked by profit instead of popularity?">What are my best sellers?</button>
-          <button class="chip-q" type="button" data-a="Three recommendations on this week's board: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?">What do you recommend?</button>
+          <button class="chip-q" type="button" data-a="Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?">What are my best sellers?</button>
+          <button class="chip-q" type="button" data-a="Three things on this week's list: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?">What do you recommend?</button>
         </div>
         <p class="chat-input">Ask about your business</p>
       </div>
@@ -150,10 +148,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 <div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0" hidden>
   <section class="light" id="board">
     <div class="wrap">
-      <p class="eyebrow">How Alfredo works</p>
-      <h2 class="big">It hands you the recommendation, then grades it.</h2>
-      <p class="sub">Dashboards show you charts and leave the thinking to you. Alfredo reads your existing POS system and hands you a short list of recommendations worth trying. When you try one, it measures what actually happened and tells you straight whether it worked.</p>
-      <p class="sub">No new hardware, nothing to install, no staff retraining. Alfredo connects to the POS system you already run.</p>
+      <p class="eyebrow">This week</p>
+      <h2 class="big">A short list every week, and an honest answer every time.</h2>
+      <p class="sub">No charts to decode. Just a few small changes worth trying, like a price, a pairing, or a happy hour time. Try one, and four weeks later Alfredo tells you what really happened.</p>
     </div>
   </section>
 
@@ -162,12 +159,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="wrap">
       <div class="vizcard glass" id="measured">
         <div class="viz-head">
-          <h3>What "measured" actually looks like</h3>
+          <h3>We raised the House Lager by 50 cents.</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-tags"><span class="chip">Marked done</span><span class="chip">Pricing</span></p>
-        <p class="viz-title">Raise House Lager from $6.50 to $7.00</p>
-        <p class="viz-note">Projected +$11.40/wk if it holds. Here is what the weeks actually said:</p>
         <div class="weekbars" id="weekbars" aria-hidden="true">
           <span class="wb ok" style="--h:78%"></span>
           <span class="wb ok" style="--h:92%"></span>
@@ -176,8 +170,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
         <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
-        <p class="viz-result">Measured: +$9.80/wk attributable</p>
-        <p class="viz-note">Compared against a control item, with what you would have made anyway subtracted out. Measured under projection, and the board says so.</p>
+        <p class="viz-result">Four weeks later: about $9.80 more a week, after what you would have made anyway.</p>
       </div>
 
       <div class="vizcard glass">
@@ -185,15 +178,11 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <h3>Every change ends in a verdict</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="nopeek">While a test is running, no interim results are shown. Checking results mid test inflates false positives, so Alfredo does not allow it.</p>
-        <p class="viz-tags"><span class="chip">Menu trial</span><span class="chip">completed</span></p>
-        <p class="viz-title">Reprice Garlic Fries from $5.50 to $6.50</p>
+        <p class="nopeek">No sneak peeks. Results stay hidden until the test is done, so nobody calls it early. Not even us.</p>
         <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
           <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
         </div>
-        <p class="viz-note">Units fell 22% and net revenue came out $41/wk below baseline. The dollar jump was too big for this item.</p>
-        <p class="viz-result bad">Rolled back to $5.50.</p>
-        <p class="viz-note">The miss is on the record where you can see it. A tool that cannot say backfired cannot be trusted when it says worked.</p>
+        <p class="viz-note">A one dollar jump on Garlic Fries cost more orders than it was worth. It went back to $5.50 in minutes, and the board said so.</p>
       </div>
     </div>
   </section>
@@ -207,13 +196,13 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
   <section class="tint">
     <div class="wrap">
-      <p class="eyebrow">What lands on your board</p>
-      <h2 class="big">Four kinds of recommendations, one short list.</h2>
+      <p class="eyebrow">What lands on your list</p>
+      <h2 class="big">Four kinds of changes.</h2>
       <div class="tiles four">
-        <div class="tile reveal"><h3>Pricing</h3><span>Which items can carry a price move, which cannot, and a built in way to prove it on one item before you commit the whole menu.</span></div>
-        <div class="tile reveal"><h3>Promotions</h3><span>Bundles and pairings pulled from your real baskets, with the co order evidence attached. Not your best seller. The pairing you would not have guessed.</span></div>
-        <div class="tile reveal"><h3>Positioning</h3><span>Where each item sits on your menu and in your market: highlight the hidden gems, dim the underperformers, watch the gaps your competitors leave open.</span></div>
-        <div class="tile reveal"><h3>Operations</h3><span>Table time, dayparts, happy hour economics, item availability. Where the floor and the data disagree, you find out early.</span></div>
+        <div class="tile reveal"><h3>Prices</h3><span>Which items can handle a small price bump, and which cannot.</span></div>
+        <div class="tile reveal"><h3>Pairings</h3><span>What your guests already like together, and what to suggest with it.</span></div>
+        <div class="tile reveal"><h3>Menu placement</h3><span>What to show off on the menu and what to quietly move down.</span></div>
+        <div class="tile reveal"><h3>How you run the floor</h3><span>Happy hour times, busy and slow hours, and how long tables stay.</span></div>
       </div>
     </div>
   </section>
@@ -232,35 +221,21 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
 <!-- ============================ MENU ============================ -->
 <div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0" hidden>
-  <section class="light" id="menulab">
+  <section class="light" id="menu">
     <div class="wrap">
-      <p class="eyebrow">The menu lab</p>
-      <h2 class="big">Your menu is a draft. Treat it like one.</h2>
-      <p class="sub">Menu Advisor is a working copy of your menu you can experiment on. Drag items, highlight, dim, badge, reprice, build bundles. Every suggestion arrives with its evidence, and any edit can become a small, measured trial in four clicks.</p>
+      <h2 class="big">Is your menu making you money?</h2>
+      <p class="sub">See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</p>
       <div class="tiles">
-        <div class="tile reveal"><h3>Suggestions with receipts</h3><span>Up to ten at a time, each carrying its evidence: co order lift, competitor prices, margin math, verbatim lines from your own reviews.</span></div>
-        <div class="tile reveal"><h3>Four clicks to a fair trial</h3><span>Pick the item, pick the change, pick a control, pick a duration. Alfredo proposes control items. You decide.</span></div>
-        <div class="tile reveal"><h3>An honest scoreboard</h3><span>Your edits tally into estimated impact, and the scoreboard keeps estimates and measured results clearly apart. They never blend.</span></div>
+        <div class="tile reveal" id="cost"><h3>Where the money goes</h3><span>Pick any dish and see what it really costs you, ingredient by ingredient.</span></div>
+        <div class="tile reveal"><h3>What to keep an eye on</h3><span>See which ingredients would hurt most if their price jumped.</span></div>
+        <div class="tile reveal"><h3>Costs that crept up</h3><span>When cheese gets more expensive but your menu price stays the same, Alfredo notices and tells you what it is costing you each week.</span></div>
+        <div class="tile reveal"><h3>Mistakes caught early</h3><span>On day one with a real client, Alfredo found a cost that was off by 1,370 times, and asked before changing anything.</span></div>
+        <div class="tile reveal"><h3>Try it small first</h3><span>Test a new price or a new spot on the menu with one item before you change the whole menu.</span></div>
       </div>
       <div class="tile roadmap reveal">
-        <p class="eyebrow">On the roadmap</p>
+        <p class="eyebrow">Coming later</p>
         <h3>Live on your digital menu</h3>
         <span>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark" id="cost">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="eyebrow">Cost intelligence</p>
-      <h2 class="big">You know what you sold. Do you know what you made?</h2>
-      <p class="sub">For businesses that share their recipe and ingredient costs, Alfredo adds a second layer: it connects what each dish costs to make with what it sells for, turning sales analytics into margin intelligence.</p>
-      <div class="tiles two">
-        <div class="tile reveal"><h3>Where each dish's money goes</h3><span>Click any item and see its cost ingredient by ingredient: which single ingredient dominates, what packaging adds, and when each cost was last confirmed. Every cost carries its date, so you always know how fresh the number is.</span></div>
-        <div class="tile reveal"><h3>The worry list, before the worry</h3><span>Alfredo shows the ingredients that drive your menu wide costs, what a 10 percent price rise in each would cost you per month, and how volatile each has been over the past year.</span></div>
-        <div class="tile reveal"><h3>Where costs rose but prices did not</h3><span>The repricing queue finds items whose ingredient costs climbed while menu prices stood still, quantifies the weekly margin bleed, and feeds the worst cases into the weekly board. It shows the mirror too: where costs fell and margins quietly improved.</span></div>
-        <div class="tile reveal"><h3>It audits the data itself</h3><span>Items selling below cost, suspicious entries, stale costs, sudden spikes. On day one with a real client's cost data, Alfredo flagged a 1,370 times data entry error. It asked the operator instead of silently fixing it. Every finding is a question you confirm or dismiss.</span></div>
       </div>
     </div>
   </section>
@@ -268,10 +243,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <section class="light">
     <div class="wrap">
       <div class="tile drift">
-        <h3>Does your website still match your till?</h3>
-        <span>Prices change at the till and the website never hears about it, or the other way around. Customers see one price and pay another, and nobody notices because cross checking them is nobody's job. Alfredo compares your published menu against what customers actually pay and flags every gap with the evidence: in real client data it found website prices that had been stale for months, one off by 40 to 50 percent, and one website price the till had never started charging. It never changes a price anywhere. It flags; you decide.</span>
+        <h3>Does your website still match your register?</h3>
+        <span>Prices change at the register and the website never gets updated, or the other way around. Alfredo spots the difference before your guests do.</span>
       </div>
-      <p class="sub wide">With cost data connected, every recommendation on the board argues from real margins: a price change shows cost, price, and margin so you can see it is safe; a promotion states what the giveaway costs and the exact volume needed to break even; a cross sell states the margin each attachment adds. The same add on data doubles as menu development evidence: which extras your guests already vote for with their orders, and what each one earns, for when you are deciding what to build next. Alfredo recommends and measures. You decide.</p>
     </div>
   </section>
 
@@ -279,7 +253,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="intel">Who is in my room, and what is happening on my street?</button>
+      <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
       <h2 class="big center">Run it on your own menu.</h2>
       <p class="sub center">Connect your recipe and ingredient costs and see your own margins on the board.</p>
       <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
@@ -291,10 +265,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 <div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0" hidden>
   <section class="light" id="regulars">
     <div class="wrap">
-      <p class="eyebrow">Customer intelligence</p>
-      <h2 class="big">Your regulars, found in your own data.</h2>
-      <p class="sub">Alfredo works out who your confirmed guests and regulars are from the data you already have: your loyalty program if you run one, and the transaction data itself if you do not. Either way, no new app to launch and no sign up sheet at the host stand. See who keeps the lights on, how regulars differ from occasional visitors, and which patterns deserve a nudge.</p>
-      <p class="sub">And in keeping with the numbers rule: only confirmed guests are counted. Alfredo never inflates the panel with estimated crowd sizes.</p>
+      <p class="eyebrow">Your guests</p>
+      <h2 class="big">Know who walks in, and who is down the street.</h2>
+      <p class="sub">Know who your regulars are and what they spend, without asking anyone to sign up for anything. Only real, confirmed guests are counted.</p>
 
       <div class="vizcard">
         <div class="viz-head">
@@ -317,10 +290,10 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
       <div class="vizcard">
         <div class="viz-head">
-          <h3>Your guests, sorted into segments you can name</h3>
+          <h3>Your guest groups</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-note">Alfredo groups your confirmed guests by how they actually behave: when they come, what they order, how they spend. You rename the segments in your own words, because you know your room better than any algorithm.</p>
+        <p class="viz-note">Your Friday night crowd, your lunch regulars, your slow sippers. Alfredo sorts your guests by how they actually come in, and you name the groups.</p>
         <div class="tiles four seg">
           <div class="tile">
             <h4>The Friday night crowd</h4>
@@ -343,7 +316,6 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
             <span>Group organizers. Fewer visits, the largest checks in the house.</span>
           </div>
         </div>
-        <p class="viz-note">Segments are built from behavior, and the names are yours to edit. One click on any segment asks Alfredo what to do about it.</p>
       </div>
     </div>
   </section>
@@ -351,25 +323,25 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <section class="dark" id="intel">
     <div class="glow a" aria-hidden="true"></div>
     <div class="wrap">
-      <p class="eyebrow">Competitive intel</p>
-      <h2 class="big">Know your block like you own it.</h2>
-      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board.</p>
+      <p class="eyebrow">Your neighbors</p>
+      <h2 class="big">Who is down the street.</h2>
+      <p class="sub">Keep an eye on the places down the street: what they charge, when they are busy, and what their customers keep saying.</p>
 
       <div class="bignums four">
-        <div><b>36</b><span>venues tracked in your area</span></div>
+        <div><b>36</b><span>places tracked in your area</span></div>
         <div><b>8 of 36</b><span>open past midnight: your late night edge</span></div>
-        <div><b>+1.1</b><span>your service score vs market average</span></div>
-        <div><b>1 click</b><span>from any competitor row to a full menu scan</span></div>
+        <div><b>+1.1</b><span>your service score against the area average</span></div>
+        <div><b>1 click</b><span>from any nearby place to their whole menu</span></div>
       </div>
 
       <div class="vizcard glass radar-card">
         <div class="viz-head">
-          <h3>Sentiment radar: you vs your market</h3>
+          <h3>How guests rate you</h3>
           <span class="sample">sample data</span>
         </div>
         <div class="radar-wrap">
           <svg id="radar" viewBox="0 0 200 200" role="img"
-               aria-label="Sample sentiment radar. Your scores against the market average on Food, Service, Value and Speed. The Ambiance axis is faded because there are not enough mentions.">
+               aria-label="Sample ratings chart. How guests rate you against the area average on Food, Service, Value and Speed. Ambiance is left blank because there are not enough reviews.">
             <g class="radar-grid" aria-hidden="true">
               <polygon points="100.0,80.5 118.55,93.97 111.46,115.78 88.54,115.78 81.45,93.97 "></polygon>
               <polygon points="100.0,61.0 137.09,87.95 122.92,131.55 77.08,131.55 62.91,87.95 "></polygon>
@@ -417,25 +389,25 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
                   x="12.5"
                   y="71.57"
                   text-anchor="end"
-                  dominant-baseline="middle">Ambiance (not enough mentions)</text>
+                  dominant-baseline="middle">Ambiance (not enough reviews)</text>
           </svg>
-          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Market average</p>
+          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
         </div>
-        <p class="viz-note">Scores are read out of your market's actual reviews. Dimensions without enough mentions stay faded until the data earns them. Even here, no number without evidence.</p>
+        <p class="viz-note">How guests rate you against the area, from real reviews. If there are not enough reviews on something, it stays blank instead of guessing.</p>
       </div>
 
       <div class="vizcard glass">
         <div class="viz-head">
-          <h3>When your market is busy, hour by hour</h3>
+          <h3>When your area is busy</h3>
           <span class="sample">sample data</span>
         </div>
         <div class="heatwrap">
           <div class="heat-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-          <div class="heat" id="heat" role="img" aria-label="Sample heat map of how busy the market is, by hour from 10am to 11pm, across the seven days of the week."></div>
+          <div class="heat" id="heat" role="img" aria-label="Sample chart of how busy your area is, by hour from 10am to 11pm, across the seven days of the week."></div>
           <div class="heat-hours" aria-hidden="true"><span>10am</span><span>2pm</span><span>6pm</span><span>10pm</span></div>
           <p class="heat-key" aria-hidden="true"><span>quieter</span><i class="heat-ramp"></i><span>busier</span></p>
         </div>
-        <p class="viz-note">Built from public busy times data across your whole market, then compared against your own volume. The gap between the two is where your money is hiding.</p>
+        <p class="viz-note">When your area is busy, hour by hour, next to how busy you are. The gap is where money is waiting.</p>
       </div>
 
       <div class="vizcard glass">
@@ -443,6 +415,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <h3>Menu Scanner</h3>
           <span class="sample">sample data</span>
         </div>
+        <p class="viz-note">Their menu next to yours, item by item, with the price difference.</p>
         <div class="table-scroll">
           <table class="match-table">
             <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
@@ -468,19 +441,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
             </tbody>
           </table>
         </div>
-        <p class="viz-note">"Try this price" only appears on items you have confirmed, and only when the competitor price is published.</p>
       </div>
 
-      <p class="cap-line">Also inside the Competitive tab:</p>
-      <ul class="cap-list">
-        <li>AI written SWOT from your market's reviews</li>
-        <li>Interactive competitor map</li>
-        <li>Census demographics per trade area</li>
-        <li>Nightlife spillover score</li>
-        <li>Extended hours revenue scenarios</li>
-        <li>Price tier positioning</li>
-        <li>One click competitor menu scan</li>
-      </ul>
+      <p class="sub wide">Also included: what reviews in your area keep saying, a map of nearby competitors, who lives and works around you, whether nearby bars send you late night guests, what longer hours could bring in, and where your prices sit in the area.</p>
     </div>
   </section>
 
@@ -488,7 +451,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="board">What should I do this week, and how do I know it worked?</button>
+      <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
       <h2 class="big center">Meet your regulars.</h2>
       <p class="sub center">Run Alfredo on your own data and see who keeps the lights on.</p>
       <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>

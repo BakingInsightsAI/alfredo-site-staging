@@ -497,6 +497,9 @@ section.feature .sub, section.feature .tile span { color: var(--band-soft); }
 .big { font-weight: 600; font-size: clamp(2.1rem, 5vw, 4rem); letter-spacing: -.04em; line-height: 1.05; }
 .big.center { text-align: center; }
 h1.big { max-width: 16ch; }
+/* The product headline is a whole sentence rather than a short phrase, so
+   it gets a wider measure than the one cut for the home page hero. */
+h1.big.wide-h1 { max-width: 26ch; }
 h1.big.center, h2.big.center { margin-inline: auto; }
 .sub { color: var(--soft); max-width: 36em; margin-top: 16px; font-size: 1.1rem; }
 .sub.center { text-align: center; margin-inline: auto; }
@@ -1052,10 +1055,6 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .conf.high { color: var(--ok); }
 .conf.low { color: var(--gold-ink); }
 
-.cap-line { margin-top: 34px; color: var(--soft); font-size: .95rem; }
-section.dark .cap-line { color: var(--band-soft); }
-.cap-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.cap-list li { border: 1px solid var(--band-rule); border-radius: 999px; padding: 9px 15px; font-size: .86rem; color: var(--band-body); }
 
 /* The four promises are the page in four phrases, so the phrase is the
    thing you read first and the explanation sits a step behind it. */

@@ -1,74 +1,69 @@
-# Product page copy. Reused verbatim from the approved pages except for the
-# six sentences that carried banned mechanism wording; those are noted in the
-# commit message and in the report.
+# Product page copy, in the words an owner would use.
 
 tabs:
   - { key: overview, label: "Overview" }
-  - { key: board,    label: "The weekly board" }
-  - { key: menu,     label: "Menu and margins" }
-  - { key: intel,    label: "Guests and competition" }
+  - { key: board,    label: "This week" }
+  - { key: menu,     label: "Your menu" }
+  - { key: intel,    label: "Your guests and neighbors" }
 
 questions:
   - key: board
-    q: "What should I do this week, and how do I know it worked?"
-    a: "The weekly board is a short list of recommendations from your own data, and every one you try comes back with an honest verdict: worked, no effect, or backfired."
-    cta: "Explore the weekly board"
+    q: "What should I change this week, and did it work?"
+    a: "Alfredo hands you a short list of small changes worth trying. Try one, and it tells you honestly whether it worked, did nothing, or backfired."
+    cta: "See this week"
   - key: menu
     q: "Is my menu making me money?"
-    a: "The menu lab lets you test changes safely, and cost intelligence connects what each dish costs to make with what it sells for."
-    cta: "Explore menu and margins"
+    a: "See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting."
+    cta: "See your menu"
   - key: intel
-    q: "Who is in my room, and what is happening on my street?"
-    a: "Customer intelligence finds your confirmed guests and regulars from data you already have. Competitive intel watches the venues around you."
-    cta: "Explore guests and competition"
+    q: "Who is coming in, and what is happening down the street?"
+    a: "Know who your regulars are and what they spend. Keep an eye on what nearby places charge and what their customers keep saying."
+    cta: "See your guests and neighbors"
 
 chat_chips:
   - q: "How am I doing this week?"
     a: "Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin."
   - q: "What are my best sellers?"
-    a: "Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list ranked by profit instead of popularity?"
+    a: "Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?"
   - q: "What do you recommend?"
-    a: "Three recommendations on this week's board: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?"
+    a: "Three things on this week's list: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?"
 
 board_types:
-  - name: "Pricing"
-    body: "Which items can carry a price move, which cannot, and a built in way to prove it on one item before you commit the whole menu."
-  - name: "Promotions"
-    body: "Bundles and pairings pulled from your real baskets, with the co order evidence attached. Not your best seller. The pairing you would not have guessed."
-  - name: "Positioning"
-    body: "Where each item sits on your menu and in your market: highlight the hidden gems, dim the underperformers, watch the gaps your competitors leave open."
-  - name: "Operations"
-    body: "Table time, dayparts, happy hour economics, item availability. Where the floor and the data disagree, you find out early."
+  - name: "Prices"
+    body: "Which items can handle a small price bump, and which cannot."
+  - name: "Pairings"
+    body: "What your guests already like together, and what to suggest with it."
+  - name: "Menu placement"
+    body: "What to show off on the menu and what to quietly move down."
+  - name: "How you run the floor"
+    body: "Happy hour times, busy and slow hours, and how long tables stay."
 
-menulab_tiles:
-  - name: "Suggestions with receipts"
-    body: "Up to ten at a time, each carrying its evidence: co order lift, competitor prices, margin math, verbatim lines from your own reviews."
-  - name: "Four clicks to a fair trial"
-    body: "Pick the item, pick the change, pick a control, pick a duration. Alfredo proposes control items. You decide."
-  - name: "An honest scoreboard"
-    body: "Your edits tally into estimated impact, and the scoreboard keeps estimates and measured results clearly apart. They never blend."
+# The first card carries the cost anchor, because a link to #cost is a link
+# to the breakdown of what a dish costs you.
+menu_cards:
+  - anchor: "cost"
+    name: "Where the money goes"
+    body: "Pick any dish and see what it really costs you, ingredient by ingredient."
+  - name: "What to keep an eye on"
+    body: "See which ingredients would hurt most if their price jumped."
+  - name: "Costs that crept up"
+    body: "When cheese gets more expensive but your menu price stays the same, Alfredo notices and tells you what it is costing you each week."
+  - name: "Mistakes caught early"
+    body: "On day one with a real client, Alfredo found a cost that was off by 1,370 times, and asked before changing anything."
+  - name: "Try it small first"
+    body: "Test a new price or a new spot on the menu with one item before you change the whole menu."
 
-cost_tiles:
-  - name: "Where each dish's money goes"
-    body: "Click any item and see its cost ingredient by ingredient: which single ingredient dominates, what packaging adds, and when each cost was last confirmed. Every cost carries its date, so you always know how fresh the number is."
-  - name: "The worry list, before the worry"
-    body: "Alfredo shows the ingredients that drive your menu wide costs, what a 10 percent price rise in each would cost you per month, and how volatile each has been over the past year."
-  - name: "Where costs rose but prices did not"
-    body: "The repricing queue finds items whose ingredient costs climbed while menu prices stood still, quantifies the weekly margin bleed, and feeds the worst cases into the weekly board. It shows the mirror too: where costs fell and margins quietly improved."
-  - name: "It audits the data itself"
-    body: "Items selling below cost, suspicious entries, stale costs, sudden spikes. On day one with a real client's cost data, Alfredo flagged a 1,370 times data entry error. It asked the operator instead of silently fixing it. Every finding is a question you confirm or dismiss."
-
-segments:
+guest_groups:
   - { name: "The Friday night crowd", guests: "124 guests", check: "$47 avg check", visits: "3.1 visits", body: "Weekend evenings, bigger tables, beverage forward orders." }
   - { name: "Lunch break locals",     guests: "96 guests",  check: "$22 avg check", visits: "5.8 visits", body: "Weekday middays, fast turns, high repeat frequency." }
   - { name: "Slow sippers",           guests: "58 guests",  check: "$29 avg check", visits: "6.4 visits", body: "Long dwell, beverage only checks. Your best nudge candidates." }
   - { name: "Big table hosts",        guests: "34 guests",  check: "$118 avg check", visits: "2.2 visits", body: "Group organizers. Fewer visits, the largest checks in the house." }
 
 intel_stats:
-  - { n: "36",      label: "venues tracked in your area" }
+  - { n: "36",      label: "places tracked in your area" }
   - { n: "8 of 36", label: "open past midnight: your late night edge" }
-  - { n: "+1.1",    label: "your service score vs market average" }
-  - { n: "1 click", label: "from any competitor row to a full menu scan" }
+  - { n: "+1.1",    label: "your service score against the area average" }
+  - { n: "1 click", label: "from any nearby place to their whole menu" }
 
 radar:
   cx: 100
@@ -79,18 +74,11 @@ radar:
     - { name: "Service", you: 0.82, market: 0.64, ux: 0.9511, uy: -0.309 }
     - { name: "Value", you: 0.68, market: 0.72, ux: 0.5878, uy: 0.809 }
     - { name: "Speed", you: 0.74, market: 0.66, ux: -0.5878, uy: 0.809 }
-    - { name: "Ambiance", you: 0.0, market: 0.0, ux: -0.9511, uy: -0.309, faded: true, note: "not enough mentions" }
+    - { name: "Ambiance", you: 0.0, market: 0.0, ux: -0.9511, uy: -0.309, faded: true, note: "not enough reviews" }
 
 scanner:
   - { theirs: "Smash Burger", theirprice: "$13.50", yours: "House Burger",   yourprice: "$11.00", gap: "You are $2.50 under", action: "Try this price" }
   - { theirs: "Loaded Tots",  theirprice: "$9.00",  yours: "Tater Tots",     yourprice: "$8.00",  gap: "You are $1.00 under", action: "Confirmed" }
   - { theirs: "Chicken Sando", theirprice: "$12.00", yours: "Crispy Chicken", yourprice: "$12.50",  gap: "Needs your review", action: "Review" }
 
-also_inside:
-  - "AI written SWOT from your market's reviews"
-  - "Interactive competitor map"
-  - "Census demographics per trade area"
-  - "Nightlife spillover score"
-  - "Extended hours revenue scenarios"
-  - "Price tier positioning"
-  - "One click competitor menu scan"
+also_included: "Also included: what reviews in your area keep saying, a map of nearby competitors, who lives and works around you, whether nearby bars send you late night guests, what longer hours could bring in, and where your prices sit in the area."

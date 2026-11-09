@@ -6,8 +6,8 @@
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
     <p class="eyebrow">Product</p>
-    <h1 class="big">Three questions Alfredo answers every week.</h1>
-    <p class="sub">Alfredo is one assistant with three standing jobs. Each one answers a question you already ask yourself.</p>
+    <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
+    <p class="sub">One assistant, three questions you already ask yourself.</p>
   </div>
 </section>
 
@@ -49,10 +49,8 @@
     <div class="wrap split">
       <div>
         <p class="eyebrow">Ask Alfredo</p>
-        <h2 class="big">Got a question? Just ask.</h2>
-        <p class="sub">A chat panel lives inside every tab. Ask how the week is going, why a number moved, or what to try next, and Alfredo answers in plain language from your own data. Every chart and every recommendation has an ask button right next to it.</p>
-        <p class="sub">And when your data cannot answer something, Alfredo says so instead of guessing. Same rule everywhere.</p>
-        <p class="sub">Ask it cost questions too, like how profitable an item really is. It answers from your own data and shows the queries it ran to get there. If it cannot verify a number, it says so instead of estimating.</p>
+        <h2 class="big">Ask it anything.</h2>
+        <p class="sub">Ask how the week went, why Friday was slower, or what to try next. Alfredo answers in plain words, from your own numbers. If it does not know, it says so.</p>
       </div>
       <div class="chatcard glass tactile">
         <div class="chat-head">
@@ -83,10 +81,9 @@
 <div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0" hidden>
   <section class="light" id="board">
     <div class="wrap">
-      <p class="eyebrow">How Alfredo works</p>
-      <h2 class="big">It hands you the recommendation, then grades it.</h2>
-      <p class="sub">Dashboards show you charts and leave the thinking to you. Alfredo reads your existing POS system and hands you a short list of recommendations worth trying. When you try one, it measures what actually happened and tells you straight whether it worked.</p>
-      <p class="sub">No new hardware, nothing to install, no staff retraining. Alfredo connects to the POS system you already run.</p>
+      <p class="eyebrow">This week</p>
+      <h2 class="big">A short list every week, and an honest answer every time.</h2>
+      <p class="sub">No charts to decode. Just a few small changes worth trying, like a price, a pairing, or a happy hour time. Try one, and four weeks later Alfredo tells you what really happened.</p>
     </div>
   </section>
 
@@ -95,12 +92,9 @@
     <div class="wrap">
       <div class="vizcard glass" id="measured">
         <div class="viz-head">
-          <h3>What "measured" actually looks like</h3>
+          <h3>We raised the House Lager by 50 cents.</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-tags"><span class="chip">Marked done</span><span class="chip">Pricing</span></p>
-        <p class="viz-title">Raise House Lager from $6.50 to $7.00</p>
-        <p class="viz-note">Projected +$11.40/wk if it holds. Here is what the weeks actually said:</p>
         <div class="weekbars" id="weekbars" aria-hidden="true">
           <span class="wb ok" style="--h:78%"></span>
           <span class="wb ok" style="--h:92%"></span>
@@ -109,8 +103,7 @@
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
         <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
-        <p class="viz-result">Measured: +$9.80/wk attributable</p>
-        <p class="viz-note">Compared against a control item, with what you would have made anyway subtracted out. Measured under projection, and the board says so.</p>
+        <p class="viz-result">Four weeks later: about $9.80 more a week, after what you would have made anyway.</p>
       </div>
 
       <div class="vizcard glass">
@@ -118,15 +111,11 @@
           <h3>Every change ends in a verdict</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="nopeek">While a test is running, no interim results are shown. Checking results mid test inflates false positives, so Alfredo does not allow it.</p>
-        <p class="viz-tags"><span class="chip">Menu trial</span><span class="chip">completed</span></p>
-        <p class="viz-title">Reprice Garlic Fries from $5.50 to $6.50</p>
+        <p class="nopeek">No sneak peeks. Results stay hidden until the test is done, so nobody calls it early. Not even us.</p>
         <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
           <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
         </div>
-        <p class="viz-note">Units fell 22% and net revenue came out $41/wk below baseline. The dollar jump was too big for this item.</p>
-        <p class="viz-result bad">Rolled back to $5.50.</p>
-        <p class="viz-note">The miss is on the record where you can see it. A tool that cannot say backfired cannot be trusted when it says worked.</p>
+        <p class="viz-note">A one dollar jump on Garlic Fries cost more orders than it was worth. It went back to $5.50 in minutes, and the board said so.</p>
       </div>
     </div>
   </section>
@@ -140,8 +129,8 @@
 
   <section class="tint">
     <div class="wrap">
-      <p class="eyebrow">What lands on your board</p>
-      <h2 class="big">Four kinds of recommendations, one short list.</h2>
+      <p class="eyebrow">What lands on your list</p>
+      <h2 class="big">Four kinds of changes.</h2>
       <div class="tiles four">
         {%- for t in product.board_types %}
         <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
@@ -164,34 +153,19 @@
 
 <!-- ============================ MENU ============================ -->
 <div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0" hidden>
-  <section class="light" id="menulab">
+  <section class="light" id="menu">
     <div class="wrap">
-      <p class="eyebrow">The menu lab</p>
-      <h2 class="big">Your menu is a draft. Treat it like one.</h2>
-      <p class="sub">Menu Advisor is a working copy of your menu you can experiment on. Drag items, highlight, dim, badge, reprice, build bundles. Every suggestion arrives with its evidence, and any edit can become a small, measured trial in four clicks.</p>
+      <h2 class="big">Is your menu making you money?</h2>
+      <p class="sub">See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</p>
       <div class="tiles">
-        {%- for t in product.menulab_tiles %}
-        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
+        {%- for c in product.menu_cards %}
+        <div class="tile reveal"{% if c.get('anchor') %} id="{{ c.anchor }}"{% endif %}><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>
         {%- endfor %}
       </div>
       <div class="tile roadmap reveal">
-        <p class="eyebrow">On the roadmap</p>
+        <p class="eyebrow">Coming later</p>
         <h3>Live on your digital menu</h3>
         <span>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark" id="cost">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="eyebrow">Cost intelligence</p>
-      <h2 class="big">You know what you sold. Do you know what you made?</h2>
-      <p class="sub">For businesses that share their recipe and ingredient costs, Alfredo adds a second layer: it connects what each dish costs to make with what it sells for, turning sales analytics into margin intelligence.</p>
-      <div class="tiles two">
-        {%- for t in product.cost_tiles %}
-        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
-        {%- endfor %}
       </div>
     </div>
   </section>
@@ -199,10 +173,9 @@
   <section class="light">
     <div class="wrap">
       <div class="tile drift">
-        <h3>Does your website still match your till?</h3>
-        <span>Prices change at the till and the website never hears about it, or the other way around. Customers see one price and pay another, and nobody notices because cross checking them is nobody's job. Alfredo compares your published menu against what customers actually pay and flags every gap with the evidence: in real client data it found website prices that had been stale for months, one off by 40 to 50 percent, and one website price the till had never started charging. It never changes a price anywhere. It flags; you decide.</span>
+        <h3>Does your website still match your register?</h3>
+        <span>Prices change at the register and the website never gets updated, or the other way around. Alfredo spots the difference before your guests do.</span>
       </div>
-      <p class="sub wide">With cost data connected, every recommendation on the board argues from real margins: a price change shows cost, price, and margin so you can see it is safe; a promotion states what the giveaway costs and the exact volume needed to break even; a cross sell states the margin each attachment adds. The same add on data doubles as menu development evidence: which extras your guests already vote for with their orders, and what each one earns, for when you are deciding what to build next. Alfredo recommends and measures. You decide.</p>
     </div>
   </section>
 
@@ -210,7 +183,7 @@
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="intel">Who is in my room, and what is happening on my street?</button>
+      <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
       <h2 class="big center">Run it on your own menu.</h2>
       <p class="sub center">Connect your recipe and ingredient costs and see your own margins on the board.</p>
       <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
@@ -222,10 +195,9 @@
 <div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0" hidden>
   <section class="light" id="regulars">
     <div class="wrap">
-      <p class="eyebrow">Customer intelligence</p>
-      <h2 class="big">Your regulars, found in your own data.</h2>
-      <p class="sub">Alfredo works out who your confirmed guests and regulars are from the data you already have: your loyalty program if you run one, and the transaction data itself if you do not. Either way, no new app to launch and no sign up sheet at the host stand. See who keeps the lights on, how regulars differ from occasional visitors, and which patterns deserve a nudge.</p>
-      <p class="sub">And in keeping with the numbers rule: only confirmed guests are counted. Alfredo never inflates the panel with estimated crowd sizes.</p>
+      <p class="eyebrow">Your guests</p>
+      <h2 class="big">Know who walks in, and who is down the street.</h2>
+      <p class="sub">Know who your regulars are and what they spend, without asking anyone to sign up for anything. Only real, confirmed guests are counted.</p>
 
       <div class="vizcard">
         <div class="viz-head">
@@ -248,12 +220,12 @@
 
       <div class="vizcard">
         <div class="viz-head">
-          <h3>Your guests, sorted into segments you can name</h3>
+          <h3>Your guest groups</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-note">Alfredo groups your confirmed guests by how they actually behave: when they come, what they order, how they spend. You rename the segments in your own words, because you know your room better than any algorithm.</p>
+        <p class="viz-note">Your Friday night crowd, your lunch regulars, your slow sippers. Alfredo sorts your guests by how they actually come in, and you name the groups.</p>
         <div class="tiles four seg">
-          {%- for s in product.segments %}
+          {%- for s in product.guest_groups %}
           <div class="tile">
             <h4>{{ s.name }}</h4>
             <p class="segstats">{{ s.guests }}<br>{{ s.check }}<br>{{ s.visits }}</p>
@@ -261,7 +233,6 @@
           </div>
           {%- endfor %}
         </div>
-        <p class="viz-note">Segments are built from behavior, and the names are yours to edit. One click on any segment asks Alfredo what to do about it.</p>
       </div>
     </div>
   </section>
@@ -269,9 +240,9 @@
   <section class="dark" id="intel">
     <div class="glow a" aria-hidden="true"></div>
     <div class="wrap">
-      <p class="eyebrow">Competitive intel</p>
-      <h2 class="big">Know your block like you own it.</h2>
-      <p class="sub">Alfredo tracks every venue around you: their ratings, their hours, their prices, and what their customers keep saying in reviews. Then it puts the pattern on your weekly board.</p>
+      <p class="eyebrow">Your neighbors</p>
+      <h2 class="big">Who is down the street.</h2>
+      <p class="sub">Keep an eye on the places down the street: what they charge, when they are busy, and what their customers keep saying.</p>
 
       <div class="bignums four">
         {%- for s in product.intel_stats %}
@@ -281,12 +252,12 @@
 
       <div class="vizcard glass radar-card">
         <div class="viz-head">
-          <h3>Sentiment radar: you vs your market</h3>
+          <h3>How guests rate you</h3>
           <span class="sample">sample data</span>
         </div>
         <div class="radar-wrap">
           <svg id="radar" viewBox="0 0 200 200" role="img"
-               aria-label="Sample sentiment radar. Your scores against the market average on Food, Service, Value and Speed. The Ambiance axis is faded because there are not enough mentions.">
+               aria-label="Sample ratings chart. How guests rate you against the area average on Food, Service, Value and Speed. Ambiance is left blank because there are not enough reviews.">
             <g class="radar-grid" aria-hidden="true">
               {%- for f in [0.25, 0.5, 0.75, 1.0] %}
               <polygon points="{% for a in product.radar.axes %}{{ (product.radar.cx + product.radar.r * f * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * f * a.uy) | round(2) }} {% endfor %}"></polygon>
@@ -307,23 +278,23 @@
                   dominant-baseline="middle">{{ a.name }}{% if a.get('note') %} ({{ a.note }}){% endif %}</text>
             {%- endfor %}
           </svg>
-          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Market average</p>
+          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
         </div>
-        <p class="viz-note">Scores are read out of your market's actual reviews. Dimensions without enough mentions stay faded until the data earns them. Even here, no number without evidence.</p>
+        <p class="viz-note">How guests rate you against the area, from real reviews. If there are not enough reviews on something, it stays blank instead of guessing.</p>
       </div>
 
       <div class="vizcard glass">
         <div class="viz-head">
-          <h3>When your market is busy, hour by hour</h3>
+          <h3>When your area is busy</h3>
           <span class="sample">sample data</span>
         </div>
         <div class="heatwrap">
           <div class="heat-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-          <div class="heat" id="heat" role="img" aria-label="Sample heat map of how busy the market is, by hour from 10am to 11pm, across the seven days of the week."></div>
+          <div class="heat" id="heat" role="img" aria-label="Sample chart of how busy your area is, by hour from 10am to 11pm, across the seven days of the week."></div>
           <div class="heat-hours" aria-hidden="true"><span>10am</span><span>2pm</span><span>6pm</span><span>10pm</span></div>
           <p class="heat-key" aria-hidden="true"><span>quieter</span><i class="heat-ramp"></i><span>busier</span></p>
         </div>
-        <p class="viz-note">Built from public busy times data across your whole market, then compared against your own volume. The gap between the two is where your money is hiding.</p>
+        <p class="viz-note">When your area is busy, hour by hour, next to how busy you are. The gap is where money is waiting.</p>
       </div>
 
       <div class="vizcard glass">
@@ -331,6 +302,7 @@
           <h3>Menu Scanner</h3>
           <span class="sample">sample data</span>
         </div>
+        <p class="viz-note">Their menu next to yours, item by item, with the price difference.</p>
         <div class="table-scroll">
           <table class="match-table">
             <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
@@ -346,15 +318,9 @@
             </tbody>
           </table>
         </div>
-        <p class="viz-note">"Try this price" only appears on items you have confirmed, and only when the competitor price is published.</p>
       </div>
 
-      <p class="cap-line">Also inside the Competitive tab:</p>
-      <ul class="cap-list">
-        {%- for item in product.also_inside %}
-        <li>{{ item }}</li>
-        {%- endfor %}
-      </ul>
+      <p class="sub wide">{{ product.also_included }}</p>
     </div>
   </section>
 
@@ -362,7 +328,7 @@
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="board">What should I do this week, and how do I know it worked?</button>
+      <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
       <h2 class="big center">Meet your regulars.</h2>
       <p class="sub center">Run Alfredo on your own data and see who keeps the lights on.</p>
       <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
