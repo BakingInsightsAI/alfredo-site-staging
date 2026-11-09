@@ -295,11 +295,17 @@
   var menu = $('menu'), scene = $('scene');
   if (!menu || !scene) return;
 
-  /* Everything below is set up when the film is near the window rather than
-     at load. site.js is deferred already, so this is about the work, not the
-     fetch: measuring the card, wiring the controls and taking the first
-     frame all happen while the visitor is still reading the hero. The margin
-     is generous, so the film is always ready before it is reached. */
+  /* The class comes first and stays first. It is the layout contract for
+     this section: it gives the caption box its fixed height and hides the
+     week row. Holding it back until the film was near the window let all
+     five captions stack at load and then collapse, which is a 0.106 layout
+     shift on the one page that has to win the first five seconds. */
+  story.classList.add('film');
+
+  /* The work, though, waits. site.js is deferred already, so this is about
+     measuring the card, wiring the controls and taking the first frame,
+     which all happen while the visitor is still reading the hero. The
+     margin is generous, so the film is ready before it is reached. */
   if ('IntersectionObserver' in window) {
     var startObs = new IntersectionObserver(function (es) {
       if (!es[es.length - 1].isIntersecting) return;
@@ -311,8 +317,6 @@
     build();
   }
   function build() {
-
-  story.classList.add('film');
 
   var caps = A.$$('.cap', story);
   var cts = A.$$('.ct', menu);
