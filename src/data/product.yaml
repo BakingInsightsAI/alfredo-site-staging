@@ -56,6 +56,8 @@ measured:
   lead: "Four weeks later: about"
   amount: "$225"
   tail: "more a week, after what you would have made anyway. That is about $11,700 a year."
+  # the same result, short enough to sit under a word on a small drawing
+  short: "About $225 more a week"
 
 # The two outcomes a visitor can pick on the this week tab. They mirror the
 # two cards above them: the 50 cent move is the House Lager that worked, the
@@ -66,7 +68,7 @@ tryit:
   heading: "Pick a change and see how the four weeks go"
   item: "House Lager"
   price: "$6.50"
-  prompt: "Nothing here is about your own business. These are the same two sample results as the cards above."
+  prompt: "Sample results, to show how a test plays out."
   again: "Start again"
   options:
     - key: "worked"
@@ -120,10 +122,10 @@ menu_cards:
     body: "Test a new price or a new spot on the menu with one item before you change the whole menu."
 
 guest_groups:
-  - { name: "The Friday night crowd", guests: "124 guests", check: "$47 avg check", visits: "3.1 visits", body: "Weekend evenings, bigger tables, beverage forward orders." }
-  - { name: "Lunch break locals",     guests: "96 guests",  check: "$22 avg check", visits: "5.8 visits", body: "Weekday middays, fast turns, high repeat frequency." }
-  - { name: "Slow sippers",           guests: "58 guests",  check: "$29 avg check", visits: "6.4 visits", body: "Long dwell, beverage only checks. Your best nudge candidates." }
-  - { name: "Big table hosts",        guests: "34 guests",  check: "$118 avg check", visits: "2.2 visits", body: "Group organizers. Fewer visits, the largest checks in the house." }
+  - { name: "The Friday night crowd", guests: "124 guests", check: "$47 average check", visits: "3.1 visits", body: "Weekend evenings, bigger tables, mostly drinks." }
+  - { name: "Lunch break locals",     guests: "96 guests",  check: "$22 average check", visits: "5.8 visits", body: "Weekday lunches, in and out fast, back often." }
+  - { name: "Slow sippers",           guests: "58 guests",  check: "$29 average check", visits: "6.4 visits", body: "Stay a long while, drinks only. A snack suggestion could go a long way." }
+  - { name: "Big table hosts",        guests: "34 guests",  check: "$118 average check", visits: "2.2 visits", body: "They bring the group. Fewer visits, the biggest checks in the house." }
 
 intel_stats:
   - { n: "36",      label: "places tracked in your area" }

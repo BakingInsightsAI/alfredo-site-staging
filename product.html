@@ -58,9 +58,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <div class="glow a" aria-hidden="true"></div>
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow">Product</p>
     <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
-    <p class="sub">One assistant, three questions you already ask yourself.</p>
   </div>
 </section>
 
@@ -88,10 +86,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <section class="dark">
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="sr-only">Three questions Alfredo answers</h2>
-      <div class="tiles">
+      <div class="tiles flush">
         <div class="tile glass tactile reveal">
-          <h3>What should I change this week, and did it work?</h3>
+          <h2>What should I change this week, and did it work?</h2>
           <span>Alfredo hands you a short list of small changes worth trying. Try one, and it tells you honestly whether it worked, did nothing, or backfired.</span>
           <div class="mini mini-bars" aria-hidden="true">
   <span class="mini-tag">sample</span>
@@ -101,12 +98,15 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <span class="mini-wb low" style="--h: 46%; --i: 2"></span>
     <span class="mini-wb ok" style="--h: 86%; --i: 3"></span>
   </div>
-  <b class="mini-verdict">Worked.</b>
+  <div class="mini-said">
+    <b class="mini-verdict">Worked.</b>
+    <span class="mini-figure">About $225 more a week</span>
+  </div>
 </div>
           <button class="textbtn" type="button" data-go="board">See this week</button>
         </div>
         <div class="tile glass tactile reveal">
-          <h3>Is my menu making me money?</h3>
+          <h2>Is my menu making me money?</h2>
           <span>See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</span>
           <div class="mini mini-plate" aria-hidden="true">
   <span class="mini-tag">sample</span>
@@ -117,7 +117,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <button class="textbtn" type="button" data-go="menu">See your menu</button>
         </div>
         <div class="tile glass tactile reveal">
-          <h3>Who is coming in, and what is happening down the street?</h3>
+          <h2>Who is coming in, and what is happening down the street?</h2>
           <span>Know who your regulars are and what they spend. Keep an eye on what nearby places charge and what their customers keep saying.</span>
           <div class="mini mini-radar" aria-hidden="true">
   <span class="mini-tag">sample</span>
@@ -225,7 +225,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <p class="viz-result" id="tryitLine"></p>
           <button type="button" class="textbtn" id="tryitAgain">Start again</button>
         </div>
-        <p class="viz-note">Nothing here is about your own business. These are the same two sample results as the cards above.</p>
+        <p class="viz-note">Sample results, to show how a test plays out.</p>
         <p class="sr-only" id="tryitSay" role="status" aria-live="polite"></p>
       </div>
 
@@ -246,9 +246,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
   <section class="light">
     <div class="wrap">
       <h3 class="big small">Small, careful, and the same menu for everyone.</h3>
-      <p class="sub">A trial in Alfredo is one item, one change, for a set number of weeks.</p>
-      <p class="sub">Every guest sees the same menu; results are compared against your own history and a control item, never against your customers.</p>
-      <p class="sub">If a change backfires, it rolls back in minutes, and the board says so. This is how you were already improving your menu, just measured honestly.</p>
+      <p class="sub">One item, one change, a few weeks. Every guest sees the same menu. If a change backfires, it goes back in minutes, and Alfredo says so.</p>
     </div>
   </section>
 
@@ -270,8 +268,8 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="menu">Is my menu making me money?</button>
-      <h2 class="big center">See it on your own data.</h2>
-      <p class="sub center">Run Alfredo on your own POS data and judge it by its verdicts.</p>
+      <h2 class="big center">See it on your own sales.</h2>
+      <p class="sub center">Request a demo and we will show you what a week looks like.</p>
       <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
     </div>
   </section>
@@ -324,11 +322,6 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         <div class="tile reveal"><h3>Mistakes caught early</h3><span>On day one with a real client, Alfredo found a cost that was off by 1,370 times, and asked before changing anything.</span></div>
         <div class="tile reveal"><h3>Try it small first</h3><span>Test a new price or a new spot on the menu with one item before you change the whole menu.</span></div>
       </div>
-      <div class="tile roadmap reveal">
-        <p class="eyebrow">Coming later</p>
-        <h3>Live on your digital menu</h3>
-        <span>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</span>
-      </div>
     </div>
   </section>
 
@@ -347,7 +340,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
       <h2 class="big center">Run it on your own menu.</h2>
-      <p class="sub center">Connect your recipe and ingredient costs and see your own margins on the board.</p>
+      <p class="sub center">Share your recipe costs and see what every plate really makes you.</p>
       <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
     </div>
   </section>
@@ -368,16 +361,16 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         </div>
         <div class="bignums">
           <div><b data-count>412</b><span>confirmed guests</span></div>
-          <div><b data-count>78</b><span>regulars (5+ visit days)</span></div>
+          <div><b data-count>78</b><span>regulars (5 or more visits)</span></div>
           <div><b data-count>31%</b><span>repeat rate</span></div>
         </div>
         <div class="cmp" id="regularsCmp">
           <div class="cmp-row"><span class="cmp-label">Average visits</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>8.4</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:19%"></i><em>1.6</em></span></div>
           <div class="cmp-row"><span class="cmp-label">Average check</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>$42</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:74%"></i><em>$31</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Share of tracked revenue</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
+          <div class="cmp-row"><span class="cmp-label">Share of your sales</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
           <p class="cmp-key"><span class="swatch a" aria-hidden="true"></span>Regulars<span class="swatch b" aria-hidden="true"></span>Occasional</p>
         </div>
-        <p class="viz-note">A small group of regulars usually carries an outsized share of revenue. Alfredo shows you exactly who and how, from the data you already have.</p>
+        <p class="viz-note">A small group of regulars usually brings in a big share of your sales. Alfredo shows you who they are.</p>
       </div>
 
       <div class="vizcard">
@@ -389,23 +382,23 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         <div class="tiles four seg">
           <div class="tile">
             <h4>The Friday night crowd</h4>
-            <p class="segstats">124 guests<br>$47 avg check<br>3.1 visits</p>
-            <span>Weekend evenings, bigger tables, beverage forward orders.</span>
+            <p class="segstats">124 guests<br>$47 average check<br>3.1 visits</p>
+            <span>Weekend evenings, bigger tables, mostly drinks.</span>
           </div>
           <div class="tile">
             <h4>Lunch break locals</h4>
-            <p class="segstats">96 guests<br>$22 avg check<br>5.8 visits</p>
-            <span>Weekday middays, fast turns, high repeat frequency.</span>
+            <p class="segstats">96 guests<br>$22 average check<br>5.8 visits</p>
+            <span>Weekday lunches, in and out fast, back often.</span>
           </div>
           <div class="tile">
             <h4>Slow sippers</h4>
-            <p class="segstats">58 guests<br>$29 avg check<br>6.4 visits</p>
-            <span>Long dwell, beverage only checks. Your best nudge candidates.</span>
+            <p class="segstats">58 guests<br>$29 average check<br>6.4 visits</p>
+            <span>Stay a long while, drinks only. A snack suggestion could go a long way.</span>
           </div>
           <div class="tile">
             <h4>Big table hosts</h4>
-            <p class="segstats">34 guests<br>$118 avg check<br>2.2 visits</p>
-            <span>Group organizers. Fewer visits, the largest checks in the house.</span>
+            <p class="segstats">34 guests<br>$118 average check<br>2.2 visits</p>
+            <span>They bring the group. Fewer visits, the biggest checks in the house.</span>
           </div>
         </div>
       </div>
@@ -546,7 +539,7 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
       <h2 class="big center">Meet your regulars.</h2>
-      <p class="sub center">Run Alfredo on your own data and see who keeps the lights on.</p>
+      <p class="sub center">Find out who keeps the lights on.</p>
       <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
     </div>
   </section>

@@ -6,9 +6,7 @@
   <div class="glow a" aria-hidden="true"></div>
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow">Product</p>
     <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
-    <p class="sub">One assistant, three questions you already ask yourself.</p>
   </div>
 </section>
 
@@ -29,15 +27,16 @@
   <section class="dark">
     <div class="glow b" aria-hidden="true"></div>
     <div class="wrap">
-      {#- The page heading above the tabs already says this. The heading
-          stays for a screen reader, because without it the cards below are
-          h3 directly under the page h1 and the level is skipped. #}
-      <h2 class="sr-only">Three questions Alfredo answers</h2>
-      <div class="tiles">
+      {#- No heading here: the page h1 above the tabs is this tab's
+          heading, and saying it twice helped nobody. The three cards are
+          the h2 level under it, which is what they are. The row carries no
+          heading above it now, so it does not need the gap that sits under
+          one. #}
+      <div class="tiles flush">
         {%- set minimap = {'board': minis.mini_board(), 'menu': minis.mini_plate(), 'intel': minis.mini_radar()} %}
         {%- for q in product.questions %}
         <div class="tile glass tactile reveal">
-          <h3>{{ q.q }}</h3>
+          <h2>{{ q.q }}</h2>
           <span>{{ q.a }}</span>
           {{ minimap[q.key] }}
           <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
@@ -164,9 +163,7 @@
   <section class="light">
     <div class="wrap">
       <h3 class="big small">Small, careful, and the same menu for everyone.</h3>
-      <p class="sub">A trial in Alfredo is one item, one change, for a set number of weeks.</p>
-      <p class="sub">Every guest sees the same menu; results are compared against your own history and a control item, never against your customers.</p>
-      <p class="sub">If a change backfires, it rolls back in minutes, and the board says so. This is how you were already improving your menu, just measured honestly.</p>
+      <p class="sub">One item, one change, a few weeks. Every guest sees the same menu. If a change backfires, it goes back in minutes, and Alfredo says so.</p>
     </div>
   </section>
 
@@ -187,8 +184,8 @@
     <div class="wrap center-block">
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="menu">Is my menu making me money?</button>
-      <h2 class="big center">See it on your own data.</h2>
-      <p class="sub center">Run Alfredo on your own POS data and judge it by its verdicts.</p>
+      <h2 class="big center">See it on your own sales.</h2>
+      <p class="sub center">Request a demo and we will show you what a week looks like.</p>
       <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
   </section>
@@ -239,11 +236,6 @@
         <div class="tile reveal"{% if c.get('anchor') %} id="{{ c.anchor }}"{% endif %}><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>
         {%- endfor %}
       </div>
-      <div class="tile roadmap reveal">
-        <p class="eyebrow">Coming later</p>
-        <h3>Live on your digital menu</h3>
-        <span>Direct integration with digital menus, so a price or layout trial goes live on the menu your guests actually see and comes back with a verdict. Not built yet. When it ships, it ships measured.</span>
-      </div>
     </div>
   </section>
 
@@ -262,7 +254,7 @@
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
       <h2 class="big center">Run it on your own menu.</h2>
-      <p class="sub center">Connect your recipe and ingredient costs and see your own margins on the board.</p>
+      <p class="sub center">Share your recipe costs and see what every plate really makes you.</p>
       <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
   </section>
@@ -283,16 +275,16 @@
         </div>
         <div class="bignums">
           <div><b data-count>412</b><span>confirmed guests</span></div>
-          <div><b data-count>78</b><span>regulars (5+ visit days)</span></div>
+          <div><b data-count>78</b><span>regulars (5 or more visits)</span></div>
           <div><b data-count>31%</b><span>repeat rate</span></div>
         </div>
         <div class="cmp" id="regularsCmp">
           <div class="cmp-row"><span class="cmp-label">Average visits</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>8.4</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:19%"></i><em>1.6</em></span></div>
           <div class="cmp-row"><span class="cmp-label">Average check</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>$42</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:74%"></i><em>$31</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Share of tracked revenue</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
+          <div class="cmp-row"><span class="cmp-label">Share of your sales</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
           <p class="cmp-key"><span class="swatch a" aria-hidden="true"></span>Regulars<span class="swatch b" aria-hidden="true"></span>Occasional</p>
         </div>
-        <p class="viz-note">A small group of regulars usually carries an outsized share of revenue. Alfredo shows you exactly who and how, from the data you already have.</p>
+        <p class="viz-note">A small group of regulars usually brings in a big share of your sales. Alfredo shows you who they are.</p>
       </div>
 
       <div class="vizcard">
@@ -411,7 +403,7 @@
       <p class="eyebrow">Next question</p>
       <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
       <h2 class="big center">Meet your regulars.</h2>
-      <p class="sub center">Run Alfredo on your own data and see who keeps the lights on.</p>
+      <p class="sub center">Find out who keeps the lights on.</p>
       <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
   </section>

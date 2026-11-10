@@ -15,7 +15,10 @@
     <span class="mini-wb {{ product.measured.kinds[loop.index0] }}" style="--h: {{ w }}%; --i: {{ loop.index0 }}"></span>
     {%- endfor %}
   </div>
-  <b class="mini-verdict">{{ home.verdict.word }}</b>
+  <div class="mini-said">
+    <b class="mini-verdict">{{ home.verdict.word }}</b>
+    <span class="mini-figure">{{ product.measured.short }}</span>
+  </div>
 </div>
 {%- endmacro -%}
 

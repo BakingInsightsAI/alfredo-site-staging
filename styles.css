@@ -582,6 +582,18 @@ section.dark .wrap { position: relative; z-index: 1; }
   section.trustband { padding-block: 72px 190px; }
   section.closeband { padding-block: 190px 72px; }
 }
+/* The offer, directly under the hero buttons. --accent is wine on a light
+   page and gold on a dark one, because gold on cream does not clear
+   contrast at this size. The underline is the link, so the line reads as
+   one thing to press rather than as a sentence with a link in it. */
+.hero-offer a {
+  color: var(--accent); font-weight: 600; font-size: clamp(1rem, 1.5vw, 1.12rem);
+  letter-spacing: -.015em; text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.hero-offer a:hover, .hero-offer a:focus-visible { text-decoration-color: var(--accent); }
+
 .teaser-offer {
   margin-top: 10px; font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 600;
   letter-spacing: -.03em; line-height: 1.12; color: var(--gold-ink); max-width: 18em;
@@ -590,13 +602,14 @@ section.dark .wrap { position: relative; z-index: 1; }
 /* -------------------------------------------------------------- tiles */
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
 .tiles.two { grid-template-columns: repeat(2, 1fr); }
+.tiles.flush { margin-top: 0; }
 .tiles.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 860px) { .tiles, .tiles.two, .tiles.four { grid-template-columns: 1fr; } }
 .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 24px; padding: 30px 28px; box-shadow: var(--card-shadow); }
 /* A card title set at 1.1rem against 1rem of body is a 1.04 step: the eye
    has nothing to land on first, which is why every tile grid read as a
    three way tie. It outranks its own text now. */
-.tile b, .tile h3 { display: block; font-weight: 600; font-size: clamp(1.375rem, 1.9vw, 1.5rem); line-height: 1.22; margin-bottom: 10px; letter-spacing: -.025em; }
+.tile b, .tile h2, .tile h3 { display: block; font-weight: 600; font-size: clamp(1.375rem, 1.9vw, 1.5rem); line-height: 1.22; margin-bottom: 10px; letter-spacing: -.025em; }
 /* In a three column grid the column is the measure; in a full width card,
    such as the roadmap and website drift cards, there was none, and the line
    ran to 127 characters on a laptop. */
@@ -728,20 +741,11 @@ footer small { margin-left: auto; font-size: .8rem; }
      min-height that used to centre this block, the top of the headline has
      to be pushed clear of them by hand. */
   .story .hero-h { min-height: 0; padding: calc(var(--pinned-top) + 18px) 24px 4px; }
-  .story .hero-h p { margin-top: 16px; }
-  .story .ctas { margin-top: 22px; }
-  .scene { min-height: 0; padding-bottom: 40px; }
 }
 /* A phone that is only 667 tall has to give up something, and it is the
    air around the hero rather than the card. */
 @media (max-height: 720px) and (max-width: 860px) {
   .story .hero-h { padding: calc(var(--pinned-top) + 4px) 24px 0; }
-  .story .hero-h p { margin-top: 10px; font-size: .95rem; }
-  .story .ctas { margin-top: 12px; gap: 10px; }
-  /* A 667 tall phone has about 580px of page under the bars. The caption
-     steps down a size so the card header still clears the fold. */
-  .cap { font-size: clamp(1.05rem, 3.2vw, 2rem); }
-  .js .story.film .caps { height: 3.7em; }
 }
 /* The measure was cut for a 48 character headline. At 56 it set in five
    lines with "business" and "had." alone, so the measure is wider now.
@@ -1307,7 +1311,10 @@ section.dark .mini-tag, .glass .mini-tag { color: var(--band-dim); border-color:
 .mini-wb { flex: 1; height: 0; border-radius: 4px 4px 2px 2px; background: var(--ok); }
 .mini-wb.low { background: var(--miss); }
 .js .mini.drawn .mini-wb { height: var(--h); transition: height .5s var(--ease); transition-delay: calc(var(--i) * 70ms); }
+.mini-said { min-width: 0; }
 .mini-verdict { display: block; font-size: .95rem; font-weight: 600; color: var(--gold-ink); letter-spacing: -.02em; }
+.mini-figure { display: block; margin-top: 3px; font-size: .78rem; line-height: 1.25; color: var(--soft); }
+section.dark .mini-figure, .glass .mini-figure { color: var(--band-soft); }
 
 /* the plate, three rows of it. The top row clears the sample label rather
    than running under it. */
@@ -1631,12 +1638,31 @@ html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
   .tile.ours { transform: none; }
 }
 
+/* ---- the hero on a phone ----
+   The offer sits under the buttons, which is four things stacked above the
+   film card on a screen that has room for about three. The air between
+   them comes in, and the scene stops reserving 86 percent of the window
+   for itself, which on a phone only pushed the card further down. These
+   live here, after every base rule they have to beat, rather than up with
+   the rest of the phone layout where an identical selector later in the
+   file quietly cancelled them. */
+@media (max-width: 860px) {
+  .story .hero-h p { margin-top: 14px; }
+  .story .ctas { margin-top: 20px; }
+  /* Without the 86 percent the scene used to reserve, the first caption
+     came up almost against the offer line and read as part of it. */
+  .scene { min-height: 0; padding-top: 26px; }
+}
+
 /* ---- short windows ----
-   A short window is the binding constraint is the binding constraint, not a narrow one: on a 667px
+   A short window is the binding constraint, not a narrow one: on a 667px
    phone the bars take 83px and the film has to fit in what is left. The
-   rows, the caption box and the gaps all come in a notch. */
+   rows, the caption box, the hero and the gaps all come in a notch. */
 @media (max-height: 720px) and (max-width: 860px) {
-  .scene { gap: 10px; padding-bottom: 22px; }
+  .story .hero-h p { margin-top: 8px; font-size: .95rem; }
+  .story .ctas { margin-top: 10px; gap: 10px; }
+  .hero-offer a { font-size: .95rem; }
+  .scene { gap: 10px; padding-top: 16px; padding-bottom: 22px; }
   .menu { --rh: 28px; padding: 13px 15px 11px; }
   .menu .grp { margin: 9px 0 2px; }
   .cap { font-size: clamp(1.25rem, 3.2vw, 2rem); }

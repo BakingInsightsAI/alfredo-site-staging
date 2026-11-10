@@ -84,8 +84,12 @@
        This is the last word on where an anchor sits. */
     function reland() {
       if (location.hash.length < 2) return;
-      var target = null;
-      try { target = document.querySelector(location.hash); } catch (e) {}
+      /* A page can name what its fragment really means. The product tabs
+         do, because three of the four tab words are also ids partway down
+         their own panel, and landing on the id would skip the tab's
+         opening. Without that, the fragment is the element it names. */
+      var target = window.__alfredoLand || null;
+      if (!target) { try { target = document.querySelector(location.hash); } catch (e) {} }
       if (target) target.scrollIntoView();
     }
     if (document.fonts && document.fonts.ready) {
@@ -686,6 +690,19 @@
     b.addEventListener('click', function () { go(b.getAttribute('data-go')); });
   });
 
+  /* The fragment can also change without a page load and without a history
+     move: a link to #menu from elsewhere on this same page, or a pasted
+     fragment in the address bar. The tabs' own pushState does not fire
+     this, so there is no double handling. */
+  window.addEventListener('hashchange', function () {
+    var frag = (location.hash || '').slice(1);
+    var name = inner[frag];
+    if (!name) return;
+    apply(name, false);
+    var target = frag !== name ? document.getElementById(frag) : null;
+    toTop(target || panels[name]);
+  });
+
   window.addEventListener('popstate', function (e) {
     var frag = (location.hash || '').slice(1);
     var name = (e.state && e.state.tab) || inner[frag] || names[0];
@@ -835,6 +852,15 @@
   if (frag2 && frag2 !== start) {
     var target = document.getElementById(frag2);
     if (target) setTimeout(function () { target.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
+  } else if (frag2 && document.getElementById(frag2) && panels[start]) {
+    /* The fragment names a tab, and the same word is also an id inside that
+       panel: product.html#intel is the guests tab, and also the neighbors
+       section halfway down it, which is where the browser jumps before any
+       of this runs. A tab opens at its own headline however it was reached,
+       including from a shared link. The bars module lands anchors again
+       once the webfont is in, so it is told what this fragment means. */
+    window.__alfredoLand = panels[start];
+    setTimeout(function () { panels[start].scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
   }
 })();
 

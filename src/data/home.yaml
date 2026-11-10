@@ -2,6 +2,10 @@
 
 hero:
   heading: "The in house consultant your business never had."
+  # The offer belongs in the first screen, not four screens down on a page
+  # a visitor may never reach.
+  offer: "The first 10 businesses get their first six months free."
+  offer_href: "pricing.html"
   lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
 
 # The story is a film of one week on a sample menu. Each caption names the

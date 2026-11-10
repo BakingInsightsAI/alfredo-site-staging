@@ -6,25 +6,20 @@
   <div class="glow a" aria-hidden="true"></div>
   <div class="glow b" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow">{{ pilot.eyebrow }}</p>
     <h1 class="big">{{ pilot.heading }}</h1>
-    {%- for line in pilot.lede %}
-    <p class="sub">{{ line }}</p>
-    {%- endfor %}
+    <p class="sub">{{ pilot.hero_line }}</p>
   </div>
 </section>
 
-{#- Who built it comes first now: the page is about us before it is about
-    how we work. #}
+{#- The two cards are the h2 level under that heading, which is what they
+    are: the page says who built it, and these two are the who. #}
 <section class="tint">
   <div class="wrap">
-    <h2 class="big">{{ pilot.built_heading }}</h2>
     <div class="tiles two">
       {%- for b in pilot.built %}
-      <div class="tile reveal"><h3>{{ b.name }}</h3><span>{{ b.body }}</span></div>
+      <div class="tile reveal"><h2>{{ b.name }}</h2><span>{{ b.body }}</span></div>
       {%- endfor %}
     </div>
-    <p class="sub wide">{{ pilot.built_close }}</p>
   </div>
 </section>
 
@@ -36,6 +31,7 @@
       <div class="tile reveal"><h3>{{ h.name }}</h3><span>{{ h.body }}</span></div>
       {%- endfor %}
     </div>
+    <p class="sub wide">{{ pilot.how_close }}</p>
   </div>
 </section>
 

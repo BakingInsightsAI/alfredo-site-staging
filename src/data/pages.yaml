@@ -21,7 +21,7 @@ honesty:
   quotes_heading: "The rule, in practice"
   quotes:
     # the first card is a paraphrase, so it carries no quotation and no gloss
-    - intro: "When Alfredo suggested a pairing to one of our operators, it labeled its own idea very low confidence and suggested trying it small first."
+    - intro: "When Alfredo suggested a pairing to one of our partners, it labeled its own idea very low confidence and suggested trying it small first."
       quote: ""
       gloss: ""
       close: "An assistant that admits when an idea is weak is one you can believe when it says an idea is strong."
@@ -76,7 +76,7 @@ pricing:
   compare_line: "A consultant is thousands for one report that is out of date the day you get it, so it is not on this scale."
   compare_close: "Alfredo works with the POS you already use, tells you what to try next, and then tells you whether it worked."
   faq_eyebrow: "Questions"
-  faq_heading: "The things operators ask first."
+  faq_heading: "What owners ask first."
   faq:
     - q: "Which POS systems does Alfredo support?"
       a: "Toast and Clover today. If you run a different system, get in touch and we will tell you honestly whether yours is ready yet."
