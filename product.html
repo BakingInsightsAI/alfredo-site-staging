@@ -96,9 +96,9 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <div class="mini mini-bars" aria-hidden="true">
   <span class="mini-tag">sample</span>
   <div class="mini-weeks">
-    <span class="mini-wb ok" style="--h: 72%; --i: 0"></span>
-    <span class="mini-wb ok" style="--h: 94%; --i: 1"></span>
-    <span class="mini-wb low" style="--h: 44%; --i: 2"></span>
+    <span class="mini-wb ok" style="--h: 78%; --i: 0"></span>
+    <span class="mini-wb ok" style="--h: 92%; --i: 1"></span>
+    <span class="mini-wb low" style="--h: 46%; --i: 2"></span>
     <span class="mini-wb ok" style="--h: 86%; --i: 3"></span>
   </div>
   <b class="mini-verdict">Worked.</b>
@@ -188,15 +188,16 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
           <h3>We raised the House Lager by 50 cents.</h3>
           <span class="sample">sample data</span>
         </div>
+        <p class="viz-vol">About 470 pints a week <span class="sample">sample</span></p>
         <div class="weekbars" id="weekbars" aria-hidden="true">
           <span class="wb ok" style="--h:78%"></span>
           <span class="wb ok" style="--h:92%"></span>
           <span class="wb low" style="--h:46%"></span>
-          <span class="wb none" style="--h:30%"></span>
+          <span class="wb ok" style="--h:86%"></span>
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
         <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
-        <p class="viz-result">Four weeks later: about <b data-count>$9.80</b> more a week, after what you would have made anyway.</p>
+        <p class="viz-result">Four weeks later: about <b data-count>$225</b> more a week, after what you would have made anyway. That is about $11,700 a year.</p>
       </div>
       <div class="vizcard glass tryit" id="tryit">
         <div class="viz-head">
@@ -209,8 +210,8 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         </p>
         <div class="tryit-choices" id="tryitChoices">
           <button type="button" class="pill pill-glass tryit-btn" data-k="worked"
-                  data-new="$7.00" data-weeks="78,92,70,84" data-kinds="ok,ok,ok,ok"
-                  data-verdict="Worked" data-line="Four weeks later: about $9.80 more a week, after what you would have made anyway.">Raise 50 cents</button>
+                  data-new="$7.00" data-weeks="78,92,46,86" data-kinds="ok,ok,low,ok"
+                  data-verdict="Worked" data-line="Four weeks later: about $225 more a week, after what you would have made anyway. That is about $11,700 a year.">Raise 50 cents</button>
           <button type="button" class="pill pill-glass tryit-btn" data-k="backfired"
                   data-new="$7.50" data-weeks="64,38,30,26" data-kinds="low,low,low,low"
                   data-verdict="Backfired" data-line="Orders fell away and the week came out behind. It went back to $6.50 in minutes, and the board said so.">Raise one dollar</button>

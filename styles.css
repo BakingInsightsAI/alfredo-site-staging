@@ -1350,6 +1350,12 @@ html:not(.js) .mini-prow { opacity: 1; transform: none; }
 /* Try it: one row, two choices, and the same four week bars and verdict
    chips the cards around it use. Nothing new is claimed; the two outcomes
    are the two samples already printed on this tab. */
+/* the volume the money is worked out from, directly under the heading */
+.viz-vol {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; font-size: .95rem; color: var(--band-soft);
+}
+
 .tryit { margin-bottom: 26px; }
 .tryit-row {
   display: flex; justify-content: space-between; align-items: baseline;
@@ -1364,8 +1370,9 @@ html:not(.js) .mini-prow { opacity: 1; transform: none; }
 }
 .tryit-new { color: var(--gold-ink); font-weight: 600; }
 .tryit-choices { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-.tryit-btn[disabled] { opacity: .5; cursor: default; }
-.tryit-btn[aria-pressed="true"] { border-color: var(--gold); }
+/* Neither choice is ever disabled: picking one used to lock the other, so
+   a visitor could see one outcome and never the second. */
+.tryit-btn[aria-pressed="true"] { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
 .tryit-out { margin-top: 22px; }
 .tryit-out .weekbars { margin-top: 0; }
 #tryitAgain { margin-top: 14px; }

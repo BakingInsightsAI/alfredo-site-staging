@@ -96,20 +96,23 @@
   <section class="dark">
     <div class="glow a" aria-hidden="true"></div>
     <div class="wrap">
+      {#- The volume is on the card so the money can be checked: 470 pints at
+          50 cents more is $235, and week three took it back to about $225. #}
+      {%- set m = product.measured %}
       <div class="vizcard glass" id="measured">
         <div class="viz-head">
-          <h3>We raised the House Lager by 50 cents.</h3>
-          <span class="sample">sample data</span>
+          <h3>{{ m.heading }}</h3>
+          <span class="sample">{{ m.label }}</span>
         </div>
+        <p class="viz-vol">{{ m.volume }} <span class="sample">sample</span></p>
         <div class="weekbars" id="weekbars" aria-hidden="true">
-          <span class="wb ok" style="--h:78%"></span>
-          <span class="wb ok" style="--h:92%"></span>
-          <span class="wb low" style="--h:46%"></span>
-          <span class="wb none" style="--h:30%"></span>
+          {%- for w in m.weeks %}
+          <span class="wb {{ m.kinds[loop.index0] }}" style="--h:{{ w }}%"></span>
+          {%- endfor %}
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-        <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
-        <p class="viz-result">Four weeks later: about <b data-count>$9.80</b> more a week, after what you would have made anyway.</p>
+        <p class="viz-key">{{ m.key }}</p>
+        <p class="viz-result">{{ m.lead }} <b data-count>{{ m.amount }}</b> {{ m.tail }}</p>
       </div>
 
       {#- The visitor makes the choice this tab is describing. Both outcomes

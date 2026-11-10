@@ -38,6 +38,25 @@ board_types:
   - name: "How you run the floor"
     body: "Happy hour times, busy and slow hours, and how long tables stay."
 
+# The House Lager result, printed on the this week tab and drawn small on
+# the home tile and the overview card. Every figure is invented for the
+# illustration and the card says so, but it has to add up: about 470 pints a
+# week at 50 cents more is $235, and the dip in week three brings it to
+# about $225, which is $11,700 over a year. The home page menu shows the
+# same 470 pints.
+measured:
+  heading: "We raised the House Lager by 50 cents."
+  label: "sample data"
+  volume: "About 470 pints a week"
+  weeks: [78, 92, 46, 86]
+  # green is on target, red is below. Week four was grey, which this card's
+  # own key calls not enough data, under a verdict that said it worked.
+  kinds: ["ok", "ok", "low", "ok"]
+  key: "green: on target, red: below, grey: not enough data that week"
+  lead: "Four weeks later: about"
+  amount: "$225"
+  tail: "more a week, after what you would have made anyway. That is about $11,700 a year."
+
 # The two outcomes a visitor can pick on the this week tab. They mirror the
 # two cards above them: the 50 cent move is the House Lager that worked, the
 # dollar move is the Garlic Fries that did not. Every figure is invented for
@@ -53,12 +72,12 @@ tryit:
     - key: "worked"
       button: "Raise 50 cents"
       new: "$7.00"
-      weeks: [78, 92, 70, 84]
-      # green is on target, red is below. The key under the card above says
-      # so, and a falling week is below, not missing.
-      kinds: ["ok", "ok", "ok", "ok"]
+      # the same four weeks as the card above it, because it is the same
+      # sample: two results that disagreed was the whole problem
+      weeks: [78, 92, 46, 86]
+      kinds: ["ok", "ok", "low", "ok"]
       verdict: "Worked"
-      line: "Four weeks later: about $9.80 more a week, after what you would have made anyway."
+      line: "Four weeks later: about $225 more a week, after what you would have made anyway. That is about $11,700 a year."
     - key: "backfired"
       button: "Raise one dollar"
       new: "$7.50"

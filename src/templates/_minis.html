@@ -11,8 +11,8 @@
 <div class="mini mini-bars" aria-hidden="true">
   <span class="mini-tag">sample</span>
   <div class="mini-weeks">
-    {%- for w in [72, 94, 44, 86] %}
-    <span class="mini-wb {{ ['ok', 'ok', 'low', 'ok'][loop.index0] }}" style="--h: {{ w }}%; --i: {{ loop.index0 }}"></span>
+    {%- for w in product.measured.weeks %}
+    <span class="mini-wb {{ product.measured.kinds[loop.index0] }}" style="--h: {{ w }}%; --i: {{ loop.index0 }}"></span>
     {%- endfor %}
   </div>
   <b class="mini-verdict">{{ home.verdict.word }}</b>

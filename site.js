@@ -628,6 +628,16 @@
     intel: 'intel', regulars: 'intel'
   };
 
+  /* The panel, not the bar. Scrolling the sticky bar into view left the
+     page wherever it already was, so opening a tab from the foot of a long
+     one dropped the visitor into the middle of the new one. Every element
+     with an id already carries scroll-margin-top for the pinned bars, so
+     the panel lands just under the tab bar rather than behind it. */
+  function toTop(el) {
+    if (!el) return;
+    el.scrollIntoView({ block: 'start', behavior: A.reduce ? 'auto' : 'smooth' });
+  }
+
   function apply(name, doScroll) {
     if (!panels[name]) name = names[0];
     names.forEach(function (n) {
@@ -640,7 +650,7 @@
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.setAttribute('tabindex', on ? '0' : '-1');
     });
-    if (doScroll) bar.scrollIntoView({ block: 'start', behavior: A.reduce ? 'auto' : 'smooth' });
+    if (doScroll) toTop(panels[name]);
     /* On a phone the bar is one scrolling row, so the tab that is now on has
        to be brought into it. scrollLeft rather than scrollIntoView, which
        would take the whole page with it. */
@@ -677,8 +687,13 @@
   });
 
   window.addEventListener('popstate', function (e) {
-    var name = (e.state && e.state.tab) || inner[(location.hash || '').slice(1)] || names[0];
+    var frag = (location.hash || '').slice(1);
+    var name = (e.state && e.state.tab) || inner[frag] || names[0];
     apply(name, false);
+    /* back to a deep link lands on the thing it names; back to a tab lands
+       on the top of that tab */
+    var target = (frag && frag !== name) ? document.getElementById(frag) : null;
+    toTop(target || panels[name]);
   });
 
   /* ------------------------------------------- try it on the sample */
@@ -700,25 +715,33 @@
     var say = document.getElementById('tryitSay');
     var again = document.getElementById('tryitAgain');
 
+    /* Every play is numbered. The verdict lands on a timer and the bars
+       grow on the next frame, so without this a second choice pressed while
+       the first was still playing would have the first one's verdict land
+       on top of it a moment later. */
+    var play = 0, timer = null;
+
     function reset() {
+      play++;
+      if (timer) { clearTimeout(timer); timer = null; }
       out.hidden = true;
       bars.innerHTML = ''; bars.classList.remove('drawn');
       newPrice.hidden = true; newPrice.textContent = '';
       oldPrice.classList.remove('struck');
-      line.textContent = '';
+      line.textContent = ''; line.classList.remove('bad');
       say.textContent = '';
       A.$$('.vd', verdicts).forEach(function (v) { v.classList.remove('on'); });
-      A.$$('.tryit-btn', choices).forEach(function (b) { b.disabled = false; b.setAttribute('aria-pressed', 'false'); });
+      A.$$('.tryit-btn', choices).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
     }
 
     function run(btn) {
       reset();
+      var mine = play;
       var weeks = btn.getAttribute('data-weeks').split(',');
       var kinds = (btn.getAttribute('data-kinds') || '').split(',');
       var verdict = btn.getAttribute('data-verdict');
       var text = btn.getAttribute('data-line');
       btn.setAttribute('aria-pressed', 'true');
-      A.$$('.tryit-btn', choices).forEach(function (b) { b.disabled = true; });
       oldPrice.classList.add('struck');
       newPrice.textContent = btn.getAttribute('data-new');
       newPrice.hidden = false;
@@ -735,7 +758,7 @@
       /* the bars already know how to grow: .weekbars.drawn is the same rule
          the measured card uses, and it is already inert under reduced
          motion, so there is no second mechanism to keep in step */
-      requestAnimationFrame(function () { bars.classList.add('drawn'); });
+      requestAnimationFrame(function () { if (mine === play) bars.classList.add('drawn'); });
 
       var land = function () {
         A.$$('.vd', verdicts).forEach(function (v) {
@@ -745,7 +768,7 @@
         line.classList.toggle('bad', verdict === 'Backfired');
         say.textContent = verdict + '. ' + text;
       };
-      if (A.reduce) land(); else setTimeout(land, 640);
+      if (A.reduce) land(); else timer = setTimeout(function () { if (mine === play) land(); }, 640);
     }
 
     A.$$('.tryit-btn', choices).forEach(function (b) {
