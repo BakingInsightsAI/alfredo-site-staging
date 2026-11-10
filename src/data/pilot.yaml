@@ -10,10 +10,10 @@ lede:
 built_heading: "Built by someone who knows numbers, with someone who runs restaurants."
 built:
   - name: "The founder"
-    body: "Ten years helping companies understand their customers and turn that into growth. When you join, you work with him directly."
+    body: "More than ten years studying how people buy, most of it advising Fortune 100 companies on what their customers want. When you join, you work with him directly."
   - name: "The restaurant owner"
-    body: "A multi location owner who helped design Alfredo from the very first week. Every feature started as a real question about his own restaurants: which price to change, which pairing to push, which competitor was pulling his regulars away."
-built_close: "Alfredo was built around how a restaurant actually runs, not how software usually gets sold."
+    body: "A multi location owner who helped design Alfredo from the very first week. Every feature started as a real question about his own places: which price to change, which pairing to push, which competitor was pulling his regulars away."
+built_close: "Running a restaurant is complicated. Alfredo takes all of that and turns it into a few simple things to try each week."
 
 how_heading: "How we work with you"
 how:

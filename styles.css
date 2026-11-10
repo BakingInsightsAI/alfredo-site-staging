@@ -997,6 +997,25 @@ footer small { margin-left: auto; font-size: .8rem; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
 .center-block { text-align: center; }
+/* Getting started. The grid is the same one the cards on every page use,
+   so the steps sit three across and stack on a phone with nothing new to
+   maintain; what is added here is the ordered list reset and the numeral.
+   The numeral takes --accent, which is wine on a light page and gold on a
+   dark band, because gold on cream does not carry its own weight. */
+.steps { list-style: none; padding-left: 0; margin-bottom: 0; counter-reset: none; }
+.steps .step { display: flex; flex-direction: column; }
+/* .tile b is a card heading at 22px, and it outranks a lone class name, so
+   the numeral is addressed through the list it is in. */
+.steps .step-n {
+  display: block; font-size: 2.75rem; line-height: 1; font-weight: 600;
+  letter-spacing: -.04em; color: var(--accent); margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.steps .step h3 { margin-bottom: 8px; }
+@media (max-width: 860px) {
+  .steps .step-n { font-size: 2.25rem; margin-bottom: 10px; }
+}
+
 .tile-cta { margin-top: 34px; }
 .center-block .pill { margin-top: 24px; }
 .big.small { font-size: clamp(1.6rem, 3vw, 2.4rem); }

@@ -60,3 +60,17 @@ pages:
     title: "Alfredo, about us"
     description: "Built by someone who knows numbers, with someone who runs restaurants. How we work with you, and where we are today."
     next: { label: "What it costs", href: "pricing.html" }
+
+# The three steps between a visitor and a working install. They are a real
+# sequence, so they are rendered as an ordered list rather than as three
+# cards that happen to sit left to right. Shown above the form on about us
+# and above the closing band on pricing.
+getting_started:
+  heading: "Getting started"
+  steps:
+    - name: "Request a demo."
+      body: "Tell us a little about your place. We reply within one business day."
+    - name: "A 30 minute call."
+      body: "We show you Alfredo and what you would get from it."
+    - name: "Up and running in about two weeks."
+      body: "If you want to go ahead, we plan the setup together and connect your POS."
