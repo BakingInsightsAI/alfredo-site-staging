@@ -41,25 +41,26 @@ board_types:
 
 # The House Lager result, printed on the this week tab and drawn small on
 # the home tile and the overview card. Every figure is invented for the
-# illustration and the card says so, but it has to add up: about 470 pints a
-# week at 50 cents more is $235, and the dip in week three brings it to
-# about $225, which is $11,700 over a year. The home page menu shows the
-# same 470 pints.
+# illustration and the card says so, but it has to add up: 470 pints a week
+# at 50 cents more is $235, and the dip in week three brings it to $225,
+# which is $11,700 over a year. The home page menu shows the same 470
+# pints. Alfredo's own figures are stated exactly: no "about" in front of
+# a number it reports.
 measured:
   heading: "We raised the House Lager by 50 cents."
   label: "sample data"
-  volume: "About 470 pints a week"
+  volume: "470 pints a week"
   weeks: [78, 92, 46, 86]
   # green is on target, red is below. Week four was grey, which this card's
   # own key calls not enough data, under a verdict that said it worked.
   kinds: ["ok", "ok", "low", "ok"]
-  key: "green: on target, red: below, grey: not enough data that week."
-  key_note: "After what you would have made anyway."
-  lead: "Four weeks later: about"
+  key: "green: on target, red: below, grey: not enough data that week"
+  after: "After what you would have made anyway."
+  lead: "Four weeks later:"
   amount: "$225"
-  tail: "more a week. That is about $11,700 a year."
+  tail: "more a week. That is $11,700 a year."
   # the same result, short enough to sit under a word on a small drawing
-  short: "About $225 more a week"
+  short: "$225 more a week"
 
 # The two outcomes a visitor can pick on the this week tab. They mirror the
 # two cards above them: the 50 cent move is the House Lager that worked, the
@@ -81,7 +82,8 @@ tryit:
       weeks: [78, 92, 46, 86]
       kinds: ["ok", "ok", "low", "ok"]
       verdict: "Worked"
-      line: "Four weeks later: about $225 more a week. That is about $11,700 a year."
+      line: "Four weeks later: $225 more a week. That is $11,700 a year."
+      after: "After what you would have made anyway."
     - key: "backfired"
       button: "Raise one dollar"
       new: "$7.50"

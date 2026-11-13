@@ -110,8 +110,9 @@
           {%- endfor %}
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-        <p class="viz-key">{{ m.key }} {{ m.key_note }}</p>
+        <p class="viz-key">{{ m.key }}</p>
         <p class="viz-result">{{ m.lead }} <b data-count>{{ m.amount }}</b> {{ m.tail }}</p>
+        <p class="viz-fine">{{ m.after }}</p>
       </div>
 
       {#- The visitor makes the choice this tab is describing. Both outcomes
@@ -130,7 +131,8 @@
           {%- for o in product.tryit.options %}
           <button type="button" class="pill pill-glass tryit-btn" data-k="{{ o.key }}"
                   data-new="{{ o.new }}" data-weeks="{{ o.weeks | join(',') }}" data-kinds="{{ o.kinds | join(',') }}"
-                  data-verdict="{{ o.verdict }}" data-line="{{ o.line }}">{{ o.button }}</button>
+                  data-verdict="{{ o.verdict }}" data-line="{{ o.line }}"
+                  data-after="{{ o.get('after') or '' }}">{{ o.button }}</button>
           {%- endfor %}
         </div>
         <div class="tryit-out" id="tryitOut" hidden>
@@ -140,6 +142,7 @@
             <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd">Backfired</span>
           </div>
           <p class="viz-result" id="tryitLine"></p>
+          <p class="viz-fine" id="tryitAfter" hidden></p>
           <button type="button" class="textbtn" id="tryitAgain">{{ product.tryit.again }}</button>
         </div>
         <p class="viz-note">{{ product.tryit.prompt }}</p>

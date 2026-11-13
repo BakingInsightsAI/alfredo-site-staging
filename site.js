@@ -731,6 +731,7 @@
     var verdicts = document.getElementById('tryitVerdicts');
     var say = document.getElementById('tryitSay');
     var again = document.getElementById('tryitAgain');
+    var after = document.getElementById('tryitAfter');
 
     /* Every play is numbered. The verdict lands on a timer and the bars
        grow on the next frame, so without this a second choice pressed while
@@ -746,8 +747,9 @@
       newPrice.hidden = true; newPrice.textContent = '';
       oldPrice.classList.remove('struck');
       line.textContent = ''; line.classList.remove('bad');
+      if (after) { after.hidden = true; after.textContent = ''; }
       say.textContent = '';
-      A.$$('.vd', verdicts).forEach(function (v) { v.classList.remove('on'); });
+      A.$$('.vd', verdicts).forEach(function (v) { v.classList.remove('on', 'good', 'flat'); });
       A.$$('.tryit-btn', choices).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
     }
 
@@ -758,6 +760,7 @@
       var kinds = (btn.getAttribute('data-kinds') || '').split(',');
       var verdict = btn.getAttribute('data-verdict');
       var text = btn.getAttribute('data-line');
+      var fine = btn.getAttribute('data-after') || '';
       btn.setAttribute('aria-pressed', 'true');
       oldPrice.classList.add('struck');
       newPrice.textContent = btn.getAttribute('data-new');
@@ -779,11 +782,15 @@
 
       var land = function () {
         A.$$('.vd', verdicts).forEach(function (v) {
-          v.classList.toggle('on', v.textContent.trim() === verdict);
+          var mine = v.textContent.trim() === verdict;
+          v.classList.toggle('on', mine);
+          v.classList.toggle('good', mine && verdict === 'Worked');
+          v.classList.toggle('flat', mine && verdict === 'No effect');
         });
         line.textContent = text;
         line.classList.toggle('bad', verdict === 'Backfired');
-        say.textContent = verdict + '. ' + text;
+        if (after) { after.textContent = fine; after.hidden = !fine; }
+        say.textContent = verdict + '. ' + text + (fine ? ' ' + fine : '');
       };
       if (A.reduce) land(); else timer = setTimeout(function () { if (mine === play) land(); }, 640);
     }

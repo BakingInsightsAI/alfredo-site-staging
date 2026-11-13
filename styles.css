@@ -1057,6 +1057,10 @@ section.dark .chip, .glass .chip { color: var(--gold-ink); }
 .viz-key { color: var(--soft); font-size: .82rem; margin-top: 10px; }
 .glass .viz-key { color: var(--band-soft); }
 .viz-result { font-weight: 600; font-size: 1.05rem; margin-top: 16px; color: var(--ok); }
+/* the qualifier under a result: the key's size and colour, so it reads as
+   small print about the figure rather than as part of the sentence */
+.viz-fine { color: var(--soft); font-size: .82rem; margin-top: 6px; }
+.glass .viz-fine, section.dark .viz-fine { color: var(--band-soft); }
 .viz-result.bad { color: var(--miss); }
 .nopeek { border-left: 3px solid var(--gold); padding: 10px 0 10px 16px; margin-bottom: 18px; color: var(--soft); font-size: .95rem; max-width: 32em; }
 .glass .nopeek { color: var(--band-soft); }
@@ -1076,7 +1080,20 @@ section.dark .chip, .glass .chip { color: var(--gold-ink); }
 .verdicts { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 6px; }
 .vd { font-size: .82rem; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--rule); color: var(--soft); }
 .glass .vd { border-color: var(--band-rule); color: var(--band-soft); }
-.vd.on { background: color-mix(in srgb, var(--miss) 18%, transparent); border-color: color-mix(in srgb, var(--miss) 50%, transparent); color: var(--miss); font-weight: 600; }
+/* The verdict that landed. This was written when the only one on the site
+   was Backfired, so the colour was wired to --miss: once a visitor could
+   pick an outcome, a Worked verdict came up in the backfired colour, which
+   is the one thing the colours on this site are not allowed to do. The
+   word chooses the ink now. */
+.vd.on {
+  --vd: var(--miss);
+  background: color-mix(in srgb, var(--vd) 18%, transparent);
+  border-color: color-mix(in srgb, var(--vd) 50%, transparent);
+  color: var(--vd); font-weight: 600;
+}
+.vd.on.good { --vd: var(--ok); }
+.vd.on.flat { --vd: var(--soft); }
+.glass .vd.on.flat, section.dark .vd.on.flat { --vd: var(--band-soft); }
 
 /* ------------------------------------------------------- chat panel */
 .chatcard { padding: 20px; }
