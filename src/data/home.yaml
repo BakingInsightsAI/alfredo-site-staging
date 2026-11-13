@@ -82,6 +82,8 @@ looks_at:
     - name: "Who walks in, and who is down the street"
       shared: "guests_line"
       href: "product.html#intel"
+  more_link: "See everything Alfredo does"
+  more_href: "product.html"
 
 photos:
   - "Photo: bar at the end of service, warm light"
@@ -102,5 +104,5 @@ price:
   href: "pricing.html"
 
 closing:
-  heading: "See it on your own restaurant."
+  heading: "See it on your own place."
   body: "A 30 minute call to see it. Up and running in about two weeks."
