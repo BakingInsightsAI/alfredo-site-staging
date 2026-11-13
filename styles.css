@@ -500,11 +500,19 @@ body:has(.staging-bar) { --bar: calc(26px + env(safe-area-inset-top, 0px)); padd
    inside the link rather than with padding, which would drag the
    underline 12px below the text. The focus ring is the one every link on
    the site gets, drawn tight around the words. */
+/* A link that is the next step out of a section is a button now: at body
+   size on a line of its own it was not being seen. It takes the site's
+   secondary pill, quiet on a light band and glass on a dark one, and never
+   gold: gold is the demo request and nothing else. The pill is already
+   44px tall and already carries the focus ring, so the transparent box
+   that used to grow the tap area is gone with it. */
 .seeall { margin-top: 34px; text-align: center; }
-.seeall a { position: relative; display: inline-block; font-size: 1.1rem; }
-.seeall a::after {
-  content: ""; position: absolute; left: -8px; right: -8px;
-  top: 50%; transform: translateY(-50%); height: 44px;
+.nextstep { margin-top: 24px; }
+/* two asks side by side on a closing band, stacked when they do not fit */
+.ctarow { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+.center-block .ctarow .pill { margin-top: 0; }
+@media (max-width: 420px) {
+  .ctarow { flex-direction: column; align-items: stretch; }
 }
 
 /* ----------------------------------------------------------- sections */
@@ -721,6 +729,15 @@ footer { background: var(--bg); color: var(--soft); font-size: .84rem; padding: 
 .foot-inner .wordmark { color: var(--text); font-size: 1rem; }
 footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
 footer nav a { text-decoration: none; display: inline-block; padding-block: 6px; }
+/* At 13.4px these were the smallest words on the site, and Log in ended up
+   on a row of its own. Two columns, 15px, and a 44px row each. */
+@media (max-width: 700px) {
+  footer nav {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px;
+    width: 100%; margin-top: 4px;
+  }
+  footer nav a { font-size: 15px; min-height: 44px; display: flex; align-items: center; }
+}
 footer nav a:hover { color: var(--text); }
 footer small { margin-left: auto; font-size: .8rem; }
 @media (max-width: 700px) { footer small { margin-left: 0; flex-basis: 100%; } }
@@ -1477,6 +1494,13 @@ html:not(.js) .mini-prow { opacity: 1; transform: none; }
   display: flex; justify-content: space-between; align-items: baseline;
   gap: 14px; margin-bottom: 8px; flex-wrap: wrap;
 }
+/* On a phone one of the three figures wrapped under its label while the
+   other two stayed beside theirs, so the three rows did not read as one
+   set. All three put the figure on its own line below the label, at the
+   weight it already had. The desktop row is untouched. */
+@media (max-width: 760px) {
+  .costbar-head { flex-direction: column; align-items: flex-start; gap: 2px; }
+}
 .costbar-name { font-weight: 600; font-size: 1.05rem; letter-spacing: -.02em; }
 .costbar-track {
   position: relative; height: 18px; border-radius: 9px;
@@ -1510,7 +1534,10 @@ html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
    the price block, the drawn check mark and the flag. The row is a grid so
    the three cards are the same height, and the feature list takes the
    slack so the three buttons line up at the foot. */
-.tiers3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
+/* 52px is the gap that sits under a section heading. There is no heading
+   over this row, so on the page it was 52px of nothing between the
+   founding band and the first card. */
+.tiers3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 0; }
 @media (max-width: 860px) { .tiers3 { grid-template-columns: 1fr; } }
 .pricetier { display: flex; flex-direction: column; position: relative; }
 .pricetier h3 { margin-bottom: 4px; }
@@ -1593,6 +1620,15 @@ html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
   padding: 0; font-size: .86rem; font-weight: 500; color: var(--field-label); margin-bottom: 7px;
 }
 .demo-form .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Four choices do not fit on one row below about 560px, and wrapping left
+   the last one alone on a line of its own. Two by two reads as one set.
+   The inputs, their names, their values and the error state are untouched:
+   this is the layout only. */
+@media (max-width: 560px) {
+  .demo-form .pills { display: grid; grid-template-columns: 1fr 1fr; }
+  .demo-form .pills label { display: flex; }
+  .demo-form .pills span { width: 100%; justify-content: center; }
+}
 .demo-form .pills label { display: inline-flex; position: relative; gap: 0; }
 .demo-form .pills input {
   position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;

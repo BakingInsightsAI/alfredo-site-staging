@@ -172,7 +172,7 @@
     {#- One way out of the section for a visitor the three cards have
         already convinced. A text link rather than a fourth gold button:
         this page has enough of those. #}
-    <p class="seeall"><a class="textlink" href="{{ home.looks_at.more_href }}">{{ home.looks_at.more_link }}</a></p>
+    <p class="seeall"><a class="pill pill-quiet" href="{{ home.looks_at.more_href }}">{{ home.looks_at.more_link }}</a></p>
   </div>
 </section>
 
@@ -183,13 +183,13 @@
     <h2 class="big">{{ home.trust.heading }}</h2>
     <p class="sub">{{ home.trust.lead }}</p>
     <p class="sub proofline">{{ home.trust.claim }}</p>
-    <p><a class="textlink" href="{{ home.trust.href }}">{{ home.trust.link }}</a></p>
+    <p class="nextstep"><a class="pill pill-glass" href="{{ home.trust.href }}">{{ home.trust.link }}</a></p>
     {#- Both figures come from the pricing data, so the teaser cannot fall
         behind the pricing page. #}
     <div class="teaser-price">
       <p class="sub">{{ home.price.lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
       <p class="teaser-offer">{{ pages.pricing.founding_heading }}</p>
-      <p><a class="textlink" href="{{ home.price.href }}">{{ home.price.link }}</a></p>
+      <p class="nextstep"><a class="pill pill-glass" href="{{ home.price.href }}">{{ home.price.link }}</a></p>
     </div>
   </div>
 </section>

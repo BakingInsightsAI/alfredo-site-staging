@@ -11,13 +11,15 @@
   </div>
 </section>
 
-{#- The two cards are the h2 level under that heading, which is what they
-    are: the page says who built it, and these two are the who. #}
+{#- Both card groups were reading as orphans, because neither had a
+    heading over it. With one, the cards go back to h3 and the page runs
+    h1, h2, h3 with nothing skipped. #}
 <section class="tint">
   <div class="wrap">
+    <h2 class="big">{{ pilot.built_heading }}</h2>
     <div class="tiles two">
       {%- for b in pilot.built %}
-      <div class="tile reveal"><h2>{{ b.name }}</h2><span>{{ b.body }}</span></div>
+      <div class="tile reveal"><h3>{{ b.name }}</h3><span>{{ b.body }}</span></div>
       {%- endfor %}
     </div>
   </div>
@@ -25,7 +27,7 @@
 
 <section class="light">
   <div class="wrap">
-    <h2 class="sr-only">{{ pilot.how_heading }}</h2>
+    <h2 class="big">{{ pilot.how_heading }}</h2>
     <div class="tiles">
       {%- for h in pilot.how %}
       <div class="tile reveal"><h3>{{ h.name }}</h3><span>{{ h.body }}</span></div>
@@ -69,7 +71,7 @@
           <input type="text" name="name" required autocomplete="name" placeholder="Your name">
         </label>
         <label>Business name
-          <input type="text" name="business" required autocomplete="organization" placeholder="Your restaurant, bar, cafe, or truck">
+          <input type="text" name="business" required autocomplete="organization" placeholder="Your restaurant, brewery, cafe, or bakery">
         </label>
         <label>Email
           <input type="email" name="email" required autocomplete="email" spellcheck="false" placeholder="you@yourbusiness.com">

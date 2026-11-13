@@ -3,7 +3,8 @@
 # Who built it is the page heading now: the old one described a platform,
 # which is not what anyone comes to this page to read about.
 heading: "Built by someone who knows numbers, with someone who runs restaurants."
-hero_line: "Running a restaurant is complicated. Alfredo takes all of that and turns it into a few simple things to try each week."
+built_heading: "Who is behind Alfredo"
+hero_line: "Running a place like yours is complicated. Alfredo takes all of that and turns it into a few simple things to try each week."
 built:
   - name: "The founder"
     body: "A decade advising Fortune 100 companies on how people buy. You work with him directly."
@@ -31,7 +32,7 @@ where:
 form_heading: "Request a demo"
 form_lede: "Tell us a little about your place and we will reply within one business day."
 # the price in this line is read from the pricing data
-form_reassure_lead: "We reply within one business day. Plans from"
+form_reassure_lead: "Plans from"
 # The location choices match the plans, so the answer Sid reads in the
 # email is the band the business falls into. The submitted value is the
 # label itself: one string, so the two cannot drift.

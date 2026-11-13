@@ -75,9 +75,17 @@
     </div>
   </section>
 
+  {#- The same component the home page closes on: heading, one line, and
+      the ask. Without the closeband modifier, which exists only to part
+      the two bands that sit together on the home page. #}
   <section class="light">
-    <div class="wrap">
-      <p class="sub">Nothing new to buy: Alfredo connects to your existing POS system. <a class="textlink" href="pricing.html">Pricing</a></p>
+    <div class="wrap center-block">
+      <h2 class="big center">{{ product.closing.heading }}</h2>
+      <p class="sub center">{{ product.closing.body_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}.</p>
+      <p class="ctarow">
+        <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+        <a class="pill pill-quiet" href="pricing.html">{{ product.closing.see_pricing }}</a>
+      </p>
     </div>
   </section>
 </div>
