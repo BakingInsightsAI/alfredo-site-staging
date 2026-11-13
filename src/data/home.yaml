@@ -55,12 +55,16 @@ verdict:
   word: "Worked."
   note: "Or no effect. Or backfired."
 
+# The section is about the three answers, not about Tuesday. The question
+# is still here, carried by the line under the heading, where it is the
+# thing all three are being asked rather than the heading itself.
 tuesday:
-  heading: "Why is Tuesday slow?"
-  sub: "Three ways to ask. Only one gives you an answer you can act on."
+  heading: "How Alfredo is different"
+  sub_lead: "Ask all three the same question:"
+  sub_question: "why is Tuesday slow?"
   tiles:
-    - { name: "A dashboard", body: "Shows you charts and leaves you to figure them out." }
-    - { name: "A consultant", body: "Hands you a ten slide deck when you only had one question." }
+    - { name: "A dashboard", body: "Shows you charts. You still have to work out what they mean." }
+    - { name: "A consultant", body: "Takes weeks, costs thousands, and hands you a long report for one simple question." }
     - { name: "Alfredo", body: "Tells you what happened, why, and what to try. Then it checks whether it worked.", ours: true }
 
 # Three doors into the product page, one per tab. The whole card is the

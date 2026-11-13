@@ -1025,6 +1025,9 @@ footer small { margin-left: auto; font-size: .8rem; }
 .big.small { font-size: clamp(1.6rem, 3vw, 2.4rem); }
 /* 60em ran to 132 characters on a laptop. 65 characters is the measure. */
 .sub.wide { max-width: 32em; margin-top: 28px; }
+/* the question the three cards are all being asked. --accent is wine on a
+   light page and gold on a dark one. */
+.sub .q { color: var(--accent); }
 /* The closing thought on the numbers rule page sits below the four
    promises, so it needs air above it to read as its own idea. */
 .bridge-h { margin-top: 56px; }
@@ -1628,7 +1631,7 @@ html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
 }
 .js .facts.drawn > div::before { transform: scaleX(1); transition: transform .5s cubic-bezier(.33, 1, .68, 1) var(--d, 0ms); }
 
-/* ---- Why is Tuesday slow: one object wins ---- */
+/* ---- How Alfredo is different: one object wins ---- */
 .tile.ours {
   position: relative;
   transform: scale(1.04);

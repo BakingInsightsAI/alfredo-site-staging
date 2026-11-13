@@ -127,7 +127,10 @@
 <section class="light">
   <div class="wrap">
     <h2 class="big center">{{ home.tuesday.heading }}</h2>
-    <p class="sub center">{{ home.tuesday.sub }}</p>
+    {#- The question is one sentence with the rest of the line, so it is a
+        span rather than emphasis: the colour is what makes it stand out,
+        and a screen reader is given the sentence whole either way. #}
+    <p class="sub center">{{ home.tuesday.sub_lead }} <span class="q">{{ home.tuesday.sub_question }}</span></p>
     <div class="tiles">
       {%- for t in home.tuesday.tiles %}
       <div class="tile{% if t.get('ours') %} ours tactile{% endif %} reveal">
