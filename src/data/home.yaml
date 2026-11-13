@@ -3,8 +3,8 @@
 hero:
   heading: "The in house consultant your business never had."
   # The offer belongs in the first screen, not four screens down on a page
-  # a visitor may never reach.
-  offer: "The first 10 businesses get their first six months free."
+  # a visitor may never reach. The sentence itself is read from the pricing
+  # data, so the hero and the pricing band cannot say different things.
   offer_href: "pricing.html"
   lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
 
@@ -96,8 +96,8 @@ trust:
   href: "honesty.html"
 
 price:
-  body: "$300 a month for one location."
-  offer: "The first 10 businesses get their first six months free."
+  # the figures come from pages.yaml, the only place a price is written
+  lead: "Plans from"
   link: "See pricing"
   href: "pricing.html"
 

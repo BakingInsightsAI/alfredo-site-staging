@@ -17,7 +17,7 @@
       {#- Directly under the buttons, where someone who is already half
           persuaded is looking. It is the whole line that links, so there is
           nothing small to aim at. #}
-      <p class="hero-offer"><a href="{{ home.hero.offer_href }}">{{ home.hero.offer }}</a></p>
+      <p class="hero-offer"><a href="{{ home.hero.offer_href }}">{{ pages.pricing.founding_heading }}</a></p>
     </div>
 
     <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
@@ -180,9 +180,11 @@
     <p class="sub">{{ home.trust.lead }}</p>
     <p class="sub proofline">{{ home.trust.claim }}</p>
     <p><a class="textlink" href="{{ home.trust.href }}">{{ home.trust.link }}</a></p>
+    {#- Both figures come from the pricing data, so the teaser cannot fall
+        behind the pricing page. #}
     <div class="teaser-price">
-      <p class="sub">{{ home.price.body }}</p>
-      <p class="teaser-offer">{{ home.price.offer }}</p>
+      <p class="sub">{{ home.price.lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
+      <p class="teaser-offer">{{ pages.pricing.founding_heading }}</p>
       <p><a class="textlink" href="{{ home.price.href }}">{{ home.price.link }}</a></p>
     </div>
   </div>

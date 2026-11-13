@@ -98,7 +98,7 @@
         </label>
         {#- What happens next, where the thumb already is, rather than above
             a form that is taller than the screen. #}
-        <p class="form-reassure">{{ pilot.form_reassure }}</p>
+        <p class="form-reassure">{{ pilot.form_reassure_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
         <button type="submit" class="pill pill-gold">{{ site.cta.label }}</button>
         <p id="form-status" role="status" aria-live="polite"></p>
       </form>

@@ -51,7 +51,7 @@ pages:
     output: pricing.html
     legacy: false
     title: "Alfredo, pricing"
-    description: "One price, right here. No sales call needed. $300 a month for one location, and the first 10 businesses get their first six months free."
+    description: "Three plans: Counter at $99 a month for one location, House at $199 for up to three, Group at $299 for up to ten. One price for your whole business, not per location and not per user."
 
   - key: pilot
     template: pilot.html

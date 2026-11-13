@@ -34,47 +34,84 @@ honesty:
 
 pricing:
   eyebrow: "Pricing"
-  heading: "One price, right here. No sales call needed."
-  lede: "Most software makes you talk to sales just to find out what it costs. Here is the number."
-  founding_heading: "The first 10 businesses get their first six months free."
-  founding_body: "However many locations you run. Regular pricing starts after six months, and you can leave anytime before that without owing a thing."
+  heading: "Less than $10 a day, whichever plan you pick."
+  lede: "One price for your whole business, not per location and not per user. No setup fee and no long term contract."
+  founding_heading: "The first 10 restaurants get everything free for six months."
+  founding_body: "Every feature, however many locations you run. After that you pay the price for your size, locked in for a full year."
+  # Every price on the site comes from here. The unit is the same for all
+  # three, so it is written once rather than three times.
+  price_unit: "a month"
+  # The daily figures are deliberate: 99, 199 and 299 a month over 30.44
+  # days are 3.25, 6.54 and 9.83, so "less than" is true of each one as
+  # written. They are not rounded and they are not hedged.
   tiers:
-    - name: "One location"
-      price: "$300"
-      unit: "a month"
-      body: "Everything included. No setup fee, no contract, no extra charge per user."
-    - name: "Two locations"
-      price: "$500"
-      unit: "a month"
-      body: "Everything included, with both places side by side."
-    - name: "Three or more"
-      price: "Let us talk"
-      body: "We will give you a straight number, not a sales pitch."
+    - name: "Counter"
+      who: "For one location"
+      price: "$99"
+      per_day: "Less than $3.30 a day"
+      per_day_note: "One price, however many people log in."
+      cta_style: "quiet"
+      features:
+        - "A weekly list of small changes worth trying"
+        - "One test every two weeks, with an honest answer on whether it worked"
+        - "Your sales at a glance, day by day"
+        - "Which menu items earn their place"
+        - "What the places down the street charge, and what their guests say"
+        - "Ask Alfredo your questions in plain words"
+    - name: "House"
+      who: "For one to three locations"
+      price: "$199"
+      per_day: "Less than $6.60 a day"
+      per_day_note: "Less than $2.20 a day per location with three."
+      flag: "The full picture"
+      lead: "Everything in Counter, plus:"
+      cta_style: "primary"
+      features:
+        - "Run as many tests as you like"
+        - "Know your regulars and what they spend"
+        - "See what you really make on every plate, extras included"
+        - "Promotions and pairings worth suggesting"
+        - "Every chart and every detail, nothing held back"
+    - name: "Group"
+      who: "For four to ten locations"
+      price: "$299"
+      per_day: "Less than $10 a day"
+      per_day_note: "Less than $1 a day per location with ten."
+      lead: "Everything in House, plus:"
+      cta_style: "quiet"
+      features:
+        - "All your locations in one place"
+        - "Compare locations side by side"
+        - "The places down the street, tracked for each location"
+  more_lead: "More than ten locations?"
+  more_link: "Talk to us"
+  more_tail: "and we will give you a straight number."
   proof: "Tested with a brewpub and live across a 14 location restaurant chain."
   proof_link: "Why you can trust it"
   compare_eyebrow: "For comparison"
-  compare_heading: "What the alternatives cost."
-  # Only the two figures that are really comparable are drawn, both put on a
-  # monthly basis so one scale holds them. A consultant is a one off fee, so
-  # it stays a line of text rather than a bar pretending to be monthly.
-  compare_scale: 2500
+  compare_heading: "What everyone else charges"
+  # Alfredo is not a bar here. Its prices are in the cards above, and a bar
+  # of our own next to three of theirs was the site arguing with itself.
+  # The widths are given rather than computed: a consultant is a one off
+  # fee, so there is no monthly scale that could hold all three honestly.
   compare_bars:
+    - name: "A consultant"
+      figure: "thousands, for one project"
+      width: 100
+      ink: "--c1"
     - name: "A big data platform"
       figure: "about $2,500 a month"
       note: "From around $30,000 a year, and you still need someone to build the reports."
-      low: 2500
+      width: 85
+      ink: "--c2"
     - name: "Back office software"
       figure: "$330 to $750 a month, per location"
       note: "Great for invoices and books. It tells you what you spent, not what to try next."
-      low: 330
-      high: 750
-    - name: "Alfredo"
-      figure: "$300 a month"
-      note: "Everything included, one location."
-      low: 300
-      ours: true
-  compare_line: "A consultant is thousands for one report that is out of date the day you get it, so it is not on this scale."
-  compare_close: "Alfredo works with the POS you already use, tells you what to try next, and then tells you whether it worked."
+      width: 25
+      ink: "--c3"
+  compare_aria: "What everyone else charges each month: a consultant thousands for one project, a big data platform about $2,500, back office software $330 to $750 per location."
+  compare_soft: "A consultant gives you a one time report."
+  compare_gold: "Alfredo tells you what to try every week, then tells you whether it worked, for a fraction of the cost."
   faq_eyebrow: "Questions"
   faq_heading: "What owners ask first."
   faq:

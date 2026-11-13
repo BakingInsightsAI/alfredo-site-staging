@@ -12,6 +12,7 @@
     <div class="pricecard glass founding tactile">
       <h2 class="founding-h">{{ p.founding_heading }}</h2>
       <p>{{ p.founding_body }}</p>
+      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
     </div>
   </div>
 </section>
@@ -19,17 +20,38 @@
 <section class="light">
   <div class="wrap">
     <h2 class="sr-only">What Alfredo costs</h2>
-    <div class="tiles">
+    {#- Three cards, one per plan, in the order a visitor grows through
+        them. The check mark on each feature is drawn by the stylesheet in
+        the accent ink, so it follows the theme and needs no icon font. The
+        flag sits on the top border of the card it belongs to. #}
+    <div class="tiers3">
       {%- for t in p.tiers %}
-      <div class="tile reveal">
+      <div class="tile pricetier reveal{% if t.get('flag') %} lead-tier{% endif %}">
+        {%- if t.get('flag') %}
+        <span class="pt-flag">{{ t.flag }}</span>
+        {%- endif %}
         <h3>{{ t.name }}</h3>
-        {#- the third tier is a conversation rather than a number, so it
-            carries no unit after it #}
-        <p class="tier"><b{% if t.price[0] == "$" %} data-count{% endif %}>{{ t.price }}</b>{% if t.get('unit') %} <span>{{ t.unit }}</span>{% endif %}</p>
-        <span>{{ t.body }}</span>
+        <p class="pt-who">{{ t.who }}</p>
+        {#- No data-count on a price. The counter animates up from zero, which
+            on this card means showing $96 on the way to $99: every other
+            counted number on the site is a statistic, and a price is not. #}
+        <p class="pt-price"><b>{{ t.price }}</b> <span>{{ p.price_unit }}</span></p>
+        <p class="pt-day">{{ t.per_day }}</p>
+        <p class="pt-daynote">{{ t.per_day_note }}</p>
+        {%- if t.get('lead') %}
+        <p class="pt-lead">{{ t.lead }}</p>
+        {%- endif %}
+        <ul class="pt-feats">
+          {%- for f in t.features %}
+          <li>{{ f }}</li>
+          {%- endfor %}
+        </ul>
+        <a class="pill {{ 'pill-gold' if t.cta_style == 'primary' else 'pill-quiet' }}"
+           href="{{ site.cta.href }}">{{ site.cta.label }}</a>
       </div>
       {%- endfor %}
     </div>
+    <p class="sub more-tier">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
     {#- The price is the moment of doubt, so the proof stands next to it
         rather than in the footer. #}
     <p class="sub proofline">{{ p.proof }} <a class="textlink" href="honesty.html">{{ p.proof_link }}</a></p>
@@ -43,21 +65,20 @@
     {#- Two bars on one monthly scale, with the figures printed on them. The
         widths come from the numbers above, so the drawing cannot drift from
         the text. #}
-    <div class="costbars" id="costbars" role="img"
-         aria-label="What the alternatives cost each month: a big data platform about $2,500, back office software $330 to $750 per location, Alfredo $300.">
+    <div class="costbars" id="costbars" role="img" aria-label="{{ p.compare_aria }}">
       {%- for c in p.compare_bars %}
-      <div class="costbar{% if c.get('ours') %} ours{% endif %}">
+      <div class="costbar">
         <p class="costbar-head"><span class="costbar-name">{{ c.name }}</span><b class="costbar-figure">{{ c.figure }}</b></p>
         <div class="costbar-track">
-          <span class="costbar-fill"
-                style="--from: {{ (100 * (c.low if c.get('high') else 0) / p.compare_scale) | round(2) }}%; --to: {{ (100 * (c.get('high') or c.low) / p.compare_scale) | round(2) }}%"></span>
+          <span class="costbar-fill" style="--from: 0%; --to: {{ c.width }}%; --bar: var({{ c.ink }})"></span>
         </div>
+        {%- if c.get('note') %}
         <p class="costbar-note">{{ c.note }}</p>
+        {%- endif %}
       </div>
       {%- endfor %}
     </div>
-    <p class="sub">{{ p.compare_line }}</p>
-    <p class="sub wide">{{ p.compare_close }}</p>
+    <p class="sub wide compare-close">{{ p.compare_soft }} <span class="cc-gold">{{ p.compare_gold }}</span></p>
   </div>
 </section>
 

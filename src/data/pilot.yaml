@@ -30,4 +30,5 @@ where:
 
 form_heading: "Request a demo"
 form_lede: "Tell us a little about your place and we will reply within one business day."
-form_reassure: "We reply within one business day. $300 a month, first six months free for the first 10."
+# the price in this line is read from the pricing data
+form_reassure_lead: "We reply within one business day. Plans from"
