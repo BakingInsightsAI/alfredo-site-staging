@@ -141,11 +141,15 @@ radar:
   cx: 100
   cy: 100
   r: 78
+  # score is what the axis label says, out of five, and it is you times
+  # five exactly: 0.86 is 4.3, 0.82 is 4.1, 0.68 is 3.4, 0.74 is 3.7. The
+  # label and the shape have to agree, so if one moves the other moves
+  # with it. Ambiance has no score because it has no reviews to make one.
   axes:
-    - { name: "Food", you: 0.86, market: 0.7, ux: 0.0, uy: -1.0 }
-    - { name: "Service", you: 0.82, market: 0.64, ux: 0.9511, uy: -0.309 }
-    - { name: "Value", you: 0.68, market: 0.72, ux: 0.5878, uy: 0.809 }
-    - { name: "Speed", you: 0.74, market: 0.66, ux: -0.5878, uy: 0.809 }
+    - { name: "Food", score: 4.3, you: 0.86, market: 0.7, ux: 0.0, uy: -1.0 }
+    - { name: "Service", score: 4.1, you: 0.82, market: 0.64, ux: 0.9511, uy: -0.309 }
+    - { name: "Value", score: 3.4, you: 0.68, market: 0.72, ux: 0.5878, uy: 0.809 }
+    - { name: "Speed", score: 3.7, you: 0.74, market: 0.66, ux: -0.5878, uy: 0.809 }
     - { name: "Ambiance", you: 0.0, market: 0.0, ux: -0.9511, uy: -0.309, faded: true, note: "not enough reviews" }
 
 scanner:

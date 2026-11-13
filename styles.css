@@ -1234,10 +1234,21 @@ section.dark .cmp-bar.b { background: color-mix(in srgb, var(--gold-soft) 32%, t
 .radar-grid line.faded { stroke: var(--band-hair); stroke-dasharray: 3 4; }
 .radar-market { fill: color-mix(in srgb, var(--band-soft) 24%, transparent); stroke: var(--band-soft); stroke-width: 1.2; }
 .radar-you { fill: rgba(217,164,65,.3); stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; }
-.radar-label { font-size: 9px; fill: var(--band-body); font-weight: 500; }
+/* Text inside the drawing is in the drawing's units, so what a reader
+   actually sees depends on how wide the chart has been scaled to. The box
+   is 340 units across and the chart is never drawn wider than 420px, so
+   the scale runs from about 0.63 on the narrowest phone to 1.235 from
+   600px up. One size would therefore be read at half the size on a phone
+   that it is on a laptop, which is how the labels came to be drawn at
+   7.5px against the 13.6px of every other word on the card. The size is
+   stepped against the scale instead, so the labels land between 10 and
+   14px at every width. */
+.radar-label { font-size: 14px; fill: var(--band-body); font-weight: 500; }
+@media (min-width: 420px) { .radar-label { font-size: 11px; } }
 /* The reason an axis is blank goes on its own line. As one string it ran four
    times the width of the longest other label and straight off the phone. */
-.radar-note { font-size: 7px; fill: var(--band-dim); font-weight: 400; }
+.radar-note { font-size: 11px; fill: var(--band-dim); font-weight: 400; }
+@media (min-width: 420px) { .radar-note { font-size: 8.5px; } }
 .radar-label.faded { fill: var(--band-dim); }
 .radar-key { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--band-soft); }
 .radar-key .swatch + .swatch { margin-left: 14px; }

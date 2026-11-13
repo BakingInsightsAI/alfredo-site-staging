@@ -329,7 +329,7 @@
               outside the radius. The centre stays at 100,100: the box runs
               -70 to 270 across and -6 to 206 down. #}
           <svg id="radar" viewBox="-70 -6 340 212" role="img"
-               aria-label="Sample ratings chart. How guests rate you against the area average on Food, Service, Value and Speed. Ambiance is left blank because there are not enough reviews.">
+               aria-label="Sample ratings chart. How guests rate you against the area average: Food {{ product.radar.axes[0].score }}, Service {{ product.radar.axes[1].score }}, Value {{ product.radar.axes[2].score }}, Speed {{ product.radar.axes[3].score }}, each out of five. Ambiance is left blank because there are not enough reviews.">
             <g class="radar-grid" aria-hidden="true">
               {%- for f in [0.25, 0.5, 0.75, 1.0] %}
               <polygon points="{% for a in product.radar.axes %}{{ (product.radar.cx + product.radar.r * f * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * f * a.uy) | round(2) }} {% endfor %}"></polygon>
@@ -347,8 +347,14 @@
                   x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}"
                   y="{{ (product.radar.cy + (product.radar.r + 14) * a.uy) | round(2) }}"
                   text-anchor="{% if a.ux > 0.2 %}start{% elif a.ux < -0.2 %}end{% else %}middle{% endif %}"
-                  dominant-baseline="middle">{{ a.name }}{% if a.get('note') %}<tspan class="radar-note"
-                    x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}" dy="11">({{ a.note }})</tspan>{% endif %}</text>
+                  dominant-baseline="middle">{{ a.name }}{% if a.get('score') %} {{ a.score }}{% endif %}
+              {#- The note is set on two lines. On one line it is the widest
+                  thing on the chart by far, and on a phone it ran out past
+                  the side of the card. Broken in half by words it is
+                  narrower than the label above it. #}
+              {%- if a.get('note') %}{% set words = a.note.split(' ') %}{% set half = (words | length + 1) // 2 %}<tspan class="radar-note"
+                    x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}" dy="12">({{ words[:half] | join(' ') }}</tspan><tspan class="radar-note"
+                    x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}" dy="11">{{ words[half:] | join(' ') }})</tspan>{% endif %}</text>
             {%- endfor %}
           </svg>
           <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
