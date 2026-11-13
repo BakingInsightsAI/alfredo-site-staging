@@ -92,13 +92,6 @@ tryit:
       verdict: "Backfired"
       line: "Orders fell away and the week came out behind. It went back to $6.50 in minutes, and the board said so."
 
-# The page used to end on one small sentence alone in a band of its own.
-# The price comes from the pricing data, as every price on the site does.
-closing:
-  heading: "Nothing new to buy."
-  body_lead: "Alfredo connects to the POS system you already use. Plans from"
-  see_pricing: "See pricing"
-
 # One plate, broken down. Every figure here is invented for the illustration,
 # which is why the card carries a sample label. The sums are consistent:
 # price minus cost is what you make, on each line and on the total.

@@ -19,11 +19,6 @@
      sit on it with a wine tinted shadow rather than a black one. */
   --bg: #FAF6EF;
   --tint: #F3E7D3;
-  /* The closing band's own surface. On a light page it is the page, and
-     the hairline is what parts it from the band above. In the dark it
-     takes the tint the alternating sections already use, because there
-     both bands are pure black and a hairline alone was not enough. */
-  --closing-bg: var(--bg);
   --surface: #FFFFFF;
   --text: #1D1D1F;
   --soft: #5C5C61;
@@ -131,7 +126,6 @@
   :root:not([data-theme="light"]) {
     --bg: #000000;
     --tint: #111013;
-    --closing-bg: var(--tint);
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
@@ -214,7 +208,6 @@
 :root[data-theme="dark"] {
     --bg: #000000;
     --tint: #111013;
-    --closing-bg: var(--tint);
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
@@ -534,20 +527,10 @@ body:has(.staging-bar) { --bar: calc(26px + env(safe-area-inset-top, 0px)); padd
    inside the link rather than with padding, which would drag the
    underline 12px below the text. The focus ring is the one every link on
    the site gets, drawn tight around the words. */
-/* A link that is the next step out of a section is a button now: at body
-   size on a line of its own it was not being seen. It takes the site's
-   secondary pill, quiet on a light band and glass on a dark one, and never
-   gold: gold is the demo request and nothing else. The pill is already
-   44px tall and already carries the focus ring, so the transparent box
-   that used to grow the tap area is gone with it. */
-.seeall { margin-top: 34px; text-align: center; }
-.nextstep { margin-top: 24px; }
-/* two asks side by side on a closing band, stacked when they do not fit */
-.ctarow { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
-.center-block .ctarow .pill { margin-top: 0; }
-@media (max-width: 420px) {
-  .ctarow { flex-direction: column; align-items: stretch; }
-}
+/* .seeall, .nextstep and .ctarow were here. v3.12 ends each chapter with
+   the Next block, so the three standalone next step pills and the two
+   button row are gone and so are their rules. pill-quiet and pill-glass
+   stay: the plan cards and the nav still use them. */
 
 /* ----------------------------------------------------------- sections */
 section { padding: 104px 0; }
@@ -642,18 +625,9 @@ section.dark .wrap { position: relative; z-index: 1; }
   .tile.tilelink:hover, .tile.tilelink:focus-visible { transform: none; }
 }
 
-/* The price line sits under the trust promise with a hairline between, so
-   the two read as two separate things rather than one paragraph. */
-.teaser-price { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--rule); }
-/* Two 34px headings were landing on one phone screen, so the reader had to
-   choose which one they were reading. v3.5 answered that with 190px of
-   padding on each side, which is 380px of nothing on a phone: in the dark
-   both bands are pure black, so the two blocks of padding read as one
-   empty screen rather than as a boundary. They are parted by what they
-   look like now, not by how far apart they are, so the spacing goes back
-   to the standard section rhythm. The hairline is the one the Next block
-   uses, on the same surface, for the same reason. */
-section.closeband { background: var(--closing-bg); border-top: 1px solid var(--rule); }
+/* section.closeband was here, with the surface and the hairline v3.11a
+   gave it. The home page has no closing band now: the Next block ends the
+   chapter. */
 /* The offer, directly under the hero buttons. --accent is wine on a light
    page and gold on a dark one, because gold on cream does not clear
    contrast at this size. The underline is the link, so the line reads as
@@ -666,10 +640,6 @@ section.closeband { background: var(--closing-bg); border-top: 1px solid var(--r
 }
 .hero-offer a:hover, .hero-offer a:focus-visible { text-decoration-color: var(--accent); }
 
-.teaser-offer {
-  margin-top: 10px; font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 600;
-  letter-spacing: -.03em; line-height: 1.12; color: var(--gold-ink); max-width: 18em;
-}
 
 /* -------------------------------------------------------------- tiles */
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
@@ -847,6 +817,16 @@ footer small { margin-left: auto; font-size: .8rem; }
 }
 .story .hero-h p { margin: 22px auto 0; max-width: 32em; color: var(--band-soft); font-size: clamp(1.02rem, 1.6vw, 1.22rem); }
 .story .ctas { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+/* The proof, one quiet line under the card the film has just played. It
+   sits in the film's own column, so on a wide screen it is centred under
+   the card rather than across the whole scene, where it read as a stray
+   line under the caption. It keeps the caption's voice: small, soft, and
+   no link. */
+.film-claim {
+  grid-column: 2; justify-self: center; text-align: center;
+  margin-top: 18px; font-size: .9rem; line-height: 1.4;
+  color: var(--band-dim); max-width: 34em;
+}
 
 /* ---- the scene: what is being said, beside what it is being said about ---- */
 /* The film is centred in the window, and the block is kept short enough
@@ -858,7 +838,11 @@ footer small { margin-left: auto; font-size: .8rem; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
   min-height: 86vh; min-height: 86svh; align-content: center;
 }
-@media (max-width: 860px) { .scene { grid-template-columns: 1fr; gap: 24px; padding-bottom: 56px; } }
+@media (max-width: 860px) {
+  .scene { grid-template-columns: 1fr; gap: 24px; padding-bottom: 56px; }
+  /* one column, so there is no second one to sit in */
+  .film-claim { grid-column: 1 / -1; }
+}
 .caps { position: relative; }
 @media (max-width: 860px) { .caps { text-align: center; } }
 .cap {

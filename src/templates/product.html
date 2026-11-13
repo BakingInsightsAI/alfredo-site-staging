@@ -43,9 +43,6 @@
         </div>
         {%- endfor %}
       </div>
-      {#- A visitor convinced by the three questions had nothing to press on
-          this tab but the bar at the top of the window. #}
-      <p class="tile-cta"><a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
     </div>
   </section>
 
@@ -73,21 +70,13 @@
         <p class="chat-input">Ask about your business</p>
       </div>
     </div>
-  </section>
-
-  {#- The same component the home page closes on: heading, one line, and
-      the ask. Without the closeband modifier, which exists only to part
-      the two bands that sit together on the home page. #}
-  <section class="light">
-    <div class="wrap center-block">
-      <h2 class="big center">{{ product.closing.heading }}</h2>
-      <p class="sub center">{{ product.closing.body_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}.</p>
-      <p class="ctarow">
-        <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-        <a class="pill pill-quiet" href="pricing.html">{{ product.closing.see_pricing }}</a>
-      </p>
+    {#- The ask comes after the chapter has been told, not in the middle of
+        it. It was sitting between the three cards and this section. #}
+    <div class="wrap">
+      <p class="tile-cta"><a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
     </div>
   </section>
+
 </div>
 
 <!-- ============================ BOARD ============================ -->

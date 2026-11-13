@@ -6,6 +6,12 @@ hero:
   # a visitor may never reach. The sentence itself is read from the pricing
   # data, so the hero and the pricing band cannot say different things.
   offer_href: "pricing.html"
+  # The proof stays on the home page even though the trust band does not:
+  # it is one quiet line under the card the film has just played, and the
+  # Why trust it chapter is where the rest of it lives. It is read from
+  # hero because that is where it first sat; the template puts it under
+  # the film.
+  claim: "Tested with a brewpub and live across a 14 location restaurant chain."
   lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
 
 # The story is a film of one week on a sample menu. Each caption names the
@@ -82,27 +88,9 @@ looks_at:
     - name: "Who walks in, and who is down the street"
       shared: "guests_line"
       href: "product.html#intel"
-  more_link: "See everything Alfredo does"
-  more_href: "product.html"
 
 photos:
   - "Photo: bar at the end of service, warm light"
   - "Photo: plates leaving the pass"
   - "Photo: taps and a poured pint"
 
-trust:
-  heading: "We do not make up numbers."
-  lead: "If Alfredo does not have the data, it says so instead of guessing."
-  claim: "Tested with a brewpub and live across a 14 location restaurant chain."
-  link: "Why you can trust it"
-  href: "honesty.html"
-
-price:
-  # the figures come from pages.yaml, the only place a price is written
-  lead: "Plans from"
-  link: "See pricing"
-  href: "pricing.html"
-
-closing:
-  heading: "See it on your own place."
-  body: "A 30 minute call to see it. Up and running in about two weeks."

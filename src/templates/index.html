@@ -120,6 +120,12 @@
         </button>
       </div>
       </div>
+      {#- The proof, directly under the card the film has just played, in
+          the same quiet voice. Not a link: the chapter that argues it is
+          along the Next chain. In the hero it cost the first screen the
+          top of this card, which is the one thing the first screen has to
+          have. #}
+      <p class="film-claim">{{ home.hero.claim }}</p>
     </div>
   </div>
 </section>
@@ -169,36 +175,11 @@
       </a>
       {%- endfor %}
     </div>
-    {#- One way out of the section for a visitor the three cards have
-        already convinced. A text link rather than a fourth gold button:
-        this page has enough of those. #}
-    <p class="seeall"><a class="pill pill-quiet" href="{{ home.looks_at.more_href }}">{{ home.looks_at.more_link }}</a></p>
   </div>
 </section>
 
-<section class="dark">
-  <div class="glow a" aria-hidden="true"></div>
-  <div class="glow b" aria-hidden="true"></div>
-  <div class="wrap">
-    <h2 class="big">{{ home.trust.heading }}</h2>
-    <p class="sub">{{ home.trust.lead }}</p>
-    <p class="sub proofline">{{ home.trust.claim }}</p>
-    <p class="nextstep"><a class="pill pill-glass" href="{{ home.trust.href }}">{{ home.trust.link }}</a></p>
-    {#- Both figures come from the pricing data, so the teaser cannot fall
-        behind the pricing page. #}
-    <div class="teaser-price">
-      <p class="sub">{{ home.price.lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
-      <p class="teaser-offer">{{ pages.pricing.founding_heading }}</p>
-      <p class="nextstep"><a class="pill pill-glass" href="{{ home.price.href }}">{{ home.price.link }}</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="light closeband">
-  <div class="wrap center-block">
-    <h2 class="big center">{{ home.closing.heading }}</h2>
-    <p class="sub center">{{ home.closing.body }}</p>
-    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-  </div>
-</section>
+{#- The chapter ends here. The Next block in the layout follows the three
+    cards directly and hands the reader to What Alfredo does for you. The
+    trust band and the closing band were the Why trust it and the Pricing
+    chapters told early, and the Next chain reaches both in order. #}
 {% endblock %}
