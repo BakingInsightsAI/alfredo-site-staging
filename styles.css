@@ -1448,8 +1448,38 @@ section.dark .mini-prow span, .glass .mini-prow span { color: var(--band-soft); 
 /* The shapes carry their weight in fill-opacity and stroke-opacity, not in
    the element's own opacity: that one is left free for the draw in, and a
    first pass that used it for both left the drawing all but invisible. */
-.mini-radar { display: grid; place-items: center; }
-.mini-radar svg { width: 110px; height: 110px; display: block; }
+.mini-radar { display: grid; place-items: center; padding-top: 34px; }
+/* The shape with its corners named. The names sit in the page rather than
+   inside the drawing, so they are the size they are set at whatever width
+   the card has been given: inside an SVG they would be in the drawing's
+   units and would shrink with it, which is how the full sized chart came
+   to be drawn at 7.5px on a phone. The narrowest card this appears in has
+   199px to spare, and the widest name beside the shape is about 56px, so
+   the shape is 96px here rather than 110. */
+/* Every selector here names .mini-radar as well as its own class. A card
+   already paints and blocks out every span inside it, and ".tile span" is
+   a class and an element, which outranks a class on its own. */
+.mini-radar .mr-wrap {
+  display: grid; grid-template-columns: max-content max-content;
+  grid-template-areas: "top ." "shape right" "feet .";
+  align-items: center; justify-content: center; gap: 4px 6px;
+}
+/* centred in its column, so the name above it sits over its top corner
+   rather than over the middle of the names below it */
+.mini-radar .mr-shape { grid-area: shape; justify-self: center; width: 96px; height: 96px; display: block; }
+.mini-radar .mr-top { grid-area: top; justify-self: center; }
+.mini-radar .mr-right { grid-area: right; }
+.mini-radar .mr-feet {
+  grid-area: feet; display: flex; justify-content: space-between; gap: 8px;
+  max-width: none;
+}
+.mini-radar .mr-ax {
+  display: inline; font-size: .74rem; line-height: 1.2; font-weight: 500;
+  color: var(--soft); white-space: nowrap; max-width: none;
+  font-variant-numeric: tabular-nums;
+}
+section.dark .mini-radar .mr-ax, .glass .mini-radar .mr-ax { color: var(--band-soft); }
+.mini-radar svg { width: 96px; height: 96px; display: block; }
 .mini-ring { fill: none; stroke: var(--soft); stroke-opacity: .3; stroke-width: 1; }
 .mini-mkt { fill: var(--soft); fill-opacity: .14; stroke: var(--soft); stroke-opacity: .5; stroke-width: 1; }
 .mini-you { fill: var(--gold); fill-opacity: .3; stroke: var(--gold-ink); stroke-width: 2; stroke-linejoin: round; }

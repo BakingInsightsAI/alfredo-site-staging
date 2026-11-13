@@ -32,17 +32,33 @@
 </div>
 {%- endmacro -%}
 
+{#- The shape, with its corners named. The other two minis each say a
+    word and a figure; this one said nothing at all, so the corners were a
+    shape with no way of knowing what it was a shape of. The names and the
+    scores are the ones the full sized chart uses, and they are set in the
+    page rather than inside the drawing so that they are the same size
+    whatever the drawing has been scaled to. The faded axis is left out
+    here as it is left out of the shape: it has no score to show. #}
 {%- macro mini_radar() -%}
 {%- set r = product.radar -%}
+{%- set shown = r.axes | rejectattr('faded', 'defined') | list -%}
 <div class="mini mini-radar" aria-hidden="true">
   <span class="mini-tag">sample</span>
-  <svg viewBox="0 0 100 100" focusable="false">
-    <polygon class="mini-ring"
-      points="{% for a in r.axes %}{% if not a.get('faded') %}{{ (50 + 38 * a.ux) | round(2) }},{{ (50 + 38 * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
-    <polygon class="mini-mkt"
-      points="{% for a in r.axes %}{% if not a.get('faded') %}{{ (50 + 38 * a.market * a.ux) | round(2) }},{{ (50 + 38 * a.market * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
-    <polygon class="mini-you"
-      points="{% for a in r.axes %}{% if not a.get('faded') %}{{ (50 + 38 * a.you * a.ux) | round(2) }},{{ (50 + 38 * a.you * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
-  </svg>
+  <div class="mr-wrap">
+    <span class="mr-ax mr-top">{{ shown[0].name }} {{ shown[0].score }}</span>
+    <svg class="mr-shape" viewBox="0 0 100 100" focusable="false">
+      <polygon class="mini-ring"
+        points="{% for a in shown %}{{ (50 + 38 * a.ux) | round(2) }},{{ (50 + 38 * a.uy) | round(2) }} {% endfor %}"></polygon>
+      <polygon class="mini-mkt"
+        points="{% for a in shown %}{{ (50 + 38 * a.market * a.ux) | round(2) }},{{ (50 + 38 * a.market * a.uy) | round(2) }} {% endfor %}"></polygon>
+      <polygon class="mini-you"
+        points="{% for a in shown %}{{ (50 + 38 * a.you * a.ux) | round(2) }},{{ (50 + 38 * a.you * a.uy) | round(2) }} {% endfor %}"></polygon>
+    </svg>
+    <span class="mr-ax mr-right">{{ shown[1].name }} {{ shown[1].score }}</span>
+    <span class="mr-feet">
+      <span class="mr-ax">{{ shown[3].name }} {{ shown[3].score }}</span>
+      <span class="mr-ax">{{ shown[2].name }} {{ shown[2].score }}</span>
+    </span>
+  </div>
 </div>
 {%- endmacro -%}
