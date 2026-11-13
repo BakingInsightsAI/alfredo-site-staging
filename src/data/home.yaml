@@ -1,96 +1,153 @@
-# Homepage copy. Captions come from the approved glass direction.
+# The homepage, v4. Every claim here is one of the approved ones, and
+# every figure in the illustrative weekly list is invented, which is what
+# the label on that card says.
 
 hero:
-  heading: "The in house business consultant you never knew you had."
-  # The offer belongs in the first screen, not four screens down on a page
-  # a visitor may never reach. The sentence itself is read from the pricing
-  # data, so the hero and the pricing band cannot say different things.
+  eyebrow: "For restaurants, bars, breweries, bakeries and cafes"
+  # the second sentence is set in amber italic by the template
+  heading_a: "Every business has a story."
+  heading_b: "Your numbers know "
+  heading_em: "what comes next."
+  lede: "Alfredo turns your sales into a short list of clear, practical changes worth trying. Choose what to try, see what happens, and make your next decision with confidence."
+  cta_secondary: "See the story"
+  offer: "The first 10 businesses get everything free for six months."
   offer_href: "pricing.html"
-  # The proof stays on the home page even though the trust band does not:
-  # it is one quiet line under the card the film has just played, and the
-  # Why trust it chapter is where the rest of it lives. It is read from
-  # hero because that is where it first sat; the template puts it under
-  # the film.
+  image_alt: "A dining room at the end of service, lit by low pendant lights."
+
+# The card in the first screen. Short on purpose: it is the signal, and the
+# full version further down the page is the showcase.
+hero_list:
+  title: "This week"
+  label: "Illustrative example"
+  rows:
+    - name: "Suggest the pale ale with the fish plate"
+      meta: "A pairing your guests already order together"
+    - name: "Move three starters to the top of the menu"
+      meta: "The three that earn the most for the kitchen"
+    - name: "Win back 14 regulars who have gone quiet"
+      meta: "Last seen more than six weeks ago"
+
+story:
+  eyebrow: "The story"
+  heading: "From a question you cannot answer to one you can."
+  lede: "Five stages, every week, in your own sales. You decide at every one of them."
+  acts:
+    - n: "One"
+      name: "The question"
+      body: "Something in the week feels off, or feels good, and you cannot say why."
+    - n: "Two"
+      name: "The discovery"
+      body: "Alfredo goes through your own sales and finds what is behind it."
+    - n: "Three"
+      name: "The choice"
+      body: "You get a short list of small changes worth trying. You pick the ones you want."
+    - n: "Four"
+      name: "The test"
+      body: "You make the change. Alfredo watches the weeks that follow."
+    - n: "Five"
+      name: "The answer"
+      body: "It worked, it did nothing, or it backfired. Alfredo tells you which."
+
+# The showcase. Mixed kinds on purpose: a pairing, a menu move, a promotion,
+# the floor, and a cost. Price is one example among several, never the one
+# the section leads with.
+weekly:
+  eyebrow: "What lands every week"
+  heading: "Three to five things worth trying. Never a wall of charts."
+  lede: "Each one says what it is, why it came up, how much work it is, what it risks, and when to check back. Nothing changes unless you choose it."
+  statement: "Alfredo recommends. You decide."
+  card_title: "Your week"
+  card_label: "Illustrative example"
+  card_sub: "Monday morning, five minutes"
+  recs:
+    - name: "Suggest the pale ale with the fish plate"
+      why: "Guests who order the fish already order this beer more than any other."
+      effort: "Low"
+      risk: "Low"
+      step: "Tell the floor on Thursday."
+      status: ""
+    - name: "Move three starters to the top of the menu"
+      why: "They earn the most per plate and sit near the bottom of the list."
+      effort: "Low"
+      risk: "Low"
+      step: "Reprint before the weekend."
+      status: ""
+    - name: "Try a Tuesday offer on the slow hour"
+      why: "Tuesday between six and seven is your quietest hour of the week."
+      effort: "Medium"
+      risk: "Medium"
+      step: "Run it for three weeks, then look."
+      status: ""
+    - name: "Check the cost on the short rib"
+      why: "The price you pay for it went up twice last month."
+      effort: "Low"
+      risk: "Low"
+      step: "Confirm the new cost or dismiss the flag."
+      status: ""
+  done_title: "Finished, with the answer"
+  done:
+    - name: "House lager up fifty cents"
+      verdict: "Worked"
+      kind: "worked"
+      body: "Four weeks on, the bar took more and sold the same number of pints. After what you would have made anyway."
+    - name: "Dessert added to the set menu"
+      verdict: "No effect"
+      kind: "none"
+      body: "Three weeks on, nothing moved either way. Alfredo said so rather than finding a number to show."
+    - name: "Happy hour pushed an hour later"
+      verdict: "Backfired"
+      kind: "back"
+      body: "The early crowd did not come back and the later hour did not fill. It went back the same night."
+
+looks:
+  eyebrow: "What Alfredo looks at"
+  heading: "Your own sales, read the way an owner would read them."
+  entries:
+    - name: "Your menu"
+      body: "What each plate really earns once the extras are counted, and which items to show off, keep or rethink."
+    - name: "Your guests"
+      body: "New faces, regulars, and the ones who have gone quiet and are worth winning back."
+    - name: "Your costs"
+      body: "Which ingredients went up, which plates they are squeezing, and what to do about it."
+    - name: "The neighborhood"
+      body: "What nearby places charge, when they are open, and what their guests keep saying."
+    - name: "Your busy times"
+      body: "Which days and hours carry the week, and which ones are quietly costing you."
+    - name: "Your taproom"
+      body: "House pours against guest pours, which beers earn their line, and what to put beside them."
+
+audience:
+  eyebrow: "Who it is for"
+  heading: "Independent places, and small groups of them."
+  cards:
+    - label: "Restaurants"
+      stem: "restaurant-kitchen"
+      alt: "A cook finishing a dish on a kitchen pass."
+    - label: "Bars"
+      stem: "bar"
+      alt: "A bar at night, a drink on the counter and bottles lit behind it."
+    - label: "Breweries and taprooms"
+      stem: "brewery"
+      alt: "A brewer holding a glass of beer up to the light beside the tanks."
+    - label: "Bakeries and cafes"
+      stem: "bakery"
+      alt: "A baker shaping dough on a floured bench beside racks of bread."
+
+different:
+  eyebrow: "Why it is different"
+  heading: "Most tools hand you charts. This one hands you a short list."
+  entries:
+    - name: "Changes to try, not charts to read"
+      body: "A dashboard shows you what happened. Alfredo tells you what to do about it, in the words you would use yourself."
+    - name: "Your own sales, nobody else's"
+      body: "Every suggestion comes out of what you already ring through your existing POS system."
+    - name: "A verdict on every change"
+      body: "Worked, no effect, or backfired. Every test ends on one of those three words."
+    - name: "Honest when it is not working"
+      body: "If a change did nothing, Alfredo says it did nothing. If the data is not there, it says pending."
+    - name: "You stay in control"
+      body: "Alfredo never changes a menu or a price on its own. It suggests, and you decide."
+
+proof:
   claim: "Tested with a brewpub and live across a 14 location restaurant chain."
-  lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
-
-# The story is a film of one week on a sample menu. Each caption names the
-# stage it belongs to by where the scroll has got to, and the menu below is
-# marked up in the same order a person would read it.
-captions:
-  - { a: ".12", b: ".30",  line: "Every order you ring tells a story.",        note: "Alfredo works with the POS you already use." }
-  - { a: ".30", b: ".46",  line: "Alfredo goes through all of it, every week.", note: "So you do not have to." }
-  - { a: ".46", b: ".70",  line: "Then marks up what is worth trying.",        note: "Small changes, easy to undo." }
-  - { a: ".70", b: ".85",  line: "You pick one.",                              note: "Try it for four weeks." }
-  - { a: ".85", b: "1.01", line: "And you find out if it worked.",             note: "" }
-
-# Every figure here is invented for the illustration, which is why the card
-# carries a sample label and says so to a screen reader as well.
-menu:
-  title: "Menu"
-  aria: "Sample menu marked up with four suggestions: raise Mozzarella Sticks from 6.99 to 7.49 dollars, dim the Calamari, pair Loaded Nachos with House IPA, and move weekday happy hour from 4 to 6pm to 5 to 7pm. The price change is picked, tracked for four weeks, and marked worked."
-  unit: "a wk"
-  pair_tag: "Pair with House IPA"
-  moved_name: "Loaded Nachos"
-  groups:
-    - name: "Starters"
-      rows:
-        - { key: "mozz",   name: "Mozzarella Sticks", count: 290, price: "$6.99",  new: "$7.49", ring: true }
-        - { key: "nachos", name: "Loaded Nachos",     count: 164, price: "$11.00", moves: true }
-        - { key: "fries",  name: "Garlic Fries",      count: 212, price: "$5.50" }
-        - { key: "cal",    name: "Calamari",          count: 38,  price: "$12.00", note: "Dim it" }
-    - name: "On tap"
-      slot_after: "ipa"
-      rows:
-        - { key: "ipa",   name: "House IPA",   count: 410, price: "$7.00" }
-        - { key: "lager", name: "House Lager", count: 470, price: "$6.50" }
-    - name: "Happy hour"
-      rows:
-        - { key: "hh", name: "Weekdays", price: "4 to 6pm", new: "5 to 7pm", wide: true }
-  weeks: [false, false, true, false]
-
-# labels for the player controls, which carry icons rather than words
-film:
-  play: "Play the film"
-  pause: "Pause the film"
-  replay: "Play from the start"
-  chapters: "Chapters"
-  chapter: "Chapter"
-
-verdict:
-  word: "Worked."
-  note: "Or no effect. Or backfired."
-
-# The section is about the three answers, not about Tuesday. The question
-# is still here, carried by the line under the heading, where it is the
-# thing all three are being asked rather than the heading itself.
-tuesday:
-  heading: "How Alfredo is different"
-  sub_lead: "Ask all three the same question:"
-  sub_question: "why is Tuesday slow?"
-  tiles:
-    - { name: "A dashboard", body: "Shows you charts. You still have to work out what they mean." }
-    - { name: "A consultant", body: "Takes weeks, costs thousands, and hands you a long report for one simple question." }
-    - { name: "Alfredo", body: "Tells you what happened, why, and what to try. Then it checks whether it worked.", ours: true }
-
-# Three doors into the product page, one per tab. The whole card is the
-# link, so there is nothing small to aim at on a phone.
-looks_at:
-  heading: "What Alfredo looks at"
-  tiles:
-    - name: "What to try this week"
-      body: "A short list of small changes, each one easy to undo."
-      href: "product.html#board"
-    # shared with the overview cards, see site.yaml
-    - name: "What your menu really earns"
-      shared: "menu_line"
-      href: "product.html#menu"
-    - name: "Who walks in, and who is down the street"
-      shared: "guests_line"
-      href: "product.html#intel"
-
-photos:
-  - "Photo: bar at the end of service, warm light"
-  - "Photo: plates leaving the pass"
-  - "Photo: taps and a poured pint"
-
+  note: "Patent pending."

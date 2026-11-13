@@ -1875,3 +1875,33 @@ html:not(.js) .costbar-fill { width: calc(var(--to) - var(--from)); }
   .weeks { margin-top: 8px; }
   .controls { margin-top: 9px; }
 }
+
+/* The contact block and the image disclosure, which are site wide rules.
+   These pages are still on the previous design, so the two blocks take the
+   footer's own voice rather than v4's. */
+.foot-extra { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); display: grid; gap: 10px; }
+.foot-contact { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-contact a { color: var(--soft); min-height: 44px; display: inline-flex; align-items: center; }
+.foot-contact a:hover { color: var(--accent); }
+.foot-disclosure { color: var(--soft); font-size: .84rem; max-width: 46em; }
+
+/* Tap areas on the pages still using this stylesheet. The nav bar is 57px
+   and the wordmark already fills 44px of it, so the demo pill grows
+   vertically into room that is already there and the row is unchanged.
+   The two round buttons keep their drawn size and take the extra through
+   a transparent box, because six more pixels of width each would have had
+   to come out of the 360px row. */
+.nav .pill-sm { min-height: 44px; }
+.themetoggle, .nav-toggle { position: relative; }
+.themetoggle::after, .nav-toggle::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 44px; height: 44px; transform: translate(-50%, -50%);
+}
+/* The rest of the controls on these pages, all grown vertically only, so
+   no row gets wider and nothing reflows. */
+footer nav a, footer .wordmark, .textbtn {
+  min-height: 44px; display: inline-flex; align-items: center;
+}
+footer nav a { padding-block: 0; }
+.chip-q { min-height: 44px; }
+.nav-links a, .nav-links ul > li > a { min-height: 44px; display: inline-flex; align-items: center; }

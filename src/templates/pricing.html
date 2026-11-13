@@ -1,4 +1,6 @@
-{% extends "base.html" %}
+{#- Still on the previous design. v4 landed on the homepage first; this
+    page moves to the new base once that direction is signed off. #}
+{% extends "base-legacy.html" %}
 {% import "_steps.html" as steps with context %}
 {% set p = pages.pricing %}
 

@@ -7,6 +7,18 @@ app_url: "https://app.bakinginsightsai.com"
 
 footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
 
+# The images are generated, and saying so on every page is a condition of
+# using them. The handoff's own wording used a word this site does not use,
+# so this is the reworded line.
+image_disclosure: "Images are AI generated for illustration. No person or business shown is real."
+
+contact:
+  email: "contact@bakinginsightsai.com"
+  instagram: "@alfredobybia"
+  instagram_href: "https://www.instagram.com/alfredobybia/"
+  facebook: "@alfredobybia"
+  facebook_href: "https://www.facebook.com/alfredobybia"
+
 # The order is the order of the story: what it does, why you can trust it,
 # who we are, what it costs.
 nav:
@@ -26,8 +38,8 @@ pages:
     template: index.html
     output: index.html
     legacy: false
-    title: "Alfredo, the in house consultant your business never had"
-    description: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked."
+    title: "Alfredo, every business has a story"
+    description: "Alfredo turns your sales into a short list of clear, practical changes worth trying each week, then tells you honestly whether each one worked."
     next: { label: "What Alfredo does for you", href: "product.html" }
 
   - key: product

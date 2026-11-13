@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{%- if site.staging %}
+<meta name="robots" content="noindex, nofollow">
+{%- endif %}
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.description }}">
+<meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)" id="themeColorLight">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" id="themeColorDark">
+<link rel="icon" type="image/png" href="favicon.png">
+{#- The font is ours now, so there is no third party stylesheet to fetch
+    before the first one can even be requested. One file carries every
+    weight, which is why a single preload covers the regular and the
+    semibold the brief asks for. Fonts are fetched in CORS mode even from
+    our own origin, so the crossorigin attribute is required or the preload
+    is thrown away and fetched again. #}
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+/* Runs before the stylesheet is applied, so the wrong theme is never
+   painted and then corrected. Only a visitor who has actually chosen gets
+   data-theme; everyone else is left to the media query, which means a
+   later change to their system setting is still followed. */
+(function(){try{var t=localStorage.getItem("theme");
+if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="styles.css">
+{%- if page.legacy %}
+<link rel="stylesheet" href="legacy.css">
+{%- endif %}
+{%- block head %}{% endblock %}
+</head>
+<body{% if page.key != 'index' %} class="page-{{ page.key }}"{% endif %}>
+{%- if site.staging %}
+<p class="staging-bar">Staging preview. Not the live site.</p>
+{%- endif %}
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav tactile" id="nav">
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <ul>
+        {%- for item in site.nav %}
+        <li><a href="{{ item.href }}"{% if item.href == page.output %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+        <li><a href="{{ site.app_url }}">Log in</a></li>
+      </ul>
+    </nav>
+    <a class="pill pill-gold pill-sm nav-cta" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    {#- Sits beside the menu button on phones rather than inside the menu,
+        so it is reachable without opening anything. The label and the
+        pressed state are set by the script once it knows which theme is
+        actually showing. #}
+    <button class="themetoggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <g class="rays"><path d="M12 1.8v3M12 19.2v3M1.8 12h3M19.2 12h3M4.8 4.8l2.1 2.1M17.1 17.1l2.1 2.1M19.2 4.8l-2.1 2.1M6.9 17.1l-2.1 2.1"></path></g>
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6a8.6 8.6 0 1 0 11 11z"></path>
+      </svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+{% block content %}{% endblock %}
+
+{#- The quiet handoff at the foot of the page. Pricing carries no next
+    because its last element is the call to action. The link is the whole
+    line, so it needs no arrow to say where it goes.
+
+    The word Next is inside the link rather than above it, so the whole
+    block is one thing to press and one thing to focus. On a phone the
+    heading alone was a 30px target; label, gap and heading together are
+    62px. It reads the same: the label is still its own line in its own
+    size and colour, and a screen reader is given "Next" and the heading
+    as one name, which is what the two lines say together. #}
+{%- if page.get('next') %}
+<section class="nextnav">
+  <div class="wrap">
+    <a class="nextlink" href="{{ page.next.href }}">
+      <span class="next-label">Next</span>
+      <span class="next-title">{{ page.next.label }}</span>
+    </a>
+  </div>
+</section>
+{%- endif %}
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <nav aria-label="Footer">
+      {%- for item in site.nav %}
+      <a href="{{ item.href }}">{{ item.label }}</a>
+      {%- endfor %}
+      <a href="{{ site.app_url }}">Log in</a>
+    </nav>
+    <small>{{ site.footer_line }}</small>
+  </div>
+  {#- The contact block and the image disclosure are site wide rules, so
+      they hold on the pages still waiting to move to v4 as well. #}
+  <div class="wrap foot-extra">
+    <p class="foot-contact">
+      <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+      <a href="{{ site.contact.instagram_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">Instagram {{ site.contact.instagram }}</a>
+      <a href="{{ site.contact.facebook_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">Facebook {{ site.contact.facebook }}</a>
+    </p>
+    <p class="foot-disclosure">{{ site.image_disclosure }}</p>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+{%- block scripts %}{% endblock %}
+</body>
+</html>

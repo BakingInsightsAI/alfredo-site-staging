@@ -1,0 +1,98 @@
+# The previous homepage's content. The pages still on that design read
+# their shared pieces from here. It goes when they move to v4.
+# Homepage copy. Captions come from the approved glass direction.
+
+hero:
+  heading: "The in house business consultant you never knew you had."
+  # The offer belongs in the first screen, not four screens down on a page
+  # a visitor may never reach. The sentence itself is read from the pricing
+  # data, so the hero and the pricing band cannot say different things.
+  offer_href: "pricing.html"
+  # The proof stays on the home page even though the trust band does not:
+  # it is one quiet line under the card the film has just played, and the
+  # Why trust it chapter is where the rest of it lives. It is read from
+  # hero because that is where it first sat; the template puts it under
+  # the film.
+  claim: "Tested with a brewpub and live across a 14 location restaurant chain."
+  lede: "Every week, Alfredo looks at your sales and tells you a few small changes worth trying. Then it tells you, honestly, whether each one worked. Works with the POS system you already use."
+
+# The story is a film of one week on a sample menu. Each caption names the
+# stage it belongs to by where the scroll has got to, and the menu below is
+# marked up in the same order a person would read it.
+captions:
+  - { a: ".12", b: ".30",  line: "Every order you ring tells a story.",        note: "Alfredo works with the POS you already use." }
+  - { a: ".30", b: ".46",  line: "Alfredo goes through all of it, every week.", note: "So you do not have to." }
+  - { a: ".46", b: ".70",  line: "Then marks up what is worth trying.",        note: "Small changes, easy to undo." }
+  - { a: ".70", b: ".85",  line: "You pick one.",                              note: "Try it for four weeks." }
+  - { a: ".85", b: "1.01", line: "And you find out if it worked.",             note: "" }
+
+# Every figure here is invented for the illustration, which is why the card
+# carries a sample label and says so to a screen reader as well.
+menu:
+  title: "Menu"
+  aria: "Sample menu marked up with four suggestions: raise Mozzarella Sticks from 6.99 to 7.49 dollars, dim the Calamari, pair Loaded Nachos with House IPA, and move weekday happy hour from 4 to 6pm to 5 to 7pm. The price change is picked, tracked for four weeks, and marked worked."
+  unit: "a wk"
+  pair_tag: "Pair with House IPA"
+  moved_name: "Loaded Nachos"
+  groups:
+    - name: "Starters"
+      rows:
+        - { key: "mozz",   name: "Mozzarella Sticks", count: 290, price: "$6.99",  new: "$7.49", ring: true }
+        - { key: "nachos", name: "Loaded Nachos",     count: 164, price: "$11.00", moves: true }
+        - { key: "fries",  name: "Garlic Fries",      count: 212, price: "$5.50" }
+        - { key: "cal",    name: "Calamari",          count: 38,  price: "$12.00", note: "Dim it" }
+    - name: "On tap"
+      slot_after: "ipa"
+      rows:
+        - { key: "ipa",   name: "House IPA",   count: 410, price: "$7.00" }
+        - { key: "lager", name: "House Lager", count: 470, price: "$6.50" }
+    - name: "Happy hour"
+      rows:
+        - { key: "hh", name: "Weekdays", price: "4 to 6pm", new: "5 to 7pm", wide: true }
+  weeks: [false, false, true, false]
+
+# labels for the player controls, which carry icons rather than words
+film:
+  play: "Play the film"
+  pause: "Pause the film"
+  replay: "Play from the start"
+  chapters: "Chapters"
+  chapter: "Chapter"
+
+verdict:
+  word: "Worked."
+  note: "Or no effect. Or backfired."
+
+# The section is about the three answers, not about Tuesday. The question
+# is still here, carried by the line under the heading, where it is the
+# thing all three are being asked rather than the heading itself.
+tuesday:
+  heading: "How Alfredo is different"
+  sub_lead: "Ask all three the same question:"
+  sub_question: "why is Tuesday slow?"
+  tiles:
+    - { name: "A dashboard", body: "Shows you charts. You still have to work out what they mean." }
+    - { name: "A consultant", body: "Takes weeks, costs thousands, and hands you a long report for one simple question." }
+    - { name: "Alfredo", body: "Tells you what happened, why, and what to try. Then it checks whether it worked.", ours: true }
+
+# Three doors into the product page, one per tab. The whole card is the
+# link, so there is nothing small to aim at on a phone.
+looks_at:
+  heading: "What Alfredo looks at"
+  tiles:
+    - name: "What to try this week"
+      body: "A short list of small changes, each one easy to undo."
+      href: "product.html#board"
+    # shared with the overview cards, see site.yaml
+    - name: "What your menu really earns"
+      shared: "menu_line"
+      href: "product.html#menu"
+    - name: "Who walks in, and who is down the street"
+      shared: "guests_line"
+      href: "product.html#intel"
+
+photos:
+  - "Photo: bar at the end of service, warm light"
+  - "Photo: plates leaving the pass"
+  - "Photo: taps and a poured pint"
+

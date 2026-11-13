@@ -1,185 +1,180 @@
 {% extends "base.html" %}
-{% import "_minis.html" as minis with context %}
+
+{#- The hero photograph is the one image a reader waits for, so it is
+    preloaded at the size the layout will actually ask for. #}
+{% block preload %}
+<link rel="preload" as="image" href="assets/hero-restaurant-1280.webp" type="image/webp"
+      imagesrcset="assets/hero-restaurant-640.webp 640w, assets/hero-restaurant-960.webp 960w, assets/hero-restaurant-1280.webp 1280w, assets/hero-restaurant-1672.webp 1672w"
+      imagesizes="100vw" fetchpriority="high">
+{% endblock %}
 
 {% block content %}
-<section class="story" id="story" aria-labelledby="storyHeading">
-  <div class="stage">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="glow b" aria-hidden="true"></div>
-
-    <div class="hero-h" id="heroH">
-      <h1 class="story-h1">{{ home.hero.heading }}</h1>
-      <p>{{ home.hero.lede }}</p>
-      <div class="ctas">
-        <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-        <a class="pill pill-glass" href="#storyHeading" id="storyJump">See a week with Alfredo</a>
-      </div>
-      {#- Directly under the buttons, where someone who is already half
-          persuaded is looking. It is the whole line that links, so there is
-          nothing small to aim at. #}
-      <p class="hero-offer"><a href="{{ home.hero.offer_href }}">{{ pages.pricing.founding_heading }}</a></p>
-    </div>
-
-    <h2 class="sr-only" id="storyHeading">A week with Alfredo</h2>
-
-    <div class="scene" id="scene">
-      <div class="caps">
-        {%- for c in home.captions %}
-        <p class="cap" data-a="{{ c.a }}" data-b="{{ c.b }}">{{ c.line }}{% if c.note %}<small>{{ c.note }}</small>{% endif %}</p>
-        {%- endfor %}
-      </div>
-
-      {#- The player is one column: the card, and the controls directly
-          under it at the same width. The wrapper inside carries the
-          entrance, because the card itself already owns its transform for
-          the tilt and the two would overwrite each other. The card is one
-          picture to a screen reader: the label says what the whole markup
-          amounts to, so the rows are not read out one by one in the order
-          an animation happens to reach them. #}
-      <div class="player reveal" id="player">
-      <div class="menu-wrap" id="menuWrap">
-      <div class="menu glass tactile" id="menu" role="img" aria-label="{{ home.menu.aria }}">
-        <span class="scanline" id="scan" aria-hidden="true"></span>
-        <header>
-          <b>{{ home.menu.title }}</b>
-          <span class="sample">sample</span>
-        </header>
-        {%- for g in home.menu.groups %}
-        {#- a label inside a picture, not a heading in the document: the
-            card is one image to a screen reader, and as an h4 after the
-            story's h2 it also skipped a level #}
-        <p class="grp">{{ g.name }}</p>
-        {%- for r in g.rows %}
-        <div class="row{% if r.get('moves') %} moved{% endif %}"{% if r.get('key') %} id="row-{{ r.key }}"{% endif %}>
-          <span class="flash" aria-hidden="true"></span>
-          {%- if r.get('ring') %}<span class="ring" id="ring" aria-hidden="true"></span>{% endif %}
-          <span class="nm">{{ r.name }}</span>
-          {%- if r.get('note') %}<span class="note" id="note-{{ r.key }}">{{ r.note }}</span>{% endif %}
-          {%- if r.get('count') %}<span class="ct" data-n="{{ r.count }}">{{ r.count }} {{ home.menu.unit }}</span>{% endif %}
-          {#- the amount is its own box so that the line drawn through it is
-              the width of the figure, not the width of the column #}
-          <span class="pr{% if r.get('wide') %} wide{% endif %}"><span class="amt">{{ r.price }}
-            {%- if r.get('new') %}<span class="strike" id="strike-{{ r.key }}" aria-hidden="true"></span>{% endif %}</span>
-            {%- if r.get('new') %}<span class="new" id="new-{{ r.key }}">{{ r.new }}</span>{% endif %}
-          </span>
-        </div>
-        {%- if g.get('slot_after') == r.get('key') %}
-        <div class="slot" id="slot">
-          <div class="row"><span class="nm">{{ home.menu.moved_name }}</span><span class="tag">{{ home.menu.pair_tag }}</span></div>
-        </div>
-        {%- endif %}
-        {%- endfor %}
-        {%- endfor %}
-
-        <div class="weeks" id="weeks" aria-hidden="true">
-          {%- for miss in home.menu.weeks %}
-          <span class="wk{% if miss %} miss{% endif %}"></span>
-          {%- endfor %}
-        </div>
-
-        <div class="mover" id="mover" aria-hidden="true">
-          <span class="nm">{{ home.menu.moved_name }}</span><span class="tag">{{ home.menu.pair_tag }}</span>
-        </div>
-
-        <div class="stamp" id="stamp" aria-hidden="true">
-          <b>{{ home.verdict.word }}</b><small>{{ home.verdict.note }}</small>
-        </div>
-      </div>
-      </div>
-
-      {#- Controls are not rendered for a visitor who has no JavaScript or
-          who asked for less motion: there is no film for them to drive, and
-          a dead button is worse than none. The stylesheet hides them until
-          the film is running. #}
-      <div class="controls" id="controls">
-        <button type="button" class="ctl is-playing" id="playBtn" aria-label="{{ home.film.pause }}"
-                data-play="{{ home.film.play }}" data-pause="{{ home.film.pause }}"
-                data-replay="{{ home.film.replay }}">
-          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <rect x="7" y="5" width="3.6" height="14" rx="1.2"></rect>
-            <rect x="13.4" y="5" width="3.6" height="14" rx="1.2"></rect>
-          </svg>
-          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M8.4 5.1a1 1 0 0 1 1.5-.86l9.1 5.4a1.2 1.2 0 0 1 0 2.06l-9.1 5.4a1 1 0 0 1-1.5-.86z"></path>
-          </svg>
-        </button>
-
-        <div class="chapters" role="group" aria-label="{{ home.film.chapters }}">
-          {%- for c in home.captions %}
-          <button type="button" class="chap" data-p="{{ c.a }}"
-                  aria-label="{{ home.film.chapter }} {{ loop.index }}, {{ c.line }}">
-            <span class="track" aria-hidden="true"><span class="fill"></span></span>
-          </button>
-          {%- endfor %}
-        </div>
-
-        <button type="button" class="ctl" id="replayBtn" aria-label="{{ home.film.replay }}">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M12 5.6V2.2a.6.6 0 0 0-1-.44L6.9 5.4a.6.6 0 0 0 0 .9l4.1 3.64a.6.6 0 0 0 1-.44V6.9a5.1 5.1 0 1 1-5.1 5.1.65.65 0 0 0-1.3 0 6.4 6.4 0 1 0 6.4-6.4z"></path>
-          </svg>
-        </button>
-      </div>
-      </div>
-      {#- The proof, directly under the card the film has just played, in
-          the same quiet voice. Not a link: the chapter that argues it is
-          along the Next chain. In the hero it cost the first screen the
-          top of this card, which is the one thing the first screen has to
-          have. #}
-      <p class="film-claim">{{ home.hero.claim }}</p>
-    </div>
+{%- set h = home.hero %}
+<section class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="assets/hero-restaurant-640.webp 640w, assets/hero-restaurant-960.webp 960w, assets/hero-restaurant-1280.webp 1280w, assets/hero-restaurant-1672.webp 1672w">
+      <img src="assets/hero-restaurant-1280.jpg" alt="{{ h.image_alt }}"
+           width="1672" height="941" fetchpriority="high" decoding="async">
+    </picture>
   </div>
-</section>
-
-<section class="light">
   <div class="wrap">
-    <h2 class="big center">{{ home.tuesday.heading }}</h2>
-    {#- The question is one sentence with the rest of the line, so it is a
-        span rather than emphasis: the colour is what makes it stand out,
-        and a screen reader is given the sentence whole either way. #}
-    <p class="sub center">{{ home.tuesday.sub_lead }} <span class="q">{{ home.tuesday.sub_question }}</span></p>
-    <div class="tiles">
-      {%- for t in home.tuesday.tiles %}
-      <div class="tile{% if t.get('ours') %} ours tactile{% endif %} reveal">
-        <h3>{{ t.name }}</h3>
-        <span>{{ t.body }}</span>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{{ h.eyebrow }}</p>
+        <h1 class="display">{{ h.heading_a }}<br>{{ h.heading_b }}<em>{{ h.heading_em }}</em></h1>
+        <p class="lede">{{ h.lede }}</p>
+        <div class="hero-actions">
+          <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+          <a class="btn btn-quiet" href="#story">{{ h.cta_secondary }}</a>
+        </div>
+        {#- The one line on this page that points at a later chapter. #}
+        <p class="hero-offer"><a href="{{ h.offer_href }}">{{ h.offer }}</a></p>
       </div>
-      {%- endfor %}
+
+      {#- The weekly list, in the first screen, so the product is seen
+          before it is explained. Three rows here; the whole thing is
+          further down. #}
+      <div class="listcard hero-card">
+        <div class="listcard-head">
+          <h2>{{ home.hero_list.title }}</h2>
+          <span class="tag-sample">{{ home.hero_list.label }}</span>
+        </div>
+        <ul class="recs">
+          {%- for r in home.hero_list.rows %}
+          <li class="rec">
+            <b>{{ r.name }}</b>
+            <p>{{ r.meta }}</p>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
     </div>
-    {#- The photo row is out until there are photographs to put in it. Three
-        empty frames captioned "Photo: ..." read as images that failed to
-        load, which costs more than leaving the space. Put this back when the
-        shots exist.
-    <div class="photos">
-      {%- for caption in home.photos %}
-      <div class="ph"><em>{{ caption }}</em></div>
-      {%- endfor %}
-    </div>
-    #}
   </div>
 </section>
 
-<section class="tint">
+<section class="section" id="story">
   <div class="wrap">
-    <h2 class="big center">{{ home.looks_at.heading }}</h2>
-    {#- The whole card is the link rather than a word inside it, so there is
-        nothing small to aim at on a phone. The small visual sits inside that
-        link too, which keeps the card one tap target; it is hidden from a
-        screen reader, which already has the heading and the sentence. #}
-    <div class="tiles">
-      {%- set minimap = {'board': minis.mini_board(), 'menu': minis.mini_plate(), 'intel': minis.mini_radar()} %}
-      {%- for t in home.looks_at.tiles %}
-      <a class="tile tilelink reveal" href="{{ t.href }}">
-        <h3>{{ t.name }}</h3>
-        <span>{{ site.shared[t.shared] if t.get('shared') else t.body }}</span>
-        {{ minimap[t.href.split('#')[1]] }}
-      </a>
+    <div class="head">
+      <p class="eyebrow">{{ home.story.eyebrow }}</p>
+      <h2 class="h2">{{ home.story.heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ home.story.lede }}</p>
+    </div>
+    <div class="acts">
+      <ol>
+        {%- for a in home.story.acts %}
+        <li class="act" data-delay="{{ loop.index0 * 90 }}">
+          <p class="act-n">{{ a.n }}</p>
+          <h3>{{ a.name }}</h3>
+          <p>{{ a.body }}</p>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section panel-sec">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ home.weekly.eyebrow }}</p>
+      <h2 class="h2">{{ home.weekly.heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ home.weekly.lede }}</p>
+      <p class="statement">{{ home.weekly.statement }}</p>
+    </div>
+
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>{{ home.weekly.card_title }}<span class="card-sub">{{ home.weekly.card_sub }}</span></h3>
+        <span class="tag-sample">{{ home.weekly.card_label }}</span>
+      </div>
+      <ul class="recs">
+        {%- for r in home.weekly.recs %}
+        <li class="rec">
+          <b>{{ r.name }}</b>
+          <p>{{ r.why }}</p>
+          <p class="rec-meta">
+            <span>Effort <i>{{ r.effort }}</i></span>
+            <span>Risk <i>{{ r.risk }}</i></span>
+            <span>{{ r.step }}</span>
+          </p>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h3 class="h3 done-h">{{ home.weekly.done_title }}</h3>
+    <ul class="cols cols-3 done-list">
+      {%- for d in home.weekly.done %}
+      <li class="card reveal" data-delay="{{ loop.index0 * 80 }}">
+        <p class="verdict"><span class="chip chip-{{ d.kind }}">{{ d.verdict }}</span></p>
+        <h4 class="h3">{{ d.name }}</h4>
+        <p>{{ d.body }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">{{ home.looks.eyebrow }}</p>
+      <h2 class="h2">{{ home.looks.heading }}</h2>
+    </div>
+    <ul class="cols cols-3">
+      {%- for i in home.looks.entries %}
+      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 80 }}">
+        <h3 class="h3">{{ i.name }}</h3>
+        <p>{{ i.body }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section cream">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">{{ home.audience.eyebrow }}</p>
+      <h2 class="h2">{{ home.audience.heading }}</h2>
+    </div>
+    <div class="audience">
+      {%- for c in home.audience.cards %}
+      <figure class="aud reveal" data-delay="{{ loop.index0 * 70 }}">
+        <picture>
+          <source type="image/webp" sizes="(max-width: 900px) 46vw, 23vw"
+                  srcset="assets/{{ c.stem }}-320.webp 320w, assets/{{ c.stem }}-480.webp 480w, assets/{{ c.stem }}-640.webp 640w, assets/{{ c.stem }}-960.webp 960w">
+          <img src="assets/{{ c.stem }}-480.jpg" alt="{{ c.alt }}"
+               width="480" height="600" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><span>{{ c.label }}</span></figcaption>
+      </figure>
       {%- endfor %}
     </div>
   </div>
 </section>
 
-{#- The chapter ends here. The Next block in the layout follows the three
-    cards directly and hands the reader to What Alfredo does for you. The
-    trust band and the closing band were the Why trust it and the Pricing
-    chapters told early, and the Next chain reaches both in order. #}
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">{{ home.different.eyebrow }}</p>
+      <h2 class="h2">{{ home.different.heading }}</h2>
+    </div>
+    <ul class="cols cols-3">
+      {%- for i in home.different.entries %}
+      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 80 }}">
+        <h3 class="h3">{{ i.name }}</h3>
+        <p>{{ i.body }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+    {#- The proof, as plain text rather than a badge, directly under the
+        argument it supports. #}
+    <p class="claim">{{ home.proof.claim }}<span>{{ home.proof.note }}</span></p>
+  </div>
+</section>
 {% endblock %}

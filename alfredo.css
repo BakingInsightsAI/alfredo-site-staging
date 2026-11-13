@@ -1,0 +1,501 @@
+/* ============================================================================
+   Alfredo, v4. One dark, warm, editorial system.
+
+   The palette is the handoff's. Every pairing in it was measured before a
+   line of this was written, and one of them failed: amber on cream comes
+   out at 2.02, nowhere near readable, so text on a cream section uses a
+   deeper amber that measures 5.05. Amber stays accent only. There are no
+   large saturated panels anywhere in here, because a solid colour block
+   was what made the previous site feel shouted rather than said.
+
+   Two families, self hosted, variable, preloaded: Playfair Display for
+   anything that carries the voice, DM Sans for anything that carries
+   information.
+   ========================================================================= */
+
+/* ---------------------------------------------------------------- fonts --
+   Both families ship as one variable file per subset, so a single file
+   covers every weight the site uses and the preload in the head covers the
+   text a reader sees first. swap, so words are readable while the file is
+   still arriving; the fallback metrics are tuned below so the swap does not
+   move the line. */
+@font-face {
+  font-family: 'Playfair Display'; font-style: normal; font-weight: 400 600;
+  font-display: swap; src: url('fonts/playfair-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Playfair Display'; font-style: normal; font-weight: 400 600;
+  font-display: swap; src: url('fonts/playfair-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Playfair Display'; font-style: italic; font-weight: 400 600;
+  font-display: swap; src: url('fonts/playfair-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Playfair Display'; font-style: italic; font-weight: 400 600;
+  font-display: swap; src: url('fonts/playfair-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'DM Sans'; font-style: normal; font-weight: 400 700;
+  font-display: swap; src: url('fonts/dmsans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'DM Sans'; font-style: normal; font-weight: 400 700;
+  font-display: swap; src: url('fonts/dmsans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* The swap target, shaped so the line does not jump when the real file
+   lands. Measured against the two families rather than guessed. */
+@font-face {
+  font-family: 'DM Sans fallback'; src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  ascent-override: 96%; descent-override: 24%; line-gap-override: 0%; size-adjust: 102%;
+}
+@font-face {
+  font-family: 'Playfair fallback'; src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
+  ascent-override: 102%; descent-override: 24%; line-gap-override: 0%; size-adjust: 106%;
+}
+
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --ink: #1A1512;
+  --amber: #D99A3E;
+  --cream: #F3E9D8;
+  --panel: #2B221C;
+  --muted: #BDAD9C;
+  --line: #574435;
+
+  /* amber is unreadable on cream at 2.02, so anything amber on a cream
+     section uses this instead, which measures 5.05 */
+  --amber-ink: #845A14;
+  /* one step up from panel, for a card that sits on a panel */
+  --raise: #332821;
+  --hair: rgba(243, 233, 216, .10);
+  --ok: #7FB069;
+  --miss: #C97C6B;
+
+  --serif: 'Playfair Display', 'Playfair fallback', Georgia, serif;
+  --sans: 'DM Sans', 'DM Sans fallback', system-ui, sans-serif;
+
+  /* One spacing scale, used everywhere. The section step is deliberately
+     smaller than the old site's: the note on that one was too much empty
+     space, and no gap on a phone now exceeds 96px. */
+  --s1: 6px; --s2: 10px; --s3: 16px; --s4: 24px; --s5: 34px;
+  --s6: 48px; --s7: 64px; --s8: 88px;
+  --section: clamp(64px, 7vw, 104px);
+  --gutter: 24px;
+  --content: 1160px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* --------------------------------------------------------------- bedrock */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ink); color: var(--cream);
+  font-family: var(--sans); font-size: 1rem; line-height: 1.62;
+  font-synthesis-weight: none; -webkit-font-smoothing: antialiased;
+}
+img, picture, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3, h4 { margin: 0; font-weight: 500; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+.cream :focus-visible { outline-color: var(--amber-ink); }
+
+.wrap { width: min(var(--content), 100% - var(--gutter) * 2); margin-inline: auto; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--cream); color: var(--ink); padding: 12px 18px; font-weight: 600;
+}
+.skip:focus { left: var(--gutter); top: 10px; }
+
+/* ----------------------------------------------------------- type scale */
+.display {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(2.3rem, 5.4vw, 4.1rem); line-height: 1.07;
+  letter-spacing: -.035em; text-wrap: balance;
+}
+.display em { font-style: italic; color: var(--amber); font-weight: 400; }
+.h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.95rem, 3.9vw, 3.1rem); line-height: 1.14;
+  letter-spacing: -.03em; text-wrap: balance;
+}
+.h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem); line-height: 1.2; letter-spacing: -.02em;
+}
+/* The label above a heading. Sentence case: the handoff set these in all
+   caps, which this site does not do. The amber and the weight carry it. */
+.eyebrow {
+  font-size: .82rem; font-weight: 600; letter-spacing: .01em;
+  color: var(--amber); margin-bottom: var(--s2);
+}
+.cream .eyebrow { color: var(--amber-ink); }
+.lede {
+  font-size: clamp(1.04rem, 1.3vw, 1.18rem); line-height: 1.58;
+  color: var(--muted); max-width: 34em; text-wrap: pretty;
+}
+.cream .lede { color: #5E5047; }
+.note { font-size: .92rem; color: var(--muted); }
+
+/* -------------------------------------------------------------- buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 12px 26px; border-radius: 10px;
+  font-weight: 600; font-size: .98rem; letter-spacing: -.005em;
+  border: 1px solid transparent; background: var(--amber); color: var(--ink);
+  transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+}
+.btn:hover { background: #E8AE57; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn-quiet { background: transparent; color: var(--cream); border-color: #7A6150; }
+.btn-quiet:hover { background: rgba(243, 233, 216, .07); border-color: var(--amber); transform: translateY(-1px); }
+.cream .btn-quiet { color: var(--ink); border-color: #B9A68F; }
+.cream .btn-quiet:hover { background: rgba(26, 21, 18, .06); border-color: var(--amber-ink); }
+.textlink {
+  color: var(--amber); font-weight: 600;
+  border-bottom: 1px solid rgba(217, 154, 62, .45); padding-bottom: 1px;
+}
+.textlink:hover { border-bottom-color: var(--amber); }
+.cream .textlink { color: var(--amber-ink); border-bottom-color: rgba(132, 90, 20, .45); }
+
+/* ------------------------------------------------------- staging and nav */
+.staging-bar {
+  background: #3A2C22; color: #E9DCC9; text-align: center;
+  font-size: .82rem; padding: 7px 16px; border-bottom: 1px solid var(--line);
+}
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(26, 21, 18, .93); border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.nav-inner { display: flex; align-items: center; gap: var(--s4); min-height: 72px; }
+.wordmark {
+  font-family: var(--serif); font-weight: 600; font-size: 1.75rem;
+  letter-spacing: -.04em; margin-right: auto;
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.wordmark i { color: var(--amber); font-style: normal; }
+.nav-links ul { list-style: none; display: flex; align-items: center; gap: var(--s5); }
+.nav-links a {
+  font-size: .92rem; color: #E0D4C2; display: inline-flex; align-items: center;
+  min-height: 44px; transition: color .18s var(--ease);
+}
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--amber); }
+.nav .btn { min-height: 44px; padding: 10px 20px; font-size: .92rem; }
+.nav-toggle {
+  display: none; background: transparent; border: 1px solid var(--line);
+  border-radius: 9px; min-width: 44px; min-height: 44px; align-items: center;
+  justify-content: center; gap: 5px; padding: 0 12px; font-size: .9rem;
+}
+.nav-toggle b { display: block; width: 17px; height: 1.5px; background: var(--cream); }
+.nav-toggle b + b { margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; flex-direction: column; }
+  .nav-links {
+    position: absolute; inset: 100% 0 auto; display: none;
+    background: #1F1813; border-bottom: 1px solid var(--line); padding: var(--s3) 0 var(--s4);
+  }
+  .nav-links.open { display: block; }
+  .nav-links ul { flex-direction: column; align-items: stretch; gap: 0; width: min(var(--content), 100% - var(--gutter) * 2); margin-inline: auto; }
+  .nav-links a { min-height: 52px; font-size: 1.04rem; border-bottom: 1px solid var(--hair); }
+  .nav-inner { min-height: 64px; gap: var(--s2); }
+  .nav .btn { padding: 10px 14px; }
+}
+@media (max-width: 420px) {
+  .wordmark { font-size: 1.5rem; }
+  .nav .btn { padding: 10px 12px; font-size: .86rem; }
+}
+
+/* ------------------------------------------------------------- sections */
+.section { padding: var(--section) 0; }
+.section + .section { border-top: 1px solid var(--hair); }
+.cream {
+  background: var(--cream); color: var(--ink);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.cream + .section, .section + .cream { border-top: 0; }
+.panel-sec { background: #211A16; }
+.head { max-width: 46rem; margin-bottom: var(--s6); }
+.head.mid { margin-inline: auto; text-align: center; }
+
+/* ------------------------------------------------------------ the hero --
+   The photograph is an element, not a background, so it can carry a srcset,
+   be preloaded, and hold its own alt text. The scrim is two layers: one
+   along the reading edge and one at the foot, so the copy has a dark field
+   under it at every width without the picture turning to mud. */
+.hero { position: relative; isolation: isolate; overflow: hidden; }
+.hero-media { position: absolute; inset: 0; z-index: -2; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(94deg, rgba(26,21,18,.97) 0%, rgba(26,21,18,.9) 38%, rgba(26,21,18,.34) 72%, rgba(26,21,18,.18) 100%),
+    linear-gradient(0deg, var(--ink) 1%, rgba(26,21,18,0) 32%);
+}
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(40px, 5vw, 72px); align-items: center;
+  padding: clamp(44px, 4.4vw, 68px) 0 clamp(52px, 5vw, 84px);
+}
+.hero-copy { max-width: 36rem; }
+.hero .display { margin: var(--s2) 0 var(--s4); }
+.hero .lede { color: #E2D6C6; max-width: 33rem; }
+/* The two buttons share the row on a phone, where thumbs want the width,
+   and sit at their own size everywhere else: stretched across a tablet
+   they read as two banners rather than two buttons. */
+.hero-actions { display: flex; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s5); }
+.hero-actions .btn { flex: 0 0 auto; }
+.hero-offer { margin-top: var(--s3); font-size: .95rem; color: #D9CBB8; }
+/* The rule follows the words rather than the box: as an inline-flex with
+   a bottom border it drew a line the full width of the paragraph. The tap
+   area comes from padding instead, which grows the hit box of an inline
+   element without opening a gap in the layout. */
+.hero-offer a {
+  color: var(--amber); padding-block: 12px;
+  text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 5px; text-decoration-color: rgba(217,154,62,.5);
+}
+.hero-offer a:hover { text-decoration-color: var(--amber); }
+
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--s5); padding-top: var(--s4); padding-bottom: var(--s6); }
+  .hero-media img { object-position: 68% 42%; }
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(26,21,18,.86) 0%, rgba(26,21,18,.6) 34%, rgba(26,21,18,.42) 58%, rgba(26,21,18,.9) 100%),
+      linear-gradient(0deg, var(--ink) 1%, rgba(26,21,18,0) 22%);
+  }
+  .hero-copy { max-width: none; }
+  .hero .lede { max-width: none; }
+}
+@media (max-width: 420px) {
+  .hero-actions { gap: var(--s2); }
+  .hero-actions .btn { flex: 1 1 46%; padding-inline: 14px; font-size: .92rem; }
+}
+
+/* ------------------------------------------------- the weekly list card --
+   The product, built as a list of real elements. Nothing here is an image,
+   and the label above it says what it is. */
+.listcard {
+  background: linear-gradient(180deg, #241D18, #1C1612);
+  border: 1px solid #6B5440; border-radius: var(--radius-lg);
+  padding: var(--s4); box-shadow: 0 30px 70px rgba(0,0,0,.5);
+}
+.listcard-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s3); padding-bottom: var(--s3); border-bottom: 1px solid var(--line);
+}
+.listcard-head h2, .listcard-head h3 { font-family: var(--serif); font-size: 1.28rem; letter-spacing: -.02em; }
+.tag-sample {
+  font-size: .72rem; font-weight: 600; color: var(--amber);
+  border: 1px solid rgba(217,154,62,.42); border-radius: 999px; padding: 3px 10px;
+  white-space: nowrap;
+}
+.cream .tag-sample { color: var(--amber-ink); border-color: rgba(132,90,20,.4); }
+.recs { list-style: none; display: grid; gap: var(--s2); margin-top: var(--s3); }
+.rec {
+  background: var(--raise); border: 1px solid var(--line);
+  border-radius: 12px; padding: var(--s3);
+}
+.rec-top { display: flex; align-items: flex-start; gap: var(--s2); justify-content: space-between; }
+.rec b { font-weight: 600; font-size: .97rem; line-height: 1.35; }
+.rec p { color: var(--muted); font-size: .87rem; margin-top: 4px; }
+.rec-meta { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s3); margin-top: var(--s2); font-size: .78rem; color: var(--muted); }
+.rec-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.rec-meta i { font-style: normal; color: #E2D6C6; font-weight: 600; }
+.chip {
+  font-size: .72rem; font-weight: 600; border-radius: 999px; padding: 3px 9px;
+  border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.chip-worked { color: var(--ok); border-color: rgba(127,176,105,.42); }
+.chip-none { color: var(--muted); }
+.chip-back { color: var(--miss); border-color: rgba(201,124,107,.42); }
+.chip-soon { color: var(--amber); border-color: rgba(217,154,62,.4); }
+
+/* ------------------------------------------------------- the five acts --
+   A thread rather than five boxes. One amber line runs the length of the
+   row with a lit node on each act, so the eye reads it as a sequence
+   instead of five things that happen to sit side by side. */
+.acts { position: relative; margin-top: var(--s6); }
+.acts ol { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s4); }
+.acts::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 13px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line) 8%, var(--line) 92%, transparent);
+}
+.act { position: relative; padding-top: var(--s5); }
+.act::before {
+  content: ''; position: absolute; left: 0; top: 7px; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--ink); border: 1px solid var(--line);
+  transition: background .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
+}
+.act.lit::before { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 0 5px rgba(217,154,62,.14); }
+.act-n { font-size: .78rem; font-weight: 600; color: var(--amber); letter-spacing: .02em; }
+.act h3 { font-family: var(--serif); font-size: clamp(1.22rem, 1.6vw, 1.5rem); margin: 4px 0 var(--s2); letter-spacing: -.02em; }
+.act p { color: var(--muted); font-size: .92rem; }
+.js .act { opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.js .act.shown { opacity: 1; transform: none; }
+@media (max-width: 900px) {
+  .acts ol { grid-template-columns: 1fr; gap: 0; }
+  .acts::before { left: 6px; right: auto; top: 6px; bottom: 6px; width: 1px; height: auto;
+    background: linear-gradient(180deg, transparent, var(--line) 4%, var(--line) 96%, transparent); }
+  .act { padding: 0 0 var(--s5) var(--s5); }
+  .act:last-child { padding-bottom: 0; }
+  .act::before { top: 5px; }
+}
+
+/* -------------------------------------------------------- feature grids */
+.cols { display: grid; gap: var(--s4); list-style: none; }
+.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s4);
+}
+.cream .card { background: #FBF5EA; border-color: #DCCDB6; }
+.card h3 { margin-bottom: var(--s2); }
+.card p { color: var(--muted); font-size: .94rem; }
+.cream .card p { color: #5E5047; }
+.card-soon { background: #241D18; border-style: dashed; }
+.card-soon h3, .card-soon p { opacity: .82; }
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.js .reveal.shown { opacity: 1; transform: none; }
+
+/* the split: words one side, the made up interface the other */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 980px) { .split { grid-template-columns: 1fr; } .cols-3 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------- audience cards */
+.audience { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s6); }
+.aud {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 4 / 5; isolation: isolate;
+}
+.aud img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .9s var(--ease);
+}
+.aud::after {
+  content: ''; position: absolute; inset: 0;
+  /* The label wraps to two lines on a phone, where the cards are smaller,
+     and the second line was sitting where the scrim had already thinned
+     out: measured off the pixels, two of the four came out at 3.59 and
+     4.15. The dark band is deeper and reaches further up now. */
+  background: linear-gradient(0deg, rgba(16,12,9,.97) 0%, rgba(16,12,9,.9) 26%, rgba(16,12,9,.45) 55%, rgba(16,12,9,.1) 100%);
+}
+.aud { margin: 0; }
+.aud figcaption {
+  position: absolute; inset: auto var(--s3) var(--s3); z-index: 1;
+  font-family: var(--serif); font-size: clamp(1.08rem, 1.3vw, 1.3rem);
+  font-weight: 500; letter-spacing: -.02em; color: var(--cream);
+}
+.aud:hover img { transform: scale(1.045); }
+@media (max-width: 900px) { .audience { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ------------------------------------------------------------- the claim */
+.claim {
+  margin-top: var(--s6); padding-top: var(--s5); border-top: 1px solid var(--hair);
+  font-size: 1.02rem; color: #E2D6C6;
+}
+.claim span { color: var(--muted); display: block; font-size: .92rem; margin-top: var(--s1); }
+
+/* ------------------------------------------------------------- handoff --
+   One target: the label and the heading are inside the same link, so the
+   whole block is pressable and takes one focus ring. */
+.next { background: #1F1813; border-top: 1px solid var(--line); }
+.nextlink { display: block; padding: var(--s7) 0; }
+.nextlink span { display: block; font-size: .86rem; color: var(--muted); margin-bottom: var(--s2); }
+.nextlink b {
+  display: block; font-family: var(--serif); font-weight: 500;
+  font-size: clamp(1.8rem, 3.4vw, 2.9rem); line-height: 1.12; letter-spacing: -.03em;
+  max-width: 20ch; transition: color .2s var(--ease);
+}
+.nextlink:hover b { color: var(--amber); }
+
+/* -------------------------------------------------------------- footer */
+.footer { background: var(--ink); border-top: 1px solid var(--line); padding: var(--s7) 0 var(--s6); font-size: .9rem; }
+.footer-top { display: flex; flex-wrap: wrap; gap: var(--s6); justify-content: space-between; }
+.footer .wordmark { font-size: 1.5rem; margin: 0; }
+.footer nav ul { list-style: none; display: grid; gap: var(--s2); }
+.footer nav a, .contact a { color: var(--muted); display: inline-flex; align-items: center; min-height: 44px; }
+.footer nav a:hover, .contact a:hover { color: var(--amber); }
+.contact { display: grid; gap: var(--s2); }
+.contact-h { font-weight: 600; color: var(--cream); }
+.social { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.social svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.footer-foot {
+  margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid var(--hair);
+  display: grid; gap: var(--s2); color: var(--muted); font-size: .84rem;
+}
+.disclosure { max-width: 46em; }
+
+/* --------------------------------------------------------- reduced motion
+   Everything that moves is listed here, set to its finished state. A reader
+   who asks for less motion gets the whole page, not a page with holes in
+   it. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important; scroll-behavior: auto !important;
+  }
+  .js .reveal, .js .act { opacity: 1 !important; transform: none !important; }
+  .act::before { background: var(--amber); border-color: var(--amber); }
+  .aud:hover img { transform: none; }
+}
+
+/* ------------------------------------------------ the rest of the home --
+   The card in the hero is the product shown before it is explained. On a
+   phone it sits under the copy and only its first rows are in the first
+   screen, which is the point: a reader sees the thing itself above the
+   fold, then scrolls into the story. */
+.hero-card { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.hero-card .rec p { font-size: .84rem; }
+@media (max-width: 980px) {
+  .hero-card { max-width: 32rem; }
+}
+
+/* The brand statement. It is a sentence, not a slogan in a box: a rule
+   above it and the serif voice are enough to make it stop the eye. */
+.statement {
+  margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--hair);
+  font-family: var(--serif); font-size: clamp(1.4rem, 2vw, 1.9rem);
+  line-height: 1.22; letter-spacing: -.025em; color: var(--cream);
+}
+.cream .statement { color: var(--ink); border-top-color: rgba(26,21,18,.14); }
+
+.listcard-head h3 { display: flex; flex-direction: column; }
+.card-sub { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 3px; }
+
+.done-h { margin-top: var(--s8); margin-bottom: var(--s4); }
+.done-list { list-style: none; }
+.done-list .card h4 { margin: var(--s2) 0 var(--s2); font-size: 1.12rem; }
+.verdict { margin: 0; }
