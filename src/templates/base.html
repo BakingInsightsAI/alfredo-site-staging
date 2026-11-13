@@ -74,12 +74,21 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
 
 {#- The quiet handoff at the foot of the page. Pricing carries no next
     because its last element is the call to action. The link is the whole
-    line, so it needs no arrow to say where it goes. #}
+    line, so it needs no arrow to say where it goes.
+
+    The word Next is inside the link rather than above it, so the whole
+    block is one thing to press and one thing to focus. On a phone the
+    heading alone was a 30px target; label, gap and heading together are
+    62px. It reads the same: the label is still its own line in its own
+    size and colour, and a screen reader is given "Next" and the heading
+    as one name, which is what the two lines say together. #}
 {%- if page.get('next') %}
 <section class="nextnav">
   <div class="wrap">
-    <p class="next-label">Next</p>
-    <a class="nextlink" href="{{ page.next.href }}">{{ page.next.label }}</a>
+    <a class="nextlink" href="{{ page.next.href }}">
+      <span class="next-label">Next</span>
+      <span class="next-title">{{ page.next.label }}</span>
+    </a>
   </div>
 </section>
 {%- endif %}
