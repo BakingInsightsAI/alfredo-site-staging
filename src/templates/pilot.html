@@ -86,11 +86,11 @@
         {#- Three taps became one: a dropdown costs a tap to open and a tap
             to choose, and there are only three answers. #}
         <fieldset class="pillset">
-          <legend>Locations</legend>
+          <legend>{{ pilot.form_locations.legend }}</legend>
           <div class="pills">
-            <label><input type="radio" name="locations" value="1" required><span>1</span></label>
-            <label><input type="radio" name="locations" value="2"><span>2</span></label>
-            <label><input type="radio" name="locations" value="3 or more"><span>3 or more</span></label>
+            {%- for c in pilot.form_locations.choices %}
+            <label><input type="radio" name="locations" value="{{ c }}"{% if loop.first %} required{% endif %}><span>{{ c }}</span></label>
+            {%- endfor %}
           </div>
         </fieldset>
         <label class="full">Anything you want us to know (optional)

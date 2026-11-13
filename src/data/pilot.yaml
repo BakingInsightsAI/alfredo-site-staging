@@ -32,3 +32,9 @@ form_heading: "Request a demo"
 form_lede: "Tell us a little about your place and we will reply within one business day."
 # the price in this line is read from the pricing data
 form_reassure_lead: "We reply within one business day. Plans from"
+# The location choices match the plans, so the answer Sid reads in the
+# email is the band the business falls into. The submitted value is the
+# label itself: one string, so the two cannot drift.
+form_locations:
+  legend: "Locations"
+  choices: ["1", "2 to 3", "4 to 10", "More than 10"]

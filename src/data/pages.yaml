@@ -35,9 +35,9 @@ honesty:
 pricing:
   eyebrow: "Pricing"
   heading: "Less than $10 a day, whichever plan you pick."
-  lede: "One price for your whole business, not per location and not per user. No setup fee and no long term contract."
-  founding_heading: "The first 10 restaurants get everything free for six months."
-  founding_body: "Every feature, however many locations you run. After that you pay the price for your size, locked in for a full year."
+  lede: "One price for your whole business, not per location and not per user. No setup fee, and month to month."
+  founding_heading: "The first 10 businesses get everything free for six months."
+  founding_body: "Restaurants, cafes, bakeries, breweries and bars. Every feature, however many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
   # Every price on the site comes from here. The unit is the same for all
   # three, so it is written once rather than three times.
   price_unit: "a month"
@@ -97,6 +97,7 @@ pricing:
   compare_bars:
     - name: "A consultant"
       figure: "thousands, for one project"
+      note: "Weeks of work, one report, then they leave."
       width: 100
       ink: "--c1"
     - name: "A big data platform"
@@ -118,7 +119,7 @@ pricing:
     - q: "Which POS systems does Alfredo support?"
       a: "Toast and Clover today. If you run a different system, get in touch and we will tell you honestly whether yours is ready yet."
     - q: "Is there a contract?"
-      a: "No. Month to month. We would rather earn the next month than lock you in."
+      a: "No long term contract. Month to month. We would rather earn the next month than lock you in."
     - q: "What counts as a location?"
       a: "One physical place: one restaurant, one taproom, one truck. Three registers in one restaurant is still one location."
     - q: "Does Alfredo know what my dishes cost to make?"
