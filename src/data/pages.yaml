@@ -9,7 +9,7 @@ honesty:
   promises_heading: "Our four promises"
   promises:
     - name: "No invented figures"
-      body: "Every dollar Alfredo shows you comes from your own sales. If we cannot trace it, you do not see it. That goes for this website too: every example here is labeled as a sample."
+      body: "Every dollar comes from your own sales. If we cannot trace it, you do not see it."
     - name: "Pending means pending"
       body: "When there is not enough data yet, Alfredo says so. It never dresses up a guess with decimals."
     - name: "Verdicts, not victory laps"
@@ -21,7 +21,7 @@ honesty:
   quotes_heading: "The rule, in practice"
   quotes:
     # the first card is a paraphrase, so it carries no quotation and no gloss
-    - intro: "When Alfredo suggested a pairing to one of our partners, it labeled its own idea very low confidence and suggested trying it small first."
+    - intro: "Alfredo labeled its own pairing idea very low confidence and said to try it small."
       quote: ""
       gloss: ""
       close: "An assistant that admits when an idea is weak is one you can believe when it says an idea is strong."

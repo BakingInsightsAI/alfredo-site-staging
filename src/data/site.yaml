@@ -74,3 +74,10 @@ getting_started:
       body: "We show you Alfredo and what you would get from it."
     - name: "Up and running in about two weeks."
       body: "If you want to go ahead, we plan the setup together and connect your POS."
+
+# Sentences printed in more than one place. A home tile and an overview
+# card say the same thing word for word, so they read one key rather than
+# two that have to be kept in step by hand.
+shared:
+  menu_line: "See what you really make on every plate, extras included, and which add ons to suggest."
+  guests_line: "Know your regulars and what they spend. See what nearby places charge and what guests say."

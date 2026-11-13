@@ -6,13 +6,13 @@ heading: "Built by someone who knows numbers, with someone who runs restaurants.
 hero_line: "Running a restaurant is complicated. Alfredo takes all of that and turns it into a few simple things to try each week."
 built:
   - name: "The founder"
-    body: "More than ten years studying how people buy, most of it advising Fortune 100 companies on what their customers want. When you join, you work with him directly."
+    body: "A decade advising Fortune 100 companies on how people buy. You work with him directly."
   - name: "The restaurant owner"
-    body: "A multi location owner who helped design Alfredo from the very first week. Every feature started as a real question about his own places: which price to change, which pairing to push, which competitor was pulling his regulars away."
+    body: "A multi location owner who helped design Alfredo from week one. Every feature began as a question about his own places."
 how_heading: "How we work with you"
 how:
   - name: "We start by listening"
-    body: "First we learn your place: your history, your goals, what you have already tried. No new hardware, no new software, no staff training. You connect your POS and we take it from there."
+    body: "We learn your place first. Then you connect your POS. No new hardware, no staff training."
   - name: "Your reviews count too"
     body: "What guests say about you, and about the places nearby, helps shape your weekly list."
   - name: "Made to fit you"

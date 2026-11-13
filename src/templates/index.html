@@ -161,7 +161,7 @@
       {%- for t in home.looks_at.tiles %}
       <a class="tile tilelink reveal" href="{{ t.href }}">
         <h3>{{ t.name }}</h3>
-        <span>{{ t.body }}</span>
+        <span>{{ site.shared[t.shared] if t.get('shared') else t.body }}</span>
         {{ minimap[t.href.split('#')[1]] }}
       </a>
       {%- endfor %}

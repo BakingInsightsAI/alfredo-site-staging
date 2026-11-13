@@ -9,15 +9,16 @@ tabs:
 questions:
   - key: board
     q: "What should I change this week, and did it work?"
-    a: "Alfredo hands you a short list of small changes worth trying. Try one, and it tells you honestly whether it worked, did nothing, or backfired."
+    a: "A short list of small changes. Try one and learn if it worked, did nothing, or backfired."
     cta: "See this week"
+  # the two below are shared with the home tiles, see site.yaml
   - key: menu
     q: "Is my menu making me money?"
-    a: "See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting."
+    shared: "menu_line"
     cta: "See your menu"
   - key: intel
     q: "Who is coming in, and what is happening down the street?"
-    a: "Know who your regulars are and what they spend. Keep an eye on what nearby places charge and what their customers keep saying."
+    shared: "guests_line"
     cta: "See your guests and neighbors"
 
 chat_chips:
@@ -52,10 +53,11 @@ measured:
   # green is on target, red is below. Week four was grey, which this card's
   # own key calls not enough data, under a verdict that said it worked.
   kinds: ["ok", "ok", "low", "ok"]
-  key: "green: on target, red: below, grey: not enough data that week"
+  key: "green: on target, red: below, grey: not enough data that week."
+  key_note: "After what you would have made anyway."
   lead: "Four weeks later: about"
   amount: "$225"
-  tail: "more a week, after what you would have made anyway. That is about $11,700 a year."
+  tail: "more a week. That is about $11,700 a year."
   # the same result, short enough to sit under a word on a small drawing
   short: "About $225 more a week"
 
@@ -79,7 +81,7 @@ tryit:
       weeks: [78, 92, 46, 86]
       kinds: ["ok", "ok", "low", "ok"]
       verdict: "Worked"
-      line: "Four weeks later: about $225 more a week, after what you would have made anyway. That is about $11,700 a year."
+      line: "Four weeks later: about $225 more a week. That is about $11,700 a year."
     - key: "backfired"
       button: "Raise one dollar"
       new: "$7.50"
@@ -115,9 +117,9 @@ menu_cards:
   - name: "What to keep an eye on"
     body: "See which ingredients would hurt most if their price jumped."
   - name: "Costs that crept up"
-    body: "When cheese gets more expensive but your menu price stays the same, Alfredo notices and tells you what it is costing you each week."
+    body: "Cheese went up, your menu price did not. Alfredo shows what that costs you each week."
   - name: "Mistakes caught early"
-    body: "On day one with a real client, Alfredo found a cost that was off by 1,370 times, and asked before changing anything."
+    body: "On day one with a real client, Alfredo caught a cost off by 1,370 times and asked first."
   - name: "Try it small first"
     body: "Test a new price or a new spot on the menu with one item before you change the whole menu."
 

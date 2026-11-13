@@ -71,11 +71,12 @@ looks_at:
     - name: "What to try this week"
       body: "A short list of small changes, each one easy to undo."
       href: "product.html#board"
+    # shared with the overview cards, see site.yaml
     - name: "What your menu really earns"
-      body: "See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting."
+      shared: "menu_line"
       href: "product.html#menu"
     - name: "Who walks in, and who is down the street"
-      body: "Know who your regulars are and what they spend, and keep an eye on what the places nearby charge and what their customers say."
+      shared: "guests_line"
       href: "product.html#intel"
 
 photos:

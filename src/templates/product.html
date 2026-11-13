@@ -37,7 +37,7 @@
         {%- for q in product.questions %}
         <div class="tile glass tactile reveal">
           <h2>{{ q.q }}</h2>
-          <span>{{ q.a }}</span>
+          <span>{{ site.shared[q.shared] if q.get('shared') else q.a }}</span>
           {{ minimap[q.key] }}
           <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
         </div>
@@ -110,7 +110,7 @@
           {%- endfor %}
         </div>
         <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-        <p class="viz-key">{{ m.key }}</p>
+        <p class="viz-key">{{ m.key }} {{ m.key_note }}</p>
         <p class="viz-result">{{ m.lead }} <b data-count>{{ m.amount }}</b> {{ m.tail }}</p>
       </div>
 
@@ -155,7 +155,7 @@
         <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
           <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
         </div>
-        <p class="viz-note">A one dollar jump on Garlic Fries cost more orders than it was worth. It went back to $5.50 in minutes, and the board said so.</p>
+        <p class="viz-note">A one dollar jump on Garlic Fries cost too many orders. It went back to $5.50 in minutes.</p>
       </div>
     </div>
   </section>
@@ -243,7 +243,7 @@
     <div class="wrap">
       <div class="tile drift">
         <h3>Does your website still match your register?</h3>
-        <span>Prices change at the register and the website never gets updated, or the other way around. Alfredo spots the difference before your guests do.</span>
+        <span>Register and website prices drift apart. Alfredo spots it before your guests do.</span>
       </div>
     </div>
   </section>
@@ -292,7 +292,7 @@
           <h3>Your guest groups</h3>
           <span class="sample">sample data</span>
         </div>
-        <p class="viz-note">Your Friday night crowd, your lunch regulars, your slow sippers. Alfredo sorts your guests by how they actually come in, and you name the groups.</p>
+        <p class="viz-note">Your Friday crowd, lunch regulars, slow sippers. Alfredo sorts them. You name them.</p>
         <div class="tiles four seg">
           {%- for s in product.guest_groups %}
           <div class="tile">
@@ -353,7 +353,7 @@
           </svg>
           <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
         </div>
-        <p class="viz-note">How guests rate you against the area, from real reviews. If there are not enough reviews on something, it stays blank instead of guessing.</p>
+        <p class="viz-note">How guests rate you against the area, from real reviews. Too few reviews? It stays blank.</p>
       </div>
 
       <div class="vizcard glass">
