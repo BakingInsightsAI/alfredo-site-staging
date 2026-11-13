@@ -19,6 +19,11 @@
      sit on it with a wine tinted shadow rather than a black one. */
   --bg: #FAF6EF;
   --tint: #F3E7D3;
+  /* The closing band's own surface. On a light page it is the page, and
+     the hairline is what parts it from the band above. In the dark it
+     takes the tint the alternating sections already use, because there
+     both bands are pure black and a hairline alone was not enough. */
+  --closing-bg: var(--bg);
   --surface: #FFFFFF;
   --text: #1D1D1F;
   --soft: #5C5C61;
@@ -126,6 +131,7 @@
   :root:not([data-theme="light"]) {
     --bg: #000000;
     --tint: #111013;
+    --closing-bg: var(--tint);
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
@@ -208,6 +214,7 @@
 :root[data-theme="dark"] {
     --bg: #000000;
     --tint: #111013;
+    --closing-bg: var(--tint);
     --surface: #111013;
     --text: #F5F5F7;
     --soft: var(--band-soft);
@@ -612,11 +619,14 @@ section.dark .wrap { position: relative; z-index: 1; }
    the two read as two separate things rather than one paragraph. */
 .teaser-price { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--rule); }
 /* Two 34px headings were landing on one phone screen, so the reader had to
-   choose which one they were reading. The band breathes instead. */
-@media (max-width: 860px) {
-  section.trustband { padding-block: 72px 190px; }
-  section.closeband { padding-block: 190px 72px; }
-}
+   choose which one they were reading. v3.5 answered that with 190px of
+   padding on each side, which is 380px of nothing on a phone: in the dark
+   both bands are pure black, so the two blocks of padding read as one
+   empty screen rather than as a boundary. They are parted by what they
+   look like now, not by how far apart they are, so the spacing goes back
+   to the standard section rhythm. The hairline is the one the Next block
+   uses, on the same surface, for the same reason. */
+section.closeband { background: var(--closing-bg); border-top: 1px solid var(--rule); }
 /* The offer, directly under the hero buttons. --accent is wine on a light
    page and gold on a dark one, because gold on cream does not clear
    contrast at this size. The underline is the link, so the line reads as
