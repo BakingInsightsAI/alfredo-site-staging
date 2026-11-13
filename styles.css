@@ -412,6 +412,33 @@ body:has(.staging-bar) { --bar: calc(26px + env(safe-area-inset-top, 0px)); padd
 }
 .wordmark span { color: var(--accent); }
 .nav .wordmark span { color: var(--nav-mark); }
+/* The wordmark is the only way home on this site, and in the bar it was the
+   smallest thing in it: 18.4px in a 64 by 40 box, under the 44px a finger
+   needs and visibly smaller than the pill beside it. The footer wordmark is
+   a different size and is left alone.
+
+   The box grows vertically only, with min-height and centring rather than
+   inline padding, so the glyphs keep the left edge they had, 24px on a
+   phone and 204px at 1440, and stay on the centre line the pill and the
+   icons sit on. line-height 1 keeps the text box tight, so the 44px is tap
+   area rather than leading. Measured: with line-height 1 the glyph ink sat
+   0.7px above the centre, because Geist's ascent and descent are not
+   symmetric, so the natural line box is left alone and min-height does the
+   work on its own. At 360px the width is untouched, which is what keeps
+   the bar on one row there.
+
+   The size steps with the screen because the bar is full at the narrow end:
+   at 360px the four items and their gaps need 326px of the 312px available
+   once the wordmark is 24px, and the menu button drops to a second row. So
+   24px starts at 390, with 22px covering 375 to 389 and the old size below
+   that. */
+.nav .wordmark {
+  padding-block: 0;
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+@media (min-width: 375px) { .nav .wordmark { font-size: 22px; } }
+@media (min-width: 390px) { .nav .wordmark { font-size: 24px; } }
+@media (min-width: 861px) { .nav .wordmark { font-size: 26px; } }
 .nav-links { margin-left: auto; }
 .nav-links ul { display: flex; gap: 26px; list-style: none; align-items: center; }
 .nav-links a {
