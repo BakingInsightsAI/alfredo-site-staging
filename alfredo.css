@@ -619,3 +619,145 @@ ul, ol { margin: 0; padding: 0; }
   .footer nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s4); }
   .footer-foot { margin-top: var(--s4); padding-top: var(--s3); }
 }
+
+/* ===================================================== the other pages ==
+   The same system as the homepage: the chapters differ, the parts do not. */
+
+/* A page opening. Shorter than the homepage hero, because the homepage is
+   the only one that has to stop someone. */
+.pagehero { padding: clamp(40px, 5vw, 72px) 0 clamp(40px, 5vw, 64px); border-bottom: 1px solid var(--hair); }
+.pagehero .split { align-items: center; }
+.pagehero-copy .display { margin: var(--s2) 0 var(--s4); }
+.pagehero-copy.wide { max-width: 52rem; }
+.pagehero-plain { padding-bottom: clamp(32px, 4vw, 56px); }
+.pagehero .hero-actions { margin-top: var(--s4); }
+
+/* a photograph beside the words, cropped to the same shape as the
+   audience cards so the set still reads as one set */
+.shot { margin: 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 5; }
+.shot img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 980px) { .shot { aspect-ratio: 16 / 10; } }
+
+.marks li b { color: var(--cream); font-weight: 600; }
+.cream .marks li { color: #4A3F37; border-top-color: rgba(26,21,18,.14); }
+.cream .marks li:last-child { border-bottom-color: rgba(26,21,18,.14); }
+
+/* the finished result, said once in full */
+.result { margin-bottom: var(--s4); }
+.result-line { font-size: 1.08rem; }
+.result-line b { font-family: var(--serif); font-size: 1.6rem; color: var(--amber); letter-spacing: -.02em; }
+
+.plate-table { width: 100%; border-collapse: collapse; margin-top: var(--s3); }
+.plate-table th, .plate-table td { padding: 11px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
+.plate-table th { color: var(--muted); font-size: .92rem; }
+.plate-table td { text-align: right; color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 600; }
+.plate-table tr:last-child th, .plate-table tr:last-child td { border-bottom: 0; }
+.asks .rec p { color: var(--muted); }
+
+/* the trust page */
+.proofs { grid-template-columns: 1fr; gap: var(--s3); }
+.flagline {
+  margin: var(--s2) 0; padding: var(--s2) var(--s3); border-left: 2px solid var(--amber);
+  background: rgba(217,154,62,.07); font-family: var(--serif); font-size: 1.1rem; color: var(--cream);
+}
+.proof-close { color: var(--muted); }
+.center-block { max-width: 44rem; margin-inline: auto; text-align: center; }
+.center-block .lede { margin-inline: auto; }
+.center-cta { margin-top: var(--s5); }
+
+/* pricing */
+.offerpanel {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s5); flex-wrap: wrap;
+  border: 1px solid #7A6150; border-radius: var(--radius-lg); padding: clamp(22px, 3vw, 34px);
+  background: linear-gradient(120deg, rgba(217,154,62,.10), rgba(217,154,62,.02) 55%, transparent);
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+.offerpanel > div { flex: 1 1 24rem; }
+.tiers { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); align-items: start; }
+.tier {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s4); display: flex; flex-direction: column; gap: var(--s2);
+}
+.tier-lit { border-color: var(--amber); box-shadow: 0 0 0 1px rgba(217,154,62,.3); }
+.tier-flag { color: var(--amber); font-size: .78rem; font-weight: 600; }
+.tier-who { color: var(--muted); font-size: .92rem; }
+.tier-price b { font-family: var(--serif); font-size: 2.6rem; letter-spacing: -.03em; }
+.tier-price span { color: var(--muted); font-size: .95rem; }
+.tier-day { font-size: .9rem; color: var(--amber); }
+.tier-day span { display: block; color: var(--muted); margin-top: 2px; }
+.tier .btn { margin-top: var(--s2); }
+.tier-lead { font-size: .9rem; color: var(--muted); margin-top: var(--s2); }
+.tier-features { list-style: none; display: grid; gap: var(--s2); margin-top: var(--s1); }
+.tier-features li { position: relative; padding-left: var(--s4); font-size: .92rem; color: #E2D6C6; }
+.tier-features li::before {
+  content: ''; position: absolute; left: 2px; top: .55em; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--amber);
+}
+.more-tier { margin-top: var(--s4); }
+@media (max-width: 900px) { .tiers { grid-template-columns: 1fr; } }
+
+.compare { list-style: none; display: grid; gap: var(--s3); }
+.compare li { border-top: 1px solid var(--hair); padding-top: var(--s3); }
+.compare-name { font-family: var(--serif); font-size: 1.25rem; letter-spacing: -.02em; }
+.compare-figure { color: var(--amber); font-weight: 600; margin: 2px 0 4px; }
+
+.faq { display: grid; gap: 0; }
+.faq details { border-top: 1px solid var(--hair); }
+.faq details:last-child { border-bottom: 1px solid var(--hair); }
+.faq summary {
+  cursor: pointer; list-style: none; padding: var(--s3) var(--s5) var(--s3) 0; position: relative;
+  font-weight: 600; min-height: 44px; display: flex; align-items: center;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: ''; position: absolute; right: 6px; top: 50%; width: 10px; height: 10px;
+  border-right: 1.5px solid var(--amber); border-bottom: 1.5px solid var(--amber);
+  transform: translateY(-70%) rotate(45deg); transition: transform .2s var(--ease);
+}
+.faq details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+.faq details p { color: var(--muted); padding-bottom: var(--s3); max-width: 44em; }
+
+.steps { list-style: none; counter-reset: s; display: grid; gap: var(--s3); margin-top: var(--s3); }
+.steps li { counter-increment: s; position: relative; padding-left: var(--s6); }
+.steps li::before {
+  content: counter(s); position: absolute; left: 0; top: -2px;
+  font-family: var(--serif); font-size: 1.5rem; color: var(--amber);
+}
+.steps b { display: block; font-weight: 600; }
+.steps span { color: var(--muted); font-size: .94rem; }
+
+/* the form */
+.formwrap { max-width: 46rem; }
+.demo-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+.field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.field-full { grid-column: 1 / -1; }
+.field label, .pillset legend { font-size: .9rem; color: #E2D6C6; padding: 0; }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 10px;
+  background: #241D18; color: var(--cream); border: 1px solid var(--line); font: inherit;
+}
+.field textarea { min-height: 96px; }
+.field input::placeholder, .field textarea::placeholder { color: #8D7E70; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.field [aria-invalid="true"] { border-color: var(--miss); }
+.field-error { color: var(--miss); font-size: .86rem; }
+.pills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s2); margin-top: 2px; }
+.pills label { position: relative; display: block; }
+.pills input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pills span {
+  display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 8px 6px;
+  border: 1px solid var(--line); border-radius: 10px; font-size: .92rem; text-align: center;
+}
+.pills input:checked + span { border-color: var(--amber); background: rgba(217,154,62,.14); color: var(--cream); }
+.pills input:focus-visible + span { outline: 3px solid var(--amber); outline-offset: 2px; }
+.form-reassure { grid-column: 1 / -1; color: var(--muted); font-size: .9rem; }
+.demo-form .btn { grid-column: 1 / -1; justify-self: start; }
+.form-status { margin-top: var(--s3); min-height: 1.5em; }
+.form-status.good { color: var(--ok); }
+.form-status.bad { color: var(--miss); }
+.form-status.working { color: var(--muted); }
+.contact-block { margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid var(--hair); }
+@media (max-width: 640px) {
+  .demo-form { grid-template-columns: 1fr; }
+  .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -1,419 +1,196 @@
-{#- Still on the previous design. v4 landed on the homepage first; this
-    page moves to the new base once that direction is signed off. #}
-{% extends "base-legacy.html" %}
-{% import "_minis.html" as minis with context %}
+{% extends "base.html" %}
+{%- set v = product.v4 %}
+
+{% block preload %}
+<link rel="preload" as="image" href="assets/restaurant-kitchen-960.webp" type="image/webp"
+      imagesrcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w"
+      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+{% endblock %}
 
 {% block content %}
-<section class="dark product-hero">
-  <div class="glow a" aria-hidden="true"></div>
-  <div class="glow b" aria-hidden="true"></div>
-  <div class="wrap">
-    <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
+{#- The page opens on the thing itself: the list on the right, what it is
+    on the left. The anchors the outreach links point at are kept as the
+    ids of the sections they named. #}
+<section class="pagehero">
+  <div class="wrap split">
+    <div class="pagehero-copy">
+      <p class="eyebrow">{{ v.eyebrow }}</p>
+      <h1 class="display">{{ v.heading_a }}<em>{{ v.heading_em }}</em></h1>
+      <p class="lede">{{ v.lede }}</p>
+      <div class="hero-actions">
+        <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+      </div>
+    </div>
+    <figure class="shot reveal">
+      <picture>
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+                srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
+        <img src="assets/restaurant-kitchen-640.jpg" alt="A cook finishing a dish on a kitchen pass."
+             width="640" height="800" fetchpriority="high" decoding="async">
+      </picture>
+    </figure>
   </div>
 </section>
 
-<div class="tabbar-wrap">
-  <div class="wrap">
-    <div class="tabbar" role="tablist" aria-label="Product sections">
-      {%- for t in product.tabs %}
-      <button class="tab{% if loop.first %} on{% endif %}" id="tab-{{ t.key }}" role="tab" type="button"
-              data-t="{{ t.key }}" aria-controls="p-{{ t.key }}"
-              aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}">{{ t.label }}</button>
-      {%- endfor %}
+<section class="section panel-sec" id="board">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ v.board_eyebrow }}</p>
+      <h2 class="h2">{{ v.board_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ v.board_lede }}</p>
+      <ul class="marks">
+        {%- for a in v.anatomy %}
+        <li><b>{{ a.name }}.</b> {{ a.body }}</li>
+        {%- endfor %}
+      </ul>
+    </div>
+
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>{{ home.weekly.card_title }}<span class="card-sub">{{ home.weekly.card_sub }}</span></h3>
+        <span class="tag-sample">{{ home.weekly.card_label }}</span>
+      </div>
+      <ul class="recs">
+        {%- for r in home.weekly.recs %}
+        <li class="rec">
+          <p class="rec-kind">{{ r.kind }}</p>
+          <b>{{ r.name }}</b>
+          <p>{{ r.why }}</p>
+          <p class="rec-meta">
+            <span>Effort <i>{{ r.effort }}</i></span>
+            <span>Risk <i>{{ r.risk }}</i></span>
+            <span>{{ r.step }}</span>
+          </p>
+        </li>
+        {%- endfor %}
+      </ul>
     </div>
   </div>
-</div>
 
-<!-- ============================ OVERVIEW ============================ -->
-<div class="panel" id="p-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap">
-      {#- No heading here: the page h1 above the tabs is this tab's
-          heading, and saying it twice helped nobody. The three cards are
-          the h2 level under it, which is what they are. The row carries no
-          heading above it now, so it does not need the gap that sits under
-          one. #}
-      <div class="tiles flush">
-        {%- set minimap = {'board': minis.mini_board(), 'menu': minis.mini_plate(), 'intel': minis.mini_radar()} %}
-        {%- for q in product.questions %}
-        <div class="tile glass tactile reveal">
-          <h2>{{ q.q }}</h2>
-          <span>{{ site.shared[q.shared] if q.get('shared') else q.a }}</span>
-          {{ minimap[q.key] }}
-          <button class="textbtn" type="button" data-go="{{ q.key }}">{{ q.cta }}</button>
-        </div>
+  {#- The same finished example the home page quotes, so the two pages
+      never print a different figure for it. #}
+  <div class="wrap">
+    <div class="done-h">
+      <h3 class="h3">{{ product.measured.heading }}</h3>
+      <span class="tag-sample">{{ home.weekly.card_label }}</span>
+    </div>
+    <div class="result">
+      <p class="result-line">{{ product.measured.lead }} <b>{{ product.measured.amount }}</b> {{ product.measured.tail }}</p>
+      <p class="note">{{ product.measured.volume }}. {{ product.measured.after }}</p>
+    </div>
+    <ul class="done-list">
+      {%- for d in home.weekly.done %}
+      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
+        <p class="verdict"><span class="chip chip-{{ d.kind }}">{{ d.verdict }}</span></p>
+        <h4 class="h3">{{ d.name }}</h4>
+        <p>{{ d.body }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h2">{{ v.kinds_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ v.kinds_lede }}</p>
+    </div>
+    <ul class="cols cols-3">
+      {%- for k in product.board_types %}
+      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 70 }}">
+        <h3 class="h3">{{ k.name }}</h3>
+        <p>{{ k.body }}</p>
+      </li>
+      {%- endfor %}
+      <li class="card reveal">
+        <h3 class="h3">Costs</h3>
+        <p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p>
+      </li>
+      {#- Quieter than the five beside it, because it is not here yet. #}
+      <li class="card card-soon reveal">
+        <h3 class="h3">{{ v.inventory.name }} <span class="chip chip-soon">{{ v.inventory.tag }}</span></h3>
+        <p>{{ v.inventory.body }}</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section panel-sec" id="menu">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ v.menu_eyebrow }}</p>
+      <h2 class="h2">{{ v.menu_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ v.menu_lede }}</p>
+      <ul class="marks">
+        {%- for m in v.menu_points %}
+        <li>{{ m }}</li>
         {%- endfor %}
+      </ul>
+    </div>
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>{{ product.plate.dish }}<span class="card-sub">One plate, taken apart</span></h3>
+        <span class="tag-sample">{{ home.weekly.card_label }}</span>
       </div>
-    </div>
-  </section>
-
-  <section class="dark" id="chat">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Ask Alfredo</p>
-        <h2 class="big">Ask it anything.</h2>
-        <p class="sub">Ask how the week went, why Friday was slower, or what to try next. Alfredo answers in plain words, from your own numbers. If it does not know, it says so.</p>
-      </div>
-      <div class="chatcard glass tactile">
-        <div class="chat-head">
-          <span class="chat-title"><i class="chat-dot" aria-hidden="true"></i>Alfredo</span>
-          <span class="sample">sample conversation, sample data</span>
-        </div>
-        <div class="chat-body" id="chatBody">
-          <p class="msg bot">Morning. Ask me anything about the business, or tap one of these to see how I answer.</p>
-        </div>
-        <div class="chat-chips" id="chatChips">
-          {%- for c in product.chat_chips %}
-          <button class="chip-q" type="button" data-a="{{ c.a }}">{{ c.q }}</button>
-          {%- endfor %}
-        </div>
-        <p class="chat-input">Ask about your business</p>
-      </div>
-    </div>
-    {#- The ask comes after the chapter has been told, not in the middle of
-        it. It was sitting between the three cards and this section. #}
-    <div class="wrap">
-      <p class="tile-cta"><a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
-    </div>
-  </section>
-
-</div>
-
-<!-- ============================ BOARD ============================ -->
-<div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0" hidden>
-  <section class="light" id="board">
-    <div class="wrap">
-      <p class="eyebrow">This week</p>
-      <h2 class="big">A short list every week, and an honest answer every time.</h2>
-      <p class="sub">No charts to decode. Just a few small changes worth trying, like a price, a pairing, or a happy hour time. Try one, and four weeks later Alfredo tells you what really happened.</p>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      {#- The volume is on the card so the money can be checked: 520 pints at
-          50 cents more is $260, and week three took it back to $247. #}
-      {%- set m = product.measured %}
-      <div class="vizcard glass" id="measured">
-        <div class="viz-head">
-          <h3>{{ m.heading }}</h3>
-          <span class="sample">{{ m.label }}</span>
-        </div>
-        <p class="viz-vol">{{ m.volume }} <span class="sample">sample</span></p>
-        <div class="weekbars" id="weekbars" aria-hidden="true">
-          {%- for w in m.weeks %}
-          <span class="wb {{ m.kinds[loop.index0] }}" style="--h:{{ w }}%"></span>
-          {%- endfor %}
-        </div>
-        <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-        <p class="viz-key">{{ m.key }}</p>
-        <p class="viz-result">{{ m.lead }} <b data-count>{{ m.amount }}</b> {{ m.tail }}</p>
-        <p class="viz-fine">{{ m.after }}</p>
-      </div>
-
-      {#- The visitor makes the choice this tab is describing. Both outcomes
-          are the samples from the two cards around it, so nothing new is
-          claimed, and the label says so before anything is pressed. #}
-      <div class="vizcard glass tryit" id="tryit">
-        <div class="viz-head">
-          <h3>{{ product.tryit.heading }}</h3>
-          <span class="sample">{{ product.tryit.label }}</span>
-        </div>
-        <p class="tryit-row">
-          <span class="tryit-name">{{ product.tryit.item }}</span>
-          <span class="tryit-price"><span class="amt" id="tryitPrice">{{ product.tryit.price }}</span><span class="tryit-new" id="tryitNew" hidden></span></span>
-        </p>
-        <div class="tryit-choices" id="tryitChoices">
-          {%- for o in product.tryit.options %}
-          <button type="button" class="pill pill-glass tryit-btn" data-k="{{ o.key }}"
-                  data-new="{{ o.new }}" data-weeks="{{ o.weeks | join(',') }}" data-kinds="{{ o.kinds | join(',') }}"
-                  data-verdict="{{ o.verdict }}" data-line="{{ o.line }}"
-                  data-after="{{ o.get('after') or '' }}">{{ o.button }}</button>
-          {%- endfor %}
-        </div>
-        <div class="tryit-out" id="tryitOut" hidden>
-          <div class="weekbars" id="tryitBars" aria-hidden="true"></div>
-          <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-          <div class="verdicts" id="tryitVerdicts" role="group" aria-label="Verdict for this sample trial">
-            <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd">Backfired</span>
-          </div>
-          <p class="viz-result" id="tryitLine"></p>
-          <p class="viz-fine" id="tryitAfter" hidden></p>
-          <button type="button" class="textbtn" id="tryitAgain">{{ product.tryit.again }}</button>
-        </div>
-        <p class="viz-note">{{ product.tryit.prompt }}</p>
-        <p class="sr-only" id="tryitSay" role="status" aria-live="polite"></p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>Every change ends in a verdict</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="nopeek">No sneak peeks. Results stay hidden until the test is done, so nobody calls it early. Not even us.</p>
-        <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
-          <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
-        </div>
-        <p class="viz-note">A one dollar jump on Garlic Fries cost too many orders. It went back to $5.50 in minutes.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="light">
-    <div class="wrap">
-      <h3 class="big small">Small, careful, and the same menu for everyone.</h3>
-      <p class="sub">One item, one change, a few weeks. Every guest sees the same menu. If a change backfires, it goes back in minutes, and Alfredo says so.</p>
-    </div>
-  </section>
-
-  <section class="tint">
-    <div class="wrap">
-      <p class="eyebrow">What lands on your list</p>
-      <h2 class="big">Four kinds of changes.</h2>
-      <div class="tiles four">
-        {%- for t in product.board_types %}
-        <div class="tile reveal"><h3>{{ t.name }}</h3><span>{{ t.body }}</span></div>
-        {%- endfor %}
-      </div>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="menu">Is my menu making me money?</button>
-      <h2 class="big center">See it on your own sales.</h2>
-      <p class="sub center">Request a demo and we will show you what a week looks like.</p>
-      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-    </div>
-  </section>
-</div>
-
-<!-- ============================ MENU ============================ -->
-<div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0" hidden>
-  <section class="light" id="menu">
-    <div class="wrap">
-      <h2 class="big">Is your menu making you money?</h2>
-      <p class="sub">See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</p>
-
-      {#- The tab asked a question about money and then showed none. This is
-          one plate, taken apart. Every figure is invented for the
-          illustration, which is why the card says so. #}
-      <div class="vizcard plate-card">
-        <div class="viz-head">
-          <h3>One plate, taken apart</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="plate" role="img" aria-label="{{ product.plate.aria }}">
-          <p class="plate-cols" aria-hidden="true"><span></span><span>price</span><span>costs you</span><span>you make</span></p>
-          <p class="plate-row dish">
-            <span class="plate-name">{{ product.plate.dish }}</span>
-            <span class="plate-n">{{ product.plate.price }}</span>
-            <span class="plate-n cost">{{ product.plate.cost }}</span>
-            <span class="plate-n make">{{ product.plate.make }}</span>
-          </p>
+      <table class="plate-table">
+        <caption class="sr-only">What one plate earns once the extras are counted</caption>
+        <tbody>
+          <tr><th scope="row">{{ product.plate.dish }}</th><td>{{ product.plate.make }}</td></tr>
           {%- for a in product.plate.addons %}
-          <p class="plate-row add">
-            <span class="plate-name">{{ a.name }}</span>
-            <span class="plate-n">{{ a.price }}</span>
-            <span class="plate-n cost">{{ a.cost }}</span>
-            <span class="plate-n make">{{ a.make }}</span>
-          </p>
+          <tr><th scope="row">{{ a.name }}</th><td>{{ a.make }}</td></tr>
           {%- endfor %}
-          <p class="plate-row total">
-            <span class="plate-name">{{ product.plate.total_label }}</span>
-            <span class="plate-n">{{ product.plate.total_price }}</span>
-            <span class="plate-n cost">{{ product.plate.total_cost }}</span>
-            <span class="plate-n make">{{ product.plate.total_make }}</span>
-          </p>
-        </div>
-        <p class="viz-note">{{ product.plate.note }}</p>
-      </div>
-      <div class="tiles">
-        {%- for c in product.menu_cards %}
-        <div class="tile reveal"{% if c.get('anchor') %} id="{{ c.anchor }}"{% endif %}><h3>{{ c.name }}</h3><span>{{ c.body }}</span></div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="intel">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ v.intel_eyebrow }}</p>
+      <h2 class="h2">{{ v.intel_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ v.intel_lede }}</p>
+      <ul class="marks">
+        {%- for m in v.intel_points %}
+        <li>{{ m }}</li>
         {%- endfor %}
-      </div>
+      </ul>
     </div>
-  </section>
+    <figure class="shot reveal">
+      <picture>
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+                srcset="assets/bar-480.webp 480w, assets/bar-640.webp 640w, assets/bar-960.webp 960w">
+        <img src="assets/bar-640.jpg" alt="A bar at night, a drink on the counter and bottles lit behind it."
+             width="640" height="800" loading="lazy" decoding="async">
+      </picture>
+    </figure>
+  </div>
+</section>
 
-  <section class="light">
-    <div class="wrap">
-      <div class="tile drift">
-        <h3>Does your website still match your register?</h3>
-        <span>Register and website prices drift apart. Alfredo spots it before your guests do.</span>
-      </div>
+<section class="section panel-sec" id="chat">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ v.chat_eyebrow }}</p>
+      <h2 class="h2">{{ v.chat_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ v.chat_lede }}</p>
+      <p class="statement">{{ home.weekly.statement }}</p>
     </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
-      <h2 class="big center">Run it on your own menu.</h2>
-      <p class="sub center">Share your recipe costs and see what every plate really makes you.</p>
-      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-    </div>
-  </section>
-</div>
-
-<!-- ============================ INTEL ============================ -->
-<div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0" hidden>
-  <section class="light" id="regulars">
-    <div class="wrap">
-      <p class="eyebrow">Your guests</p>
-      <h2 class="big">Know who walks in, and who is down the street.</h2>
-      <p class="sub">Know who your regulars are and what they spend, without asking anyone to sign up for anything. Only real, confirmed guests are counted.</p>
-
-      <div class="vizcard">
-        <div class="viz-head">
-          <h3>Regulars vs occasional guests</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="bignums">
-          <div><b data-count>412</b><span>confirmed guests</span></div>
-          <div><b data-count>78</b><span>regulars (5 or more visits)</span></div>
-          <div><b data-count>31%</b><span>repeat rate</span></div>
-        </div>
-        <div class="cmp" id="regularsCmp">
-          <div class="cmp-row"><span class="cmp-label">Average visits</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>8.4</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:19%"></i><em>1.6</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Average check</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>$42</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:74%"></i><em>$31</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Share of your sales</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
-          <p class="cmp-key"><span class="swatch a" aria-hidden="true"></span>Regulars<span class="swatch b" aria-hidden="true"></span>Occasional</p>
-        </div>
-        <p class="viz-note">A small group of regulars usually brings in a big share of your sales. Alfredo shows you who they are.</p>
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>Ask it anything<span class="card-sub">The way you would ask a manager</span></h3>
+        <span class="tag-sample">{{ home.weekly.card_label }}</span>
       </div>
-
-      <div class="vizcard">
-        <div class="viz-head">
-          <h3>Your guest groups</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="viz-note">Your Friday crowd, lunch regulars, slow sippers. Alfredo sorts them. You name them.</p>
-        <div class="tiles four seg">
-          {%- for s in product.guest_groups %}
-          <div class="tile">
-            <h4>{{ s.name }}</h4>
-            <p class="segstats">{{ s.guests }}<br>{{ s.check }}<br>{{ s.visits }}</p>
-            <span>{{ s.body }}</span>
-          </div>
-          {%- endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark" id="intel">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="eyebrow">Your neighbors</p>
-      <h2 class="big">Who is down the street.</h2>
-      <p class="sub">Keep an eye on the places down the street: what they charge, when they are busy, and what their customers keep saying.</p>
-
-      <div class="bignums four">
-        {%- for s in product.intel_stats %}
-        <div><b>{{ s.n }}</b><span>{{ s.label }}</span></div>
+      <ul class="recs asks">
+        {%- for c in product.chat_chips %}
+        <li class="rec">
+          <b>{{ c.q }}</b>
+          <p>{{ c.a }}</p>
+        </li>
         {%- endfor %}
-      </div>
-
-      <div class="vizcard glass radar-card">
-        <div class="viz-head">
-          <h3>How guests rate you</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="radar-wrap">
-          {#- The box is wider than the drawing so the axis labels have room
-              outside the radius. The centre stays at 100,100: the box runs
-              -70 to 270 across and -6 to 206 down. #}
-          <svg id="radar" viewBox="-70 -6 340 212" role="img"
-               aria-label="Sample ratings chart. How guests rate you against the area average: Food {{ product.radar.axes[0].score }}, Service {{ product.radar.axes[1].score }}, Value {{ product.radar.axes[2].score }}, Speed {{ product.radar.axes[3].score }}, each out of five. Ambiance is left blank because there are not enough reviews.">
-            <g class="radar-grid" aria-hidden="true">
-              {%- for f in [0.25, 0.5, 0.75, 1.0] %}
-              <polygon points="{% for a in product.radar.axes %}{{ (product.radar.cx + product.radar.r * f * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * f * a.uy) | round(2) }} {% endfor %}"></polygon>
-              {%- endfor %}
-              {%- for a in product.radar.axes %}
-              <line x1="{{ product.radar.cx }}" y1="{{ product.radar.cy }}"
-                    x2="{{ (product.radar.cx + product.radar.r * a.ux) | round(2) }}" y2="{{ (product.radar.cy + product.radar.r * a.uy) | round(2) }}"
-                    class="{% if a.get('faded') %}faded{% endif %}"></line>
-              {%- endfor %}
-            </g>
-            <polygon class="radar-market" points="{% for a in product.radar.axes %}{% if not a.get('faded') %}{{ (product.radar.cx + product.radar.r * a.market * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * a.market * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
-            <polygon class="radar-you" points="{% for a in product.radar.axes %}{% if not a.get('faded') %}{{ (product.radar.cx + product.radar.r * a.you * a.ux) | round(2) }},{{ (product.radar.cy + product.radar.r * a.you * a.uy) | round(2) }} {% endif %}{% endfor %}"></polygon>
-            {%- for a in product.radar.axes %}
-            <text class="radar-label{% if a.get('faded') %} faded{% endif %}"
-                  x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}"
-                  y="{{ (product.radar.cy + (product.radar.r + 14) * a.uy) | round(2) }}"
-                  text-anchor="{% if a.ux > 0.2 %}start{% elif a.ux < -0.2 %}end{% else %}middle{% endif %}"
-                  dominant-baseline="middle">{{ a.name }}{% if a.get('score') %} {{ a.score }}{% endif %}
-              {#- The note is set on two lines. On one line it is the widest
-                  thing on the chart by far, and on a phone it ran out past
-                  the side of the card. Broken in half by words it is
-                  narrower than the label above it. #}
-              {%- if a.get('note') %}{% set words = a.note.split(' ') %}{% set half = (words | length + 1) // 2 %}<tspan class="radar-note"
-                    x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}" dy="12">({{ words[:half] | join(' ') }}</tspan><tspan class="radar-note"
-                    x="{{ (product.radar.cx + (product.radar.r + 14) * a.ux) | round(2) }}" dy="11">{{ words[half:] | join(' ') }})</tspan>{% endif %}</text>
-            {%- endfor %}
-          </svg>
-          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
-        </div>
-        <p class="viz-note">How guests rate you against the area, from real reviews. Too few reviews? It stays blank.</p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>When your area is busy</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="heatwrap">
-          <div class="heat-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-          <div class="heat" id="heat" role="img" aria-label="Sample chart of how busy your area is, by hour from 10am to 11pm, across the seven days of the week."></div>
-          <div class="heat-hours" aria-hidden="true"><span>10am</span><span>2pm</span><span>6pm</span><span>10pm</span></div>
-          <p class="heat-key" aria-hidden="true"><span>quieter</span><i class="heat-ramp"></i><span>busier</span></p>
-        </div>
-        <p class="viz-note">When your area is busy, hour by hour, next to how busy you are. The gap is where money is waiting.</p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>Menu Scanner</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="viz-note">Their menu next to yours, item by item, with the price difference.</p>
-        <div class="table-scroll">
-          <table class="match-table">
-            <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
-            <tbody>
-              {%- for r in product.scanner %}
-              <tr>
-                <td>{{ r.theirs }}<span class="mono">{{ r.theirprice }}</span></td>
-                <td>{{ r.yours }}<span class="mono">{{ r.yourprice }}</span></td>
-                <td>{{ r.gap }}</td>
-                <td>{{ r.action }}</td>
-              </tr>
-              {%- endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p class="sub wide">{{ product.also_included }}</p>
+      </ul>
     </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
-      <h2 class="big center">Meet your regulars.</h2>
-      <p class="sub center">Find out who keeps the lights on.</p>
-      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-    </div>
-  </section>
-</div>
+  </div>
+</section>
 {% endblock %}

@@ -1,62 +1,63 @@
-{#- Still on the previous design. v4 landed on the homepage first; this
-    page moves to the new base once that direction is signed off. #}
-{% extends "base-legacy.html" %}
-{% set h = pages.honesty %}
+{% extends "base.html" %}
+{%- set h = pages.honesty %}
 
 {% block content %}
-<section class="dark manifesto">
-  <div class="glow a" aria-hidden="true"></div>
-  <div class="glow b" aria-hidden="true"></div>
+<section class="pagehero pagehero-plain">
   <div class="wrap">
-    <p class="eyebrow">{{ h.eyebrow }}</p>
-    <h1 class="big">{{ h.heading }}</h1>
-    {%- for line in h.lede %}
-    <p class="sub">{{ line }}</p>
-    {%- endfor %}
+    <div class="pagehero-copy wide">
+      <p class="eyebrow">{{ h.eyebrow }}</p>
+      <h1 class="display">{{ h.heading }}</h1>
+      {%- for p in h.lede %}
+      <p class="lede" style="margin-top:var(--s3)">{{ p }}</p>
+      {%- endfor %}
+    </div>
   </div>
 </section>
 
-<section class="light">
+<section class="section panel-sec">
   <div class="wrap">
-    <h2 class="big">{{ h.promises_heading }}</h2>
-    <div class="tiles two">
+    <div class="head">
+      <h2 class="h2">{{ h.promises_heading }}</h2>
+    </div>
+    <ul class="cols cols-2">
       {%- for p in h.promises %}
-      <div class="tile promise reveal"><h3>{{ p.name }}</h3><span>{{ p.body }}</span></div>
+      <li class="card reveal" data-delay="{{ loop.index0 % 2 * 70 }}">
+        <h3 class="h3">{{ p.name }}</h3>
+        <p>{{ p.body }}</p>
+      </li>
       {%- endfor %}
-    </div>
-    <h3 class="big small bridge-h">{{ h.bridge_heading }}</h3>
-    <p class="sub wide">{{ h.bridge }}</p>
+    </ul>
   </div>
 </section>
 
-<section class="dark">
-  <div class="glow b" aria-hidden="true"></div>
-  <div class="wrap">
-    <h2 class="big">{{ h.quotes_heading }}</h2>
-    <div class="tiles two quotes">
+{#- The day one story, which is the whole promise in one example. Set as
+    what it is: a thing that happened, and what was done about it. #}
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ h.quotes_heading }}</p>
+      <h2 class="h2">{{ h.bridge_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ h.bridge }}</p>
+    </div>
+    <ul class="cols proofs">
       {%- for q in h.quotes %}
-      <div class="glass quotecard reveal">
-        <p class="viz-note">{{ q.intro }}</p>
+      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
+        <p>{{ q.intro }}</p>
         {%- if q.quote %}
-        <blockquote class="enginequote">{{ q.quote }}</blockquote>
+        <p class="flagline">{{ q.quote }}</p>
         {%- endif %}
-        {%- if q.gloss %}
-        <p class="gloss">{{ q.gloss }}</p>
-        {%- endif %}
-        <p class="viz-note">{{ q.close }}</p>
-      </div>
+        <p class="proof-close">{{ q.close }}</p>
+      </li>
       {%- endfor %}
-    </div>
+    </ul>
   </div>
 </section>
 
-<section class="light">
+<section class="section cream">
   <div class="wrap center-block">
-    <h2 class="big center">{{ h.cta_heading }}</h2>
-    <p class="sub center">{{ h.cta_body }}</p>
-    {#- This used to be a text link to the about page, which is where the
-        next link below already goes. #}
-    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    <h2 class="h2">{{ h.cta_heading }}</h2>
+    <p class="lede" style="margin:var(--s3) auto 0">{{ h.cta_body }}</p>
+    <p class="center-cta"><a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
   </div>
 </section>
 {% endblock %}

@@ -7,27 +7,23 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Alfredo, what it does</title>
 <meta name="description" content="Three questions every owner asks: what to change this week, whether the menu is making money, and who is coming in. Alfredo answers them every week.">
-<meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)" id="themeColorLight">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" id="themeColorDark">
+<meta name="theme-color" content="#1A1512">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script>
-/* Runs before the stylesheet is applied, so the wrong theme is never
-   painted and then corrected. Only a visitor who has actually chosen gets
-   data-theme; everyone else is left to the media query, which means a
-   later change to their system setting is still followed. */
-(function(){try{var t=localStorage.getItem("theme");
-if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
-</script>
-<link rel="stylesheet" href="styles.css">
+<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/restaurant-kitchen-960.webp" type="image/webp"
+      imagesrcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w"
+      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+
+<link rel="stylesheet" href="alfredo.css">
 </head>
-<body class="page-product">
+<body>
 <p class="staging-bar">Staging preview. Not the live site.</p>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="nav tactile" id="nav">
+<header class="nav">
   <div class="wrap nav-inner">
-    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
+    <a class="wordmark" href="index.html">alfredo<i aria-hidden="true">.</i></a>
     <nav class="nav-links" id="navLinks" aria-label="Main">
       <ul>
         <li><a href="product.html" aria-current="page">What it does</a></li>
@@ -37,557 +33,299 @@ if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)
         <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
       </ul>
     </nav>
-    <a class="pill pill-gold pill-sm nav-cta" href="pilot.html#pilot">Request a demo</a>
-    <button class="themetoggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
-      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <circle cx="12" cy="12" r="4.2"></circle>
-        <g class="rays"><path d="M12 1.8v3M12 19.2v3M1.8 12h3M19.2 12h3M4.8 4.8l2.1 2.1M17.1 17.1l2.1 2.1M19.2 4.8l-2.1 2.1M6.9 17.1l-2.1 2.1"></path></g>
-      </svg>
-      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6a8.6 8.6 0 1 0 11 11z"></path>
-      </svg>
-    </button>
-    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
-      <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i></span>
+    <a class="btn" href="pilot.html#pilot">Request a demo</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks">
+      <span class="sr-only">Menu</span>
+      <b aria-hidden="true"></b><b aria-hidden="true"></b><b aria-hidden="true"></b>
     </button>
   </div>
 </header>
 
 <main id="main" tabindex="-1">
 
-<section class="dark product-hero">
-  <div class="glow a" aria-hidden="true"></div>
-  <div class="glow b" aria-hidden="true"></div>
-  <div class="wrap">
-    <h1 class="big wide-h1">Three questions every owner asks. Alfredo answers them every week.</h1>
+<section class="pagehero">
+  <div class="wrap split">
+    <div class="pagehero-copy">
+      <p class="eyebrow">What it does</p>
+      <h1 class="display">One short list, <em>every Monday.</em></h1>
+      <p class="lede">Alfredo reads the sales you already ring through your existing POS system, and turns the week into three to five changes worth trying. You choose. It reports back.</p>
+      <div class="hero-actions">
+        <a class="btn" href="pilot.html#pilot">Request a demo</a>
+      </div>
+    </div>
+    <figure class="shot reveal">
+      <picture>
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+                srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
+        <img src="assets/restaurant-kitchen-640.jpg" alt="A cook finishing a dish on a kitchen pass."
+             width="640" height="800" fetchpriority="high" decoding="async">
+      </picture>
+    </figure>
   </div>
 </section>
 
-<div class="tabbar-wrap">
+<section class="section panel-sec" id="board">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">The list itself</p>
+      <h2 class="h2">What a suggestion tells you before you decide.</h2>
+      <p class="lede" style="margin-top:var(--s3)">Every one of them comes with the same six things, so you can judge it in a few seconds and get back to the floor.</p>
+      <ul class="marks">
+        <li><b>What it is.</b> The change itself, in one line you could read out to the floor.</li>
+        <li><b>Why it came up.</b> What in your own sales put it on the list this week.</li>
+        <li><b>How much work.</b> Low, medium or high, so a busy week gets the easy ones.</li>
+        <li><b>What it risks.</b> What could go the other way, said plainly before you try it.</li>
+        <li><b>How to do it.</b> The steps, and who needs to know.</li>
+        <li><b>When to check back.</b> The date Alfredo comes back with the answer.</li>
+      </ul>
+    </div>
+
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>Four kinds of suggestion<span class="card-sub">One week, four corners of your sales</span></h3>
+        <span class="tag-sample">Illustrative example</span>
+      </div>
+      <ul class="recs">
+        <li class="rec">
+          <p class="rec-kind">Pairing</p>
+          <b>Suggest the pale ale with the fish plate</b>
+          <p>Guests who order the fish already order this beer more than any other.</p>
+          <p class="rec-meta">
+            <span>Effort <i>Low</i></span>
+            <span>Risk <i>Low</i></span>
+            <span>Tell the floor on Thursday.</span>
+          </p>
+        </li>
+        <li class="rec">
+          <p class="rec-kind">Cost</p>
+          <b>Check the plate on the short rib</b>
+          <p>The price you pay for it went up twice last month.</p>
+          <p class="rec-meta">
+            <span>Effort <i>Low</i></span>
+            <span>Risk <i>Low</i></span>
+            <span>Confirm the new cost or dismiss the flag.</span>
+          </p>
+        </li>
+        <li class="rec">
+          <p class="rec-kind">Neighborhood</p>
+          <b>Try a coffee and pastry offer from two until four</b>
+          <p>The bakery next door closes at two, and two until four is your quietest stretch.</p>
+          <p class="rec-meta">
+            <span>Effort <i>Medium</i></span>
+            <span>Risk <i>Low</i></span>
+            <span>Run it for three weeks, then look.</span>
+          </p>
+        </li>
+        <li class="rec">
+          <p class="rec-kind">Guests</p>
+          <b>Win back 14 regulars who have gone quiet</b>
+          <p>Last seen more than six weeks ago, and every one of them used to be in most weeks.</p>
+          <p class="rec-meta">
+            <span>Effort <i>Low</i></span>
+            <span>Risk <i>Low</i></span>
+            <span>Write to them before the weekend.</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="wrap">
-    <div class="tabbar" role="tablist" aria-label="Product sections">
-      <button class="tab on" id="tab-overview" role="tab" type="button"
-              data-t="overview" aria-controls="p-overview"
-              aria-selected="true" tabindex="0">Overview</button>
-      <button class="tab" id="tab-board" role="tab" type="button"
-              data-t="board" aria-controls="p-board"
-              aria-selected="false" tabindex="-1">This week</button>
-      <button class="tab" id="tab-menu" role="tab" type="button"
-              data-t="menu" aria-controls="p-menu"
-              aria-selected="false" tabindex="-1">Your menu</button>
-      <button class="tab" id="tab-intel" role="tab" type="button"
-              data-t="intel" aria-controls="p-intel"
-              aria-selected="false" tabindex="-1">Your guests and neighbors</button>
+    <div class="done-h">
+      <h3 class="h3">We raised the House Lager by 50 cents.</h3>
+      <span class="tag-sample">Illustrative example</span>
+    </div>
+    <div class="result">
+      <p class="result-line">Four weeks later: <b>$247</b> more a week. That is $12,844 a year.</p>
+      <p class="note">520 pints a week. After what you would have made anyway.</p>
+    </div>
+    <ul class="done-list">
+      <li class="card reveal" data-delay="0">
+        <p class="verdict"><span class="chip chip-worked">Worked</span></p>
+        <h4 class="h3">House lager: $247 more a week</h4>
+        <p>Raised fifty cents. Four weeks on, the same number of pints sold. After what you would have made anyway.</p>
+      </li>
+      <li class="card reveal" data-delay="70">
+        <p class="verdict"><span class="chip chip-none">No effect</span></p>
+        <h4 class="h3">Calamari moved to the top of the starters</h4>
+        <p>Four weeks on, it sold the same. Alfredo said so, and the top spot went to something that does move.</p>
+      </li>
+      <li class="card reveal" data-delay="140">
+        <p class="verdict"><span class="chip chip-back">Backfired</span></p>
+        <h4 class="h3">Happy hour pushed an hour later</h4>
+        <p>The early crowd did not come back and the later hour did not fill. It went back the same night.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h2">Five kinds of changes, and one on the way.</h2>
+      <p class="lede" style="margin-top:var(--s3)">Price is one of them, not the whole of it.</p>
+    </div>
+    <ul class="cols cols-3">
+      <li class="card reveal" data-delay="0">
+        <h3 class="h3">Prices</h3>
+        <p>Which items can handle a small price bump, and which cannot.</p>
+      </li>
+      <li class="card reveal" data-delay="70">
+        <h3 class="h3">Pairings</h3>
+        <p>What your guests already like together, and what to suggest with it.</p>
+      </li>
+      <li class="card reveal" data-delay="140">
+        <h3 class="h3">Menu placement</h3>
+        <p>What to show off on the menu and what to quietly move down.</p>
+      </li>
+      <li class="card reveal" data-delay="0">
+        <h3 class="h3">How you run the floor</h3>
+        <p>Happy hour times, busy and slow hours, and how long tables stay.</p>
+      </li>
+      <li class="card reveal">
+        <h3 class="h3">Costs</h3>
+        <p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p>
+      </li>
+      <li class="card card-soon reveal">
+        <h3 class="h3">Inventory <span class="chip chip-soon">Coming soon</span></h3>
+        <p>Know what you have on hand. We are building inventory tracking now.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section panel-sec" id="menu">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Your menu</p>
+      <h2 class="h2">What every plate really earns.</h2>
+      <p class="lede" style="margin-top:var(--s3)">Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week.</p>
+      <ul class="marks">
+        <li>What each plate makes once the extras are counted.</li>
+        <li>Items selling below what they cost to make.</li>
+        <li>The one ingredient squeezing a plate.</li>
+        <li>A real cost problem told apart from a false alarm.</li>
+        <li>Which items to show off, keep, or rethink.</li>
+      </ul>
+    </div>
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>House Burger<span class="card-sub">One plate, taken apart</span></h3>
+        <span class="tag-sample">Illustrative example</span>
+      </div>
+      <table class="plate-table">
+        <caption class="sr-only">What one plate earns once the extras are counted</caption>
+        <tbody>
+          <tr><th scope="row">House Burger</th><td>$6.90</td></tr>
+          <tr><th scope="row">Add bacon</th><td>$1.30</td></tr>
+          <tr><th scope="row">Add fries</th><td>$2.35</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============================ OVERVIEW ============================ -->
-<div class="panel" id="p-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="tiles flush">
-        <div class="tile glass tactile reveal">
-          <h2>What should I change this week, and did it work?</h2>
-          <span>A short list of small changes. Try one and learn if it worked, did nothing, or backfired.</span>
-          <div class="mini mini-bars" aria-hidden="true">
-  <span class="mini-tag">sample</span>
-  <div class="mini-weeks">
-    <span class="mini-wb ok" style="--h: 78%; --i: 0"></span>
-    <span class="mini-wb ok" style="--h: 92%; --i: 1"></span>
-    <span class="mini-wb low" style="--h: 46%; --i: 2"></span>
-    <span class="mini-wb ok" style="--h: 86%; --i: 3"></span>
+<section class="section" id="intel">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Your guests and the street outside</p>
+      <h2 class="h2">Who comes in, and what is happening nearby.</h2>
+      <p class="lede" style="margin-top:var(--s3)">New faces, the regulars, and the ones who have gone quiet. Then the places down the street: what they charge, when they open, and what their guests keep saying.</p>
+      <ul class="marks">
+        <li>New, returning, and quiet regulars, and who is worth winning back.</li>
+        <li>What nearby places charge, set beside your own prices.</li>
+        <li>Who is open when you are closed.</li>
+        <li>What reviews in your area keep saying.</li>
+        <li>Your sales by day and time of day, and your locations side by side on the Group plan.</li>
+        <li>House pours against guest pours, and what to put beside them.</li>
+      </ul>
+    </div>
+    <figure class="shot reveal">
+      <picture>
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+                srcset="assets/bar-480.webp 480w, assets/bar-640.webp 640w, assets/bar-960.webp 960w">
+        <img src="assets/bar-640.jpg" alt="A bar at night, a drink on the counter and bottles lit behind it."
+             width="640" height="800" loading="lazy" decoding="async">
+      </picture>
+    </figure>
   </div>
-  <div class="mini-said">
-    <b class="mini-verdict">Worked.</b>
-    <span class="mini-figure">$247 more a week</span>
+</section>
+
+<section class="section panel-sec" id="chat">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Ask it anything</p>
+      <h2 class="h2">Questions in plain words, answered from your own numbers.</h2>
+      <p class="lede" style="margin-top:var(--s3)">No report to build and no chart to read. Ask the way you would ask a manager, and if Alfredo does not know, it says so.</p>
+      <p class="statement">Alfredo recommends. You decide.</p>
+    </div>
+    <div class="listcard reveal">
+      <div class="listcard-head">
+        <h3>Ask it anything<span class="card-sub">The way you would ask a manager</span></h3>
+        <span class="tag-sample">Illustrative example</span>
+      </div>
+      <ul class="recs asks">
+        <li class="rec">
+          <b>How am I doing this week?</b>
+          <p>Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.</p>
+        </li>
+        <li class="rec">
+          <b>What are my best sellers?</b>
+          <p>Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?</p>
+        </li>
+        <li class="rec">
+          <b>What do you recommend?</b>
+          <p>Three things on this week's list: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?</p>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
-          <button class="textbtn" type="button" data-go="board">See this week</button>
-        </div>
-        <div class="tile glass tactile reveal">
-          <h2>Is my menu making me money?</h2>
-          <span>See what you really make on every plate, extras included, and which add ons to suggest.</span>
-          <div class="mini mini-plate" aria-hidden="true">
-  <span class="mini-tag">sample</span>
-  <p class="mini-prow head"><span>House Burger</span><b>$6.90</b></p>
-  <p class="mini-prow" style="--i: 1"><span>Add bacon</span><b>$1.30</b></p>
-  <p class="mini-prow" style="--i: 2"><span>Add fries</span><b>$2.35</b></p>
-</div>
-          <button class="textbtn" type="button" data-go="menu">See your menu</button>
-        </div>
-        <div class="tile glass tactile reveal">
-          <h2>Who is coming in, and what is happening down the street?</h2>
-          <span>Know your regulars and what they spend. See what nearby places charge and what guests say.</span>
-          <div class="mini mini-radar" aria-hidden="true">
-  <span class="mini-tag">sample</span>
-  <div class="mr-wrap">
-    <span class="mr-ax mr-top">Food 4.3</span>
-    <svg class="mr-shape" viewBox="0 0 100 100" focusable="false">
-      <polygon class="mini-ring"
-        points="50.0,12.0 86.14,38.26 72.34,80.74 27.66,80.74 "></polygon>
-      <polygon class="mini-mkt"
-        points="50.0,23.4 73.13,42.49 66.08,72.13 35.26,70.29 "></polygon>
-      <polygon class="mini-you"
-        points="50.0,17.32 79.64,40.37 65.19,70.9 33.47,72.75 "></polygon>
-    </svg>
-    <span class="mr-ax mr-right">Service 4.1</span>
-    <span class="mr-feet">
-      <span class="mr-ax">Speed 3.7</span>
-      <span class="mr-ax">Value 3.4</span>
-    </span>
-  </div>
-</div>
-          <button class="textbtn" type="button" data-go="intel">See your guests and neighbors</button>
-        </div>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <section class="dark" id="chat">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Ask Alfredo</p>
-        <h2 class="big">Ask it anything.</h2>
-        <p class="sub">Ask how the week went, why Friday was slower, or what to try next. Alfredo answers in plain words, from your own numbers. If it does not know, it says so.</p>
-      </div>
-      <div class="chatcard glass tactile">
-        <div class="chat-head">
-          <span class="chat-title"><i class="chat-dot" aria-hidden="true"></i>Alfredo</span>
-          <span class="sample">sample conversation, sample data</span>
-        </div>
-        <div class="chat-body" id="chatBody">
-          <p class="msg bot">Morning. Ask me anything about the business, or tap one of these to see how I answer.</p>
-        </div>
-        <div class="chat-chips" id="chatChips">
-          <button class="chip-q" type="button" data-a="Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.">How am I doing this week?</button>
-          <button class="chip-q" type="button" data-a="Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?">What are my best sellers?</button>
-          <button class="chip-q" type="button" data-a="Three things on this week's list: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?">What do you recommend?</button>
-        </div>
-        <p class="chat-input">Ask about your business</p>
-      </div>
-    </div>
-    <div class="wrap">
-      <p class="tile-cta"><a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a></p>
-    </div>
-  </section>
-
-</div>
-
-<!-- ============================ BOARD ============================ -->
-<div class="panel" id="p-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0" hidden>
-  <section class="light" id="board">
-    <div class="wrap">
-      <p class="eyebrow">This week</p>
-      <h2 class="big">A short list every week, and an honest answer every time.</h2>
-      <p class="sub">No charts to decode. Just a few small changes worth trying, like a price, a pairing, or a happy hour time. Try one, and four weeks later Alfredo tells you what really happened.</p>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="vizcard glass" id="measured">
-        <div class="viz-head">
-          <h3>We raised the House Lager by 50 cents.</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="viz-vol">520 pints a week <span class="sample">sample</span></p>
-        <div class="weekbars" id="weekbars" aria-hidden="true">
-          <span class="wb ok" style="--h:78%"></span>
-          <span class="wb ok" style="--h:92%"></span>
-          <span class="wb low" style="--h:46%"></span>
-          <span class="wb ok" style="--h:86%"></span>
-        </div>
-        <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-        <p class="viz-key">green: on target, red: below, grey: not enough data that week</p>
-        <p class="viz-result">Four weeks later: <b data-count>$247</b> more a week. That is $12,844 a year.</p>
-        <p class="viz-fine">After what you would have made anyway.</p>
-      </div>
-      <div class="vizcard glass tryit" id="tryit">
-        <div class="viz-head">
-          <h3>Pick a change and see how the four weeks go</h3>
-          <span class="sample">Sample. Try it.</span>
-        </div>
-        <p class="tryit-row">
-          <span class="tryit-name">House Lager</span>
-          <span class="tryit-price"><span class="amt" id="tryitPrice">$6.50</span><span class="tryit-new" id="tryitNew" hidden></span></span>
-        </p>
-        <div class="tryit-choices" id="tryitChoices">
-          <button type="button" class="pill pill-glass tryit-btn" data-k="worked"
-                  data-new="$7.00" data-weeks="78,92,46,86" data-kinds="ok,ok,low,ok"
-                  data-verdict="Worked" data-line="Four weeks later: $247 more a week. That is $12,844 a year."
-                  data-after="After what you would have made anyway.">Raise 50 cents</button>
-          <button type="button" class="pill pill-glass tryit-btn" data-k="backfired"
-                  data-new="$7.50" data-weeks="64,38,30,26" data-kinds="low,low,low,low"
-                  data-verdict="Backfired" data-line="Orders fell away and the week came out behind. It went back to $6.50 in minutes, and the board said so."
-                  data-after="">Raise one dollar</button>
-        </div>
-        <div class="tryit-out" id="tryitOut" hidden>
-          <div class="weekbars" id="tryitBars" aria-hidden="true"></div>
-          <div class="weeklabels" aria-hidden="true"><span>Week one</span><span>Week two</span><span>Week three</span><span>Week four</span></div>
-          <div class="verdicts" id="tryitVerdicts" role="group" aria-label="Verdict for this sample trial">
-            <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd">Backfired</span>
-          </div>
-          <p class="viz-result" id="tryitLine"></p>
-          <p class="viz-fine" id="tryitAfter" hidden></p>
-          <button type="button" class="textbtn" id="tryitAgain">Start again</button>
-        </div>
-        <p class="viz-note">Sample results, to show how a test plays out.</p>
-        <p class="sr-only" id="tryitSay" role="status" aria-live="polite"></p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>Every change ends in a verdict</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="nopeek">No sneak peeks. Results stay hidden until the test is done, so nobody calls it early. Not even us.</p>
-        <div class="verdicts" role="group" aria-label="Verdict for this trial: backfired">
-          <span class="vd">Worked</span><span class="vd">No effect</span><span class="vd on">Backfired</span>
-        </div>
-        <p class="viz-note">A one dollar jump on Garlic Fries cost too many orders. It went back to $5.50 in minutes.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="light">
-    <div class="wrap">
-      <h3 class="big small">Small, careful, and the same menu for everyone.</h3>
-      <p class="sub">One item, one change, a few weeks. Every guest sees the same menu. If a change backfires, it goes back in minutes, and Alfredo says so.</p>
-    </div>
-  </section>
-
-  <section class="tint">
-    <div class="wrap">
-      <p class="eyebrow">What lands on your list</p>
-      <h2 class="big">Four kinds of changes.</h2>
-      <div class="tiles four">
-        <div class="tile reveal"><h3>Prices</h3><span>Which items can handle a small price bump, and which cannot.</span></div>
-        <div class="tile reveal"><h3>Pairings</h3><span>What your guests already like together, and what to suggest with it.</span></div>
-        <div class="tile reveal"><h3>Menu placement</h3><span>What to show off on the menu and what to quietly move down.</span></div>
-        <div class="tile reveal"><h3>How you run the floor</h3><span>Happy hour times, busy and slow hours, and how long tables stay.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="menu">Is my menu making me money?</button>
-      <h2 class="big center">See it on your own sales.</h2>
-      <p class="sub center">Request a demo and we will show you what a week looks like.</p>
-      <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
-    </div>
-  </section>
-</div>
-
-<!-- ============================ MENU ============================ -->
-<div class="panel" id="p-menu" role="tabpanel" aria-labelledby="tab-menu" tabindex="0" hidden>
-  <section class="light" id="menu">
-    <div class="wrap">
-      <h2 class="big">Is your menu making you money?</h2>
-      <p class="sub">See what you really make on every plate, the dish and the extras together, and which add ons are worth suggesting.</p>
-      <div class="vizcard plate-card">
-        <div class="viz-head">
-          <h3>One plate, taken apart</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="plate" role="img" aria-label="Sample plate breakdown. House Burger sells for 11 dollars, costs 4 dollars 10 to make, and makes 6 dollars 90. Add bacon sells for 2 dollars, costs 70 cents, makes 1 dollar 30. Add fries sells for 3 dollars 50, costs 1 dollar 15, makes 2 dollars 35. The plate with both sells for 16 dollars 50, costs 5 dollars 95, and makes 10 dollars 55.">
-          <p class="plate-cols" aria-hidden="true"><span></span><span>price</span><span>costs you</span><span>you make</span></p>
-          <p class="plate-row dish">
-            <span class="plate-name">House Burger</span>
-            <span class="plate-n">$11.00</span>
-            <span class="plate-n cost">$4.10</span>
-            <span class="plate-n make">$6.90</span>
-          </p>
-          <p class="plate-row add">
-            <span class="plate-name">Add bacon</span>
-            <span class="plate-n">$2.00</span>
-            <span class="plate-n cost">$0.70</span>
-            <span class="plate-n make">$1.30</span>
-          </p>
-          <p class="plate-row add">
-            <span class="plate-name">Add fries</span>
-            <span class="plate-n">$3.50</span>
-            <span class="plate-n cost">$1.15</span>
-            <span class="plate-n make">$2.35</span>
-          </p>
-          <p class="plate-row total">
-            <span class="plate-name">Plate with both</span>
-            <span class="plate-n">$16.50</span>
-            <span class="plate-n cost">$5.95</span>
-            <span class="plate-n make">$10.55</span>
-          </p>
-        </div>
-        <p class="viz-note">The dish is not the whole story. The two add ons are 35 percent of what this plate makes.</p>
-      </div>
-      <div class="tiles">
-        <div class="tile reveal" id="cost"><h3>Where the money goes</h3><span>Pick any dish and see what it really costs you, ingredient by ingredient.</span></div>
-        <div class="tile reveal"><h3>What to keep an eye on</h3><span>See which ingredients would hurt most if their price jumped.</span></div>
-        <div class="tile reveal"><h3>Costs that crept up</h3><span>Cheese went up, your menu price did not. Alfredo shows what that costs you each week.</span></div>
-        <div class="tile reveal"><h3>Mistakes caught early</h3><span>On day one with a real client, Alfredo caught a cost off by 1,370 times and asked first.</span></div>
-        <div class="tile reveal"><h3>Try it small first</h3><span>Test a new price or a new spot on the menu with one item before you change the whole menu.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="light">
-    <div class="wrap">
-      <div class="tile drift">
-        <h3>Does your website still match your register?</h3>
-        <span>Register and website prices drift apart. Alfredo spots it before your guests do.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="intel">Who is coming in, and what is happening down the street?</button>
-      <h2 class="big center">Run it on your own menu.</h2>
-      <p class="sub center">Share your recipe costs and see what every plate really makes you.</p>
-      <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
-    </div>
-  </section>
-</div>
-
-<!-- ============================ INTEL ============================ -->
-<div class="panel" id="p-intel" role="tabpanel" aria-labelledby="tab-intel" tabindex="0" hidden>
-  <section class="light" id="regulars">
-    <div class="wrap">
-      <p class="eyebrow">Your guests</p>
-      <h2 class="big">Know who walks in, and who is down the street.</h2>
-      <p class="sub">Know who your regulars are and what they spend, without asking anyone to sign up for anything. Only real, confirmed guests are counted.</p>
-
-      <div class="vizcard">
-        <div class="viz-head">
-          <h3>Regulars vs occasional guests</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="bignums">
-          <div><b data-count>412</b><span>confirmed guests</span></div>
-          <div><b data-count>78</b><span>regulars (5 or more visits)</span></div>
-          <div><b data-count>31%</b><span>repeat rate</span></div>
-        </div>
-        <div class="cmp" id="regularsCmp">
-          <div class="cmp-row"><span class="cmp-label">Average visits</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>8.4</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:19%"></i><em>1.6</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Average check</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>$42</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:74%"></i><em>$31</em></span></div>
-          <div class="cmp-row"><span class="cmp-label">Share of your sales</span><span class="cmp-track"><i class="cmp-bar a" style="--w:100%"></i><em>34%</em></span><span class="cmp-track"><i class="cmp-bar b" style="--w:65%"></i><em>22%</em></span></div>
-          <p class="cmp-key"><span class="swatch a" aria-hidden="true"></span>Regulars<span class="swatch b" aria-hidden="true"></span>Occasional</p>
-        </div>
-        <p class="viz-note">A small group of regulars usually brings in a big share of your sales. Alfredo shows you who they are.</p>
-      </div>
-
-      <div class="vizcard">
-        <div class="viz-head">
-          <h3>Your guest groups</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="viz-note">Your Friday crowd, lunch regulars, slow sippers. Alfredo sorts them. You name them.</p>
-        <div class="tiles four seg">
-          <div class="tile">
-            <h4>The Friday night crowd</h4>
-            <p class="segstats">124 guests<br>$47 average check<br>3.1 visits</p>
-            <span>Weekend evenings, bigger tables, mostly drinks.</span>
-          </div>
-          <div class="tile">
-            <h4>Lunch break locals</h4>
-            <p class="segstats">96 guests<br>$22 average check<br>5.8 visits</p>
-            <span>Weekday lunches, in and out fast, back often.</span>
-          </div>
-          <div class="tile">
-            <h4>Slow sippers</h4>
-            <p class="segstats">58 guests<br>$29 average check<br>6.4 visits</p>
-            <span>Stay a long while, drinks only. A snack suggestion could go a long way.</span>
-          </div>
-          <div class="tile">
-            <h4>Big table hosts</h4>
-            <p class="segstats">34 guests<br>$118 average check<br>2.2 visits</p>
-            <span>They bring the group. Fewer visits, the biggest checks in the house.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark" id="intel">
-    <div class="glow a" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="eyebrow">Your neighbors</p>
-      <h2 class="big">Who is down the street.</h2>
-      <p class="sub">Keep an eye on the places down the street: what they charge, when they are busy, and what their customers keep saying.</p>
-
-      <div class="bignums four">
-        <div><b>36</b><span>places tracked in your area</span></div>
-        <div><b>8 of 36</b><span>open past midnight: your late night edge</span></div>
-        <div><b>+1.1</b><span>your service score against the area average</span></div>
-        <div><b>1 click</b><span>from any nearby place to their whole menu</span></div>
-      </div>
-
-      <div class="vizcard glass radar-card">
-        <div class="viz-head">
-          <h3>How guests rate you</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="radar-wrap">
-          <svg id="radar" viewBox="-70 -6 340 212" role="img"
-               aria-label="Sample ratings chart. How guests rate you against the area average: Food 4.3, Service 4.1, Value 3.4, Speed 3.7, each out of five. Ambiance is left blank because there are not enough reviews.">
-            <g class="radar-grid" aria-hidden="true">
-              <polygon points="100.0,80.5 118.55,93.97 111.46,115.78 88.54,115.78 81.45,93.97 "></polygon>
-              <polygon points="100.0,61.0 137.09,87.95 122.92,131.55 77.08,131.55 62.91,87.95 "></polygon>
-              <polygon points="100.0,41.5 155.64,81.92 134.39,147.33 65.61,147.33 44.36,81.92 "></polygon>
-              <polygon points="100.0,22.0 174.19,75.9 145.85,163.1 54.15,163.1 25.81,75.9 "></polygon>
-              <line x1="100" y1="100"
-                    x2="100.0" y2="22.0"
-                    class=""></line>
-              <line x1="100" y1="100"
-                    x2="174.19" y2="75.9"
-                    class=""></line>
-              <line x1="100" y1="100"
-                    x2="145.85" y2="163.1"
-                    class=""></line>
-              <line x1="100" y1="100"
-                    x2="54.15" y2="163.1"
-                    class=""></line>
-              <line x1="100" y1="100"
-                    x2="25.81" y2="75.9"
-                    class="faded"></line>
-            </g>
-            <polygon class="radar-market" points="100.0,45.4 147.48,84.57 133.01,145.43 69.74,141.65 "></polygon>
-            <polygon class="radar-you" points="100.0,32.92 160.83,80.24 131.18,142.91 66.07,146.7 "></polygon>
-            <text class="radar-label"
-                  x="100.0"
-                  y="8.0"
-                  text-anchor="middle"
-                  dominant-baseline="middle">Food 4.3</text>
-            <text class="radar-label"
-                  x="187.5"
-                  y="71.57"
-                  text-anchor="start"
-                  dominant-baseline="middle">Service 4.1</text>
-            <text class="radar-label"
-                  x="154.08"
-                  y="174.43"
-                  text-anchor="start"
-                  dominant-baseline="middle">Value 3.4</text>
-            <text class="radar-label"
-                  x="45.92"
-                  y="174.43"
-                  text-anchor="end"
-                  dominant-baseline="middle">Speed 3.7</text>
-            <text class="radar-label faded"
-                  x="12.5"
-                  y="71.57"
-                  text-anchor="end"
-                  dominant-baseline="middle">Ambiance<tspan class="radar-note"
-                    x="12.5" dy="12">(not enough</tspan><tspan class="radar-note"
-                    x="12.5" dy="11">reviews)</tspan></text>
-          </svg>
-          <p class="radar-key"><span class="swatch you" aria-hidden="true"></span>You<span class="swatch mkt" aria-hidden="true"></span>Area average</p>
-        </div>
-        <p class="viz-note">How guests rate you against the area, from real reviews. Too few reviews? It stays blank.</p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>When your area is busy</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <div class="heatwrap">
-          <div class="heat-days" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
-          <div class="heat" id="heat" role="img" aria-label="Sample chart of how busy your area is, by hour from 10am to 11pm, across the seven days of the week."></div>
-          <div class="heat-hours" aria-hidden="true"><span>10am</span><span>2pm</span><span>6pm</span><span>10pm</span></div>
-          <p class="heat-key" aria-hidden="true"><span>quieter</span><i class="heat-ramp"></i><span>busier</span></p>
-        </div>
-        <p class="viz-note">When your area is busy, hour by hour, next to how busy you are. The gap is where money is waiting.</p>
-      </div>
-
-      <div class="vizcard glass">
-        <div class="viz-head">
-          <h3>Menu Scanner</h3>
-          <span class="sample">sample data</span>
-        </div>
-        <p class="viz-note">Their menu next to yours, item by item, with the price difference.</p>
-        <div class="table-scroll">
-          <table class="match-table">
-            <thead><tr><th>Their item</th><th>Your item</th><th>Gap</th><th>Action</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>Smash Burger<span class="mono">$13.50</span></td>
-                <td>House Burger<span class="mono">$11.00</span></td>
-                <td>You are $2.50 under</td>
-                <td>Try this price</td>
-              </tr>
-              <tr>
-                <td>Loaded Tots<span class="mono">$9.00</span></td>
-                <td>Tater Tots<span class="mono">$8.00</span></td>
-                <td>You are $1.00 under</td>
-                <td>Confirmed</td>
-              </tr>
-              <tr>
-                <td>Chicken Sando<span class="mono">$12.00</span></td>
-                <td>Crispy Chicken<span class="mono">$12.50</span></td>
-                <td>Needs your review</td>
-                <td>Review</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p class="sub wide">Also included: what reviews in your area keep saying, a map of nearby competitors, who lives and works around you, whether nearby bars send you late night guests, what longer hours could bring in, and where your prices sit in the area.</p>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="glow b" aria-hidden="true"></div>
-    <div class="wrap center-block">
-      <p class="eyebrow">Next question</p>
-      <button class="nextq" type="button" data-go="board">What should I change this week, and did it work?</button>
-      <h2 class="big center">Meet your regulars.</h2>
-      <p class="sub center">Find out who keeps the lights on.</p>
-      <a class="pill pill-gold" href="pilot.html#pilot">Request a demo</a>
-    </div>
-  </section>
-</div>
-
-<section class="nextnav">
+<section class="next">
   <div class="wrap">
     <a class="nextlink" href="honesty.html">
-      <span class="next-label">Next</span>
-      <span class="next-title">Why you can trust the numbers</span>
+      <span>Next</span>
+      <b>Why you can trust the numbers</b>
     </a>
   </div>
 </section>
 </main>
 
-<footer>
-  <div class="wrap foot-inner">
-    <a class="wordmark" href="index.html">alfredo<span aria-hidden="true">.</span></a>
-    <nav aria-label="Footer">
-      <a href="product.html">What it does</a>
-      <a href="honesty.html">Why trust it</a>
-      <a href="pilot.html">About us</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://app.bakinginsightsai.com">Log in</a>
-    </nav>
-    <small>© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers.</small>
-  </div>
-  <div class="wrap foot-extra">
-    <p class="foot-contact">
-      <a href="mailto:contact@bakinginsightsai.com">contact@bakinginsightsai.com</a>
-      <a href="https://www.instagram.com/alfredobybia/" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">Instagram @alfredobybia</a>
-      <a href="https://www.facebook.com/alfredobybia" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">Facebook @alfredobybia</a>
-    </p>
-    <p class="foot-disclosure">Images are AI generated for illustration. No person or business shown is real.</p>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a class="wordmark" href="index.html">alfredo<i aria-hidden="true">.</i></a>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="product.html">What it does</a></li>
+          <li><a href="honesty.html">Why trust it</a></li>
+          <li><a href="pilot.html">About us</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="https://app.bakinginsightsai.com">Log in</a></li>
+        </ul>
+      </nav>
+      <div class="contact">
+        <p class="contact-h">Get in touch</p>
+        <a href="mailto:contact@bakinginsightsai.com">contact@bakinginsightsai.com</a>
+        <a class="social" href="https://www.instagram.com/alfredobybia/" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.68.8.9 1.4.17.4.37 1 .42 2.2.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.2-.22.6-.5 1-.9 1.4-.4.4-.8.68-1.4.9-.4.17-1 .37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.2-.42-.6-.22-1-.5-1.4-.9-.4-.4-.68-.8-.9-1.4-.17-.4-.37-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.2.22-.6.5-1 .9-1.4.4-.4.8-.68 1.4-.9.4-.17 1-.37 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.84-.4.4-.64.8-.84 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.06 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.84 1.3.4.4.8.64 1.3.84.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.84.4-.4.64-.8.84-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.84-1.3-.4-.4-.8-.64-1.3-.84-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.1-.4a1.15 1.15 0 1 1 0-2.3 1.15 1.15 0 0 1 0 2.3Z"/></svg>
+          @alfredobybia
+        </a>
+        <a class="social" href="https://www.facebook.com/alfredobybia" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12Z"/></svg>
+          @alfredobybia
+        </a>
+      </div>
+    </div>
+    <div class="footer-foot">
+      <p>© 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers.</p>
+      <p class="disclosure">Images are AI generated for illustration. No person or business shown is real.</p>
+    </div>
   </div>
 </footer>
 
-<script src="site.js" defer></script>
+<script src="alfredo.js" defer></script>
 </body>
 </html>

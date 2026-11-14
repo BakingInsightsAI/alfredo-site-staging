@@ -1,111 +1,161 @@
-{#- Still on the previous design. v4 landed on the homepage first; this
-    page moves to the new base once that direction is signed off. #}
-{% extends "base-legacy.html" %}
-{% import "_steps.html" as steps with context %}
+{% extends "base.html" %}
+
+{% block preload %}
+<link rel="preload" as="image" href="assets/brewery-960.webp" type="image/webp"
+      imagesrcset="assets/brewery-480.webp 480w, assets/brewery-640.webp 640w, assets/brewery-960.webp 960w"
+      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+{% endblock %}
 
 {% block content %}
-<section class="dark">
-  <div class="glow a" aria-hidden="true"></div>
-  <div class="glow b" aria-hidden="true"></div>
-  <div class="wrap">
-    <h1 class="big">{{ pilot.heading }}</h1>
-    <p class="sub">{{ pilot.hero_line }}</p>
+<section class="pagehero">
+  <div class="wrap split">
+    <div class="pagehero-copy">
+      <p class="eyebrow">About us</p>
+      <h1 class="display">{{ pilot.heading }}</h1>
+      <p class="lede">{{ pilot.hero_line }}</p>
+      <div class="hero-actions">
+        <a class="btn" href="#pilot">{{ site.cta.label }}</a>
+      </div>
+    </div>
+    <figure class="shot reveal">
+      <picture>
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+                srcset="assets/brewery-480.webp 480w, assets/brewery-640.webp 640w, assets/brewery-960.webp 960w">
+        <img src="assets/brewery-640.jpg" alt="A brewer holding a glass of beer up to the light beside the tanks."
+             width="640" height="800" fetchpriority="high" decoding="async">
+      </picture>
+    </figure>
   </div>
 </section>
 
-{#- Both card groups were reading as orphans, because neither had a
-    heading over it. With one, the cards go back to h3 and the page runs
-    h1, h2, h3 with nothing skipped. #}
-<section class="tint">
+<section class="section panel-sec">
   <div class="wrap">
-    <h2 class="big">{{ pilot.built_heading }}</h2>
-    <div class="tiles two">
+    <div class="head">
+      <h2 class="h2">{{ pilot.built_heading }}</h2>
+    </div>
+    <ul class="cols cols-2">
       {%- for b in pilot.built %}
-      <div class="tile reveal"><h3>{{ b.name }}</h3><span>{{ b.body }}</span></div>
+      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
+        <h3 class="h3">{{ b.name }}</h3>
+        <p>{{ b.body }}</p>
+      </li>
       {%- endfor %}
-    </div>
+    </ul>
   </div>
 </section>
 
-<section class="light">
+<section class="section">
   <div class="wrap">
-    <h2 class="big">{{ pilot.how_heading }}</h2>
-    <div class="tiles">
+    <div class="head">
+      <h2 class="h2">{{ pilot.how_heading }}</h2>
+    </div>
+    <ul class="cols cols-3">
       {%- for h in pilot.how %}
-      <div class="tile reveal"><h3>{{ h.name }}</h3><span>{{ h.body }}</span></div>
+      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 70 }}">
+        <h3 class="h3">{{ h.name }}</h3>
+        <p>{{ h.body }}</p>
+      </li>
       {%- endfor %}
-    </div>
-    <p class="sub wide">{{ pilot.how_close }}</p>
+    </ul>
+    <p class="claim">{{ pilot.how_close }}</p>
   </div>
 </section>
 
-<section class="tint">
-  <div class="wrap">
-    <p class="eyebrow">{{ pilot.where_eyebrow }}</p>
-    <h2 class="big">{{ pilot.where_heading }}</h2>
-    {#- These three are statements rather than headed cards, so they carry
-        no title and read at the weight of the thing they assert. #}
-    <div class="tiles">
-      {%- for w in pilot.where %}
-      <div class="tile statement reveal"><span>{{ w }}</span></div>
-      {%- endfor %}
-    </div>
-  </div>
-</section>
-
-{{ steps.getting_started("light") }}
-
-<section class="dark" id="pilot">
-  <div class="glow a" aria-hidden="true"></div>
+<section class="section panel-sec">
   <div class="wrap split">
     <div>
-      <h2 class="big">{{ pilot.form_heading }}</h2>
-      <p class="sub">{{ pilot.form_lede }}</p>
+      <p class="eyebrow">{{ pilot.where_eyebrow }}</p>
+      <h2 class="h2">{{ pilot.where_heading }}</h2>
+      <ul class="marks">
+        {%- for w in pilot.where %}
+        <li>{{ w }}</li>
+        {%- endfor %}
+      </ul>
     </div>
-    <div class="glass formcard tactile">
-      <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demo-form">
-        <input type="hidden" name="access_key" value="{{ site.web3forms_key }}">
-        <input type="hidden" name="subject" value="{{ site.form_subject }}">
-        <input type="hidden" name="from_name" value="Alfredo website">
-        <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
+    <div>
+      <h3 class="h3">{{ site.getting_started.heading }}</h3>
+      <ol class="steps">
+        {%- for s in site.getting_started.steps %}
+        <li><b>{{ s.name }}</b> <span>{{ s.body }}</span></li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
 
-        <label>Name
-          <input type="text" name="name" required autocomplete="name" placeholder="Your name">
-        </label>
-        <label>Business name
-          <input type="text" name="business" required autocomplete="organization" placeholder="Your restaurant, brewery, cafe, or bakery">
-        </label>
-        <label>Email
-          <input type="email" name="email" required autocomplete="email" spellcheck="false" placeholder="you@yourbusiness.com">
-        </label>
-        <label>POS system
-          <select name="pos" required>
-            <option value="" disabled selected>Select your POS</option>
-            <option>Toast</option>
-            <option>Clover</option>
-            <option>Square</option>
-            <option>Other</option>
-          </select>
-        </label>
-        {#- Three taps became one: a dropdown costs a tap to open and a tap
-            to choose, and there are only three answers. #}
-        <fieldset class="pillset">
-          <legend>{{ pilot.form_locations.legend }}</legend>
-          <div class="pills">
-            {%- for c in pilot.form_locations.choices %}
-            <label><input type="radio" name="locations" value="{{ c }}"{% if loop.first %} required{% endif %}><span>{{ c }}</span></label>
-            {%- endfor %}
-          </div>
-        </fieldset>
-        <label class="full">Anything you want us to know (optional)
-          <textarea name="message" rows="3" placeholder="Optional"></textarea>
-        </label>
-        {#- What happens next, where the thumb already is, rather than above
-            a form that is taller than the screen. #}
-        <p class="form-reassure">{{ pilot.form_reassure_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
-        <button type="submit" class="pill pill-gold">{{ site.cta.label }}</button>
-        <p id="form-status" role="status" aria-live="polite"></p>
-      </form>
+{#- The form. Delivery, the access key, the staging subject, the field
+    names and the submitted values are exactly what they were: only the
+    clothes changed. #}
+<section class="section" id="pilot">
+  <div class="wrap formwrap">
+    <div class="head">
+      <h2 class="h2">{{ pilot.form_heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ pilot.form_lede }}</p>
+    </div>
+    <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
+      <input type="hidden" name="access_key" value="{{ site.web3forms_key }}">
+      <input type="hidden" name="subject" value="{{ site.form_subject }}">
+      <input type="hidden" name="from_name" value="Alfredo website">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <p class="field">
+        <label for="f-name">Name</label>
+        <input id="f-name" type="text" name="name" required autocomplete="name"
+               placeholder="Your name" aria-describedby="nameError">
+        <span class="field-error" id="nameError" hidden
+              data-missing="Please tell us your name." data-invalid="Please tell us your name."></span>
+      </p>
+      <p class="field">
+        <label for="f-business">Business name</label>
+        <input id="f-business" type="text" name="business" required autocomplete="organization"
+               placeholder="Your restaurant, brewery, cafe, or bakery" aria-describedby="businessError">
+        <span class="field-error" id="businessError" hidden
+              data-missing="Please tell us the name of your place." data-invalid="Please tell us the name of your place."></span>
+      </p>
+      <p class="field">
+        <label for="f-email">Email</label>
+        <input id="f-email" type="email" name="email" required autocomplete="email" spellcheck="false"
+               placeholder="you@yourbusiness.com" aria-describedby="emailError">
+        <span class="field-error" id="emailError" hidden
+              data-missing="Please add an email so we can reply." data-invalid="That email does not look right. Please check it."></span>
+      </p>
+      <p class="field">
+        <label for="f-pos">POS system</label>
+        <select id="f-pos" name="pos" required aria-describedby="posError">
+          <option value="" disabled selected>Select your POS</option>
+          <option>Toast</option>
+          <option>Clover</option>
+          <option>Square</option>
+          <option>Other</option>
+        </select>
+        <span class="field-error" id="posError" hidden
+              data-missing="Please pick the system you run." data-invalid="Please pick the system you run."></span>
+      </p>
+      <fieldset class="field field-full pillset" aria-describedby="locationsError">
+        <legend>{{ pilot.form_locations.legend }}</legend>
+        <div class="pills">
+          {%- for c in pilot.form_locations.choices %}
+          <label><input type="radio" name="locations" value="{{ c }}"{% if loop.first %} required{% endif %}><span>{{ c }}</span></label>
+          {%- endfor %}
+        </div>
+        <span class="field-error" id="locationsError" hidden
+              data-missing="Please choose how many locations you run." data-invalid="Please choose how many locations you run."></span>
+      </fieldset>
+      <p class="field field-full">
+        <label for="f-message">Anything you want us to know (optional)</label>
+        <textarea id="f-message" name="message" rows="3" placeholder="Optional"></textarea>
+      </p>
+
+      <p class="form-reassure">{{ pilot.form_reassure_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
+      <button type="submit" class="btn">{{ site.cta.label }}</button>
+    </form>
+    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+
+    <div class="contact contact-block">
+      <p class="contact-h">Or reach us directly</p>
+      <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+      <a class="social" href="{{ site.contact.instagram_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">{{ site.contact.instagram }} on Instagram</a>
+      <a class="social" href="{{ site.contact.facebook_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">{{ site.contact.facebook }} on Facebook</a>
     </div>
   </div>
 </section>

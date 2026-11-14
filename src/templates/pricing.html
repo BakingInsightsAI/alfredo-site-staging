@@ -1,112 +1,93 @@
-{#- Still on the previous design. v4 landed on the homepage first; this
-    page moves to the new base once that direction is signed off. #}
-{% extends "base-legacy.html" %}
-{% import "_steps.html" as steps with context %}
-{% set p = pages.pricing %}
+{% extends "base.html" %}
+{%- set p = pages.pricing %}
 
 {% block content %}
-<section class="dark feature">
-  <div class="glow a" aria-hidden="true"></div>
+<section class="pagehero pagehero-plain">
   <div class="wrap">
-    <p class="eyebrow">{{ p.eyebrow }}</p>
-    <h1 class="big">{{ p.heading }}</h1>
-    <p class="sub">{{ p.lede }}</p>
-    <div class="pricecard glass founding tactile">
-      <h2 class="founding-h">{{ p.founding_heading }}</h2>
-      <p>{{ p.founding_body }}</p>
-      <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    <div class="pagehero-copy wide">
+      <p class="eyebrow">{{ p.eyebrow }}</p>
+      <h1 class="display">{{ p.heading }}</h1>
+      <p class="lede" style="margin-top:var(--s3)">{{ p.lede }}</p>
     </div>
   </div>
 </section>
 
-<section class="light">
+{#- The founding offer. Prominent, but a bordered panel rather than a slab
+    of colour: a saturated block was what made the previous site shout. #}
+<section class="section">
   <div class="wrap">
-    <h2 class="sr-only">What Alfredo costs</h2>
-    {#- Three cards, one per plan, in the order a visitor grows through
-        them. The check mark on each feature is drawn by the stylesheet in
-        the accent ink, so it follows the theme and needs no icon font. The
-        flag sits on the top border of the card it belongs to. #}
-    <div class="tiers3">
+    <div class="offerpanel reveal">
+      <div>
+        <h2 class="h2">{{ p.founding_heading }}</h2>
+        <p class="lede" style="margin-top:var(--s3)">{{ p.founding_body }}</p>
+      </div>
+      <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    </div>
+
+    <ul class="tiers">
       {%- for t in p.tiers %}
-      <div class="tile pricetier reveal{% if t.get('flag') %} lead-tier{% endif %}">
-        {%- if t.get('flag') %}
-        <span class="pt-flag">{{ t.flag }}</span>
-        {%- endif %}
-        <h3>{{ t.name }}</h3>
-        <p class="pt-who">{{ t.who }}</p>
-        {#- No data-count on a price. The counter animates up from zero, which
-            on this card means showing $96 on the way to $99: every other
-            counted number on the site is a statistic, and a price is not. #}
-        <p class="pt-price"><b>{{ t.price }}</b> <span>{{ p.price_unit }}</span></p>
-        <p class="pt-day">{{ t.per_day }}</p>
-        <p class="pt-daynote">{{ t.per_day_note }}</p>
-        {%- if t.get('lead') %}
-        <p class="pt-lead">{{ t.lead }}</p>
-        {%- endif %}
-        <ul class="pt-feats">
+      <li class="tier{% if t.get('flag') %} tier-lit{% endif %} reveal" data-delay="{{ loop.index0 * 70 }}">
+        {%- if t.get('flag') %}<p class="tier-flag">{{ t.flag }}</p>{% endif %}
+        <h3 class="h3">{{ t.name }}</h3>
+        <p class="tier-who">{{ t.who }}</p>
+        <p class="tier-price"><b>{{ t.price }}</b> <span>{{ p.price_unit }}</span></p>
+        <p class="tier-day">{{ t.per_day }}<span>{{ t.per_day_note }}</span></p>
+        <a class="btn{% if t.cta_style != 'primary' %} btn-quiet{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+        {%- if t.get('lead') %}<p class="tier-lead">{{ t.lead }}</p>{% endif %}
+        <ul class="tier-features">
           {%- for f in t.features %}
           <li>{{ f }}</li>
           {%- endfor %}
         </ul>
-        <a class="pill {{ 'pill-gold' if t.cta_style == 'primary' else 'pill-quiet' }}"
-           href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-      </div>
+      </li>
       {%- endfor %}
-    </div>
-    <p class="sub more-tier">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
-    {#- The price is the moment of doubt, so the proof stands next to it
-        rather than in the footer. #}
-    <p class="sub proofline">{{ p.proof }}</p>
+    </ul>
+    <p class="note more-tier">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
+    <p class="claim">{{ p.proof }}</p>
   </div>
 </section>
 
-<section class="tint">
+<section class="section panel-sec">
   <div class="wrap">
-    <p class="eyebrow">{{ p.compare_eyebrow }}</p>
-    <h2 class="big">{{ p.compare_heading }}</h2>
-    {#- Two bars on one monthly scale, with the figures printed on them. The
-        widths come from the numbers above, so the drawing cannot drift from
-        the text. #}
-    <div class="costbars" id="costbars" role="img" aria-label="{{ p.compare_aria }}">
+    <div class="head">
+      <p class="eyebrow">{{ p.compare_eyebrow }}</p>
+      <h2 class="h2">{{ p.compare_heading }}</h2>
+    </div>
+    <ul class="compare">
       {%- for c in p.compare_bars %}
-      <div class="costbar">
-        <p class="costbar-head"><span class="costbar-name">{{ c.name }}</span><b class="costbar-figure">{{ c.figure }}</b></p>
-        <div class="costbar-track">
-          <span class="costbar-fill" style="--from: 0%; --to: {{ c.width }}%; --bar: var({{ c.ink }})"></span>
-        </div>
-        {%- if c.get('note') %}
-        <p class="costbar-note">{{ c.note }}</p>
-        {%- endif %}
-      </div>
+      <li class="reveal" data-delay="{{ loop.index0 * 70 }}">
+        <p class="compare-name">{{ c.name }}</p>
+        <p class="compare-figure">{{ c.figure }}</p>
+        <p class="note">{{ c.note }}</p>
+      </li>
       {%- endfor %}
-    </div>
-    <p class="sub wide compare-close">{{ p.compare_soft }} <span class="cc-gold">{{ p.compare_gold }}</span></p>
+    </ul>
+    <p class="statement">{{ p.compare_soft }} {{ p.compare_gold }}</p>
   </div>
 </section>
 
-<section class="light">
-  <div class="wrap">
-    <p class="eyebrow">{{ p.faq_eyebrow }}</p>
-    <h2 class="big">{{ p.faq_heading }}</h2>
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">{{ p.faq_eyebrow }}</p>
+      <h2 class="h2">{{ p.faq_heading }}</h2>
+    </div>
     <div class="faq">
       {%- for f in p.faq %}
-      <details>
-        <summary>{{ f.q }}<span class="pm" aria-hidden="true"></span></summary>
-        <div class="ans"><p>{{ f.a }}</p></div>
+      <details class="reveal" data-delay="{{ loop.index0 * 60 }}">
+        <summary>{{ f.q }}</summary>
+        <p>{{ f.a }}</p>
       </details>
       {%- endfor %}
     </div>
   </div>
 </section>
 
-{{ steps.getting_started("tint") }}
-
-<section class="dark">
-  <div class="glow b" aria-hidden="true"></div>
+<section class="section cream">
   <div class="wrap center-block">
-    <h2 class="big center">{{ p.cta_heading }}</h2>
-    <p class="sub center">{{ p.cta_body }}</p>
-    <a class="pill pill-gold" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+    <h2 class="h2">{{ p.cta_heading }}</h2>
+    <p class="lede" style="margin:var(--s3) auto 0">{{ p.cta_body }}</p>
+    <p class="center-cta"><a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
   </div>
 </section>
 {% endblock %}

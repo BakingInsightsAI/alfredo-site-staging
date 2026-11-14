@@ -161,3 +161,57 @@ scanner:
   - { theirs: "Chicken Sando", theirprice: "$12.00", yours: "Crispy Chicken", yourprice: "$12.50",  gap: "Needs your review", action: "Review" }
 
 also_included: "Also included: what reviews in your area keep saying, a map of nearby competitors, who lives and works around you, whether nearby bars send you late night guests, what longer hours could bring in, and where your prices sit in the area."
+
+# ---------------------------------------------------------------- v4 ----
+# The page level copy for the rebuilt product page. The capability names in
+# the brief are internal, so none of them is a heading here: a reader sees
+# what the thing does, in the words they would use for it themselves.
+v4:
+  eyebrow: "What it does"
+  heading_a: "One short list, "
+  heading_em: "every Monday."
+  lede: "Alfredo reads the sales you already ring through your existing POS system, and turns the week into three to five changes worth trying. You choose. It reports back."
+  board_eyebrow: "The list itself"
+  board_heading: "What a suggestion tells you before you decide."
+  board_lede: "Every one of them comes with the same six things, so you can judge it in a few seconds and get back to the floor."
+  anatomy:
+    - name: "What it is"
+      body: "The change itself, in one line you could read out to the floor."
+    - name: "Why it came up"
+      body: "What in your own sales put it on the list this week."
+    - name: "How much work"
+      body: "Low, medium or high, so a busy week gets the easy ones."
+    - name: "What it risks"
+      body: "What could go the other way, said plainly before you try it."
+    - name: "How to do it"
+      body: "The steps, and who needs to know."
+    - name: "When to check back"
+      body: "The date Alfredo comes back with the answer."
+  kinds_heading: "Five kinds of changes, and one on the way."
+  kinds_lede: "Price is one of them, not the whole of it."
+  inventory:
+    name: "Inventory"
+    tag: "Coming soon"
+    body: "Know what you have on hand. We are building inventory tracking now."
+  menu_eyebrow: "Your menu"
+  menu_heading: "What every plate really earns."
+  menu_lede: "Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week."
+  menu_points:
+    - "What each plate makes once the extras are counted."
+    - "Items selling below what they cost to make."
+    - "The one ingredient squeezing a plate."
+    - "A real cost problem told apart from a false alarm."
+    - "Which items to show off, keep, or rethink."
+  intel_eyebrow: "Your guests and the street outside"
+  intel_heading: "Who comes in, and what is happening nearby."
+  intel_lede: "New faces, the regulars, and the ones who have gone quiet. Then the places down the street: what they charge, when they open, and what their guests keep saying."
+  intel_points:
+    - "New, returning, and quiet regulars, and who is worth winning back."
+    - "What nearby places charge, set beside your own prices."
+    - "Who is open when you are closed."
+    - "What reviews in your area keep saying."
+    - "Your sales by day and time of day, and your locations side by side on the Group plan."
+    - "House pours against guest pours, and what to put beside them."
+  chat_eyebrow: "Ask it anything"
+  chat_heading: "Questions in plain words, answered from your own numbers."
+  chat_lede: "No report to build and no chart to read. Ask the way you would ask a manager, and if Alfredo does not know, it says so."
