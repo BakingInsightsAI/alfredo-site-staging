@@ -95,32 +95,6 @@ meet:
       - { name: "No effect", body: "Nothing moved. Worth knowing, and worth stopping.", result: false }
       - { name: "Backfired", body: "It went the other way, so put it back.", result: false }
 
-# --------------------------------------------- 03b the action center --
-# The supplied v6 component. One sentence departs from the kit, which read
-# "Set a baseline and review date": the standing rules forbid describing
-# the mechanism and name baselines in that list, so the third card sets a
-# review date instead. Nothing in it is a measured result.
-actions:
-  eyebrow: "The Action Center"
-  heading: "The next good move starts here."
-  label: "Illustrative examples, not customer data"
-  cards:
-    - tag: "01 / Service pattern"
-      pill: "Review"
-      name: "Give Thursday lunch a closer look."
-      body: "Compare weekday lunch orders and explore whether a limited Thursday offer makes sense for your business."
-      feet: ["Effort: Low", "Owner decides"]
-    - tag: "02 / Menu pairing"
-      pill: "Explore"
-      name: "Find the pairings guests already love."
-      body: "Look for food and drink combinations in existing receipts before deciding whether to suggest a bundle."
-      feet: ["Effort: To assess", "Owner decides"]
-    - tag: "03 / Measured test"
-      pill: "Pending"
-      name: "Know when a change has earned its place."
-      body: "Set a review date before you start. Alfredo reports what the completed test supports, including no clear effect."
-      feet: ["Result: Pending", "Owner decides"]
-
 # -------------------------------------------------------------- 04 proof --
 proof:
   eyebrow: "04 / The outcome"

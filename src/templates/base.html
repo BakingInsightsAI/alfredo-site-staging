@@ -19,10 +19,6 @@
 <link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
 {%- block preload %}{% endblock %}
 <link rel="stylesheet" href="alfredo.css">
-{#- The v6 gloss, layered over the editorial system rather than
-    replacing it. It must load second: every rule in it is an
-    override of something alfredo.css already sets. #}
-<link rel="stylesheet" href="gloss-v6.css">
 {#- The only inline script on the site. It marks the document as scripted
     before first paint, which is what lets the stylesheet hide the blocks
     that are about to be revealed. Without it nothing is ever hidden. #}
