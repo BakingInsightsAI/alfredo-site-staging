@@ -3,80 +3,75 @@
 {% block preload %}
 <link rel="preload" as="image" href="assets/brewery-960.webp" type="image/webp"
       imagesrcset="assets/brewery-480.webp 480w, assets/brewery-640.webp 640w, assets/brewery-960.webp 960w"
-      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+      imagesizes="(max-width: 900px) 100vw, 32vw" fetchpriority="high">
 {% endblock %}
 
 {% block content %}
-<section class="pagehero">
-  <div class="wrap split">
-    <div class="pagehero-copy">
+<section class="pagehead darkest">
+  <div class="wrap grid12 pagehead-grid">
+    <div class="pagehead-copy">
       <p class="eyebrow">About us</p>
       <h1 class="display">{{ pilot.heading }}</h1>
-      <p class="lede">{{ pilot.hero_line }}</p>
-      <div class="hero-actions">
+      <p class="lead">{{ pilot.hero_line }}</p>
+      <div class="actions">
         <a class="btn" href="#pilot">{{ site.cta.label }}</a>
       </div>
     </div>
-    <figure class="shot reveal">
+    <figure class="pagehead-fig">
       <picture>
-        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+        <source type="image/webp" sizes="(max-width: 900px) 100vw, 32vw"
                 srcset="assets/brewery-480.webp 480w, assets/brewery-640.webp 640w, assets/brewery-960.webp 960w">
         <img src="assets/brewery-640.jpg" alt="A brewer holding a glass of beer up to the light beside the tanks."
-             width="640" height="800" fetchpriority="high" decoding="async">
+             width="640" height="736" fetchpriority="high" decoding="async">
       </picture>
     </figure>
   </div>
 </section>
 
-<section class="section panel-sec">
+{#- Two people, described by what they do. No portraits, no names. #}
+<section class="section paper">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <h2 class="h2">{{ pilot.built_heading }}</h2>
     </div>
-    <ul class="cols cols-2">
+    <div class="pairs">
       {%- for b in pilot.built %}
-      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
-        <h3 class="h3">{{ b.name }}</h3>
-        <p>{{ b.body }}</p>
-      </li>
+      <div><h3>{{ b.name }}</h3><p>{{ b.body }}</p></div>
       {%- endfor %}
-    </ul>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section paper-light">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <h2 class="h2">{{ pilot.how_heading }}</h2>
     </div>
-    <ul class="cols cols-3">
+    <div class="pairs pairs-3">
       {%- for h in pilot.how %}
-      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 70 }}">
-        <h3 class="h3">{{ h.name }}</h3>
-        <p>{{ h.body }}</p>
-      </li>
+      <div><h3>{{ h.name }}</h3><p>{{ h.body }}</p></div>
       {%- endfor %}
-    </ul>
-    <p class="claim">{{ pilot.how_close }}</p>
+    </div>
+    <p class="claim" style="margin-top:56px">{{ pilot.how_close }}</p>
   </div>
 </section>
 
-<section class="section panel-sec">
-  <div class="wrap split">
-    <div>
+<section class="section sand">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">{{ pilot.where_eyebrow }}</p>
-      <h2 class="h2">{{ pilot.where_heading }}</h2>
+      <h2 class="h3">{{ pilot.where_heading }}</h2>
       <ul class="marks">
         {%- for w in pilot.where %}
         <li>{{ w }}</li>
         {%- endfor %}
       </ul>
     </div>
-    <div>
+    <div class="ed-main">
       <h3 class="h3">{{ site.getting_started.heading }}</h3>
       <ol class="steps">
         {%- for s in site.getting_started.steps %}
-        <li><b>{{ s.name }}</b> <span>{{ s.body }}</span></li>
+        <li><div><b>{{ s.name }}</b> <span>{{ s.body }}</span></div></li>
         {%- endfor %}
       </ol>
     </div>
@@ -86,11 +81,11 @@
 {#- The form. Delivery, the access key, the staging subject, the field
     names and the submitted values are exactly what they were: only the
     clothes changed. #}
-<section class="section" id="pilot">
+<section class="section paper" id="pilot">
   <div class="wrap formwrap">
-    <div class="head">
+    <div class="proof-head reveal" style="margin-bottom:0">
       <h2 class="h2">{{ pilot.form_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ pilot.form_lede }}</p>
+      <p class="lead">{{ pilot.form_lede }}</p>
     </div>
     <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
       <input type="hidden" name="access_key" value="{{ site.web3forms_key }}">

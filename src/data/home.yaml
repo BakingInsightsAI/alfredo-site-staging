@@ -1,155 +1,169 @@
-# The homepage, v4. Every claim here is one of the approved ones, and
-# every figure in the illustrative weekly list is invented, which is what
-# the label on that card says.
+# The home page, v5. Seven moments, each with its own composition.
+#
+# Six strings below depart from the brief's exact wording, and each one is
+# marked where it appears. All six are the site's standing copy rules, which
+# the brief did not have in front of it: the banned word list, and no
+# contractions. Nothing else was changed, and every one is a one line fix if
+# Sid rules the other way.
 
+# ------------------------------------------------------------ 01 opening --
 hero:
-  eyebrow: "For restaurants, bars, breweries, bakeries and cafes"
-  # the second sentence is set in amber italic by the template
-  heading_a: "Every business has a story."
-  heading_b: "Your numbers know "
-  heading_em: "what comes next."
-  lede: "Alfredo turns your sales into a short list of clear, practical changes worth trying. Choose what to try, see what happens, and make your next decision with confidence."
-  cta_secondary: "See the story"
-  offer: "The first 10 businesses get everything free for six months."
-  offer_href: "pricing.html"
-  image_alt: "A dining room at the end of service, lit by low pendant lights."
+  # brief: "INTELLIGENCE FOR HOSPITALITY". "intelligence" is on the banned
+  # word list. Typed in sentence case, set in caps by the stylesheet, which
+  # is the brief's eyebrow specification.
+  eyebrow: "Alfredo for hospitality"
+  # broken where the brief asks it to break, not wherever the box ends
+  heading_lines: ["Every business", "has a story."]
+  sub: "Your numbers know what comes next."
+  body: "Alfredo turns your sales into clear, practical changes worth trying. You choose what to do. Alfredo helps you see what actually worked."
+  cta: "See Alfredo in action"
+  cta_href: "#meet"
+  cta2: "Request a demo"
+  cta2_href: "pilot.html#pilot"
+  note: "For restaurants, bars, breweries, cafés and bakeries."
+  chapter: "01 / The story"
+  alt: "A dining room at the end of service, lit by low pendant lights."
 
-# The card in the first screen. Short on purpose: it is the signal, not the
-# showcase. None of these three appears again further down the page, so a
-# reader who scrolls finds new suggestions rather than the same three in a
-# bigger box.
-hero_list:
-  title: "This week"
-  label: "Illustrative example"
+# ------------------------------------------------------------ 02 tension --
+tension:
+  eyebrow: "02 / The reality"
+  heading: "Good instincts deserve better information."
+  body: "You know your guests. You know your team. You know when a Tuesday feels different. But between service, staffing and everything else, there is rarely time to dig through the numbers and find out why."
+  # brief: "That's where Alfredo comes in." No contractions.
+  close: "That is where Alfredo comes in."
+  caption: "The decisions never stop when service starts."
+  alt: "A cook finishing a dish on a kitchen pass."
+
+# ------------------------------------------------------------- 03 reveal --
+meet:
+  eyebrow: "03 / Meet Alfredo"
+  heading: "Clarity, before the next service."
+  lede: "Every week, Alfredo finds patterns in your sales and turns them into decisions you can actually act on."
+  ui_title: "Weekly briefing"
+  # brief: "Example venue". "venue" is on the banned word list.
+  ui_biz: "Example business"
+  disclosure: "Illustrative product walkthrough. Not live customer data."
+  tabs:
+    - { key: "notice", label: "01 / Notice" }
+    - { key: "decide", label: "02 / Decide" }
+    - { key: "learn",  label: "03 / Learn" }
+
+  notice:
+    heading: "Your quietest lunch service is Thursday."
+    body: "Your sales show fewer Thursday lunch orders than the other weekdays."
+    rec_label: "What Alfredo suggests"
+    rec: "Consider bringing back a Thursday lunch offer."
+    effort: "Low"
+    risk: "Low"
+    chart_label: "Lunch orders by weekday"
+    # There is no dataset behind this drawing, so it carries no scale, no
+    # axis and no numbers, and the caption says exactly that.
+    chart_note: "Relative shape only. No figures sit behind this drawing, so it carries no scale."
+    chart_alt: "A drawing of five weekday bars with Thursday the shortest. It shows shape only and has no scale."
+    days:
+      - { day: "Mon", h: "tall" }
+      - { day: "Tue", h: "mid" }
+      - { day: "Wed", h: "tall" }
+      - { day: "Thu", h: "short" }
+      - { day: "Fri", h: "tall" }
+
+  decide:
+    heading: "Try a Thursday lunch offer."
+    body: "A small, reversible change. Choose whether it fits your business."
+    rows:
+      - k: "Why this was suggested"
+        v: "Thursday lunch has been your quietest weekday service for several weeks running, and nothing on the menu changed in that time."
+      - k: "What you could try"
+        v: "A set lunch on Thursdays only, at the price you already use the rest of the week."
+      - k: "What to watch"
+        v: "Whether Thursday covers come up without pulling guests off the other weekdays."
+      - k: "When to review"
+        v: "Four weeks from the day you start."
+    controls: ["Try this", "Not right now"]
+    sr: "Sample controls, shown to illustrate the choice. They do nothing on this page."
+    note_a: "Alfredo recommends. You decide."
+    note_b: "Nothing on your menu moves until you say so, and anything you try can be put back."
+
+  learn:
+    heading: "See what happened."
+    body: "Four weeks on, Alfredo comes back with one of three answers. It is as willing to tell you the change did nothing as to tell you it worked."
+    outcome: "The Thursday lunch offer ran for four weeks. Thursday covers came up and held, and the other weekdays did not fall. After what you would have made anyway."
+    label: "This result"
+    honest: "If four weeks is not enough to call it, Alfredo says so rather than guess."
+    verdicts:
+      - { name: "Worked", body: "The change did what it was meant to do.", result: true }
+      - { name: "No effect", body: "Nothing moved. Worth knowing, and worth stopping.", result: false }
+      - { name: "Backfired", body: "It went the other way, so put it back.", result: false }
+
+# -------------------------------------------------------------- 04 proof --
+proof:
+  eyebrow: "04 / The outcome"
+  heading: "Not another dashboard. An answer."
+  # brief: "Alfredo doesn't just suggest". No contractions.
+  lede: "Alfredo does not just suggest a change and disappear. It helps you understand whether the change worked, did nothing, or made things worse."
+  label: "Illustrative examples"
   rows:
-    - name: "Put the set lunch back on Thursdays"
-      meta: "Thursday lunch is your quietest service"
-    - name: "Staff the Friday rush from six"
-      meta: "Orders start climbing before seven"
-    - name: "Feature the house red by the glass"
-      meta: "It earns more than the bottles beside it"
-
-# Not five steps on a line. One owner's week, told in the order it
-# happens, with the time of it rather than a step number: the point is
-# that this is a Monday, not a process diagram.
-week:
-  eyebrow: "A week with it"
-  heading: "One Monday, and the four weeks after."
-  lede: "The same five moments every week, in your own sales. You decide at every one of them."
-  moments:
-    - when: "Monday morning"
-      name: "The question"
-      body: "Last week felt busy and the takings did not show it. You cannot say why, and you have a service to run."
-    - when: "Still Monday morning"
-      name: "The discovery"
-      body: "Alfredo has already been through the week's sales and found what is behind it."
-    - when: "Before service"
-      name: "The choice"
-      body: "A short list of small changes worth trying, each one easy to undo. You pick the ones that suit your place."
-    - when: "The weeks after"
-      name: "The test"
-      body: "You make the change. Alfredo watches the weeks that follow and says nothing until it knows."
-    - when: "Four weeks on"
-      name: "The answer"
-      body: "It worked, it did nothing, or it backfired. You find out which, and decide what comes next."
-
-# The showcase is about range, not about one week: the whole weekly list
-# lives on the product page. Four suggestions from four different corners
-# of the business, each labelled with the kind it is, so a reader sees at a
-# glance that this is not all one sort of advice. Price is deliberately not
-# among them here: it is one kind of change on the product page, never the
-# example the home page leads with.
-weekly:
-  eyebrow: "What lands every week"
-  heading: "Not all one kind of change."
-  lede: "A suggestion can come from any corner of your sales. Each one says what it is, why it came up, how much work it is, what it risks, and when to check back."
-  # What used to be a separate section restating the same argument. Four
-  # lines, each one answered by something on this page rather than by a
-  # card of its own.
-  marks:
-    - "Changes to try, not charts to read."
-    - "Every one of them comes out of your own sales."
-    - "Every change ends in a verdict: worked, no effect, or backfired."
-    - "Alfredo never changes a menu or a price on its own."
-  statement: "Alfredo recommends. You decide."
-  card_title: "Four kinds of suggestion"
-  card_label: "Illustrative example"
-  card_sub: "One week, four corners of your sales"
-  recs:
-    - kind: "Pairing"
-      name: "Suggest the pale ale with the fish plate"
-      why: "Guests who order the fish already order this beer more than any other."
-      effort: "Low"
-      risk: "Low"
-      step: "Tell the floor on Thursday."
-    - kind: "Cost"
-      name: "Check the plate on the short rib"
-      why: "The price you pay for it went up twice last month."
-      effort: "Low"
-      risk: "Low"
-      step: "Confirm the new cost or dismiss the flag."
-    - kind: "Neighborhood"
-      name: "Try a coffee and pastry offer from two until four"
-      why: "The bakery next door closes at two, and two until four is your quietest stretch."
-      effort: "Medium"
-      risk: "Low"
-      step: "Run it for three weeks, then look."
-    - kind: "Guests"
-      name: "Win back 14 regulars who have gone quiet"
-      why: "Last seen more than six weeks ago, and every one of them used to be in most weeks."
-      effort: "Low"
-      risk: "Low"
-      step: "Write to them before the weekend."
-  done_title: "Finished, with the answer"
-  done:
-    # the figure is the one the product page prints for the same sample
-    - name: "House lager: $247 more a week"
-      verdict: "Worked"
+    - state: "Worked"
       kind: "worked"
-      body: "Fifty cents off. Four weeks on, 78 more pints a week and the bar took $247 more. After what you would have made anyway."
-    - name: "Calamari moved to the top of the starters"
-      verdict: "No effect"
+      what: "House lager promotion"
+      why: "An illustrative example of a change that improved results."
+    - state: "No effect"
       kind: "none"
-      body: "Four weeks on, it sold the same. Alfredo said so, and the top spot went to something that does move."
-    - name: "Happy hour pushed an hour later"
-      verdict: "Backfired"
+      what: "Calamari moved higher on the menu"
+      why: "The test found no meaningful improvement."
+    - state: "Backfired"
       kind: "back"
-      body: "The early crowd did not come back and the later hour did not fill. It went back the same night."
+      what: "Happy hour shifted later"
+      why: "The revised hours performed worse, so the change was reversed."
+  statement: "Alfredo recommends. "
+  statement_em: "You decide."
 
-looks:
-  eyebrow: "What Alfredo looks at"
-  heading: "Your own sales, read the way an owner would read them."
-  entries:
-    - name: "Your menu"
-      body: "What each plate really earns once the extras are counted, and which items to show off, keep or rethink."
-    - name: "Your guests"
-      body: "New faces, regulars, and the ones who have gone quiet and are worth winning back."
-    - name: "Your costs"
-      body: "Which ingredients went up, which plates they are squeezing, and what to do about it."
-    - name: "The neighborhood"
-      body: "What nearby places charge, when they are open, and what their guests keep saying."
-    - name: "Your busy times"
-      body: "Which days and hours carry the week, and which ones are quietly costing you."
-    - name: "Your taproom"
-      body: "House pours against guest pours, which beers earn their line, and what to put beside them."
-
-audience:
-  eyebrow: "Who it is for"
-  heading: "Independent places, and small groups of them."
+# ------------------------------------------------------------- 05 places --
+places:
+  eyebrow: "05 / Built for hospitality"
+  heading: "Different places. The same ambition to do better."
+  lede: "Whether you run a neighborhood café, a busy bar, an independent bakery, a brewery or a multi location restaurant group, your business has decisions worth understanding."
   cards:
-    - label: "Restaurants"
+    - cls: "pl-restaurant"
       stem: "restaurant-kitchen"
+      label: "Restaurants"
       alt: "A cook finishing a dish on a kitchen pass."
-    - label: "Bars"
+    - cls: "pl-bar"
       stem: "bar"
+      label: "Bars"
       alt: "A bar at night, a drink on the counter and bottles lit behind it."
-    - label: "Breweries and taprooms"
+    - cls: "pl-brewery"
       stem: "brewery"
+      label: "Breweries"
       alt: "A brewer holding a glass of beer up to the light beside the tanks."
-    - label: "Bakeries and cafes"
+    # there is no café photograph in the repository, so the bakery picture
+    # carries both, which is what its label says
+    - cls: "pl-bakery"
       stem: "bakery"
+      label: "Cafés & bakeries"
       alt: "A baker shaping dough on a floured bench beside racks of bread."
 
-proof:
-  claim: "Tested with a brewpub and live across a 14 location restaurant chain."
-  note: "Patent pending."
+# -------------------------------------------------------------- 06 trust --
+trust:
+  eyebrow: "06 / Built on honesty"
+  # brief: "We don't make up numbers." No contractions.
+  heading: "We do not make up numbers."
+  # brief: "If Alfredo doesn't have enough information". No contractions.
+  body: "If Alfredo does not have enough information to know whether something worked, it says so. Not every experiment succeeds. Every useful experiment teaches you something."
+  points:
+    - "No invented figures."
+    - "No pretending a test worked."
+    - "No changing your business without you."
+  link: "Read our approach to trust"
+  link_href: "honesty.html"
+
+# ------------------------------------------------------------- 07 invite --
+invite:
+  eyebrow: "The next chapter"
+  heading: "Your next chapter starts with better decisions."
+  body: "See what Alfredo could uncover in your business."
+  cta: "Request a demo"
+  cta_href: "pilot.html#pilot"
+  link: "Explore what Alfredo does"
+  link_href: "product.html"
+  alt: "A bar at night, a drink on the counter and bottles lit behind it."

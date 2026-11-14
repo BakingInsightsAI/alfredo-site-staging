@@ -7,15 +7,16 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Alfredo, what it does</title>
 <meta name="description" content="Three questions every owner asks: what to change this week, whether the menu is making money, and who is coming in. Alfredo answers them every week.">
-<meta name="theme-color" content="#1A1512">
+<meta name="theme-color" content="#191715">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/restaurant-kitchen-960.webp" type="image/webp"
       imagesrcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w"
-      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+      imagesizes="(max-width: 900px) 100vw, 32vw" fetchpriority="high">
 
 <link rel="stylesheet" href="alfredo.css">
+<script>document.documentElement.className += ' js';</script>
 </head>
 <body>
 <p class="staging-bar">Staging preview. Not the live site.</p>
@@ -43,33 +44,32 @@
 
 <main id="main" tabindex="-1">
 
-<section class="pagehero">
-  <div class="wrap split">
-    <div class="pagehero-copy">
+<section class="pagehead darkest">
+  <div class="wrap grid12 pagehead-grid">
+    <div class="pagehead-copy">
       <p class="eyebrow">What it does</p>
-      <h1 class="display">One short list, <em>every Monday.</em></h1>
-      <p class="lede">Alfredo reads the sales you already ring through your existing POS system, and turns the week into three to five changes worth trying. You choose. It reports back.</p>
-      <div class="hero-actions">
+      <h1 class="display">One short list, every Monday.</h1>
+      <p class="lead">Alfredo reads the sales you already ring through your existing POS system, and turns the week into three to five changes worth trying. You choose. It reports back.</p>
+      <div class="actions">
         <a class="btn" href="pilot.html#pilot">Request a demo</a>
       </div>
     </div>
-    <figure class="shot reveal">
+    <figure class="pagehead-fig">
       <picture>
-        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+        <source type="image/webp" sizes="(max-width: 900px) 100vw, 32vw"
                 srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
         <img src="assets/restaurant-kitchen-640.jpg" alt="A cook finishing a dish on a kitchen pass."
-             width="640" height="800" fetchpriority="high" decoding="async">
+             width="640" height="736" fetchpriority="high" decoding="async">
       </picture>
     </figure>
   </div>
 </section>
-
-<section class="section panel-sec" id="board">
-  <div class="wrap split">
-    <div>
+<section class="section paper" id="board">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">The list itself</p>
-      <h2 class="h2">What a suggestion tells you before you decide.</h2>
-      <p class="lede" style="margin-top:var(--s3)">Every one of them comes with the same six things, so you can judge it in a few seconds and get back to the floor.</p>
+      <h2 class="h3">What a suggestion tells you before you decide.</h2>
+      <p class="body">Every one of them comes with the same six things, so you can judge it in a few seconds and get back to the floor.</p>
       <ul class="marks">
         <li><b>What it is.</b> The change itself, in one line you could read out to the floor.</li>
         <li><b>Why it came up.</b> What in your own sales put it on the list this week.</li>
@@ -79,83 +79,92 @@
         <li><b>When to check back.</b> The date Alfredo comes back with the answer.</li>
       </ul>
     </div>
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>Monday, the 6th<span class="card-sub">Five things worth trying this week</span></h3>
-        <span class="tag-sample">Illustrative example</span>
+
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>Monday, the 6th<span class="pui-sub">Five things worth trying this week</span></h3>
+            <span class="tag-sample">Illustrative example</span>
+          </div>
+          <div class="pui-pad">
+            <ul class="recs">
+              <li class="rec">
+                <p class="rec-kind">Pairing</p>
+                <b>Offer the sourdough board with the cheese plate</b>
+                <p>Two in three cheese plates already leave the kitchen with bread beside them.</p>
+                <p class="rec-meta">
+                  <span>Effort <i>Low</i></span>
+                  <span>Risk <i>Low</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>Tell the floor on Thursday and add one line to the specials card.</dd></div>
+                  <div><dt>Check back</dt><dd>Three weeks</dd></div>
+                </dl>
+              </li>
+              <li class="rec">
+                <p class="rec-kind">Menu placement</p>
+                <b>Move the lamb ragu into the top third of the mains</b>
+                <p>It earns more per plate than any other main and sits second from the bottom.</p>
+                <p class="rec-meta">
+                  <span>Effort <i>Low</i></span>
+                  <span>Risk <i>Low</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>Reprint the mains before the weekend.</dd></div>
+                  <div><dt>Check back</dt><dd>Four weeks</dd></div>
+                </dl>
+              </li>
+              <li class="rec">
+                <p class="rec-kind">Costs</p>
+                <b>Look again at the mushroom tart</b>
+                <p>What you pay for the mushrooms went up twice, and the tart is now selling for less than it costs to make.</p>
+                <p class="rec-meta">
+                  <span>Effort <i>Low</i></span>
+                  <span>Risk <i>Low</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>Confirm the new costs or dismiss the flag.</dd></div>
+                  <div><dt>Check back</dt><dd>This week</dd></div>
+                </dl>
+              </li>
+              <li class="rec">
+                <p class="rec-kind">Prices</p>
+                <b>Try fifty cents off the flatbread after nine</b>
+                <p>Late orders drop off sharply, and the flatbread costs little to make.</p>
+                <p class="rec-meta">
+                  <span>Effort <i>Low</i></span>
+                  <span>Risk <i>Low</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>Fifty cents off from nine until close, nothing else changes.</dd></div>
+                  <div><dt>Check back</dt><dd>Four weeks</dd></div>
+                </dl>
+              </li>
+              <li class="rec">
+                <p class="rec-kind">Neighborhood</p>
+                <b>Hold the Thursday quiz an hour later</b>
+                <p>The pub two streets over starts theirs at eight and takes your early crowd with it.</p>
+                <p class="rec-meta">
+                  <span>Effort <i>Medium</i></span>
+                  <span>Risk <i>Medium</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>Move the start, and tell the regulars the week before.</dd></div>
+                  <div><dt>Check back</dt><dd>Four weeks</dd></div>
+                </dl>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul class="recs">
-        <li class="rec rec-full">
-          <p class="rec-kind">Pairing</p>
-          <b>Offer the sourdough board with the cheese plate</b>
-          <p>Two in three cheese plates already leave the kitchen with bread beside them.</p>
-          <p class="rec-meta">
-            <span>Effort <i>Low</i></span>
-            <span>Risk <i>Low</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>Tell the floor on Thursday and add one line to the specials card.</dd>
-            <dt>Check back</dt><dd>Three weeks</dd>
-          </dl>
-        </li>
-        <li class="rec rec-full">
-          <p class="rec-kind">Menu placement</p>
-          <b>Move the lamb ragu into the top third of the mains</b>
-          <p>It earns more per plate than any other main and sits second from the bottom.</p>
-          <p class="rec-meta">
-            <span>Effort <i>Low</i></span>
-            <span>Risk <i>Low</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>Reprint the mains before the weekend.</dd>
-            <dt>Check back</dt><dd>Four weeks</dd>
-          </dl>
-        </li>
-        <li class="rec rec-full">
-          <p class="rec-kind">Costs</p>
-          <b>Look again at the mushroom tart</b>
-          <p>What you pay for the mushrooms went up twice, and the tart is now selling for less than it costs to make.</p>
-          <p class="rec-meta">
-            <span>Effort <i>Low</i></span>
-            <span>Risk <i>Low</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>Confirm the new costs or dismiss the flag.</dd>
-            <dt>Check back</dt><dd>This week</dd>
-          </dl>
-        </li>
-        <li class="rec rec-full">
-          <p class="rec-kind">Prices</p>
-          <b>Try fifty cents off the flatbread after nine</b>
-          <p>Late orders drop off sharply, and the flatbread costs little to make.</p>
-          <p class="rec-meta">
-            <span>Effort <i>Low</i></span>
-            <span>Risk <i>Low</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>Fifty cents off from nine until close, nothing else changes.</dd>
-            <dt>Check back</dt><dd>Four weeks</dd>
-          </dl>
-        </li>
-        <li class="rec rec-full">
-          <p class="rec-kind">Neighborhood</p>
-          <b>Hold the Thursday quiz an hour later</b>
-          <p>The pub two streets over starts theirs at eight and takes your early crowd with it.</p>
-          <p class="rec-meta">
-            <span>Effort <i>Medium</i></span>
-            <span>Risk <i>Medium</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>Move the start, and tell the regulars the week before.</dd>
-            <dt>Check back</dt><dd>Four weeks</dd>
-          </dl>
-        </li>
-      </ul>
     </div>
   </div>
+</section>
+<section class="section-tight dark">
   <div class="wrap">
-    <div class="done-h">
-      <h3 class="h3">We took fifty cents off the House Lager.</h3>
+    <div class="head-row">
+      <h2 class="h3">We took fifty cents off the House Lager.</h2>
       <span class="tag-sample">Illustrative example</span>
     </div>
     <div class="result">
@@ -165,47 +174,32 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section paper-light">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <h2 class="h2">Five kinds of changes, and one on the way.</h2>
-      <p class="lede" style="margin-top:var(--s3)">Price is one of them, not the whole of it.</p>
+      <p class="lead">Price is one of them, not the whole of it.</p>
     </div>
-    <ul class="cols cols-3">
-      <li class="card reveal" data-delay="0">
-        <h3 class="h3">Prices</h3>
-        <p>Which items could sell more at a slightly lower price.</p>
-      </li>
-      <li class="card reveal" data-delay="70">
-        <h3 class="h3">Pairings</h3>
-        <p>What your guests already like together, and what to suggest with it.</p>
-      </li>
-      <li class="card reveal" data-delay="140">
-        <h3 class="h3">Menu placement</h3>
-        <p>What to show off on the menu and what to quietly move down.</p>
-      </li>
-      <li class="card reveal" data-delay="0">
-        <h3 class="h3">How you run the floor</h3>
-        <p>Happy hour times, busy and slow hours, and how long tables stay.</p>
-      </li>
-      <li class="card reveal">
-        <h3 class="h3">Costs</h3>
-        <p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p>
-      </li>
-      <li class="card card-soon reveal">
-        <h3 class="h3">Inventory <span class="chip chip-soon">Coming soon</span></h3>
+    <ul class="index-list">
+      <li><h3>Prices</h3><p>Which items could sell more at a slightly lower price.</p></li>
+      <li><h3>Pairings</h3><p>What your guests already like together, and what to suggest with it.</p></li>
+      <li><h3>Menu placement</h3><p>What to show off on the menu and what to quietly move down.</p></li>
+      <li><h3>How you run the floor</h3><p>Happy hour times, busy and slow hours, and how long tables stay.</p></li>
+      <li><h3>Costs</h3><p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p></li>
+      <li class="index-soon">
+        <h3>Inventory <span class="chip-soon">Coming soon</span></h3>
         <p>Know what you have on hand. We are building inventory tracking now.</p>
       </li>
     </ul>
   </div>
 </section>
 
-<section class="section panel-sec" id="menu">
-  <div class="wrap split">
-    <div>
+<section class="section sand" id="menu">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">Your menu</p>
-      <h2 class="h2">What every plate really earns.</h2>
-      <p class="lede" style="margin-top:var(--s3)">Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week.</p>
+      <h2 class="h3">What every plate really earns.</h2>
+      <p class="body">Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week.</p>
       <ul class="marks">
         <li>What each plate makes once the extras are counted.</li>
         <li>Items selling below what they cost to make.</li>
@@ -214,29 +208,37 @@
         <li>Which items to show off, keep, or rethink.</li>
       </ul>
     </div>
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>House Burger<span class="card-sub">One plate, taken apart</span></h3>
-        <span class="tag-sample">Illustrative example</span>
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>House Burger<span class="pui-sub">One plate, taken apart</span></h3>
+            <span class="tag-sample">Illustrative example</span>
+          </div>
+          <div class="pui-pad">
+            <table class="plate-table">
+              <caption class="sr-only">What one plate earns once the extras are counted</caption>
+              <tbody>
+                <tr><th scope="row">House Burger</th><td>$6.90</td></tr>
+                <tr><th scope="row">Add bacon</th><td>$1.30</td></tr>
+                <tr><th scope="row">Add fries</th><td>$2.35</td></tr>
+                <tr><th scope="row">Plate with both</th><td>$10.55</td></tr>
+              </tbody>
+            </table>
+            <p class="pui-caption">The dish is not the whole story. The two add ons are 35 percent of what this plate makes.</p>
+          </div>
+        </div>
       </div>
-      <table class="plate-table">
-        <caption class="sr-only">What one plate earns once the extras are counted</caption>
-        <tbody>
-          <tr><th scope="row">House Burger</th><td>$6.90</td></tr>
-          <tr><th scope="row">Add bacon</th><td>$1.30</td></tr>
-          <tr><th scope="row">Add fries</th><td>$2.35</td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
 
-<section class="section" id="intel">
-  <div class="wrap split">
-    <div>
+<section class="section paper" id="intel">
+  <div class="wrap grid12 ed">
+    <div class="ed-wide reveal">
       <p class="eyebrow">Your guests and the street outside</p>
-      <h2 class="h2">Who comes in, and what is happening nearby.</h2>
-      <p class="lede" style="margin-top:var(--s3)">New faces, the regulars, and the ones who have gone quiet. Then the places down the street: what they charge, when they open, and what their guests keep saying.</p>
+      <h2 class="h3">Who comes in, and what is happening nearby.</h2>
+      <p class="body">New faces, the regulars, and the ones who have gone quiet. Then the places down the street: what they charge, when they open, and what their guests keep saying.</p>
       <ul class="marks">
         <li>New, returning, and quiet regulars, and who is worth winning back.</li>
         <li>What nearby places charge, set beside your own prices.</li>
@@ -246,44 +248,41 @@
         <li>House pours against guest pours, and what to put beside them.</li>
       </ul>
     </div>
-    <figure class="shot reveal">
+    <figure class="ed-side">
       <picture>
-        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 36vw"
                 srcset="assets/bar-480.webp 480w, assets/bar-640.webp 640w, assets/bar-960.webp 960w">
         <img src="assets/bar-640.jpg" alt="A bar at night, a drink on the counter and bottles lit behind it."
-             width="640" height="800" loading="lazy" decoding="async">
+             width="640" height="840" loading="lazy" decoding="async"
+             style="width:100%;aspect-ratio:4/5.2;object-fit:cover;object-position:52% 44%">
       </picture>
     </figure>
   </div>
 </section>
 
-<section class="section panel-sec" id="chat">
-  <div class="wrap split">
-    <div>
+<section class="section dark" id="chat">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">Ask it anything</p>
-      <h2 class="h2">Questions in plain words, answered from your own numbers.</h2>
-      <p class="lede" style="margin-top:var(--s3)">No report to build and no chart to read. Ask the way you would ask a manager, and if Alfredo does not know, it says so.</p>
-      <p class="statement">Alfredo recommends. You decide.</p>
+      <h2 class="h3">Questions in plain words, answered from your own numbers.</h2>
+      <p class="body">No report to build and no chart to read. Ask the way you would ask a manager, and if Alfredo does not know, it says so.</p>
     </div>
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>Ask it anything<span class="card-sub">The way you would ask a manager</span></h3>
-        <span class="tag-sample">Illustrative example</span>
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>Ask it anything<span class="pui-sub">The way you would ask a manager</span></h3>
+            <span class="tag-sample">Illustrative example</span>
+          </div>
+          <div class="pui-pad">
+            <ul class="recs asks">
+              <li class="rec"><b>How am I doing this week?</b><p>Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.</p></li>
+              <li class="rec"><b>What are my best sellers?</b><p>Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?</p></li>
+              <li class="rec"><b>What do you recommend?</b><p>Three things on this week's list: a small price cut on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?</p></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul class="recs asks">
-        <li class="rec">
-          <b>How am I doing this week?</b>
-          <p>Revenue is up 4.2% week over week, most of it from Friday night. Orders are flat and average check is up $1.10. One thing to watch: Monday is still your softest day by a wide margin.</p>
-        </li>
-        <li class="rec">
-          <b>What are my best sellers?</b>
-          <p>Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?</p>
-        </li>
-        <li class="rec">
-          <b>What do you recommend?</b>
-          <p>Three things on this week's list: a small price cut on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?</p>
-        </li>
-      </ul>
     </div>
   </div>
 </section>

@@ -4,40 +4,40 @@
 {% block preload %}
 <link rel="preload" as="image" href="assets/restaurant-kitchen-960.webp" type="image/webp"
       imagesrcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w"
-      imagesizes="(max-width: 980px) 100vw, 44vw" fetchpriority="high">
+      imagesizes="(max-width: 900px) 100vw, 32vw" fetchpriority="high">
 {% endblock %}
 
 {% block content %}
-{#- The page opens on the thing itself: the list on the right, what it is
-    on the left. The anchors the outreach links point at are kept as the
-    ids of the sections they named. #}
-<section class="pagehero">
-  <div class="wrap split">
-    <div class="pagehero-copy">
+<section class="pagehead darkest">
+  <div class="wrap grid12 pagehead-grid">
+    <div class="pagehead-copy">
       <p class="eyebrow">{{ v.eyebrow }}</p>
-      <h1 class="display">{{ v.heading_a }}<em>{{ v.heading_em }}</em></h1>
-      <p class="lede">{{ v.lede }}</p>
-      <div class="hero-actions">
+      <h1 class="display">{{ v.heading_a }}{{ v.heading_em }}</h1>
+      <p class="lead">{{ v.lede }}</p>
+      <div class="actions">
         <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
       </div>
     </div>
-    <figure class="shot reveal">
+    <figure class="pagehead-fig">
       <picture>
-        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+        <source type="image/webp" sizes="(max-width: 900px) 100vw, 32vw"
                 srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
         <img src="assets/restaurant-kitchen-640.jpg" alt="A cook finishing a dish on a kitchen pass."
-             width="640" height="800" fetchpriority="high" decoding="async">
+             width="640" height="736" fetchpriority="high" decoding="async">
       </picture>
     </figure>
   </div>
 </section>
 
-<section class="section panel-sec" id="board">
-  <div class="wrap split">
-    <div>
+{#- The list itself, which is what this page is for. The argument on the
+    left is answered item by item by the panel on the right. The anchors the
+    outreach links point at are kept as the ids of the sections they named. #}
+<section class="section paper" id="board">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">{{ v.board_eyebrow }}</p>
-      <h2 class="h2">{{ v.board_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ v.board_lede }}</p>
+      <h2 class="h3">{{ v.board_heading }}</h2>
+      <p class="body">{{ v.board_lede }}</p>
       <ul class="marks">
         {%- for a in v.anatomy %}
         <li><b>{{ a.name }}.</b> {{ a.body }}</li>
@@ -45,41 +45,44 @@
       </ul>
     </div>
 
-    {#- The list itself, which is what this page is for. The home page
-        shows the range of it in four short cards; this is a Monday, in
-        full, with every one of the six things said for every suggestion.
-        None of these five appears on the home page. #}
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>{{ product.weeklist.title }}<span class="card-sub">{{ product.weeklist.sub }}</span></h3>
-        <span class="tag-sample">{{ product.weeklist.label }}</span>
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>{{ product.weeklist.title }}<span class="pui-sub">{{ product.weeklist.sub }}</span></h3>
+            <span class="tag-sample">{{ product.weeklist.label }}</span>
+          </div>
+          <div class="pui-pad">
+            <ul class="recs">
+              {%- for r in product.weeklist.entries %}
+              <li class="rec">
+                <p class="rec-kind">{{ r.kind }}</p>
+                <b>{{ r.name }}</b>
+                <p>{{ r.why }}</p>
+                <p class="rec-meta">
+                  <span>Effort <i>{{ r.effort }}</i></span>
+                  <span>Risk <i>{{ r.risk }}</i></span>
+                </p>
+                <dl class="rec-steps">
+                  <div><dt>How to do it</dt><dd>{{ r.how }}</dd></div>
+                  <div><dt>Check back</dt><dd>{{ r.back }}</dd></div>
+                </dl>
+              </li>
+              {%- endfor %}
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul class="recs">
-        {%- for r in product.weeklist.entries %}
-        <li class="rec rec-full">
-          <p class="rec-kind">{{ r.kind }}</p>
-          <b>{{ r.name }}</b>
-          <p>{{ r.why }}</p>
-          <p class="rec-meta">
-            <span>Effort <i>{{ r.effort }}</i></span>
-            <span>Risk <i>{{ r.risk }}</i></span>
-          </p>
-          <dl class="rec-steps">
-            <dt>How to do it</dt><dd>{{ r.how }}</dd>
-            <dt>Check back</dt><dd>{{ r.back }}</dd>
-          </dl>
-        </li>
-        {%- endfor %}
-      </ul>
     </div>
   </div>
+</section>
 
-  {#- The House Lager, walked through once. The figure is the one the home
-      page quotes for the same sample, and it is told here rather than
-      repeated there as a card. #}
+{#- The House Lager, walked through once. The figure is the one the home
+    page quotes for the same sample, and it is a price coming down. #}
+<section class="section-tight dark">
   <div class="wrap">
-    <div class="done-h">
-      <h3 class="h3">{{ product.measured.heading }}</h3>
+    <div class="head-row">
+      <h2 class="h3">{{ product.measured.heading }}</h2>
       <span class="tag-sample">{{ product.weeklist.label }}</span>
     </div>
     <div class="result">
@@ -89,106 +92,111 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section paper-light">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <h2 class="h2">{{ v.kinds_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ v.kinds_lede }}</p>
+      <p class="lead">{{ v.kinds_lede }}</p>
     </div>
-    <ul class="cols cols-3">
+    <ul class="index-list">
       {%- for k in product.board_types %}
-      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 70 }}">
-        <h3 class="h3">{{ k.name }}</h3>
-        <p>{{ k.body }}</p>
-      </li>
+      <li><h3>{{ k.name }}</h3><p>{{ k.body }}</p></li>
       {%- endfor %}
-      <li class="card reveal">
-        <h3 class="h3">Costs</h3>
-        <p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p>
-      </li>
-      {#- Quieter than the five beside it, because it is not here yet. #}
-      <li class="card card-soon reveal">
-        <h3 class="h3">{{ v.inventory.name }} <span class="chip chip-soon">{{ v.inventory.tag }}</span></h3>
+      <li><h3>Costs</h3><p>Which ingredients went up, which plates they are squeezing, and what to do about it.</p></li>
+      {#- quieter than the five above it, because it is not here yet #}
+      <li class="index-soon">
+        <h3>{{ v.inventory.name }} <span class="chip-soon">{{ v.inventory.tag }}</span></h3>
         <p>{{ v.inventory.body }}</p>
       </li>
     </ul>
   </div>
 </section>
 
-<section class="section panel-sec" id="menu">
-  <div class="wrap split">
-    <div>
+<section class="section sand" id="menu">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">{{ v.menu_eyebrow }}</p>
-      <h2 class="h2">{{ v.menu_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ v.menu_lede }}</p>
+      <h2 class="h3">{{ v.menu_heading }}</h2>
+      <p class="body">{{ v.menu_lede }}</p>
       <ul class="marks">
         {%- for m in v.menu_points %}
         <li>{{ m }}</li>
         {%- endfor %}
       </ul>
     </div>
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>{{ product.plate.dish }}<span class="card-sub">One plate, taken apart</span></h3>
-        <span class="tag-sample">{{ home.weekly.card_label }}</span>
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>{{ product.plate.dish }}<span class="pui-sub">One plate, taken apart</span></h3>
+            <span class="tag-sample">{{ product.weeklist.label }}</span>
+          </div>
+          <div class="pui-pad">
+            <table class="plate-table">
+              <caption class="sr-only">What one plate earns once the extras are counted</caption>
+              <tbody>
+                <tr><th scope="row">{{ product.plate.dish }}</th><td>{{ product.plate.make }}</td></tr>
+                {%- for a in product.plate.addons %}
+                <tr><th scope="row">{{ a.name }}</th><td>{{ a.make }}</td></tr>
+                {%- endfor %}
+                <tr><th scope="row">{{ product.plate.total_label }}</th><td>{{ product.plate.total_make }}</td></tr>
+              </tbody>
+            </table>
+            <p class="pui-caption">{{ product.plate.note }}</p>
+          </div>
+        </div>
       </div>
-      <table class="plate-table">
-        <caption class="sr-only">What one plate earns once the extras are counted</caption>
-        <tbody>
-          <tr><th scope="row">{{ product.plate.dish }}</th><td>{{ product.plate.make }}</td></tr>
-          {%- for a in product.plate.addons %}
-          <tr><th scope="row">{{ a.name }}</th><td>{{ a.make }}</td></tr>
-          {%- endfor %}
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
 
-<section class="section" id="intel">
-  <div class="wrap split">
-    <div>
+<section class="section paper" id="intel">
+  <div class="wrap grid12 ed">
+    <div class="ed-wide reveal">
       <p class="eyebrow">{{ v.intel_eyebrow }}</p>
-      <h2 class="h2">{{ v.intel_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ v.intel_lede }}</p>
+      <h2 class="h3">{{ v.intel_heading }}</h2>
+      <p class="body">{{ v.intel_lede }}</p>
       <ul class="marks">
         {%- for m in v.intel_points %}
         <li>{{ m }}</li>
         {%- endfor %}
       </ul>
     </div>
-    <figure class="shot reveal">
+    <figure class="ed-side">
       <picture>
-        <source type="image/webp" sizes="(max-width: 980px) 100vw, 44vw"
+        <source type="image/webp" sizes="(max-width: 980px) 100vw, 36vw"
                 srcset="assets/bar-480.webp 480w, assets/bar-640.webp 640w, assets/bar-960.webp 960w">
         <img src="assets/bar-640.jpg" alt="A bar at night, a drink on the counter and bottles lit behind it."
-             width="640" height="800" loading="lazy" decoding="async">
+             width="640" height="840" loading="lazy" decoding="async"
+             style="width:100%;aspect-ratio:4/5.2;object-fit:cover;object-position:52% 44%">
       </picture>
     </figure>
   </div>
 </section>
 
-<section class="section panel-sec" id="chat">
-  <div class="wrap split">
-    <div>
+<section class="section dark" id="chat">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy reveal">
       <p class="eyebrow">{{ v.chat_eyebrow }}</p>
-      <h2 class="h2">{{ v.chat_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ v.chat_lede }}</p>
-      <p class="statement">{{ home.weekly.statement }}</p>
+      <h2 class="h3">{{ v.chat_heading }}</h2>
+      <p class="body">{{ v.chat_lede }}</p>
     </div>
-    <div class="listcard reveal">
-      <div class="listcard-head">
-        <h3>Ask it anything<span class="card-sub">The way you would ask a manager</span></h3>
-        <span class="tag-sample">{{ home.weekly.card_label }}</span>
+    <div class="ed-main">
+      <div class="pui pui-plain">
+        <div>
+          <div class="pui-head">
+            <h3>Ask it anything<span class="pui-sub">The way you would ask a manager</span></h3>
+            <span class="tag-sample">{{ product.weeklist.label }}</span>
+          </div>
+          <div class="pui-pad">
+            <ul class="recs asks">
+              {%- for c in product.chat_chips %}
+              <li class="rec"><b>{{ c.q }}</b><p>{{ c.a }}</p></li>
+              {%- endfor %}
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul class="recs asks">
-        {%- for c in product.chat_chips %}
-        <li class="rec">
-          <b>{{ c.q }}</b>
-          <p>{{ c.a }}</p>
-        </li>
-        {%- endfor %}
-      </ul>
     </div>
   </div>
 </section>
