@@ -38,9 +38,9 @@ pages:
     template: index.html
     output: index.html
     legacy: false
+    hero: true
     title: "Alfredo, every business has a story"
-    description: "Alfredo turns your sales into a short list of clear, practical changes worth trying each week, then tells you honestly whether each one worked."
-    next: { label: "What Alfredo does for you", href: "product.html" }
+    description: "Alfredo turns your sales into clear, practical changes worth trying. You choose what to do. Alfredo helps you see what actually worked."
 
   - key: product
     template: product.html

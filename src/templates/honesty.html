@@ -2,62 +2,68 @@
 {%- set h = pages.honesty %}
 
 {% block content %}
-<section class="pagehero pagehero-plain">
-  <div class="wrap">
-    <div class="pagehero-copy wide">
+{#- A manifesto page. The promises are numbered statements on rules, not
+    four icon cards, because the point of the page is the plain claim. #}
+<section class="pagehead darkest">
+  <div class="wrap grid12 pagehead-grid">
+    <div class="pagehead-copy">
       <p class="eyebrow">{{ h.eyebrow }}</p>
       <h1 class="display">{{ h.heading }}</h1>
-      {%- for p in h.lede %}
-      <p class="lede" style="margin-top:var(--s3)">{{ p }}</p>
+      {%- for line in h.lede %}
+      <p class="lead"{% if not loop.first %} style="margin-top:18px"{% endif %}>{{ line }}</p>
       {%- endfor %}
     </div>
   </div>
 </section>
 
-<section class="section panel-sec">
+<section class="section paper">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <h2 class="h2">{{ h.promises_heading }}</h2>
     </div>
-    <ul class="cols cols-2">
+    <ul class="manifesto">
       {%- for p in h.promises %}
-      <li class="card reveal" data-delay="{{ loop.index0 % 2 * 70 }}">
-        <h3 class="h3">{{ p.name }}</h3>
-        <p>{{ p.body }}</p>
+      <li>
+        <p class="m-n" aria-hidden="true">{{ "%02d"|format(loop.index) }}</p>
+        <div>
+          <h3>{{ p.name }}</h3>
+          <p>{{ p.body }}</p>
+        </div>
       </li>
       {%- endfor %}
     </ul>
   </div>
 </section>
 
-{#- The day one story, which is the whole promise in one example. Set as
-    what it is: a thing that happened, and what was done about it. #}
-<section class="section">
-  <div class="wrap split">
-    <div>
-      <p class="eyebrow">{{ h.quotes_heading }}</p>
-      <h2 class="h2">{{ h.bridge_heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ h.bridge }}</p>
+<section class="section sand">
+  <div class="wrap grid12 ed">
+    <div class="ed-copy">
+      <p class="eyebrow">{{ h.bridge_heading }}</p>
     </div>
-    <ul class="cols proofs">
-      {%- for q in h.quotes %}
-      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
-        <p>{{ q.intro }}</p>
-        {%- if q.quote %}
-        <p class="flagline">{{ q.quote }}</p>
-        {%- endif %}
-        <p class="proof-close">{{ q.close }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
+    <div class="ed-main">
+      <p class="pull reveal">{{ h.bridge }}</p>
+    </div>
   </div>
 </section>
 
-<section class="section cream">
-  <div class="wrap center-block">
-    <h2 class="h2">{{ h.cta_heading }}</h2>
-    <p class="lede" style="margin:var(--s3) auto 0">{{ h.cta_body }}</p>
-    <p class="center-cta"><a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
+<section class="section paper-light">
+  <div class="wrap">
+    <div class="proof-head reveal">
+      <h2 class="h2">{{ h.quotes_heading }}</h2>
+    </div>
+    <div class="practice">
+      {%- for q in h.quotes %}
+      <div>
+        <div>
+          <p>{{ q.intro }}</p>
+          {%- if q.quote %}
+          <p class="p-quote">{{ q.quote }}</p>
+          {%- endif %}
+        </div>
+        <p class="p-close">{{ q.close }}</p>
+      </div>
+      {%- endfor %}
+    </div>
   </div>
 </section>
 {% endblock %}

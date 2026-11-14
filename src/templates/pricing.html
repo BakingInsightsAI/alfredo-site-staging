@@ -2,92 +2,108 @@
 {%- set p = pages.pricing %}
 
 {% block content %}
-<section class="pagehero pagehero-plain">
-  <div class="wrap">
-    <div class="pagehero-copy wide">
+{#- Every price, every plan name and every line of each plan is read from
+    the data unchanged. Nothing here is restated by hand. #}
+<section class="pagehead darkest">
+  <div class="wrap grid12 pagehead-grid">
+    <div class="pagehead-copy">
       <p class="eyebrow">{{ p.eyebrow }}</p>
       <h1 class="display">{{ p.heading }}</h1>
-      <p class="lede" style="margin-top:var(--s3)">{{ p.lede }}</p>
+      <p class="lead">{{ p.lede }}</p>
     </div>
   </div>
 </section>
 
-{#- The founding offer. Prominent, but a bordered panel rather than a slab
-    of colour: a saturated block was what made the previous site shout. #}
-<section class="section">
+<section class="section paper">
   <div class="wrap">
-    <div class="offerpanel reveal">
-      <div>
-        <h2 class="h2">{{ p.founding_heading }}</h2>
-        <p class="lede" style="margin-top:var(--s3)">{{ p.founding_body }}</p>
-      </div>
-      <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-    </div>
-
-    <ul class="tiers">
+    <div class="tiers">
       {%- for t in p.tiers %}
-      <li class="tier{% if t.get('flag') %} tier-lit{% endif %} reveal" data-delay="{{ loop.index0 * 70 }}">
-        {%- if t.get('flag') %}<p class="tier-flag">{{ t.flag }}</p>{% endif %}
-        <h3 class="h3">{{ t.name }}</h3>
-        <p class="tier-who">{{ t.who }}</p>
-        <p class="tier-price"><b>{{ t.price }}</b> <span>{{ p.price_unit }}</span></p>
-        <p class="tier-day">{{ t.per_day }}<span>{{ t.per_day_note }}</span></p>
-        <a class="btn{% if t.cta_style != 'primary' %} btn-quiet{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-        {%- if t.get('lead') %}<p class="tier-lead">{{ t.lead }}</p>{% endif %}
-        <ul class="tier-features">
+      <div class="tier{% if t.get('flag') %} tier-best{% endif %}">
+        <p class="tier-mark">{{ t.get('flag', '') }}</p>
+        <h2 class="tier-name">{{ t.name }}</h2>
+        <p class="tier-for">{{ t.who }}</p>
+        <p class="tier-price">{{ t.price }} <span class="tier-unit">{{ p.price_unit }}</span></p>
+        <p class="tier-day">{{ t.per_day }}. {{ t.per_day_note }}</p>
+        {%- if t.get('lead') %}
+        <p class="tier-day" style="margin-top:18px">{{ t.lead }}</p>
+        {%- endif %}
+        <ul class="tier-list">
           {%- for f in t.features %}
           <li>{{ f }}</li>
           {%- endfor %}
         </ul>
-      </li>
+        <a class="btn{% if t.cta_style != 'primary' %} btn-ghost{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+      </div>
       {%- endfor %}
-    </ul>
-    <p class="note more-tier">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
-    <p class="claim">{{ p.proof }}</p>
+    </div>
+
+    <p class="tier-day" style="margin-top:30px">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
+
+    <div class="offer">
+      <h2>{{ p.founding_heading }}</h2>
+      <p>{{ p.founding_body }}</p>
+    </div>
+
+    <p class="claim" style="margin-top:56px">{{ p.proof }}<span>Patent pending.</span></p>
   </div>
 </section>
 
-<section class="section panel-sec">
+<section class="section paper-light">
   <div class="wrap">
-    <div class="head">
+    <div class="proof-head reveal">
       <p class="eyebrow">{{ p.compare_eyebrow }}</p>
       <h2 class="h2">{{ p.compare_heading }}</h2>
     </div>
-    <ul class="compare">
-      {%- for c in p.compare_bars %}
-      <li class="reveal" data-delay="{{ loop.index0 * 70 }}">
-        <p class="compare-name">{{ c.name }}</p>
-        <p class="compare-figure">{{ c.figure }}</p>
-        <p class="note">{{ c.note }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
-    <p class="statement">{{ p.compare_soft }} {{ p.compare_gold }}</p>
+    <table class="compare">
+      <caption class="sr-only">{{ p.compare_aria }}</caption>
+      <thead>
+        <tr><th scope="col">What it is</th><th scope="col">What it costs</th><th scope="col">What you get</th></tr>
+      </thead>
+      <tbody>
+        {%- for b in p.compare_bars %}
+        <tr>
+          <th scope="row">{{ b.name }}</th>
+          <td class="c-price">{{ b.figure }}</td>
+          <td>{{ b.note }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+    <p class="claim" style="margin-top:48px">{{ p.compare_gold }}<span>{{ p.compare_soft }}</span></p>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap split">
-    <div>
+<section class="section paper">
+  <div class="wrap">
+    <div class="proof-head reveal">
       <p class="eyebrow">{{ p.faq_eyebrow }}</p>
       <h2 class="h2">{{ p.faq_heading }}</h2>
     </div>
     <div class="faq">
       {%- for f in p.faq %}
-      <details class="reveal" data-delay="{{ loop.index0 * 60 }}">
-        <summary>{{ f.q }}</summary>
-        <p>{{ f.a }}</p>
-      </details>
+      <div><h3>{{ f.q }}</h3><p>{{ f.a }}</p></div>
       {%- endfor %}
     </div>
   </div>
 </section>
 
-<section class="section cream">
-  <div class="wrap center-block">
-    <h2 class="h2">{{ p.cta_heading }}</h2>
-    <p class="lede" style="margin:var(--s3) auto 0">{{ p.cta_body }}</p>
-    <p class="center-cta"><a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a></p>
+<section class="section close-band darkest">
+  <div class="wrap grid12 ed">
+    <div class="ed-wide">
+      <h2 class="h2">{{ p.cta_heading }}</h2>
+      <p>{{ p.cta_body }}</p>
+      <div class="actions">
+        <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+      </div>
+    </div>
+    <div class="ed-side">
+      <h3 class="h3">{{ site.getting_started.heading }}</h3>
+      <ol class="steps">
+        {%- for s in site.getting_started.steps %}
+        <li><div><b>{{ s.name }}</b> <span>{{ s.body }}</span></div></li>
+        {%- endfor %}
+      </ol>
+    </div>
   </div>
 </section>
 {% endblock %}

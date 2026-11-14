@@ -1,5 +1,5 @@
-{#- The v4 shell: head, the staging banner, the bar, the handoff block and
-    the footer. Everything a page shares lives here once. #}
+{#- The v5 shell: head, the staging banner, the masthead, the handoff block
+    and the footer. Everything every page shares lives here once. #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,19 +10,22 @@
 {%- endif %}
 <title>{{ page.title }}</title>
 <meta name="description" content="{{ page.description }}">
-<meta name="theme-color" content="#1A1512">
+<meta name="theme-color" content="#191715">
 <link rel="icon" type="image/png" href="favicon.png">
-{#- Both families are self hosted and variable, so one file per subset
-    covers every weight on the page and these two preloads cover everything
-    a reader sees first. Fonts are fetched in CORS mode even from our own
+{#- Both families are self hosted and these two files cover the text a
+    reader meets first. Fonts are fetched in CORS mode even from our own
     origin, so crossorigin is required or the preload is thrown away. #}
-<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
 {%- block preload %}{% endblock %}
 <link rel="stylesheet" href="alfredo.css">
+{#- The only inline script on the site. It marks the document as scripted
+    before first paint, which is what lets the stylesheet hide the blocks
+    that are about to be revealed. Without it nothing is ever hidden. #}
+<script>document.documentElement.className += ' js';</script>
 {%- block head %}{% endblock %}
 </head>
-<body>
+<body{% if page.get('hero') %} class="hero-nav"{% endif %}>
 {%- if site.staging %}
 <p class="staging-bar">Staging preview. Not the live site.</p>
 {%- endif %}

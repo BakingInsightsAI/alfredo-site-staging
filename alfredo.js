@@ -1,19 +1,20 @@
-/* Alfredo, v4. Three small jobs: the menu, the scroll reveals, and the
-   demo form. Nothing here is required for the page to make sense: with
-   JavaScript off the menu is a plain list, every revealed block is already
-   visible, and the form posts the normal way. */
+/* Alfredo, v5. Four small jobs: the menu, the scroll reveals, the product
+   demonstration, and the demo form.
+
+   None of it is required for the page to make sense. With scripting off the
+   menu is a plain list, nothing is hidden waiting to be revealed, all three
+   stages of the demonstration are on the page at once, and the form posts
+   the ordinary way. Every tab role and every hidden attribute below is added
+   here rather than written into the markup, which is why that is true. */
 (function () {
   'use strict';
-
-  var root = document.documentElement;
-  root.classList.add('js');
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------- menu --
-     The button owns the open state, and aria-expanded is set from the same
-     place, so the two cannot disagree. Escape closes it and returns the
-     focus to the button, which is where the reader was. */
+     The button owns the open state and aria-expanded is set in the same
+     place, so the two cannot disagree. Escape closes it and gives the focus
+     back to the button, which is where the reader was. */
   var toggle = document.getElementById('navToggle');
   var links = document.getElementById('navLinks');
   if (toggle && links) {
@@ -22,7 +23,7 @@
       toggle.setAttribute('aria-expanded', String(open));
     };
     toggle.addEventListener('click', function () {
-      setOpen(links.className.indexOf('open') === -1);
+      setOpen(!links.classList.contains('open'));
     });
     links.addEventListener('click', function (e) {
       if (e.target.closest('a')) setOpen(false);
@@ -33,39 +34,81 @@
         toggle.focus();
       }
     });
-    /* a width change can take the menu back to a row, where the open class
-       would otherwise linger */
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) setOpen(false);
+      if (window.innerWidth > 1000) setOpen(false);
     });
   }
 
   /* ---------------------------------------------------------- reveals --
-     Anything with .reveal or .act arrives when it is first seen, once.
-     Under reduced motion the class is added immediately and the stylesheet
-     has already turned the transition off, so the page is simply there. */
-  var items = [].slice.call(document.querySelectorAll('.reveal, .act'));
+     Only the things carrying .reveal, which is the heading that opens each
+     editorial moment, the product demonstration and the ledger. Not every
+     paragraph, and not every row. Under reduced motion they are simply in. */
+  var items = [].slice.call(document.querySelectorAll('.reveal'));
   if (items.length) {
     if (reduce || !('IntersectionObserver' in window)) {
-      items.forEach(function (el) { el.classList.add('shown', 'lit'); });
+      items.forEach(function (el) { el.classList.add('in'); });
     } else {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          var el = entry.target;
-          var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
-          setTimeout(function () { el.classList.add('shown', 'lit'); }, delay);
-          io.unobserve(el);
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
         });
-      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
       items.forEach(function (el) { io.observe(el); });
     }
   }
 
+  /* ------------------------------------------- the product walkthrough --
+     A real tablist: arrow keys and Home and End move between the stages,
+     one tab is in the tab order at a time, and the panel each one owns is
+     named by it. Nothing rotates on its own. */
+  var tabsBox = document.querySelector('[data-tabs]');
+  if (tabsBox) {
+    var tabs = [].slice.call(tabsBox.querySelectorAll('[data-tab]'));
+    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('data-tab')); });
+    if (tabs.length && panels.every(Boolean)) {
+      tabsBox.setAttribute('role', 'tablist');
+      tabsBox.setAttribute('aria-label', 'Stages of the walkthrough');
+
+      var select = function (i, moveFocus) {
+        tabs.forEach(function (tab, n) {
+          var on = n === i;
+          tab.setAttribute('aria-selected', String(on));
+          tab.setAttribute('tabindex', on ? '0' : '-1');
+          panels[n].hidden = !on;
+        });
+        if (moveFocus) tabs[i].focus();
+      };
+
+      tabs.forEach(function (tab, i) {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('id', 'tab-' + tab.getAttribute('data-tab'));
+        tab.setAttribute('aria-controls', tab.getAttribute('data-tab'));
+        panels[i].setAttribute('role', 'tabpanel');
+        panels[i].setAttribute('aria-labelledby', 'tab-' + tab.getAttribute('data-tab'));
+        panels[i].setAttribute('tabindex', '0');
+
+        tab.addEventListener('click', function () { select(i, false); });
+        tab.addEventListener('keydown', function (e) {
+          var to = null;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') to = (i + 1) % tabs.length;
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') to = (i - 1 + tabs.length) % tabs.length;
+          if (e.key === 'Home') to = 0;
+          if (e.key === 'End') to = tabs.length - 1;
+          if (to === null) return;
+          e.preventDefault();
+          select(to, true);
+        });
+      });
+
+      select(0, false);
+    }
+  }
+
   /* ------------------------------------------------------------- form --
-     Validation is the browser's: the fields carry the constraints, and this
-     only decides when to show the message. The post is a normal fetch, and
-     every ending tells the reader what happened and what to do next. */
+     Unchanged from v4: same endpoint, same field names, same messages.
+     Validation is the browser's, and this only decides when to show it. */
   var form = document.getElementById('demoForm');
   if (form) {
     var status = document.getElementById('formStatus');
