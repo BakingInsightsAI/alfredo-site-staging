@@ -78,7 +78,7 @@ meet:
       - k: "What to watch"
         v: "Whether Thursday covers come up without pulling guests off the other weekdays."
       - k: "When to review"
-        v: "Four weeks from the day you start."
+        v: "The date you choose. Alfredo suggests one, and you can make it shorter or longer."
     controls: ["Try this", "Not right now"]
     sr: "Sample controls, shown to illustrate the choice. They do nothing on this page."
     note_a: "Alfredo recommends. You decide."
@@ -86,10 +86,10 @@ meet:
 
   learn:
     heading: "See what happened."
-    body: "Four weeks on, Alfredo comes back with one of three answers. It is as willing to tell you the change did nothing as to tell you it worked."
-    outcome: "The Thursday lunch offer ran for four weeks. Thursday covers came up and held, and the other weekdays did not fall. After what you would have made anyway."
+    body: "On the date you chose, Alfredo comes back with one of three answers. It is as willing to tell you the change did nothing as to tell you it worked."
+    outcome: "The Thursday lunch offer ran for five weeks. Thursday covers came up and held, and the other weekdays did not fall. After what you would have made anyway."
     label: "This result"
-    honest: "If four weeks is not enough to call it, Alfredo says so rather than guess."
+    honest: "If the time you chose is not enough to call it, Alfredo says so rather than guess."
     verdicts:
       - { name: "Worked", body: "The change did what it was meant to do.", result: true }
       - { name: "No effect", body: "Nothing moved. Worth knowing, and worth stopping.", result: false }
