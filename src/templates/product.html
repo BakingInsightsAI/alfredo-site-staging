@@ -45,48 +45,47 @@
       </ul>
     </div>
 
+    {#- The list itself, which is what this page is for. The home page
+        shows the range of it in four short cards; this is a Monday, in
+        full, with every one of the six things said for every suggestion.
+        None of these five appears on the home page. #}
     <div class="listcard reveal">
       <div class="listcard-head">
-        <h3>{{ home.weekly.card_title }}<span class="card-sub">{{ home.weekly.card_sub }}</span></h3>
-        <span class="tag-sample">{{ home.weekly.card_label }}</span>
+        <h3>{{ product.weeklist.title }}<span class="card-sub">{{ product.weeklist.sub }}</span></h3>
+        <span class="tag-sample">{{ product.weeklist.label }}</span>
       </div>
       <ul class="recs">
-        {%- for r in home.weekly.recs %}
-        <li class="rec">
+        {%- for r in product.weeklist.entries %}
+        <li class="rec rec-full">
           <p class="rec-kind">{{ r.kind }}</p>
           <b>{{ r.name }}</b>
           <p>{{ r.why }}</p>
           <p class="rec-meta">
             <span>Effort <i>{{ r.effort }}</i></span>
             <span>Risk <i>{{ r.risk }}</i></span>
-            <span>{{ r.step }}</span>
           </p>
+          <dl class="rec-steps">
+            <dt>How to do it</dt><dd>{{ r.how }}</dd>
+            <dt>Check back</dt><dd>{{ r.back }}</dd>
+          </dl>
         </li>
         {%- endfor %}
       </ul>
     </div>
   </div>
 
-  {#- The same finished example the home page quotes, so the two pages
-      never print a different figure for it. #}
+  {#- The House Lager, walked through once. The figure is the one the home
+      page quotes for the same sample, and it is told here rather than
+      repeated there as a card. #}
   <div class="wrap">
     <div class="done-h">
       <h3 class="h3">{{ product.measured.heading }}</h3>
-      <span class="tag-sample">{{ home.weekly.card_label }}</span>
+      <span class="tag-sample">{{ product.weeklist.label }}</span>
     </div>
     <div class="result">
       <p class="result-line">{{ product.measured.lead }} <b>{{ product.measured.amount }}</b> {{ product.measured.tail }}</p>
       <p class="note">{{ product.measured.volume }}. {{ product.measured.after }}</p>
     </div>
-    <ul class="done-list">
-      {%- for d in home.weekly.done %}
-      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
-        <p class="verdict"><span class="chip chip-{{ d.kind }}">{{ d.verdict }}</span></p>
-        <h4 class="h3">{{ d.name }}</h4>
-        <p>{{ d.body }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
   </div>
 </section>
 

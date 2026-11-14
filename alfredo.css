@@ -761,3 +761,19 @@ ul, ol { margin: 0; padding: 0; }
   .demo-form { grid-template-columns: 1fr; }
   .pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* The full form of a suggestion, on the page whose job is the list. The
+   two lines under the effort and the risk are a description list, because
+   that is what they are: a label and its answer. */
+.rec-steps {
+  display: grid; grid-template-columns: max-content minmax(0, 1fr);
+  gap: 3px var(--s3); margin-top: var(--s2);
+  padding-top: var(--s2); border-top: 1px solid var(--hair);
+  font-size: .85rem;
+}
+.rec-steps dt { color: var(--muted); }
+.rec-steps dd { margin: 0; color: #E2D6C6; }
+@media (max-width: 520px) {
+  .rec-steps { grid-template-columns: 1fr; gap: 0; }
+  .rec-steps dt { margin-top: 5px; }
+}
