@@ -45,7 +45,7 @@ menu:
       slot_after: "ipa"
       rows:
         - { key: "ipa",   name: "House IPA",   count: 410, price: "$7.00" }
-        - { key: "lager", name: "House Lager", count: 470, price: "$6.50" }
+        - { key: "lager", name: "House Lager", count: 520, price: "$6.50" }
     - name: "Happy hour"
       rows:
         - { key: "hh", name: "Weekdays", price: "4 to 6pm", new: "5 to 7pm", wide: true }

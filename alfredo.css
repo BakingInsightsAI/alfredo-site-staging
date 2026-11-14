@@ -495,7 +495,23 @@ ul, ol { margin: 0; padding: 0; }
 .listcard-head h3 { display: flex; flex-direction: column; }
 .card-sub { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 3px; }
 
-.done-h { margin-top: var(--s8); margin-bottom: var(--s4); }
+.done-h {
+  margin-top: var(--s8); margin-bottom: var(--s4);
+  display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap;
+}
 .done-list { list-style: none; }
 .done-list .card h4 { margin: var(--s2) 0 var(--s2); font-size: 1.12rem; }
 .verdict { margin: 0; }
+
+/* The kind of change a suggestion is, above its title. Sentence case and
+   the accent, not a capitalised chip: this site does not set labels in
+   caps, and the four of them in a column are what tell a reader the
+   advice is not all one sort. */
+/* .rec p paints every paragraph in a card muted, and a class and an
+   element outrank a class on its own, so this has to name the card as
+   well or the label comes out grey. */
+.rec .rec-kind {
+  font-size: .76rem; font-weight: 600; color: var(--amber);
+  letter-spacing: .01em; margin-top: 0; margin-bottom: 3px;
+}
+.listcard .rec-kind + b { display: block; }

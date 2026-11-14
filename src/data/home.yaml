@@ -14,18 +14,20 @@ hero:
   offer_href: "pricing.html"
   image_alt: "A dining room at the end of service, lit by low pendant lights."
 
-# The card in the first screen. Short on purpose: it is the signal, and the
-# full version further down the page is the showcase.
+# The card in the first screen. Short on purpose: it is the signal, not the
+# showcase. None of these three appears again further down the page, so a
+# reader who scrolls finds new suggestions rather than the same three in a
+# bigger box.
 hero_list:
   title: "This week"
   label: "Illustrative example"
   rows:
-    - name: "Suggest the pale ale with the fish plate"
-      meta: "A pairing your guests already order together"
-    - name: "Move three starters to the top of the menu"
-      meta: "The three that earn the most for the kitchen"
-    - name: "Win back 14 regulars who have gone quiet"
-      meta: "Last seen more than six weeks ago"
+    - name: "Put the set lunch back on Thursdays"
+      meta: "Thursday lunch is your quietest service"
+    - name: "Staff the Friday rush from six"
+      meta: "Orders start climbing before seven"
+    - name: "Feature the house red by the glass"
+      meta: "It earns more than the bottles beside it"
 
 story:
   eyebrow: "The story"
@@ -48,52 +50,56 @@ story:
       name: "The answer"
       body: "It worked, it did nothing, or it backfired. Alfredo tells you which."
 
-# The showcase. Mixed kinds on purpose: a pairing, a menu move, a promotion,
-# the floor, and a cost. Price is one example among several, never the one
-# the section leads with.
+# The showcase is about range, not about one week: the whole weekly list
+# lives on the product page. Four suggestions from four different corners
+# of the business, each labelled with the kind it is, so a reader sees at a
+# glance that this is not all one sort of advice. Price is deliberately not
+# among them here: it is one kind of change on the product page, never the
+# example the home page leads with.
 weekly:
-  eyebrow: "What lands every week"
-  heading: "Three to five things worth trying. Never a wall of charts."
-  lede: "Each one says what it is, why it came up, how much work it is, what it risks, and when to check back. Nothing changes unless you choose it."
+  eyebrow: "The range of it"
+  heading: "Not all one kind of change."
+  lede: "A suggestion can come from any corner of your sales. Each one says what it is, why it came up, how much work it is, what it risks, and when to check back. Nothing changes unless you choose it."
   statement: "Alfredo recommends. You decide."
-  card_title: "Your week"
+  card_title: "Four kinds of suggestion"
   card_label: "Illustrative example"
-  card_sub: "Monday morning, five minutes"
+  card_sub: "One week, four corners of your sales"
   recs:
-    - name: "Suggest the pale ale with the fish plate"
+    - kind: "Pairing"
+      name: "Suggest the pale ale with the fish plate"
       why: "Guests who order the fish already order this beer more than any other."
       effort: "Low"
       risk: "Low"
       step: "Tell the floor on Thursday."
-      status: ""
-    - name: "Move three starters to the top of the menu"
-      why: "They earn the most per plate and sit near the bottom of the list."
-      effort: "Low"
-      risk: "Low"
-      step: "Reprint before the weekend."
-      status: ""
-    - name: "Try a Tuesday offer on the slow hour"
-      why: "Tuesday between six and seven is your quietest hour of the week."
-      effort: "Medium"
-      risk: "Medium"
-      step: "Run it for three weeks, then look."
-      status: ""
-    - name: "Check the cost on the short rib"
+    - kind: "Cost"
+      name: "Check the plate on the short rib"
       why: "The price you pay for it went up twice last month."
       effort: "Low"
       risk: "Low"
       step: "Confirm the new cost or dismiss the flag."
-      status: ""
+    - kind: "Neighborhood"
+      name: "Try a coffee and pastry offer from two until four"
+      why: "The bakery next door closes at two, and two until four is your quietest stretch."
+      effort: "Medium"
+      risk: "Low"
+      step: "Run it for three weeks, then look."
+    - kind: "Guests"
+      name: "Win back 14 regulars who have gone quiet"
+      why: "Last seen more than six weeks ago, and every one of them used to be in most weeks."
+      effort: "Low"
+      risk: "Low"
+      step: "Write to them before the weekend."
   done_title: "Finished, with the answer"
   done:
-    - name: "House lager up fifty cents"
+    # the figure is the one the product page prints for the same sample
+    - name: "House lager: $247 more a week"
       verdict: "Worked"
       kind: "worked"
-      body: "Four weeks on, the bar took more and sold the same number of pints. After what you would have made anyway."
-    - name: "Dessert added to the set menu"
+      body: "Raised fifty cents. Four weeks on, the same number of pints sold. After what you would have made anyway."
+    - name: "Calamari moved to the top of the starters"
       verdict: "No effect"
       kind: "none"
-      body: "Three weeks on, nothing moved either way. Alfredo said so rather than finding a number to show."
+      body: "Four weeks on, it sold the same. Alfredo said so, and the top spot went to something that does move."
     - name: "Happy hour pushed an hour later"
       verdict: "Backfired"
       kind: "back"

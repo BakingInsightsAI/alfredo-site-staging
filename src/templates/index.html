@@ -92,6 +92,9 @@
       <ul class="recs">
         {%- for r in home.weekly.recs %}
         <li class="rec">
+          {#- the kind of change this is, so the four read as a range
+              rather than as four of the same thing #}
+          <p class="rec-kind">{{ r.kind }}</p>
           <b>{{ r.name }}</b>
           <p>{{ r.why }}</p>
           <p class="rec-meta">
@@ -106,7 +109,12 @@
   </div>
 
   <div class="wrap">
-    <h3 class="h3 done-h">{{ home.weekly.done_title }}</h3>
+    {#- These three carry a figure of their own now, so the group says what
+        it is in the same words the cards above use. #}
+    <div class="done-h">
+      <h3 class="h3">{{ home.weekly.done_title }}</h3>
+      <span class="tag-sample">{{ home.weekly.card_label }}</span>
+    </div>
     <ul class="cols cols-3 done-list">
       {%- for d in home.weekly.done %}
       <li class="card reveal" data-delay="{{ loop.index0 * 80 }}">
