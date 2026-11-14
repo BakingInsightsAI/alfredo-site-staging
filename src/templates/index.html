@@ -186,6 +186,29 @@
       </div>
     </div>
     <p class="pui-disclosure">{{ m.disclosure }}</p>
+
+{#- The Action Center, inside this section's wrap and after the
+    walkthrough's disclosure, which is where the component belongs. #}
+{%- set ac = home.actions %}
+    <section class="v6-action-center" aria-labelledby="v6-actions-title">
+      <div class="v6-action-top">
+        <div>
+          <p class="eyebrow">{{ ac.eyebrow }}</p>
+          <h3 id="v6-actions-title">{{ ac.heading }}</h3>
+        </div>
+        <span class="v6-demo-label">{{ ac.label }}</span>
+      </div>
+      <div class="v6-action-grid">
+        {%- for c in ac.cards %}
+        <article class="v6-action-card">
+          <header><span class="v6-card-id">{{ c.tag }}</span><span class="v6-pill">{{ c.pill }}</span></header>
+          <h4>{{ c.name }}</h4>
+          <p>{{ c.body }}</p>
+          <footer><span>{{ c.feet[0] }}</span><span>{{ c.feet[1] }}</span></footer>
+        </article>
+        {%- endfor %}
+      </div>
+    </section>
   </div>
 </section>
 

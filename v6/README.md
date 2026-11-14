@@ -1,12 +1,18 @@
-# v6 preview
+# v6 preview (superseded by the root)
 
-The v6 glossy styling upgrade, published so it can be looked at on a real
-URL alongside the version it is built on:
+v6 is now the staging site itself, at the root of this repository, and it is
+rendered there by `build.py` from `src/templates` like every other page.
+This folder is the frozen snapshot that was published while v6 was under
+review, kept only so the URL it was shared on still resolves:
 
     https://bakinginsightsai.github.io/alfredo-site-staging/v6/
 
-`/v5/` is untouched and still serves the editorial design, so the two can be
-opened side by side. The root of this repository is unaffected.
+Because it is frozen, it will drift from the root as soon as the templates
+change again. Prefer the root. This folder can be deleted in one commit
+whenever the link is no longer needed.
+
+`/v5/` is untouched and still serves the editorial design without the gloss,
+which is what makes the before and after comparison possible.
 
 ## How it was built
 
