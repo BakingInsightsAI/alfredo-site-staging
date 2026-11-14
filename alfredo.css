@@ -243,7 +243,7 @@ ul, ol { margin: 0; padding: 0; }
 }
 .cream + .section, .section + .cream { border-top: 0; }
 .panel-sec { background: #211A16; }
-.head { max-width: 46rem; margin-bottom: var(--s6); }
+.head { max-width: 46rem; margin-bottom: clamp(26px, 4vw, 48px); }
 .head.mid { margin-inline: auto; text-align: center; }
 
 /* ------------------------------------------------------------ the hero --
@@ -287,14 +287,33 @@ ul, ol { margin: 0; padding: 0; }
 
 @media (max-width: 980px) {
   .hero-grid { grid-template-columns: 1fr; gap: var(--s5); padding-top: var(--s4); padding-bottom: var(--s6); }
-  .hero-media img { object-position: 68% 42%; }
-  .hero::before {
-    background:
-      linear-gradient(180deg, rgba(26,21,18,.86) 0%, rgba(26,21,18,.6) 34%, rgba(26,21,18,.42) 58%, rgba(26,21,18,.9) 100%),
-      linear-gradient(0deg, var(--ink) 1%, rgba(26,21,18,0) 22%);
-  }
   .hero-copy { max-width: none; }
   .hero .lede { max-width: none; }
+}
+/* On a phone the picture was being covered by its own scrim at exactly the
+   height where there is most of it to see. It carries the top of the
+   screen now and the scrim gathers under the words, which is where it is
+   needed. The foot of it runs a long way into the page background, so the
+   photograph ends in a fade rather than on a line. Every run of text over
+   it was then measured off the rendered pixels, not assumed. */
+@media (max-width: 980px) {
+  .hero-media img { object-position: 62% 38%; }
+  /* The ramp is in pixels, not in per cent of the hero. Per cent moves
+     with the height of the copy, so the band where the words land drifts
+     with it: measured off the pixels, the eyebrow and the headline were
+     sitting over candle flames at 1.11 and 1.59. In pixels the open part
+     of the picture is the top 170px and the words never begin before
+     215px, where the scrim is already at .86. */
+  .hero::before {
+    background: linear-gradient(180deg,
+      rgba(26,21,18,.10) 0,
+      rgba(26,21,18,.14) 90px,
+      rgba(26,21,18,.62) 170px,
+      rgba(26,21,18,.90) 235px,
+      rgba(26,21,18,.96) 320px,
+      var(--ink) 100%);
+  }
+  .hero-grid { padding-top: 215px; padding-bottom: var(--s5); gap: var(--s4); }
 }
 @media (max-width: 420px) {
   .hero-actions { gap: var(--s2); }
@@ -339,6 +358,37 @@ ul, ol { margin: 0; padding: 0; }
 .chip-none { color: var(--muted); }
 .chip-back { color: var(--miss); border-color: rgba(201,124,107,.42); }
 .chip-soon { color: var(--amber); border-color: rgba(217,154,62,.4); }
+
+/* ---------------------------------------------------------- the week --
+   Five moments in the order they happen, each held by its time rather
+   than by a number. The thread is a hairline down the side with a small
+   amber mark at each moment: enough to say these follow one another,
+   without turning a Monday into a process diagram. On a wide screen the
+   heading stays put while the week runs past it. */
+/* the heading holds its ground while the week runs past it, so it takes
+   a little less of the row than the week does */
+.split-sticky { align-items: start; }
+@media (min-width: 981px) { .split-sticky { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); } }
+@media (min-width: 981px) {
+  .week-intro { position: sticky; top: calc(72px + var(--s6)); }
+}
+.moments { list-style: none; position: relative; padding-left: var(--s5); }
+.moments::before {
+  content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--line) 5%, var(--line) 95%, transparent);
+}
+.moment { position: relative; padding-bottom: var(--s5); }
+.moment:last-child { padding-bottom: 0; }
+.moment::before {
+  content: ''; position: absolute; left: -24px; top: 7px; width: 11px; height: 11px;
+  border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px rgba(217,154,62,.12);
+}
+.when { font-size: .8rem; font-weight: 600; color: var(--amber); letter-spacing: .01em; }
+.moment h3 {
+  font-family: var(--serif); font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  letter-spacing: -.02em; margin: 2px 0 var(--s1);
+}
+.moment-body { color: var(--muted); font-size: .94rem; }
 
 /* ------------------------------------------------------- the five acts --
    A thread rather than five boxes. One amber line runs the length of the
@@ -390,11 +440,26 @@ ul, ol { margin: 0; padding: 0; }
 
 /* the split: words one side, the made up interface the other */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+/* A grid never ends on a short row. The six card grid divides by three,
+   two and one, so it can step down freely. The three finished tests do
+   not divide by two, so they go straight from three across to one. */
 @media (max-width: 980px) { .split { grid-template-columns: 1fr; } .cols-3 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-@media (max-width: 640px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+.done-list { list-style: none; display: grid; gap: var(--s4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 980px) { .done-list { grid-template-columns: 1fr; } }
+
+/* Six short cards stacked one above the other is most of a phone screen
+   each. Two across, with the padding and the type stepped down to suit the
+   narrower column. */
+@media (max-width: 520px) {
+  .looks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+  .looks-grid .card { padding: var(--s3); }
+  .looks-grid .card h3 { font-size: 1.02rem; margin-bottom: 4px; }
+  .looks-grid .card p { font-size: .84rem; line-height: 1.45; }
+}
 
 /* ------------------------------------------------------- audience cards */
-.audience { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); margin-top: var(--s6); }
+.audience { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); margin-top: clamp(26px, 4vw, 48px); }
 .aud {
   position: relative; border-radius: var(--radius); overflow: hidden;
   aspect-ratio: 4 / 5; isolation: isolate;
@@ -485,6 +550,19 @@ ul, ol { margin: 0; padding: 0; }
 
 /* The brand statement. It is a sentence, not a slogan in a box: a rule
    above it and the serif voice are enough to make it stop the eye. */
+/* The argument that used to be a section of its own, five cards restating
+   what this one already shows. Four lines, each answered by something
+   within arm's reach on this page. */
+.marks { list-style: none; margin-top: var(--s4); display: grid; gap: 0; }
+.marks li {
+  padding: var(--s2) 0 var(--s2) var(--s4); position: relative;
+  border-top: 1px solid var(--hair); color: #E2D6C6; font-size: .96rem;
+}
+.marks li:last-child { border-bottom: 1px solid var(--hair); }
+.marks li::before {
+  content: ''; position: absolute; left: 2px; top: 1.05em; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--amber);
+}
 .statement {
   margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--hair);
   font-family: var(--serif); font-size: clamp(1.4rem, 2vw, 1.9rem);
@@ -496,7 +574,7 @@ ul, ol { margin: 0; padding: 0; }
 .card-sub { font-family: var(--sans); font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 3px; }
 
 .done-h {
-  margin-top: var(--s8); margin-bottom: var(--s4);
+  margin-top: clamp(40px, 6vw, 88px); margin-bottom: var(--s4);
   display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap;
 }
 .done-list { list-style: none; }
@@ -515,3 +593,29 @@ ul, ol { margin: 0; padding: 0; }
   letter-spacing: .01em; margin-top: 0; margin-bottom: 3px;
 }
 .listcard .rec-kind + b { display: block; }
+
+/* ------------------------------------------------- density on a phone --
+   The note on the previous site was too much empty space. Every card on a
+   phone loses a few pixels of padding and a little of the gap between it
+   and the next one: enough to take a screen and a half off the page,
+   nowhere near enough to make anything feel cramped. Tap targets are not
+   touched. */
+@media (max-width: 640px) {
+  .listcard { padding: var(--s3); border-radius: var(--radius); }
+  .listcard-head { padding-bottom: var(--s2); }
+  .rec { padding: 14px; }
+  .recs { gap: 8px; }
+  .done-list { gap: var(--s2); }
+  .done-list .card { padding: var(--s3); }
+  .marks li { padding-top: 7px; padding-bottom: 7px; }
+  .statement { margin-top: var(--s4); padding-top: var(--s3); }
+  .claim { margin-top: var(--s5); padding-top: var(--s4); }
+  .moment { padding-bottom: var(--s4); }
+
+  /* the footer is five links, a contact block and two lines of small
+     print, which had been taking a whole screen on its own */
+  .footer { padding: var(--s6) 0 var(--s5); }
+  .footer-top { gap: var(--s4); }
+  .footer nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s4); }
+  .footer-foot { margin-top: var(--s4); padding-top: var(--s3); }
+}

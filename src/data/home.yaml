@@ -29,26 +29,29 @@ hero_list:
     - name: "Feature the house red by the glass"
       meta: "It earns more than the bottles beside it"
 
-story:
-  eyebrow: "The story"
-  heading: "From a question you cannot answer to one you can."
-  lede: "Five stages, every week, in your own sales. You decide at every one of them."
-  acts:
-    - n: "One"
+# Not five steps on a line. One owner's week, told in the order it
+# happens, with the time of it rather than a step number: the point is
+# that this is a Monday, not a process diagram.
+week:
+  eyebrow: "A week with it"
+  heading: "One Monday, and the four weeks after."
+  lede: "The same five moments every week, in your own sales. You decide at every one of them."
+  moments:
+    - when: "Monday morning"
       name: "The question"
-      body: "Something in the week feels off, or feels good, and you cannot say why."
-    - n: "Two"
+      body: "Last week felt busy and the takings did not show it. You cannot say why, and you have a service to run."
+    - when: "Still Monday morning"
       name: "The discovery"
-      body: "Alfredo goes through your own sales and finds what is behind it."
-    - n: "Three"
+      body: "Alfredo has already been through the week's sales and found what is behind it."
+    - when: "Before service"
       name: "The choice"
-      body: "You get a short list of small changes worth trying. You pick the ones you want."
-    - n: "Four"
+      body: "A short list of small changes worth trying, each one easy to undo. You pick the ones that suit your place."
+    - when: "The weeks after"
       name: "The test"
-      body: "You make the change. Alfredo watches the weeks that follow."
-    - n: "Five"
+      body: "You make the change. Alfredo watches the weeks that follow and says nothing until it knows."
+    - when: "Four weeks on"
       name: "The answer"
-      body: "It worked, it did nothing, or it backfired. Alfredo tells you which."
+      body: "It worked, it did nothing, or it backfired. You find out which, and decide what comes next."
 
 # The showcase is about range, not about one week: the whole weekly list
 # lives on the product page. Four suggestions from four different corners
@@ -57,9 +60,17 @@ story:
 # among them here: it is one kind of change on the product page, never the
 # example the home page leads with.
 weekly:
-  eyebrow: "The range of it"
+  eyebrow: "What lands every week"
   heading: "Not all one kind of change."
-  lede: "A suggestion can come from any corner of your sales. Each one says what it is, why it came up, how much work it is, what it risks, and when to check back. Nothing changes unless you choose it."
+  lede: "A suggestion can come from any corner of your sales. Each one says what it is, why it came up, how much work it is, what it risks, and when to check back."
+  # What used to be a separate section restating the same argument. Four
+  # lines, each one answered by something on this page rather than by a
+  # card of its own.
+  marks:
+    - "Changes to try, not charts to read."
+    - "Every one of them comes out of your own sales."
+    - "Every change ends in a verdict: worked, no effect, or backfired."
+    - "Alfredo never changes a menu or a price on its own."
   statement: "Alfredo recommends. You decide."
   card_title: "Four kinds of suggestion"
   card_label: "Illustrative example"
@@ -138,21 +149,6 @@ audience:
     - label: "Bakeries and cafes"
       stem: "bakery"
       alt: "A baker shaping dough on a floured bench beside racks of bread."
-
-different:
-  eyebrow: "Why it is different"
-  heading: "Most tools hand you charts. This one hands you a short list."
-  entries:
-    - name: "Changes to try, not charts to read"
-      body: "A dashboard shows you what happened. Alfredo tells you what to do about it, in the words you would use yourself."
-    - name: "Your own sales, nobody else's"
-      body: "Every suggestion comes out of what you already ring through your existing POS system."
-    - name: "A verdict on every change"
-      body: "Worked, no effect, or backfired. Every test ends on one of those three words."
-    - name: "Honest when it is not working"
-      body: "If a change did nothing, Alfredo says it did nothing. If the data is not there, it says pending."
-    - name: "You stay in control"
-      body: "Alfredo never changes a menu or a price on its own. It suggests, and you decide."
 
 proof:
   claim: "Tested with a brewpub and live across a 14 location restaurant chain."

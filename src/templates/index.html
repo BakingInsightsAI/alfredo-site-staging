@@ -27,14 +27,14 @@
         <p class="lede">{{ h.lede }}</p>
         <div class="hero-actions">
           <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-          <a class="btn btn-quiet" href="#story">{{ h.cta_secondary }}</a>
+          <a class="btn btn-quiet" href="#week">{{ h.cta_secondary }}</a>
         </div>
         {#- The one line on this page that points at a later chapter. #}
         <p class="hero-offer"><a href="{{ h.offer_href }}">{{ h.offer }}</a></p>
       </div>
 
       {#- The weekly list, in the first screen, so the product is seen
-          before it is explained. Three rows here; the whole thing is
+          before it is explained. None of these three appears again
           further down. #}
       <div class="listcard hero-card">
         <div class="listcard-head">
@@ -54,24 +54,25 @@
   </div>
 </section>
 
-<section class="section" id="story">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">{{ home.story.eyebrow }}</p>
-      <h2 class="h2">{{ home.story.heading }}</h2>
-      <p class="lede" style="margin-top:var(--s3)">{{ home.story.lede }}</p>
+{#- One week, in the order it happens. The time of each moment carries it,
+    not a step number: five numbered boxes on a rule read as a process
+    diagram, which is the opposite of a Monday in somebody's week. #}
+<section class="section week" id="week">
+  <div class="wrap split split-sticky">
+    <div class="week-intro">
+      <p class="eyebrow">{{ home.week.eyebrow }}</p>
+      <h2 class="h2">{{ home.week.heading }}</h2>
+      <p class="lede" style="margin-top:var(--s3)">{{ home.week.lede }}</p>
     </div>
-    <div class="acts">
-      <ol>
-        {%- for a in home.story.acts %}
-        <li class="act" data-delay="{{ loop.index0 * 90 }}">
-          <p class="act-n">{{ a.n }}</p>
-          <h3>{{ a.name }}</h3>
-          <p>{{ a.body }}</p>
-        </li>
-        {%- endfor %}
-      </ol>
-    </div>
+    <ol class="moments">
+      {%- for m in home.week.moments %}
+      <li class="moment reveal" data-delay="{{ loop.index0 * 70 }}">
+        <p class="when">{{ m.when }}</p>
+        <h3>{{ m.name }}</h3>
+        <p class="moment-body">{{ m.body }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
   </div>
 </section>
 
@@ -81,6 +82,13 @@
       <p class="eyebrow">{{ home.weekly.eyebrow }}</p>
       <h2 class="h2">{{ home.weekly.heading }}</h2>
       <p class="lede" style="margin-top:var(--s3)">{{ home.weekly.lede }}</p>
+      {#- What used to be its own section further down, restating this one.
+          Four lines, each answered by something already on this page. #}
+      <ul class="marks">
+        {%- for m in home.weekly.marks %}
+        <li>{{ m }}</li>
+        {%- endfor %}
+      </ul>
       <p class="statement">{{ home.weekly.statement }}</p>
     </div>
 
@@ -109,21 +117,24 @@
   </div>
 
   <div class="wrap">
-    {#- These three carry a figure of their own now, so the group says what
-        it is in the same words the cards above use. #}
+    {#- These three carry a figure of their own, so the group says what it
+        is in the same words the cards above use. #}
     <div class="done-h">
       <h3 class="h3">{{ home.weekly.done_title }}</h3>
       <span class="tag-sample">{{ home.weekly.card_label }}</span>
     </div>
-    <ul class="cols cols-3 done-list">
+    <ul class="done-list">
       {%- for d in home.weekly.done %}
-      <li class="card reveal" data-delay="{{ loop.index0 * 80 }}">
+      <li class="card reveal" data-delay="{{ loop.index0 * 70 }}">
         <p class="verdict"><span class="chip chip-{{ d.kind }}">{{ d.verdict }}</span></p>
         <h4 class="h3">{{ d.name }}</h4>
         <p>{{ d.body }}</p>
       </li>
       {%- endfor %}
     </ul>
+    {#- The proof, as plain text, directly under the finished tests it
+        belongs to. #}
+    <p class="claim">{{ home.proof.claim }}<span>{{ home.proof.note }}</span></p>
   </div>
 </section>
 
@@ -133,9 +144,9 @@
       <p class="eyebrow">{{ home.looks.eyebrow }}</p>
       <h2 class="h2">{{ home.looks.heading }}</h2>
     </div>
-    <ul class="cols cols-3">
+    <ul class="cols cols-3 looks-grid">
       {%- for i in home.looks.entries %}
-      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 80 }}">
+      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 70 }}">
         <h3 class="h3">{{ i.name }}</h3>
         <p>{{ i.body }}</p>
       </li>
@@ -152,7 +163,7 @@
     </div>
     <div class="audience">
       {%- for c in home.audience.cards %}
-      <figure class="aud reveal" data-delay="{{ loop.index0 * 70 }}">
+      <figure class="aud reveal" data-delay="{{ loop.index0 * 60 }}">
         <picture>
           <source type="image/webp" sizes="(max-width: 900px) 46vw, 23vw"
                   srcset="assets/{{ c.stem }}-320.webp 320w, assets/{{ c.stem }}-480.webp 480w, assets/{{ c.stem }}-640.webp 640w, assets/{{ c.stem }}-960.webp 960w">
@@ -163,26 +174,6 @@
       </figure>
       {%- endfor %}
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">{{ home.different.eyebrow }}</p>
-      <h2 class="h2">{{ home.different.heading }}</h2>
-    </div>
-    <ul class="cols cols-3">
-      {%- for i in home.different.entries %}
-      <li class="card reveal" data-delay="{{ loop.index0 % 3 * 80 }}">
-        <h3 class="h3">{{ i.name }}</h3>
-        <p>{{ i.body }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
-    {#- The proof, as plain text rather than a badge, directly under the
-        argument it supports. #}
-    <p class="claim">{{ home.proof.claim }}<span>{{ home.proof.note }}</span></p>
   </div>
 </section>
 {% endblock %}
