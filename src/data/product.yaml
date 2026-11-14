@@ -27,11 +27,11 @@ chat_chips:
   - q: "What are my best sellers?"
     a: "Wings lead on volume, but your best seller is not your best earner: your highest margin mover is a mid shelf pour. Want the list sorted by profit instead of popularity?"
   - q: "What do you recommend?"
-    a: "Three things on this week's list: a small price trial on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?"
+    a: "Three things on this week's list: a small price cut on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?"
 
 board_types:
   - name: "Prices"
-    body: "Which items can handle a small price bump, and which cannot."
+    body: "Which items could sell more at a slightly lower price."
   - name: "Pairings"
     body: "What your guests already like together, and what to suggest with it."
   - name: "Menu placement"
@@ -39,61 +39,23 @@ board_types:
   - name: "How you run the floor"
     body: "Happy hour times, busy and slow hours, and how long tables stay."
 
-# The House Lager result, printed on the this week tab and drawn small on
-# the overview card, and quoted on the home page as a finished test. One
-# figure, the same everywhere. Every number is invented for the
-# illustration and the card says so, but it has to add up: 520 pints a
-# week at 50 cents more is $260, and the dip in week three brings it to
-# $247, which is $12,844 over a year. The volume moved from 470 to 520
-# when the figure became $247: 470 pints could only ever have made $235,
-# so the old volume and the new figure could not both be true.
-# Alfredo's own figures are stated exactly: no "about" in front of a
-# number it reports.
+# The House Lager walkthrough, printed once on this page and quoted on the
+# home page as a finished test. One figure, the same in both places. Every
+# number is invented for the illustration and the card says so, but it has
+# to add up, and it is a price coming down, never going up:
+#   before   520 pints a week at $7.00 = $3,640
+#   after    598 pints a week at $6.50 = $3,887
+#   so       $3,887 - $3,640 = $247 more a week, and 598 - 520 = 78 more pints
+#   a year   $247 x 52 = $12,844
+# Alfredo's own figures are stated exactly: no "about" in front of a number
+# it reports. The takings are what the bar took, never what it made.
 measured:
-  heading: "We raised the House Lager by 50 cents."
-  label: "sample data"
-  volume: "520 pints a week"
-  weeks: [78, 92, 46, 86]
-  # green is on target, red is below. Week four was grey, which this card's
-  # own key calls not enough data, under a verdict that said it worked.
-  kinds: ["ok", "ok", "low", "ok"]
-  key: "green: on target, red: below, grey: not enough data that week"
+  heading: "We took fifty cents off the House Lager."
+  detail: "From $7.00 to $6.50. 520 pints a week became 598, and takings went from $3,640 to $3,887"
   after: "After what you would have made anyway."
-  lead: "Four weeks later:"
+  lead: "Four weeks later the bar took"
   amount: "$247"
   tail: "more a week. That is $12,844 a year."
-  # the same result, short enough to sit under a word on a small drawing
-  short: "$247 more a week"
-
-# The two outcomes a visitor can pick on the this week tab. They mirror the
-# two cards above them: the 50 cent move is the House Lager that worked, the
-# dollar move is the Garlic Fries that did not. Every figure is invented for
-# the illustration and the card says so.
-tryit:
-  label: "Sample. Try it."
-  heading: "Pick a change and see how the four weeks go"
-  item: "House Lager"
-  price: "$6.50"
-  prompt: "Sample results, to show how a test plays out."
-  again: "Start again"
-  options:
-    - key: "worked"
-      button: "Raise 50 cents"
-      new: "$7.00"
-      # the same four weeks as the card above it, because it is the same
-      # sample: two results that disagreed was the whole problem
-      weeks: [78, 92, 46, 86]
-      kinds: ["ok", "ok", "low", "ok"]
-      verdict: "Worked"
-      line: "Four weeks later: $247 more a week. That is $12,844 a year."
-      after: "After what you would have made anyway."
-    - key: "backfired"
-      button: "Raise one dollar"
-      new: "$7.50"
-      weeks: [64, 38, 30, 26]
-      kinds: ["low", "low", "low", "low"]
-      verdict: "Backfired"
-      line: "Orders fell away and the week came out behind. It went back to $6.50 in minutes, and the board said so."
 
 # One plate, broken down. Every figure here is invented for the illustration,
 # which is why the card carries a sample label. The sums are consistent:
@@ -155,10 +117,6 @@ radar:
     - { name: "Speed", score: 3.7, you: 0.74, market: 0.66, ux: -0.5878, uy: 0.809 }
     - { name: "Ambiance", you: 0.0, market: 0.0, ux: -0.9511, uy: -0.309, faded: true, note: "not enough reviews" }
 
-scanner:
-  - { theirs: "Smash Burger", theirprice: "$13.50", yours: "House Burger",   yourprice: "$11.00", gap: "You are $2.50 under", action: "Try this price" }
-  - { theirs: "Loaded Tots",  theirprice: "$9.00",  yours: "Tater Tots",     yourprice: "$8.00",  gap: "You are $1.00 under", action: "Confirmed" }
-  - { theirs: "Chicken Sando", theirprice: "$12.00", yours: "Crispy Chicken", yourprice: "$12.50",  gap: "Needs your review", action: "Review" }
 
 also_included: "Also included: what reviews in your area keep saying, a map of nearby competitors, who lives and works around you, whether nearby bars send you late night guests, what longer hours could bring in, and where your prices sit in the area."
 
@@ -247,11 +205,11 @@ weeklist:
       how: "Confirm the new costs or dismiss the flag."
       back: "This week"
     - kind: "Prices"
-      name: "Test a small rise on the burrata"
-      why: "It sells out most nights and the price has not moved in a year."
+      name: "Try fifty cents off the flatbread after nine"
+      why: "Late orders drop off sharply, and the flatbread costs little to make."
       effort: "Low"
-      risk: "Medium"
-      how: "Fifty cents, and leave the rest of the starters alone."
+      risk: "Low"
+      how: "Fifty cents off from nine until close, nothing else changes."
       back: "Four weeks"
     - kind: "Neighborhood"
       name: "Hold the Thursday quiz an hour later"
