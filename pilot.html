@@ -16,7 +16,7 @@
       imagesizes="(max-width: 900px) 100vw, 32vw" fetchpriority="high">
 
 <link rel="stylesheet" href="alfredo.css">
-<link rel="stylesheet" href="gloss-v6.css">
+<link rel="stylesheet" href="glossy.css">
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body>
@@ -47,7 +47,7 @@
 
 <main id="main" tabindex="-1">
 
-<section class="pagehead darkest">
+<section class="pagehead darkest pagehead-short">
   <div class="wrap grid12 pagehead-grid">
     <div class="pagehead-copy">
       <p class="eyebrow">About us</p>
@@ -73,119 +73,99 @@
       <h2 class="h2">Why Alfredo exists</h2>
     </div>
     <div class="pairs">
-      <div><h3>Why it exists</h3><p>Owners get plenty of tools that say what happened last week. Alfredo was built to say what to try next, and then to say honestly whether it worked.</p></div>
+      <div><p>Owners get plenty of tools that say what happened last week. Alfredo was built to say what to try next, and then to say honestly whether it worked.</p></div>
       <div><h3>How it was built</h3><p>Every feature started as a question from a working restaurant rather than a product meeting. People who run places have shaped it from the first week.</p></div>
     </div>
+
+    <h3 class="h4 sub-head">How we work with you</h3>
+    <p class="body">We learn your place first. Then you connect your POS, with no new hardware and no staff training. What guests say about you, and about the places nearby, helps shape your weekly list. A brewery sees its taproom and a bar sees its bar program, and early partners help decide what we build next.</p>
+
+    <h3 class="h4 sub-head">Early, and honest about it.</h3>
+    <ul class="marks marks-row">
+      <li>Tested with a brewpub and live across a 14 location restaurant chain.</li>
+      <li>Patent pending with the USPTO.</li>
+      <li>Now taking on a small number of partners, and we work with each of them directly.</li>
+    </ul>
+
+    <p class="body who-for">Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today.</p>
   </div>
 </section>
-
-<section class="section paper-light">
-  <div class="wrap">
-    <div class="proof-head reveal">
-      <h2 class="h2">How we work with you</h2>
-    </div>
-    <div class="pairs pairs-3">
-      <div><h3>We start by listening</h3><p>We learn your place first. Then you connect your POS. No new hardware, no staff training.</p></div>
-      <div><h3>Your reviews count too</h3><p>What guests say about you, and about the places nearby, helps shape your weekly list.</p></div>
-      <div><h3>Made to fit you</h3><p>A brewery sees its taproom, a bar sees its bar program. Early partners help decide what we build next.</p></div>
-    </div>
-    <p class="claim" style="margin-top:56px">Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today.</p>
-  </div>
-</section>
-
-<section class="section sand">
-  <div class="wrap grid12 ed">
-    <div class="ed-copy reveal">
-      <p class="eyebrow">Where we are</p>
-      <h2 class="h3">Early, and honest about it.</h2>
-      <ul class="marks">
-        <li>Tested with a brewpub and live across a 14 location restaurant chain.</li>
-        <li>Patent pending with the USPTO.</li>
-        <li>Now taking on a small number of partners, and we work with each of them directly.</li>
-      </ul>
-    </div>
-    <div class="ed-main">
-      <h3 class="h3">Getting started</h3>
+<section class="section paper-light" id="pilot">
+  <div class="wrap form-layout">
+    <aside class="form-aside">
+      <h2 class="h4">Getting started</h2>
       <ol class="steps">
         <li><div><b>Request a demo.</b> <span>Tell us a little about your place. We reply within one business day.</span></div></li>
         <li><div><b>A 30 minute call.</b> <span>We show you Alfredo and what you would get from it.</span></div></li>
         <li><div><b>Up and running in about two weeks.</b> <span>If you want to go ahead, we plan the setup together and connect your POS.</span></div></li>
       </ol>
-    </div>
-  </div>
-</section>
-<section class="section paper" id="pilot">
-  <div class="wrap formwrap">
-    <div class="proof-head reveal" style="margin-bottom:0">
-      <h2 class="h2">Request a demo</h2>
-      <p class="lead">Tell us a little about your place and we will reply within one business day.</p>
-    </div>
-    <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
-      <input type="hidden" name="access_key" value="6ce52bfe-d286-44ff-992c-bb7565c31fb6">
-      <input type="hidden" name="subject" value="STAGING TEST demo request">
-      <input type="hidden" name="from_name" value="Alfredo website">
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    </aside>
 
-      <p class="field">
-        <label for="f-name">Name</label>
-        <input id="f-name" type="text" name="name" required autocomplete="name"
-               placeholder="Your name" aria-describedby="nameError">
-        <span class="field-error" id="nameError" hidden
-              data-missing="Please tell us your name." data-invalid="Please tell us your name."></span>
-      </p>
-      <p class="field">
-        <label for="f-business">Business name</label>
-        <input id="f-business" type="text" name="business" required autocomplete="organization"
-               placeholder="Your restaurant, brewery, cafe, or bakery" aria-describedby="businessError">
-        <span class="field-error" id="businessError" hidden
-              data-missing="Please tell us the name of your place." data-invalid="Please tell us the name of your place."></span>
-      </p>
-      <p class="field">
-        <label for="f-email">Email</label>
-        <input id="f-email" type="email" name="email" required autocomplete="email" spellcheck="false"
-               placeholder="you@yourbusiness.com" aria-describedby="emailError">
-        <span class="field-error" id="emailError" hidden
-              data-missing="Please add an email so we can reply." data-invalid="That email does not look right. Please check it."></span>
-      </p>
-      <p class="field">
-        <label for="f-pos">POS system</label>
-        <select id="f-pos" name="pos" required aria-describedby="posError">
-          <option value="" disabled selected>Select your POS</option>
-          <option>Toast</option>
-          <option>Clover</option>
-          <option>Square</option>
-          <option>Other</option>
-        </select>
-        <span class="field-error" id="posError" hidden
-              data-missing="Please pick the system you run." data-invalid="Please pick the system you run."></span>
-        <span style="font-size:14px;color:var(--muted-dark)">We connect Toast and Clover today. Choose anything else and we will tell you honestly whether yours is ready yet.</span>
-      </p>
-      <fieldset class="field field-full pillset" aria-describedby="locationsError">
-        <legend>Locations</legend>
-        <div class="pills">
-          <label><input type="radio" name="locations" value="1" required><span>1</span></label>
-          <label><input type="radio" name="locations" value="2 to 3"><span>2 to 3</span></label>
-          <label><input type="radio" name="locations" value="4 to 10"><span>4 to 10</span></label>
-          <label><input type="radio" name="locations" value="More than 10"><span>More than 10</span></label>
-        </div>
-        <span class="field-error" id="locationsError" hidden
-              data-missing="Please choose how many locations you run." data-invalid="Please choose how many locations you run."></span>
-      </fieldset>
-      <p class="field field-full">
-        <label for="f-message">Anything you want us to know (optional)</label>
-        <textarea id="f-message" name="message" rows="3" placeholder="Optional"></textarea>
-      </p>
+    <div class="formwrap">
+      <div class="proof-head reveal" style="margin-bottom:0">
+        <h2 class="h3">Request a demo</h2>
+        <p class="body">Tell us a little about your place and we will reply within one business day.</p>
+      </div>
+      <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
+        <input type="hidden" name="access_key" value="6ce52bfe-d286-44ff-992c-bb7565c31fb6">
+        <input type="hidden" name="subject" value="STAGING TEST demo request">
+        <input type="hidden" name="from_name" value="Alfredo website">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
-      <p class="form-reassure">Plans from $99 a month. Less than $3.30 a day.</p>
-      <button type="submit" class="btn">Request a demo</button>
-    </form>
-    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        <p class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" type="text" name="name" required autocomplete="name"
+                 placeholder="Your name" aria-describedby="nameError">
+          <span class="field-error" id="nameError" hidden
+                data-missing="Please tell us your name." data-invalid="Please tell us your name."></span>
+        </p>
+        <p class="field">
+          <label for="f-business">Business name</label>
+          <input id="f-business" type="text" name="business" required autocomplete="organization"
+                 placeholder="Your restaurant, brewery, cafe, or bakery" aria-describedby="businessError">
+          <span class="field-error" id="businessError" hidden
+                data-missing="Please tell us the name of your place." data-invalid="Please tell us the name of your place."></span>
+        </p>
+        <p class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" name="email" required autocomplete="email" spellcheck="false"
+                 placeholder="you@yourbusiness.com" aria-describedby="emailError">
+          <span class="field-error" id="emailError" hidden
+                data-missing="Please add an email so we can reply." data-invalid="That email does not look right. Please check it."></span>
+        </p>
+        <p class="field">
+          <label for="f-pos">POS system</label>
+          <select id="f-pos" name="pos" required aria-describedby="posError">
+            <option value="" disabled selected>Select your POS</option>
+            <option>Toast</option>
+            <option>Clover</option>
+            <option>Square</option>
+            <option>Other</option>
+          </select>
+          <span class="field-error" id="posError" hidden
+                data-missing="Please pick the system you run." data-invalid="Please pick the system you run."></span>
+          <span class="field-hint">We connect Toast and Clover today. Choose anything else and we will tell you honestly whether yours is ready yet.</span>
+        </p>
+        <fieldset class="field field-full pillset" aria-describedby="locationsError">
+          <legend>Locations</legend>
+          <div class="pills">
+            <label><input type="radio" name="locations" value="1" required><span>1</span></label>
+            <label><input type="radio" name="locations" value="2 to 3"><span>2 to 3</span></label>
+            <label><input type="radio" name="locations" value="4 to 10"><span>4 to 10</span></label>
+            <label><input type="radio" name="locations" value="More than 10"><span>More than 10</span></label>
+          </div>
+          <span class="field-error" id="locationsError" hidden
+                data-missing="Please choose how many locations you run." data-invalid="Please choose how many locations you run."></span>
+        </fieldset>
+        <p class="field field-full">
+          <label for="f-message">Anything you want us to know (optional)</label>
+          <textarea id="f-message" name="message" rows="3" placeholder="Optional"></textarea>
+        </p>
 
-    <div class="contact contact-block">
-      <p class="contact-h">Or reach us directly</p>
-      <a href="mailto:contact@bakinginsightsai.com">contact@bakinginsightsai.com</a>
-      <a class="social" href="https://www.instagram.com/alfredobybia/" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">@alfredobybia on Instagram</a>
-      <a class="social" href="https://www.facebook.com/alfredobybia" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">@alfredobybia on Facebook</a>
+        <p class="form-reassure">Plans from $99 a month. Less than $3.30 a day.</p>
+        <button type="submit" class="btn">Request a demo</button>
+      </form>
+      <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 </section>

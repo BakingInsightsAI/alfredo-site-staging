@@ -30,6 +30,7 @@ honesty:
       quote: "Confirm or dismiss."
       gloss: ""
       close: "Numbers that get quietly changed are numbers you cannot trust."
+  quotes_more: "See another example"
   cta_heading: "Hold us to it."
   cta_body: "Run Alfredo on your own data and judge it by its verdicts. That is the whole point."
 
@@ -89,6 +90,8 @@ pricing:
   more_link: "Talk to us"
   more_tail: "and we will put together an arrangement that fits your group, with a straight number."
   proof: "Tested with a brewpub and live across a 14 location restaurant chain."
+  plan_details: "See what is included"
+  compare_more: "See how this compares with the alternatives"
   compare_eyebrow: "For comparison"
   compare_heading: "What everyone else charges"
   # Alfredo is not a bar here. Its prices are in the cards above, and a bar

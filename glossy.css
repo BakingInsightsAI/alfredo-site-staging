@@ -1,0 +1,688 @@
+/* ===========================================================================
+   Alfredo, the condensed glossy layer.
+
+   Loaded after alfredo.css, which keeps the grid, the type scale, the form
+   and the shell. This file does three jobs:
+
+   1. Turns the site warm near-black. alfredo.css paints its grounds through
+      five classes, so the whole site flips by restating those five and the
+      three tokens that carried "secondary ink on a light ground". Nothing
+      else has to be hunted down.
+   2. Adds the components the condensed build needs, above all the board.
+   3. Raises the phone type floor to 14px for anything read as a sentence
+      and 12px for a tracked label.
+
+   Gold is used for one thing at a time: a selected state, an action, or a
+   single edge. There is no glass on blocks that are only read.
+   ========================================================================= */
+
+:root {
+  /* the warm near-blacks, darkest first */
+  --g-void:      #15100d;
+  --g-obsidian:  #18120f;
+  --g-ink:       #1b1512;
+  --g-raise:     #211913;
+  --g-raise-2:   #241b15;
+  --g-surface:   #2a201a;
+
+  --g-cream:     #f6efe3;
+  --g-cream-dim: #d9ccba;
+  --g-amber:     #d99a3e;
+  --g-gold:      #f1bb70;
+  --g-gold-deep: #a9702c;
+  --g-edge:      rgba(247, 207, 149, .22);
+  --g-edge-soft: rgba(247, 207, 149, .12);
+
+  /* alfredo.css reaches for these three whenever it wants quieter ink on a
+     light ground. There are no light grounds any more, so they are redefined
+     once here instead of being overridden rule by rule. */
+  --muted-dark: #b3a697;
+  --copper-deep: #f1bb70;
+  --line-light: #3b2f26;
+
+  /* and these three are its dark ground equivalents, nudged warmer */
+  --muted-light: #c6b8a6;
+  --line-dark: #43362c;
+  --copper-light: #f1bb70;
+
+  --ink: #15100d;
+  --charcoal: #18120f;
+  --surface-dark: #2a201a;
+}
+
+/* --------------------------------------------------------------- grounds */
+.paper        { background: var(--g-ink);      color: var(--g-cream); }
+.paper-light  { background: var(--g-raise);    color: var(--g-cream); }
+.sand         { background: var(--g-raise-2);  color: var(--g-cream); }
+.dark         { background: var(--g-obsidian); color: var(--g-cream); }
+.darkest      { background: var(--g-void);     color: var(--g-cream); }
+body          { background: var(--g-ink); color: var(--g-cream); }
+
+/* a hairline of light where two grounds meet, which is what stops the page
+   reading as one undifferentiated slab */
+.section + .section, .section + .section-tight, .section-tight + .section {
+  border-top: 1px solid var(--g-edge-soft);
+}
+
+.paper .h2, .paper-light .h2, .sand .h2,
+.paper .h3, .paper-light .h3, .sand .h3,
+.paper .h4, .paper-light .h4, .sand .h4,
+.paper h3, .paper-light h3, .sand h3 { color: var(--g-cream); }
+.eyebrow, .paper .eyebrow, .paper-light .eyebrow, .sand .eyebrow { color: var(--g-gold); }
+.body, .lead { color: var(--g-cream-dim); }
+.textlink { color: var(--g-gold); }
+.rule, hr { border-top-color: var(--g-edge-soft); }
+
+/* ------------------------------------------------------------- the shell */
+.staging-bar { background: var(--g-gold-deep); color: #1b1512; }
+.nav { background: linear-gradient(180deg, rgba(21,16,13,.96), rgba(21,16,13,.72) 70%, transparent); }
+body:not(.hero-nav) .nav { background: var(--g-void); border-bottom: 1px solid var(--g-edge-soft); }
+
+.btn {
+  background: linear-gradient(180deg, var(--g-gold) 0%, var(--g-amber) 58%, #c2832c 100%);
+  color: #22180f; border: 0; font-weight: 600;
+  box-shadow: 0 1px 0 rgba(255,236,200,.55) inset, 0 6px 18px rgba(0,0,0,.34);
+}
+.btn:hover { filter: brightness(1.06); }
+.btn-ghost, .dark .btn-ghost, .darkest .btn-ghost, .hero .btn-ghost {
+  background: rgba(246,239,227,.05); color: var(--g-cream);
+  border: 1px solid var(--g-edge); box-shadow: none;
+}
+.btn-ghost:hover, .dark .btn-ghost:hover, .darkest .btn-ghost:hover, .hero .btn-ghost:hover {
+  background: rgba(246,239,227,.1); border-color: var(--g-gold);
+}
+
+/* Fix 2. The demo action is visible on a phone, not hidden behind the menu.
+   It sits beside the toggle and shortens its label rather than vanishing. */
+@media (max-width: 1000px) {
+  .nav .btn { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .nav-inner { gap: 8px; }
+  .nav .btn { padding: 0 13px; font-size: 14px; min-height: 44px; white-space: nowrap; }
+  .nav .btn .long { display: none; }
+  .nav-toggle { width: 44px; height: 44px; }
+  .wordmark img { height: 24px; width: auto; }
+}
+
+/* ---------------------------------------------------------------- hero */
+.hero-short .hero-inner { padding-block: 112px 56px; }
+.hero-veil {
+  background:
+    linear-gradient(180deg, rgba(21,16,13,.86) 0%, rgba(21,16,13,.55) 40%, rgba(21,16,13,.92) 100%),
+    linear-gradient(90deg, rgba(21,16,13,.92) 0%, rgba(21,16,13,.4) 62%, rgba(21,16,13,.2) 100%);
+}
+.hero-sub { color: var(--g-gold); }
+.hero-body, .hero-note { color: var(--g-cream-dim); }
+.hero-chapter { color: var(--g-cream-dim); }
+
+@media (max-width: 640px) {
+  .hero-short .hero-inner { padding-block: 84px 36px; }
+  .hero-short .hero-photo { height: 190px; }
+}
+
+/* ============================================================ THE BOARD */
+.board-section { padding-block: 0 64px; }
+.board-reality {
+  font-family: var(--serif); font-size: clamp(21px, 2.5vw, 29px); line-height: 1.3;
+  color: var(--g-cream); max-width: 26em; margin: 0 0 30px;
+}
+.board {
+  position: relative; border-radius: 16px; overflow: hidden;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(247,207,149,.09) 0%, transparent 62%),
+    linear-gradient(180deg, var(--g-surface) 0%, var(--g-obsidian) 100%);
+  border: 1px solid var(--g-edge);
+  box-shadow: 0 1px 0 rgba(255,236,200,.1) inset, 0 28px 70px rgba(0,0,0,.5);
+}
+.board-head {
+  display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-start;
+  padding: 22px 24px 18px; border-bottom: 1px solid var(--g-edge-soft);
+}
+.board-head .eyebrow { margin-bottom: 6px; }
+.board-title {
+  font-family: var(--serif); font-size: clamp(24px, 3vw, 32px); line-height: 1.1;
+  color: var(--g-cream); font-weight: 400;
+}
+.board-sub { display: block; font-family: var(--sans); font-size: 15px; color: var(--g-cream-dim); margin-top: 6px; }
+.board-head .tag-sample { margin-left: auto; flex: none; }
+
+.board-pick { padding: 18px 24px 0; font-size: 13px; color: var(--muted-light); }
+
+/* Fix 4. Five selectors in a wrapping grid, three then two, so every one is
+   reachable at 320px with no horizontal scroller and no hidden tabs. */
+.board-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  padding: 10px 24px 0; border: 0; overflow: visible;
+}
+.board-tab {
+  display: flex; flex-direction: column; gap: 3px; align-items: flex-start;
+  min-height: 56px; padding: 9px 11px; cursor: pointer; text-align: left;
+  background: rgba(246,239,227,.045); color: var(--g-cream-dim);
+  border: 1px solid var(--g-edge-soft); border-radius: 9px;
+  font-family: var(--sans); font-size: 14px; line-height: 1.2;
+}
+.board-tab i { font-style: normal; font-size: 12px; letter-spacing: .1em; color: var(--muted-light); }
+.board-tab span { font-weight: 500; }
+.board-tab:hover { background: rgba(246,239,227,.08); }
+.board-tab[aria-selected="true"] {
+  background: linear-gradient(180deg, rgba(247,207,149,.18), rgba(247,207,149,.07));
+  border-color: var(--g-gold); color: var(--g-cream);
+}
+.board-tab[aria-selected="true"] i { color: var(--g-gold); }
+
+.board-panel { padding: 22px 24px 4px; }
+.board-name {
+  font-family: var(--serif); font-weight: 400; line-height: 1.14;
+  font-size: clamp(23px, 3.1vw, 31px); color: var(--g-cream);
+}
+.board-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; margin-top: 20px; }
+.board-fields .bf-wide { grid-column: 1 / -1; }
+.board-fields dt {
+  font-size: 12px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--g-gold); margin-bottom: 5px;
+}
+.board-fields dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--g-cream); }
+.board-foot {
+  margin: 20px 24px 0; padding: 14px 0 20px; border-top: 1px solid var(--g-edge-soft);
+  font-size: 13px; color: var(--muted-light);
+}
+.board-note { margin-top: 18px; font-size: 14px; color: var(--muted-light); max-width: 56em; }
+
+@media (max-width: 640px) {
+  .board-head, .board-pick, .board-tabs, .board-panel { padding-left: 16px; padding-right: 16px; }
+  .board-foot { margin-left: 16px; margin-right: 16px; }
+  .board-tabs { grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .board-tab { min-height: 52px; padding: 8px 9px; font-size: 13.5px; }
+  .board-fields { grid-template-columns: 1fr; gap: 14px; }
+  .board-head .tag-sample { margin-left: 0; }
+}
+@media (max-width: 360px) {
+  .board-tab { font-size: 13px; padding: 8px 7px; }
+}
+
+/* ========================================================= OWNERSHIP STRIP */
+.strip { background: var(--g-void); border-top: 1px solid var(--g-edge-soft); border-bottom: 1px solid var(--g-edge-soft); }
+.strip-inner { display: flex; flex-wrap: wrap; gap: 14px 40px; align-items: center; padding-block: 22px; }
+.strip-claim { font-family: var(--serif); font-size: 23px; color: var(--g-cream-dim); flex: none; }
+.strip-claim em { font-style: normal; color: var(--g-gold); }
+.strip-steps {
+  display: flex; flex-wrap: wrap; gap: 8px 26px; margin: 0; padding: 0;
+  list-style: none; counter-reset: s;
+}
+.strip-steps li {
+  font-size: 14px; color: var(--muted-light); counter-increment: s;
+  display: flex; gap: 8px; align-items: baseline;
+}
+.strip-steps li::before {
+  content: counter(s, decimal-leading-zero);
+  font-size: 12px; letter-spacing: .1em; color: var(--g-gold-deep);
+}
+@media (max-width: 640px) {
+  .strip-inner { gap: 12px; }
+  .strip-claim { font-size: 20px; }
+  .strip-steps { gap: 7px; }
+}
+
+/* ============================================================== THE LEDGER */
+.ledger-row { border-top: 1px solid var(--g-edge-soft); }
+.ledger-why, .ledger-what { color: var(--g-cream-dim); }
+.proof-honest { margin-top: 28px; font-size: 14px; color: var(--muted-light); max-width: 60em; }
+.tag-sample {
+  background: rgba(247,207,149,.12); color: var(--g-gold);
+  border: 1px solid var(--g-edge); font-size: 12px; letter-spacing: .12em;
+}
+
+/* ============================================================== THE PLACES */
+.places-band { padding-block: 56px; }
+.places-band .places { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.places-band .place { margin: 0 !important; }
+.places-band .place-img { aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--g-edge-soft); }
+.places-band figcaption {
+  border-top: 0; padding-top: 9px; margin-top: 9px; color: var(--g-cream-dim);
+  font-size: 13px; letter-spacing: .1em; text-transform: none;
+}
+@media (max-width: 640px) {
+  .places-band .places { grid-template-columns: repeat(2, 1fr); gap: 11px; }
+  .places-band { padding-block: 40px; }
+}
+
+/* ============================================================== THE INVITE */
+.invite-veil {
+  background: linear-gradient(180deg, rgba(21,16,13,.9) 0%, rgba(21,16,13,.72) 50%, rgba(21,16,13,.95) 100%);
+}
+.invite-sub { color: var(--g-cream-dim); }
+.invite-facts {
+  list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 9px;
+}
+.invite-facts li {
+  position: relative; padding-left: 20px; font-size: 15px; color: var(--g-cream);
+}
+.invite-facts li::before {
+  content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 1px; background: var(--g-gold);
+}
+
+/* ============================================================= WHAT IT DOES */
+.pagehead-short { padding-block: 112px 56px; }
+.pagehead-bridge { margin-top: 18px; font-size: 15px; color: var(--muted-light); max-width: 46em; }
+.head-note { margin-top: 13px; font-size: 14px; color: var(--muted-light); }
+
+.anatomy { list-style: none; margin: 34px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--g-edge-soft); border: 1px solid var(--g-edge-soft); border-radius: 12px; overflow: hidden; }
+.anatomy li { display: grid; grid-template-columns: 42px 1fr; gap: 12px; padding: 20px 22px; background: var(--g-ink); }
+.anatomy .an-n { font-family: var(--serif); font-size: 22px; color: var(--g-gold-deep); line-height: 1; }
+.anatomy h3 { font-size: 17px; margin-bottom: 5px; color: var(--g-cream); }
+.anatomy p { font-size: 14.5px; line-height: 1.5; color: var(--g-cream-dim); }
+@media (max-width: 760px) { .anatomy { grid-template-columns: 1fr; } }
+
+.index-list li { border-top-color: var(--g-edge-soft); }
+.index-list h3 { color: var(--g-cream); }
+.index-list p { color: var(--g-cream-dim); }
+.index-soon h3 { color: var(--muted-light); }
+.chip-soon { background: rgba(247,207,149,.12); color: var(--g-gold); border: 1px solid var(--g-edge); font-size: 11px; }
+
+.result {
+  border-radius: 14px; padding: 24px 26px;
+  background: radial-gradient(120% 120% at 20% 0%, rgba(247,207,149,.1), transparent 60%), var(--g-surface);
+  border: 1px solid var(--g-edge);
+}
+.result-line { color: var(--g-cream); }
+.result-line b { color: var(--g-gold); }
+.note { color: var(--muted-light); font-size: 14px; }
+
+/* beyond the list: the three capability blocks, each keeping its anchor */
+.beyond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 34px; }
+.beyond-block { min-width: 0; }
+.beyond-block .h4 { font-size: 20px; color: var(--g-cream); margin-bottom: 9px; }
+.beyond-block .body { font-size: 15px; }
+.beyond-block .marks { margin-top: 14px; }
+.beyond-block .marks li { font-size: 14.5px; }
+.plate-card, .ask-card {
+  margin-top: 18px; border-radius: 12px; padding: 16px 18px;
+  background: var(--g-surface); border: 1px solid var(--g-edge-soft);
+}
+.plate-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; margin-bottom: 12px; }
+.plate-head h4 { font-size: 15px; color: var(--g-cream); }
+.plate-head .pui-sub { display: block; font-size: 13px; color: var(--muted-light); font-weight: 400; margin-top: 3px; }
+.plate-head .tag-sample { margin-left: auto; }
+.plate-table th, .plate-table td { border-bottom-color: var(--g-edge-soft); color: var(--g-cream); font-size: 14px; }
+.ask-card .asks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.ask-card .asks li { border-top: 1px solid var(--g-edge-soft); padding-top: 12px; }
+.ask-card .asks li:first-child { border-top: 0; padding-top: 0; }
+.ask-card .asks b { display: block; color: var(--g-gold); font-size: 14.5px; margin-bottom: 5px; }
+.ask-card .asks p { font-size: 14px; color: var(--g-cream-dim); line-height: 1.5; }
+@media (max-width: 900px) { .beyond-grid { grid-template-columns: 1fr; gap: 34px; } }
+
+/* ================================================================== TRUST */
+.manifesto li { border-top-color: var(--g-edge-soft); }
+.manifesto h3 { color: var(--g-cream); }
+.manifesto p { color: var(--g-cream-dim); }
+.m-n { color: var(--g-gold-deep); }
+.practice > div { border-top-color: var(--g-edge-soft); }
+.practice p { color: var(--g-cream-dim); }
+.p-quote { color: var(--g-gold); border-left-color: var(--g-gold); }
+.p-close { color: var(--g-cream); }
+
+/* a details control that does not look like a bug */
+.disclose { margin-top: 28px; border-top: 1px solid var(--g-edge-soft); }
+.disclose > summary {
+  cursor: pointer; list-style: none; padding: 16px 0; min-height: 44px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 500; color: var(--g-gold);
+}
+.disclose > summary::-webkit-details-marker { display: none; }
+.disclose > summary::after {
+  content: "+"; margin-left: auto; font-size: 19px; line-height: 1; color: var(--g-gold);
+}
+.disclose[open] > summary::after { content: "\2212"; }
+.disclose > summary:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+
+/* ================================================================ ABOUT US */
+.sub-head { margin-top: 48px; margin-bottom: 18px; font-size: 20px; color: var(--g-cream); }
+.pairs h3, .pairs h4 { color: var(--g-cream); }
+.pairs p { color: var(--g-cream-dim); }
+.marks-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.marks li { color: var(--g-cream-dim); }
+.claim { color: var(--g-cream); }
+.claim span { color: var(--muted-light); }
+.claim-tight { margin-top: 34px; }
+
+.form-layout { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: start; }
+.form-aside .h4 { font-size: 19px; color: var(--g-cream); margin-bottom: 14px; }
+.form-aside .steps { margin-top: 0; }
+.form-aside .steps li b { color: var(--g-cream); }
+.form-aside .steps li span { color: var(--g-cream-dim); }
+.contact-block { margin-top: 32px; }
+.field > label, .pillset > legend { color: var(--g-gold); font-size: 12px; }
+.field input, .field select, .field textarea {
+  background: rgba(246,239,227,.05); color: var(--g-cream);
+  border: 1px solid var(--g-edge-soft); border-radius: 8px;
+}
+.field input::placeholder, .field textarea::placeholder { color: #8d8276; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--g-gold); }
+.field-hint { font-size: 14px; color: var(--muted-light); }
+.field-error { color: #f0a192; font-size: 14px; }
+.pills label span {
+  background: rgba(246,239,227,.05); border: 1px solid var(--g-edge-soft);
+  color: var(--g-cream); border-radius: 8px;
+}
+.pills label input:checked + span {
+  background: linear-gradient(180deg, rgba(247,207,149,.2), rgba(247,207,149,.08));
+  border-color: var(--g-gold); color: var(--g-cream);
+}
+.form-reassure { color: var(--muted-light); font-size: 15px; }
+.form-status { color: var(--g-cream); }
+@media (max-width: 900px) { .form-layout { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 760px) { .marks-row { grid-template-columns: 1fr; gap: 10px; } }
+
+/* ================================================================= PRICING */
+.pagehead-price { padding-block: 104px 44px; }
+.tier {
+  background: linear-gradient(180deg, var(--g-surface), var(--g-obsidian));
+  border: 1px solid var(--g-edge-soft); border-radius: 14px;
+}
+.tier-best {
+  background: radial-gradient(130% 100% at 50% 0%, rgba(247,207,149,.14), transparent 62%),
+              linear-gradient(180deg, var(--g-surface), var(--g-obsidian));
+  border-color: var(--g-gold);
+  box-shadow: 0 1px 0 rgba(255,236,200,.12) inset, 0 22px 54px rgba(0,0,0,.45);
+}
+.tier-mark { color: var(--g-gold); }
+.tier-name, .tier-price { color: var(--g-cream); }
+.tier-unit { color: var(--muted-light); }
+.tier-for, .tier-day { color: var(--muted-light); font-size: 14px; }
+.tier-plus { margin-top: 18px; color: var(--g-cream); }
+.tier-list li { color: var(--g-cream-dim); border-top-color: var(--g-edge-soft); }
+.tier-more { margin-top: 28px; font-size: 15px; color: var(--muted-light); }
+.offer {
+  margin-top: 34px; border-radius: 14px; padding: 24px 26px;
+  background: radial-gradient(120% 130% at 12% 0%, rgba(247,207,149,.12), transparent 60%), var(--g-surface);
+  border: 1px solid var(--g-edge);
+}
+.offer h2 { color: var(--g-cream); font-size: 22px; }
+.offer p { color: var(--g-cream-dim); font-size: 15px; }
+
+.faq-rows { display: grid; margin-top: 26px; border-top: 1px solid var(--g-edge-soft); }
+.faq-row { border-bottom: 1px solid var(--g-edge-soft); }
+.faq-row > summary {
+  cursor: pointer; list-style: none; padding: 17px 0; min-height: 44px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 16px; font-weight: 500; color: var(--g-cream);
+}
+.faq-row > summary::-webkit-details-marker { display: none; }
+.faq-row > summary::after { content: "+"; margin-left: auto; font-size: 19px; color: var(--g-gold); }
+.faq-row[open] > summary::after { content: "\2212"; }
+.faq-row > summary:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+.faq-row > p { padding-bottom: 18px; font-size: 15px; color: var(--g-cream-dim); max-width: 62em; }
+
+.tbl-scroll { overflow-x: auto; }
+.compare th, .compare td { border-bottom-color: var(--g-edge-soft); color: var(--g-cream-dim); }
+.compare thead th { color: var(--g-gold); }
+.compare tbody th { color: var(--g-cream); }
+.c-price { color: var(--g-cream); }
+.close-band { border-top: 1px solid var(--g-edge-soft); }
+.close-inner { max-width: 44em; }
+
+/* ================================================================== FOOTER */
+.footer { background: var(--g-void); border-top: 1px solid var(--g-edge-soft); }
+.footer a { color: var(--g-cream-dim); }
+.footer a:hover { color: var(--g-gold); }
+.contact-h { color: var(--g-gold); }
+.footer-foot p { color: var(--muted-light); font-size: 13px; }
+@media (max-width: 640px) {
+  .footer { padding-block: 34px 28px; }
+  .footer-top { gap: 26px; }
+  .footer nav ul { grid-template-columns: 1fr 1fr; }
+  .footer a { min-height: 44px; }
+}
+
+/* ======================================================== PHONE TYPE FLOOR
+   Fix 3. Nothing read as a sentence falls below 14px on a phone, and no
+   tracked label below 12px. These are the rules alfredo.css sets lower. */
+@media (max-width: 760px) {
+  .eyebrow, .contact-h, .nextlink span, .tier-mark, .compare thead th,
+  .field > label, .pillset > legend, .board-fields dt, .chip-soon,
+  .tag-sample, .rec-kind, .rec-steps dt, .m-n, .board-tab i, .strip-steps li::before,
+  .places-band figcaption { font-size: 12px; }
+  .pui-caption, .note, .board-foot, .board-pick, .footer-foot p,
+  .field-error, .field-hint, .tier-for, .tier-day, .board-note,
+  .proof-honest, .pagehead-bridge, .head-note, .form-reassure,
+  .ask-card .asks p, .anatomy p, .beyond-block .marks li,
+  .strip-steps li, .disclosure { font-size: 14px; }
+  .body, .lead, .marks li, .faq-row > p, .offer p, .tier-list li,
+  .invite-sub, .invite-facts li, .board-fields dd { font-size: 15px; }
+}
+
+/* ============================================================ REDUCED MOTION
+   alfredo.css already stops the reveal animation. The board changes content
+   with no transition either way, so nothing here needs disabling. */
+@media (prefers-reduced-motion: reduce) {
+  .board-tab, .btn { transition: none; }
+}
+
+/* ========================================================= VERTICAL RHYTHM
+   The editorial build breathed at 76px a section, which is right for a long
+   read and wrong for a page budgeted in screens. Everything below is spacing
+   only: no copy, no colour and no component changes. */
+.section { padding-block: 64px; }
+.section-tight { padding-block: 44px; }
+.pagehead { padding-block: 104px 52px; }
+.proof-head { margin-bottom: 26px; }
+.h2 { font-size: clamp(27px, 3.4vw, 40px); }
+.h3 { font-size: clamp(22px, 2.6vw, 29px); }
+
+.ledger-row { padding-block: 20px; }
+.ledger-state { font-size: clamp(26px, 3.2vw, 36px); }
+.manifesto li { padding-block: 22px; }
+.index-list { gap: 0; }
+.index-list li { padding-block: 18px; }
+.tier { padding: 24px 22px; }
+.tier-list { margin-bottom: 20px; }
+.tier-list li { padding-block: 9px; }
+.tier-price { margin-block: 6px 4px; }
+.pairs { gap: 26px 34px; }
+.steps li { padding-block: 12px; }
+.marks li { padding-block: 6px; }
+.invite-inner { padding-block: 8px; }
+.next { padding-block: 26px; }
+
+.footer { padding-block: 40px 30px; }
+.footer-top { gap: 30px; padding-bottom: 26px; }
+.footer-foot { padding-top: 18px; }
+
+@media (max-width: 760px) {
+  .section { padding-block: 38px; }
+  .section-tight { padding-block: 30px; }
+  .pagehead, .pagehead-short { padding-block: 82px 30px; }
+  .pagehead-price { padding-block: 82px 26px; }
+  .proof-head { margin-bottom: 18px; }
+  .board-section { padding-block: 0 38px; }
+  .board-reality { margin-bottom: 22px; font-size: 20px; }
+
+  .ledger-row { padding-block: 15px; }
+  .ledger-state { font-size: 24px; }
+  .manifesto li { padding-block: 17px; }
+  .index-list li { padding-block: 14px; }
+  .anatomy li { padding: 15px 16px; }
+  .tier { padding: 20px 18px; }
+  .tier-list li { padding-block: 7px; }
+  .pairs { gap: 20px; }
+  .sub-head { margin-top: 32px; margin-bottom: 12px; }
+  .claim-tight { margin-top: 24px; }
+  .beyond-grid { gap: 26px; margin-top: 22px; }
+  .plate-card, .ask-card { padding: 14px 15px; }
+  .offer { padding: 18px 18px; margin-top: 26px; }
+  .faq-row > summary { padding-block: 14px; }
+  .steps li { padding-block: 10px; }
+  .invite-facts { margin-top: 16px; }
+  .next { padding-block: 20px; }
+
+  .footer { padding-block: 30px 24px; }
+  .footer-top { gap: 20px; padding-bottom: 20px; }
+  .footer-foot { padding-top: 14px; }
+  .footer .wordmark img { height: 24px; width: auto; }
+  .contact-block a, .footer .contact a { min-height: 44px; }
+}
+
+/* the home closing block carries its own chapter handoff, so the link sits
+   beside the action rather than in a section of its own underneath it */
+.nextlink-inline { display: grid; gap: 2px; text-decoration: none; }
+.nextlink-inline span { color: var(--g-gold); }
+.nextlink-inline b { color: var(--g-cream); font-family: var(--serif); font-size: 20px; font-weight: 400; }
+.nextlink-inline:hover b { color: var(--g-gold); }
+
+/* ---------------------------------------------------------- the footer
+   Three stacked blocks and two wrapping lines came to 567px on a phone,
+   which is most of a screen spent on a colophon. */
+.footer-top { grid-template-columns: auto 1fr auto; align-items: start; }
+@media (max-width: 760px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 18px 16px; padding-bottom: 16px; }
+  .footer-top > div:first-child { grid-column: 1 / -1; }
+  .footer nav ul { grid-template-columns: 1fr; gap: 0; }
+  .footer nav a, .footer .contact a { min-height: 44px; font-size: 14px; }
+  .footer .contact { display: grid; gap: 0; }
+  .footer-foot { display: grid; gap: 6px; padding-top: 12px; }
+  .footer-foot p, .footer-foot .disclosure { font-size: 12.5px; line-height: 1.45; }
+}
+
+/* ------------------------------------------------------- the first screen */
+@media (max-width: 760px) {
+  .hero-short .hero-inner { padding-block: 20px 26px; }
+  .hero-short .hero-photo { height: 160px; }
+  .hero-short .display { font-size: clamp(34px, 10.5vw, 44px); }
+  .hero-short .hero-sub { margin-top: 10px; }
+  .hero-short .hero-body { margin-top: 12px; font-size: 15px; }
+  .hero-short .actions { margin-top: 18px; }
+  .hero-short .hero-note { margin-top: 14px; }
+
+  .places-band { padding-block: 30px; }
+  .places-band .places { gap: 9px; }
+  .places-band figcaption { padding-top: 6px; margin-top: 6px; }
+  .invite-inner { padding-block: 0; }
+  .section.invite { padding-block: 40px; }
+  .ledger-row { padding-block: 13px; }
+}
+
+/* the plan features, behind a control on each card. The price, who it is
+   for and the action stay in the open; the list is what made each card
+   800px tall on a phone. */
+.plan-details { margin-block: 14px 20px; border-top: 1px solid var(--g-edge-soft); }
+.plan-details > summary {
+  cursor: pointer; list-style: none; padding: 13px 0; min-height: 44px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 500; color: var(--g-gold);
+}
+.plan-details > summary::-webkit-details-marker { display: none; }
+.plan-details > summary::after { content: "+"; margin-left: auto; font-size: 18px; color: var(--g-gold); }
+.plan-details[open] > summary::after { content: "\2212"; }
+.plan-details > summary:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+.plan-details .tier-list { margin-bottom: 6px; }
+
+/* last of the spacing. Two full width stacked buttons, an oversized closing
+   headline and a loose board panel were the remaining avoidable height. */
+@media (max-width: 760px) {
+  .hero-short .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-short .actions .btn { flex: 1 1 auto; min-width: 150px; }
+  .invite .h2 { font-size: clamp(28px, 8.4vw, 36px); }
+  .invite-sub { margin-top: 12px; }
+  .board-panel { padding-top: 16px; }
+  .board-name { font-size: 21px; }
+  .board-fields { margin-top: 15px; gap: 12px; }
+  .board-pick { padding-top: 14px; }
+  .board-foot { margin-top: 14px; padding-block: 12px 16px; }
+  .board-head { padding-block: 16px 14px; }
+  .strip-inner { padding-block: 16px; }
+  .beyond-block .marks { margin-top: 10px; }
+  .form-aside .steps li { padding-block: 8px; }
+  .close-inner .lead { margin-top: 10px; }
+}
+
+/* the last four below the floor, found by measuring the painted text rather
+   than by reading the stylesheet: the colophon and the image disclosure,
+   the board selector labels, the sample card subtitles, and the plan mark */
+.footer-foot p, .footer-foot .disclosure { font-size: 14px; }
+.board-tab, .board-tab span { font-size: 14px; }
+.pui-sub, .plate-head .pui-sub { font-size: 14px; }
+.tier-mark { font-size: 12px; }
+@media (max-width: 760px) {
+  .footer-foot p, .footer-foot .disclosure { font-size: 14px; line-height: 1.45; }
+  .board-tab, .board-tab span { font-size: 14px; }
+  .pui-sub, .plate-head .pui-sub { font-size: 14px; }
+  .tier-mark { font-size: 12px; }
+}
+@media (max-width: 360px) {
+  .board-tab, .board-tab span { font-size: 14px; }
+  .board-tab { padding: 8px 6px; }
+}
+
+/* alfredo.css sets this through .tier-best .tier-mark, which outranks a
+   lone class, so the floor has to be written at the same weight */
+.tier .tier-mark, .tier-best .tier-mark { font-size: 12px; }
+
+/* ------------------------------------------------------------- contrast
+   Three grounds changed under text that was coloured for a light page.
+   Measured, not guessed: each value below is the least change that clears
+   its floor against the ground it is actually painted on. */
+
+/* the verdicts were picked for paper. On the raised dark ground the green
+   measured 2.90 and the red 2.66 against a 3.0 floor for display sizes. */
+.ledger-worked { color: #8ec495; }
+.ledger-none   { color: var(--g-cream-dim); }
+.ledger-back   { color: #e8978a; }
+
+/* staging chrome only, never built into production, but it should still be
+   readable: ink on gold measured 4.34 against a 4.5 floor at 12px. */
+.staging-bar { background: #e0a553; color: #15100d; }
+
+/* ===================================================== SECOND CONDENSING
+   Length recovered from layout and repetition, with no approved copy cut. */
+
+/* 2. Effort and risk are two words each, so they are chips on one line
+   rather than two labelled rows, and how and when sit side by side. */
+.board-fields { grid-template-columns: 1fr 1fr; }
+.bf-chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.bf-chip {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 5px 11px; border-radius: 999px; font-size: 14px;
+  background: rgba(246,239,227,.06); border: 1px solid var(--g-edge-soft);
+  color: var(--muted-light);
+}
+.bf-chip b { color: var(--g-cream); font-weight: 600; }
+
+/* 9. the six parts, one line each */
+.an-line { font-size: 14.5px; line-height: 1.5; color: var(--g-cream-dim); }
+.an-line b { color: var(--g-cream); font-weight: 600; }
+.anatomy li { align-items: baseline; padding: 14px 20px; }
+
+/* 6. one row of four shorter pictures on phones, all four kept */
+@media (max-width: 760px) {
+  .places-band .places { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .places-band .place-img { aspect-ratio: 1 / 1; }
+  .places-band figcaption { font-size: 12px; letter-spacing: .1em; padding-top: 5px; margin-top: 5px; }
+}
+
+@media (max-width: 640px) {
+  .board-fields { grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+  .bf-chip { font-size: 14px; padding: 5px 10px; }
+  .anatomy li { padding: 12px 15px; }
+}
+
+/* the four cards still carried the span and offset they were given for the
+   twelve column staggered gallery, which turned a four column strip back
+   into two rows */
+.places-band .places > .place { grid-column: auto; margin-top: 0; }
+
+/* 2. who Alfredo is for is a sentence, so it is set as one */
+.who-for { margin-top: 26px; }
+
+/* 4. On a phone the headline sits below the photograph, so the veil that
+   makes type readable over it has nothing to do there. At 86% it was
+   taking the strip down to a mean of 20/255, which reads as near black.
+   The veil now starts where the copy starts and the photograph is shown. */
+@media (max-width: 760px) {
+  .hero-short .hero-veil {
+    inset: 124px 0 0;
+    background: linear-gradient(180deg, rgba(21,16,13,0) 0%, rgba(21,16,13,.85) 36px, rgba(21,16,13,1) 100%);
+  }
+  .hero-short .hero-photo { height: 176px; }
+  .hero-short .hero-photo img { object-position: 62% 44%; }
+}

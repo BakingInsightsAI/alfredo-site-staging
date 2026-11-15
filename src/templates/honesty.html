@@ -3,15 +3,17 @@
 
 {% block content %}
 {#- A manifesto page. The promises are numbered statements on rules, not
-    four icon cards, because the point of the page is the plain claim. #}
-<section class="pagehead darkest">
+    four icon cards, because the point of the page is the plain claim. The
+    old separate "Why we built it" band is folded into this opening. #}
+<section class="pagehead darkest pagehead-short">
   <div class="wrap grid12 pagehead-grid">
     <div class="pagehead-copy">
       <p class="eyebrow">{{ h.eyebrow }}</p>
       <h1 class="display">{{ h.heading }}</h1>
       {%- for line in h.lede %}
-      <p class="lead"{% if not loop.first %} style="margin-top:18px"{% endif %}>{{ line }}</p>
+      <p class="lead"{% if not loop.first %} style="margin-top:16px"{% endif %}>{{ line }}</p>
       {%- endfor %}
+      <p class="pagehead-bridge">{{ h.bridge }}</p>
     </div>
   </div>
 </section>
@@ -32,39 +34,44 @@
       </li>
       {%- endfor %}
     </ul>
-    <p class="body" style="margin-top:38px">{{ h.examples_note }}</p>
+    <p class="body" style="margin-top:34px">{{ h.examples_note }}</p>
   </div>
 </section>
 
-<section class="section sand">
-  <div class="wrap grid12 ed">
-    <div class="ed-copy">
-      <p class="eyebrow">{{ h.bridge_heading }}</p>
-    </div>
-    <div class="ed-main">
-      <p class="pull reveal">{{ h.bridge }}</p>
-    </div>
-  </div>
-</section>
-
+{#- The rule in practice. One example is shown, the second is behind a
+    disclosure control so the page stays short without losing it. #}
 <section class="section paper-light">
   <div class="wrap">
     <div class="proof-head reveal">
-      <h2 class="h2">{{ h.quotes_heading }}</h2>
+      <h2 class="h3">{{ h.quotes_heading }}</h2>
     </div>
+    {%- set shown = h.quotes[1] %}
+    {%- set hidden = h.quotes[0] %}
     <div class="practice">
-      {%- for q in h.quotes %}
       <div>
         <div>
-          <p>{{ q.intro }}</p>
-          {%- if q.quote %}
-          <p class="p-quote">{{ q.quote }}</p>
+          <p>{{ shown.intro }}</p>
+          {%- if shown.quote %}
+          <p class="p-quote">{{ shown.quote }}</p>
           {%- endif %}
         </div>
-        <p class="p-close">{{ q.close }}</p>
+        <p class="p-close">{{ shown.close }}</p>
       </div>
-      {%- endfor %}
     </div>
+    <details class="disclose">
+      <summary>{{ h.quotes_more }}</summary>
+      <div class="practice">
+        <div>
+          <div>
+            <p>{{ hidden.intro }}</p>
+            {%- if hidden.quote %}
+            <p class="p-quote">{{ hidden.quote }}</p>
+            {%- endif %}
+          </div>
+          <p class="p-close">{{ hidden.close }}</p>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 {% endblock %}
