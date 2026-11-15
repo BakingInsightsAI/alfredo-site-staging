@@ -95,7 +95,7 @@ v4:
   beyond_heading: "Your menu, your guests, and what is happening nearby."
   menu_eyebrow: "Your menu"
   menu_heading: "What every plate really earns."
-  menu_lede: "Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week. This part needs your recipes and ingredient costs."
+  menu_lede: "Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two from your own recipes and ingredient costs, shows which items are selling below what they cost to make, names the one ingredient squeezing a plate, tells a real cost problem apart from a false alarm, and says which items to show off, keep, or rethink."
   menu_points:
     - "What each plate makes once the extras are counted, from your own recipes and costs."
     - "Items selling below what they cost to make."
@@ -104,7 +104,7 @@ v4:
     - "Which items to show off, keep, or rethink."
   intel_eyebrow: "Your guests and the street outside"
   intel_heading: "Who comes in, and what is happening nearby."
-  intel_lede: "New faces, the regulars, and the ones who have gone quiet, as far as your POS tells you who is who. Then the places down the street: the prices and hours they list publicly, and what their reviews say."
+  intel_lede: "New faces, the regulars, and the ones who have gone quiet, as far as your POS tells you who is who. Then the places down the street: what they list publicly, set beside your own prices, who is open later than you by the hours they list, and what reviews in your area keep saying. Alongside that, your sales by day and time of day, your locations side by side on the Group plan, and the drinks you make against the brands you stock."
   intel_points:
     - "New, returning, and quiet regulars, where your POS records who is who."
     - "What nearby places list publicly, set beside your own prices."

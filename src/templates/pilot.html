@@ -43,11 +43,7 @@
     </div>
 
     <h3 class="h4 sub-head">{{ pilot.how_heading }}</h3>
-    <div class="pairs pairs-3">
-      {%- for h in pilot.how %}
-      <div><h4>{{ h.name }}</h4><p>{{ h.body }}</p></div>
-      {%- endfor %}
-    </div>
+    <p class="body">{{ pilot.how_body }}</p>
 
     <h3 class="h4 sub-head">{{ pilot.where_heading }}</h3>
     <ul class="marks marks-row">

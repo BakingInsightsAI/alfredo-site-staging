@@ -44,7 +44,7 @@
       {%- for a in v.anatomy %}
       <li>
         <p class="an-n" aria-hidden="true">{{ "%02d"|format(loop.index) }}</p>
-        <div><h3>{{ a.name }}</h3><p>{{ a.body }}</p></div>
+        <p class="an-line"><b>{{ a.name }}.</b> {{ a.body }}</p>
       </li>
       {%- endfor %}
     </ol>
@@ -100,11 +100,6 @@
       <article class="beyond-block" id="menu">
         <h3 class="h4">{{ v.menu_heading }}</h3>
         <p class="body">{{ v.menu_lede }}</p>
-        <ul class="marks">
-          {%- for m in v.menu_points %}
-          <li>{{ m }}</li>
-          {%- endfor %}
-        </ul>
         <div class="plate-card">
           <div class="plate-head">
             <h4>{{ product.plate.dish }}<span class="pui-sub">One plate, taken apart</span></h4>
@@ -127,11 +122,6 @@
       <article class="beyond-block" id="intel">
         <h3 class="h4">{{ v.intel_heading }}</h3>
         <p class="body">{{ v.intel_lede }}</p>
-        <ul class="marks">
-          {%- for m in v.intel_points %}
-          <li>{{ m }}</li>
-          {%- endfor %}
-        </ul>
       </article>
 
       <article class="beyond-block" id="chat">
@@ -143,9 +133,8 @@
             <span class="tag-sample">{{ product.weeklist.label }}</span>
           </div>
           <ul class="asks">
-            {%- for c in product.chat_chips %}
+            {%- set c = product.chat_chips[0] %}
             <li><b>{{ c.q }}</b><p>{{ c.a }}</p></li>
-            {%- endfor %}
           </ul>
         </div>
       </article>

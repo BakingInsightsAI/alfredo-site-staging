@@ -74,17 +74,17 @@
         <h3 class="board-name">{{ r.name }}</h3>
         <dl class="board-fields">
           <div class="bf-wide"><dt>{{ bd.fields.why }}</dt><dd>{{ r.why }}</dd></div>
-          <div><dt>{{ bd.fields.effort }}</dt><dd>{{ r.effort }}</dd></div>
-          <div><dt>{{ bd.fields.risk }}</dt><dd>{{ r.risk }}</dd></div>
-          <div class="bf-wide"><dt>{{ bd.fields.how }}</dt><dd>{{ r.how }}</dd></div>
+          <div class="bf-chips">
+            <span class="bf-chip">{{ bd.fields.effort }} <b>{{ r.effort }}</b></span>
+            <span class="bf-chip">{{ bd.fields.risk }} <b>{{ r.risk }}</b></span>
+          </div>
+          <div><dt>{{ bd.fields.how }}</dt><dd>{{ r.how }}</dd></div>
           <div><dt>{{ bd.fields.back }}</dt><dd>{{ r.back }}</dd></div>
         </dl>
       </div>
       {%- endfor %}
 
-      <p class="board-foot">{{ bd.window }}</p>
     </div>
-    <p class="board-note">{{ bd.note }}</p>
   </div>
 </section>
 

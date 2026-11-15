@@ -11,13 +11,7 @@ built:
   - name: "How it was built"
     body: "Every feature started as a question from a working restaurant rather than a product meeting. People who run places have shaped it from the first week."
 how_heading: "How we work with you"
-how:
-  - name: "We start by listening"
-    body: "We learn your place first. Then you connect your POS. No new hardware, no staff training."
-  - name: "Your reviews count too"
-    body: "What guests say about you, and about the places nearby, helps shape your weekly list."
-  - name: "Made to fit you"
-    body: "A brewery sees its taproom, a bar sees its bar program. Early partners help decide what we build next."
+how_body: "We learn your place first. Then you connect your POS, with no new hardware and no staff training. What guests say about you, and about the places nearby, helps shape your weekly list. A brewery sees its taproom and a bar sees its bar program, and early partners help decide what we build next."
 # the one line worth keeping from the old opening: who this is for
 how_close: "Restaurants, bars, cafes, bakeries, food trucks: if you ring sales through a POS, get in touch and we will tell you honestly where the fit stands today."
 
