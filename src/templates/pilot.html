@@ -38,7 +38,9 @@
     </div>
     <div class="pairs">
       {%- for b in pilot.built %}
-      <div><h3>{{ b.name }}</h3><p>{{ b.body }}</p></div>
+      {#- the first card's name repeats the section heading, so it carries
+          its body alone #}
+      <div>{% if not loop.first %}<h3>{{ b.name }}</h3>{% endif %}<p>{{ b.body }}</p></div>
       {%- endfor %}
     </div>
 
@@ -52,7 +54,7 @@
       {%- endfor %}
     </ul>
 
-    <p class="claim claim-tight">{{ pilot.how_close }}</p>
+    <p class="body who-for">{{ pilot.how_close }}</p>
   </div>
 </section>
 
@@ -69,12 +71,6 @@
         <li><div><b>{{ s.name }}</b> <span>{{ s.body }}</span></div></li>
         {%- endfor %}
       </ol>
-      <div class="contact contact-block">
-        <p class="contact-h">Or reach us directly</p>
-        <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
-        <a class="social" href="{{ site.contact.instagram_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">{{ site.contact.instagram }} on Instagram</a>
-        <a class="social" href="{{ site.contact.facebook_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">{{ site.contact.facebook }} on Facebook</a>
-      </div>
     </aside>
 
     <div class="formwrap">

@@ -670,3 +670,19 @@ body:not(.hero-nav) .nav { background: var(--g-void); border-bottom: 1px solid v
    twelve column staggered gallery, which turned a four column strip back
    into two rows */
 .places-band .places > .place { grid-column: auto; margin-top: 0; }
+
+/* 2. who Alfredo is for is a sentence, so it is set as one */
+.who-for { margin-top: 26px; }
+
+/* 4. On a phone the headline sits below the photograph, so the veil that
+   makes type readable over it has nothing to do there. At 86% it was
+   taking the strip down to a mean of 20/255, which reads as near black.
+   The veil now starts where the copy starts and the photograph is shown. */
+@media (max-width: 760px) {
+  .hero-short .hero-veil {
+    inset: 124px 0 0;
+    background: linear-gradient(180deg, rgba(21,16,13,0) 0%, rgba(21,16,13,.85) 36px, rgba(21,16,13,1) 100%);
+  }
+  .hero-short .hero-photo { height: 176px; }
+  .hero-short .hero-photo img { object-position: 62% 44%; }
+}
