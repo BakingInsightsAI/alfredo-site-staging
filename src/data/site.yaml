@@ -40,14 +40,14 @@ pages:
     legacy: false
     hero: true
     title: "Alfredo, every business has a story"
-    description: "Alfredo turns your sales into clear, practical changes worth trying. You choose what to do. Alfredo helps you see what actually worked."
+    description: "Alfredo reads your sales, your menu, your guests and the places down the street, and turns them into clear, practical changes worth trying. You choose what to do."
 
   - key: product
     template: product.html
     output: product.html
     legacy: false
     title: "Alfredo, what it does"
-    description: "Three questions every owner asks: what to change this week, whether the menu is making money, and who is coming in. Alfredo answers them every week."
+    description: "One short list of changes worth trying, every Monday. What to try, what it risks, how to do it, and an honest answer on whether it worked."
     next: { label: "Why you can trust the numbers", href: "honesty.html" }
 
   - key: honesty
@@ -56,7 +56,7 @@ pages:
     legacy: false
     title: "Alfredo, why you can trust the numbers"
     description: "We do not make up numbers. If the data is not there, the number is not there either. Here is the whole promise, in public."
-    next: { label: "Who is behind Alfredo", href: "pilot.html" }
+    next: { label: "Why Alfredo exists", href: "pilot.html" }
 
   - key: pricing
     template: pricing.html
@@ -70,7 +70,7 @@ pages:
     output: pilot.html
     legacy: false
     title: "Alfredo, about us"
-    description: "Built by someone who knows numbers, with someone who runs restaurants. How we work with you, and where we are today."
+    description: "Why Alfredo exists, how it was built, and where we are today."
     next: { label: "What it costs", href: "pricing.html" }
 
 # The three steps between a visitor and a working install. They are a real
@@ -86,10 +86,3 @@ getting_started:
       body: "We show you Alfredo and what you would get from it."
     - name: "Up and running in about two weeks."
       body: "If you want to go ahead, we plan the setup together and connect your POS."
-
-# Sentences printed in more than one place. A home tile and an overview
-# card say the same thing word for word, so they read one key rather than
-# two that have to be kept in step by hand.
-shared:
-  menu_line: "See what you really make on every plate, extras included, and which add ons to suggest."
-  guests_line: "Know your regulars and what they spend. See what nearby places charge and what guests say."

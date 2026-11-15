@@ -4,7 +4,7 @@ honesty:
   eyebrow: "The numbers rule"
   heading: "We do not make up numbers."
   lede:
-    - "Most analytics tools try to impress you with big projected numbers. Alfredo does the opposite."
+    - "Plenty of analytics tools try to impress you with big projected numbers. Alfredo does the opposite."
     - "If the data is not there, the number is not there either. Here is the whole promise, in public, so you can hold us to it."
   promises_heading: "Our four promises"
   promises:
@@ -16,8 +16,9 @@ honesty:
       body: "Every test ends one of three ways: it worked, it did nothing, or it backfired. When it backfires, Alfredo says so."
     - name: "No peeking"
       body: "Results stay hidden until a test is finished, so nobody calls it early. Not even us."
+  examples_note: "The examples on this website are labeled and invented, to show you how Alfredo behaves. The numbers inside Alfredo come from your own sales and follow the four promises above."
   bridge_heading: "Why we built it"
-  bridge: "There are tools that report, tools that do your books, and tools that forecast. None of them suggested what to try and then admitted when they were wrong. So we built one."
+  bridge: "There are tools that report, tools that do your books, and tools that forecast. We could not find one that suggested what to try and then admitted when it was wrong. So we built one."
   quotes_heading: "The rule, in practice"
   quotes:
     # the first card is a paraphrase, so it carries no quotation and no gloss
@@ -25,8 +26,8 @@ honesty:
       quote: ""
       gloss: ""
       close: "An assistant that admits when an idea is weak is one you can believe when it says an idea is strong."
-    - intro: "On day one with a real client, Alfredo found a cost that was off by 1,370 times. Instead of quietly fixing it, it asked:"
-      quote: "Flagged for review. Confirm or dismiss."
+    - intro: "On day one with a real client, Alfredo found 57 ingredient cost errors. Instead of quietly fixing them, it flagged each one:"
+      quote: "Confirm or dismiss."
       gloss: ""
       close: "Numbers that get quietly changed are numbers you cannot trust."
   cta_heading: "Hold us to it."
@@ -35,6 +36,7 @@ honesty:
 pricing:
   eyebrow: "Pricing"
   heading: "Less than $10 a day, whichever plan you pick."
+  heading_note: "Based on a year of the monthly price."
   lede: "One price for your whole business, not per location and not per user. No setup fee, and month to month."
   founding_heading: "The first 10 businesses get everything free for six months."
   founding_body: "Restaurants, cafes, bakeries, breweries and bars. Every feature, however many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
@@ -53,10 +55,10 @@ pricing:
       cta_style: "quiet"
       features:
         - "A weekly list of small changes worth trying"
-        - "One test every two weeks, with an honest answer on whether it worked"
+        - "A measured test every two weeks, with an honest answer on whether it worked. The weekly list still comes every week."
         - "Your sales at a glance, day by day"
         - "Which menu items earn their place"
-        - "What the places down the street charge, and what their guests say"
+        - "What the places down the street list publicly: prices, hours and what their reviews say"
         - "Ask Alfredo your questions in plain words"
     - name: "House"
       who: "For one to three locations"
@@ -68,8 +70,8 @@ pricing:
       cta_style: "primary"
       features:
         - "Run as many tests as you like"
-        - "Know your regulars and what they spend"
-        - "See what you really make on every plate, extras included"
+        - "Know your regulars and what they spend, where your POS records who is who"
+        - "See what you really make on every plate, extras included, once you share your recipes and costs"
         - "Promotions and pairings worth suggesting"
         - "Every chart and every detail, nothing held back"
     - name: "Group"
@@ -82,10 +84,10 @@ pricing:
       features:
         - "All your locations in one place"
         - "Compare locations side by side"
-        - "The places down the street, tracked for each location"
+        - "The places down the street, for each of your locations"
   more_lead: "More than ten locations?"
   more_link: "Talk to us"
-  more_tail: "and we will give you a straight number."
+  more_tail: "and we will put together an arrangement that fits your group, with a straight number."
   proof: "Tested with a brewpub and live across a 14 location restaurant chain."
   compare_eyebrow: "For comparison"
   compare_heading: "What everyone else charges"
@@ -99,17 +101,12 @@ pricing:
       note: "Weeks of work, one report, then they leave."
       width: 100
       ink: "--c1"
-    - name: "A big data platform"
-      figure: "about $2,500 a month"
-      note: "From around $30,000 a year, and you still need someone to build the reports."
-      width: 85
-      ink: "--c2"
     - name: "Back office software"
       figure: "$330 to $750 a month, per location"
-      note: "Great for invoices and books. It tells you what you spent, not what to try next."
+      note: "Prices checked in November 2026. Great for invoices and books. It tells you what you spent, not what to try next."
       width: 25
       ink: "--c3"
-  compare_aria: "What everyone else charges each month: a consultant thousands for one project, a big data platform about $2,500, back office software $330 to $750 per location."
+  compare_aria: "What everyone else charges each month: a consultant thousands for one project, back office software $330 to $750 per location."
   compare_soft: "A consultant gives you a one time report."
   compare_gold: "Alfredo tells you what to try every week, then tells you whether it worked, for a fraction of the cost."
   faq_eyebrow: "Questions"
