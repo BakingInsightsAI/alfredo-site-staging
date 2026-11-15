@@ -5,6 +5,11 @@ form_subject: "STAGING TEST demo request"
 web3forms_key: "6ce52bfe-d286-44ff-992c-bb7565c31fb6"
 app_url: "https://app.bakinginsightsai.com"
 
+# How many founding places are still open. This is the only place the
+# number is written: the home panel and the pricing offer both read it, so
+# when a spot fills, one edit updates every page.
+founding_spots_open: 9
+
 footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
 
 # The images are generated, and saying so on every page is a condition of

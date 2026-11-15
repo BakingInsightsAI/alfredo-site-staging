@@ -686,3 +686,47 @@ body:not(.hero-nav) .nav { background: var(--g-void); border-bottom: 1px solid v
   .hero-short .hero-photo { height: 176px; }
   .hero-short .hero-photo img { object-position: 62% 44%; }
 }
+
+/* ===================================================== THE FOUNDING PANEL
+   On the first screen, directly under the two hero actions. A thin gold
+   edge and a glossy dark fill, so it reads as the one highlighted thing in
+   the hero without competing with the primary button. */
+.offer-panel {
+  margin-top: 18px; padding: 14px 16px; border-radius: 11px;
+  border: 1px solid var(--g-gold);
+  background:
+    radial-gradient(130% 150% at 8% 0%, rgba(247,207,149,.16), transparent 62%),
+    linear-gradient(180deg, rgba(42,32,26,.92), rgba(24,18,15,.94));
+  box-shadow: 0 1px 0 rgba(255,236,200,.14) inset, 0 12px 30px rgba(0,0,0,.4);
+  max-width: 430px;
+}
+.offer-panel-label {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--g-gold); font-weight: 600; margin-bottom: 6px;
+}
+.offer-panel-body { font-size: 15px; line-height: 1.45; color: var(--g-cream); }
+.offer-panel-body b { color: var(--g-gold); font-weight: 600; white-space: nowrap; }
+.offer-panel .textlink { display: inline-block; margin-top: 9px; font-size: 14px; }
+
+/* the same count on the pricing offer band */
+.offer-spots { margin-top: 10px; font-size: 15px; color: var(--g-gold); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .offer-panel { margin-top: 14px; padding: 12px 14px; }
+  .offer-panel-body { font-size: 14.5px; }
+  .hero-short .hero-note { margin-top: 12px; }
+}
+
+/* The founding panel has to finish inside the first screen at 360, so the
+   hero above it gives back the 43px it was over by. The photograph keeps
+   enough band to read as a dining room, which was checked on the pixels
+   rather than by eye. */
+@media (max-width: 760px) {
+  .hero-short .hero-photo { height: 128px; }
+  .hero-short .hero-veil { inset: 84px 0 0; }
+  .hero-short .hero-inner { padding-block: 12px 24px; }
+  .hero-short .hero-sub { margin-top: 8px; }
+  .hero-short .hero-body { margin-top: 10px; }
+  .hero-short .actions { margin-top: 14px; }
+  .offer-panel { margin-top: 12px; }
+}

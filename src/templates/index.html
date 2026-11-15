@@ -35,6 +35,15 @@
         <a class="btn" href="{{ h.cta_href }}">{{ h.cta }}</a>
         <a class="btn btn-ghost" href="{{ h.cta2_href }}">{{ h.cta2 }}</a>
       </div>
+      {#- The founding offer, on the first screen. The spot count is read
+          from site.yaml so this panel and the pricing offer cannot drift.
+          The link to pricing is the one place home points past the next
+          chapter. #}
+      <div class="offer-panel">
+        <p class="offer-panel-label">{{ h.offer_label }}</p>
+        <p class="offer-panel-body">{{ h.offer_body }} <b>{{ site.founding_spots_open }} of 10 spots open.</b></p>
+        <a class="textlink" href="{{ h.offer_href }}">{{ h.offer_link }}</a>
+      </div>
       <p class="hero-note">{{ h.note }}</p>
     </div>
   </div>
