@@ -69,7 +69,7 @@ v4:
   heading_a: "One short list, "
   heading_em: "every Monday."
   lede: "Alfredo reads the sales you already ring through your existing POS system, then looks at your menu, your guests and the places down the street. Every Monday it turns that into three to five changes worth trying. You choose which ones to run as a test. It reports back."
-  board_eyebrow: "The list itself"
+  board_eyebrow: "Inside a suggestion"
   board_heading: "What a suggestion tells you before you decide."
   board_lede: "Every one of them comes with the same six things, so you can judge it in a few seconds and get back to the floor."
   anatomy:
@@ -91,6 +91,8 @@ v4:
     name: "Inventory"
     tag: "Coming soon"
     body: "Know what you have on hand. We are building inventory tracking now."
+  beyond_eyebrow: "Beyond the list"
+  beyond_heading: "Your menu, your guests, and what is happening nearby."
   menu_eyebrow: "Your menu"
   menu_heading: "What every plate really earns."
   menu_lede: "Once the extras are counted, the plate that sells most is often not the plate that earns most. Alfredo separates the two, and flags a cost that has crept up before it eats the week. This part needs your recipes and ingredient costs."

@@ -10,13 +10,12 @@
 
 {% block content %}
 {#- ======================================================== 01 the opening
-    The picture runs the full width and the full height. The headline stands
-    on it about 8vw in, where the gradient has already made the ground dark
-    enough to read against. Below 640px the same markup becomes a picture
-    band above a solid dark block, because a headline this size over a busy
-    kitchen is not readable on a phone however the gradient is tuned. #}
+    The headline and the weekly board are one screen. The photograph runs
+    behind the headline and stops where the board begins, so the product is
+    the first thing a reader meets rather than the fourth. #}
 {%- set h = home.hero %}
-<section class="hero">
+{%- set bd = home.board %}
+<section class="hero hero-short">
   <div class="hero-photo">
     <picture>
       <source type="image/webp" sizes="100vw"
@@ -42,155 +41,69 @@
   <p class="hero-chapter" aria-hidden="true">{{ h.chapter }}</p>
 </section>
 
-{#- ======================================================== 02 the tension
-    Seven columns of type against five of photograph, the picture dropped
-    well below the headline so the two do not start on the same line. No
-    container around the image and no card anywhere in the section. #}
-{%- set t = home.tension %}
-<section class="section paper">
-  <div class="wrap grid12 tension-grid">
-    <div class="tension-copy">
-      <div class="reveal">
-        <p class="eyebrow">{{ t.eyebrow }}</p>
-        <h2 class="h2">{{ t.heading }}</h2>
-      </div>
-      <p class="body">{{ t.body }}</p>
-      <hr class="rule">
-      <p class="tension-close">{{ t.close }}</p>
-      <div class="tension-space" aria-hidden="true"></div>
-    </div>
-    <figure class="tension-fig">
-      <picture>
-        <source type="image/webp" sizes="(max-width: 900px) 100vw, 36vw"
-                srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
-        <img src="assets/restaurant-kitchen-640.jpg" alt="{{ t.alt }}"
-             width="640" height="896" loading="lazy" decoding="async">
-      </picture>
-      <figcaption class="tension-cap">{{ t.caption }}</figcaption>
-    </figure>
-  </div>
-</section>
-
-{#- ================================================== 03 the product reveal
-    Entering the product rather than reading about it. The interface is
-    built as markup, not pasted in as a picture, so it reflows, it reads
-    aloud, and the three stages are really three stages. #}
-{%- set m = home.meet %}
-<section class="section dark" id="meet">
+{#- ==================================================== 01b the weekly list
+    The board is the product. Five selectors in a wrapping grid so all five
+    are reachable at 320px without a horizontal scroller, and one detail
+    panel below them. The five records are read from product.weeklist, so
+    this page and What it does cannot drift apart: What it does explains
+    the shape of a suggestion and never names one. #}
+<section class="section board-section darkest" id="list">
   <div class="wrap">
-    <div class="reveal-head reveal">
-      <p class="eyebrow">{{ m.eyebrow }}</p>
-      <h2 class="h2">{{ m.heading }}</h2>
-      <p class="lead">{{ m.lede }}</p>
-    </div>
-
-    <div class="pui-shell reveal">
-      <div class="pui">
-        {#- chrome, so a reader recognises what they are looking at. It
-            links nowhere and says nothing, so it is hidden from the
-            reading order rather than faked as navigation. #}
-        <div class="pui-rail" aria-hidden="true">
-          <span class="pui-mark">a</span>
-          <ul><li></li><li></li><li></li><li></li><li></li></ul>
-        </div>
+    <p class="board-reality">{{ bd.reality }}</p>
+    <div class="board reveal">
+      <div class="board-head">
         <div>
-          <div class="pui-head">
-            <h3>{{ m.ui_title }}</h3>
-            <span class="pui-biz">{{ m.ui_biz }}</span>
-          </div>
-
-          <div class="pui-tabs" data-tabs>
-            {%- for tab in m.tabs %}
-            <button class="pui-tab" type="button" data-tab="stage-{{ tab.key }}">{{ tab.label }}</button>
-            {%- endfor %}
-          </div>
-
-          {#- 01 notice #}
-          {%- set n = m.notice %}
-          <div class="pui-panel" id="stage-notice">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">{{ n.heading }}</h4>
-                <p class="pui-p">{{ n.body }}</p>
-                <div class="pui-field">
-                  <p class="pui-label">{{ n.rec_label }}</p>
-                  <p class="pui-rec">{{ n.rec }}</p>
-                </div>
-                <p class="pui-meta">
-                  <span>Effort <b>{{ n.effort }}</b></span>
-                  <span>Risk <b>{{ n.risk }}</b></span>
-                </p>
-              </div>
-              <div>
-                <p class="pui-label">{{ n.chart_label }}</p>
-                {#- shape only: no values, no scale, no axis #}
-                <ul class="pui-chart" role="img" aria-label="{{ n.chart_alt }}">
-                  {%- for d in n.days %}
-                  <li class="{{ d.h }}"><i aria-hidden="true"></i><span>{{ d.day }}</span></li>
-                  {%- endfor %}
-                </ul>
-                <p class="pui-caption">{{ n.chart_note }}</p>
-              </div>
-            </div>
-            <p class="pui-caption" style="margin-top:16px">{{ n.also }}</p>
-          </div>
-
-          {#- 02 decide #}
-          {%- set d = m.decide %}
-          <div class="pui-panel" id="stage-decide">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">{{ d.heading }}</h4>
-                <p class="pui-p">{{ d.body }}</p>
-                <dl class="pui-dl">
-                  {%- for row in d.rows %}
-                  <div><dt>{{ row.k }}</dt><dd>{{ row.v }}</dd></div>
-                  {%- endfor %}
-                </dl>
-              </div>
-              <div class="pui-aside">
-                <p class="sr-only">{{ d.sr }}</p>
-                <p class="pui-controls" aria-hidden="true">
-                  <span class="pui-btn pui-btn-go">{{ d.controls[0] }}</span>
-                  <span class="pui-btn pui-btn-no">{{ d.controls[1] }}</span>
-                </p>
-                <p class="pui-note"><b>{{ d.note_a }}</b> {{ d.note_b }}</p>
-              </div>
-            </div>
-          </div>
-
-          {#- 03 learn #}
-          {%- set l = m.learn %}
-          <div class="pui-panel" id="stage-learn">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">{{ l.heading }}</h4>
-                <p class="pui-p">{{ l.body }}</p>
-                <div class="pui-field">
-                  <p class="pui-label">What the test said</p>
-                  <p class="pui-rec">{{ l.outcome }}</p>
-                </div>
-                <p class="pui-caption" style="margin-top:16px">{{ l.honest }}</p>
-              </div>
-              <ul class="pui-verdicts">
-                {%- for v in l.verdicts %}
-                <li class="pui-verdict{% if v.result %} is-result{% endif %}">
-                  <i aria-hidden="true"></i>
-                  <span><b>{{ v.name }}.</b> {{ v.body }}</span>
-                  {%- if v.result %}<em>{{ l.label }}</em>{% endif %}
-                </li>
-                {%- endfor %}
-              </ul>
-            </div>
-          </div>
+          <p class="eyebrow">{{ bd.eyebrow }}</p>
+          <h2 class="board-title">{{ bd.heading }}<span class="board-sub">{{ bd.sub }}</span></h2>
         </div>
+        <span class="tag-sample">{{ bd.label }}</span>
       </div>
+
+      <p class="board-pick" id="boardPick">{{ bd.pick }}</p>
+      <div class="board-tabs" data-tabs aria-labelledby="boardPick">
+        {%- for r in product.weeklist.entries %}
+        <button class="board-tab" type="button" data-tab="rec-{{ loop.index0 }}">
+          <i aria-hidden="true">{{ "%02d"|format(loop.index) }}</i>
+          <span>{{ r.kind }}</span>
+        </button>
+        {%- endfor %}
+      </div>
+
+      {%- for r in product.weeklist.entries %}
+      <div class="board-panel" id="rec-{{ loop.index0 }}"{% if not loop.first %} hidden{% endif %}>
+        <h3 class="board-name">{{ r.name }}</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>{{ bd.fields.why }}</dt><dd>{{ r.why }}</dd></div>
+          <div><dt>{{ bd.fields.effort }}</dt><dd>{{ r.effort }}</dd></div>
+          <div><dt>{{ bd.fields.risk }}</dt><dd>{{ r.risk }}</dd></div>
+          <div class="bf-wide"><dt>{{ bd.fields.how }}</dt><dd>{{ r.how }}</dd></div>
+          <div><dt>{{ bd.fields.back }}</dt><dd>{{ r.back }}</dd></div>
+        </dl>
+      </div>
+      {%- endfor %}
+
+      <p class="board-foot">{{ bd.window }}</p>
     </div>
-    <p class="pui-disclosure">{{ m.disclosure }}</p>
+    <p class="board-note">{{ bd.note }}</p>
   </div>
 </section>
 
-{#- ========================================================== 04 the proof
+{#- =================================================== 01c ownership strip
+    The three stages the old walkthrough took a full screen to explain. The
+    brand line appears here once and nowhere else on this page. #}
+{%- set st = home.strip %}
+<section class="strip">
+  <div class="wrap strip-inner">
+    <p class="strip-claim">{{ st.statement }}<em>{{ st.statement_em }}</em></p>
+    <ol class="strip-steps">
+      {%- for s in st.steps %}
+      <li>{{ s }}</li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+{#- ========================================================== 02 the proof
     A ledger, not three cards: three ruled rows across the whole measure,
     with the verdict set oversized in serif on the left. #}
 {%- set p = home.proof %}
@@ -212,28 +125,26 @@
       </div>
       {%- endfor %}
     </div>
-    <p class="proof-statement">{{ p.statement }}<em>{{ p.statement_em }}</em></p>
+    <p class="proof-honest">{{ p.honest }}</p>
   </div>
 </section>
 
-{#- ========================================================= 05 the places
-    Four unequal crops on the twelve column grid, two staggered rows. The
-    labels sit under the pictures on a hairline, not on a white chip. #}
+{#- ========================================================= 03 the places
+    One shallow band rather than two staggered rows of tall crops. #}
 {%- set pl = home.places %}
-<section class="section sand">
+<section class="section sand places-band">
   <div class="wrap">
     <div class="places-head reveal">
       <p class="eyebrow">{{ pl.eyebrow }}</p>
-      <h2 class="h2">{{ pl.heading }}</h2>
-      <p class="lead">{{ pl.lede }}</p>
+      <h2 class="h3">{{ pl.heading }}</h2>
     </div>
     <div class="places">
       {%- for c in pl.cards %}
       <figure class="place {{ c.cls }}">
         <div class="place-img">
           <picture>
-            <source type="image/webp" sizes="(max-width: 860px) 46vw, 30vw"
-                    srcset="assets/{{ c.stem }}-320.webp 320w, assets/{{ c.stem }}-480.webp 480w, assets/{{ c.stem }}-640.webp 640w, assets/{{ c.stem }}-960.webp 960w">
+            <source type="image/webp" sizes="(max-width: 860px) 46vw, 24vw"
+                    srcset="assets/{{ c.stem }}-320.webp 320w, assets/{{ c.stem }}-480.webp 480w, assets/{{ c.stem }}-640.webp 640w">
             <img src="assets/{{ c.stem }}-480.jpg" alt="{{ c.alt }}"
                  width="480" height="640" loading="lazy" decoding="async">
           </picture>
@@ -245,32 +156,11 @@
   </div>
 </section>
 
-{#- ========================================================== 06 the trust
-    Type and rules, nothing else. The accent is a copper hairline, which is
-    the one decorative mark in the section. #}
-{%- set tr = home.trust %}
-<section class="section paper">
-  <div class="wrap">
-    <div class="trust-head reveal">
-      <hr class="trust-accent" aria-hidden="true">
-      <p class="eyebrow">{{ tr.eyebrow }}</p>
-      <h2 class="h2">{{ tr.heading }}</h2>
-      <p class="body">{{ tr.body }}</p>
-    </div>
-    <ul class="trust-list">
-      {%- for point in tr.points %}
-      <li>{{ point }}</li>
-      {%- endfor %}
-    </ul>
-    <p class="body" style="margin-top:28px">{{ tr.proof }}</p>
-    <p class="trust-more"><a class="textlink" href="{{ tr.link_href }}">{{ tr.link }}</a></p>
-  </div>
-</section>
-
-{#- ========================================================= 07 the invite
-    The closing scene, set left, with no box around it. The section and the
-    footer are the same ink, so one runs into the other without a seam. #}
-{%- set iv = home.invite %}
+{#- ============================================== 04 the proof and invite
+    The old trust band and the old closing scene, merged. The honesty rules
+    live in full on Why trust it; one line and the link ahead are enough
+    here. The chapter handoff is rendered by the shell after this. #}
+{%- set cl = home.close %}
 <section class="section invite darkest">
   <div class="invite-photo" aria-hidden="true">
     <picture>
@@ -282,13 +172,19 @@
   <div class="invite-veil" aria-hidden="true"></div>
   <div class="wrap">
     <div class="invite-inner">
-      <p class="eyebrow">{{ iv.eyebrow }}</p>
-      <h2 class="h2">{{ iv.heading }}</h2>
-      <p class="invite-sub">{{ iv.body }}</p>
-      <p class="invite-sub" style="margin-top:12px">{{ iv.offer }}</p>
+      <p class="eyebrow">{{ cl.eyebrow }}</p>
+      <h2 class="h2">{{ cl.heading }}</h2>
+      <p class="invite-sub">{{ cl.body }} <a class="textlink" href="{{ cl.link_href }}">{{ cl.link }}</a></p>
+      <ul class="invite-facts">
+        <li>{{ cl.proof }}</li>
+        <li>{{ cl.offer }}</li>
+      </ul>
       <div class="actions">
-        <a class="btn" href="{{ iv.cta_href }}">{{ iv.cta }}</a>
-        <a class="textlink" href="{{ iv.link_href }}">{{ iv.link }}</a>
+        <a class="btn" href="{{ cl.cta_href }}">{{ cl.cta }}</a>
+        <a class="nextlink nextlink-inline" href="{{ cl.next_href }}">
+          <span>Next</span>
+          <b>{{ cl.next_label }}</b>
+        </a>
       </div>
     </div>
   </div>

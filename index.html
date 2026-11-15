@@ -16,7 +16,7 @@
       imagesizes="100vw" fetchpriority="high">
 
 <link rel="stylesheet" href="alfredo.css">
-<link rel="stylesheet" href="gloss-v6.css">
+<link rel="stylesheet" href="glossy.css">
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body class="hero-nav">
@@ -47,7 +47,7 @@
 
 <main id="main" tabindex="-1">
 
-<section class="hero">
+<section class="hero hero-short">
   <div class="hero-photo">
     <picture>
       <source type="image/webp" sizes="100vw"
@@ -64,7 +64,7 @@
       <p class="hero-sub">Your numbers know what comes next.</p>
       <p class="hero-body">Alfredo reads your sales, your menu, your guests and the places down the street, and turns them into clear, practical changes worth trying. You choose what to do. Alfredo helps you see what actually worked.</p>
       <div class="actions">
-        <a class="btn" href="#meet">See Alfredo in action</a>
+        <a class="btn" href="#list">See this week's list</a>
         <a class="btn btn-ghost" href="pilot.html#pilot">Request a demo</a>
       </div>
       <p class="hero-note">For restaurants, bars, breweries, cafes and bakeries.</p>
@@ -72,141 +72,111 @@
   </div>
   <p class="hero-chapter" aria-hidden="true">01 / The story</p>
 </section>
-<section class="section paper">
-  <div class="wrap grid12 tension-grid">
-    <div class="tension-copy">
-      <div class="reveal">
-        <p class="eyebrow">02 / The reality</p>
-        <h2 class="h2">Good instincts deserve better information.</h2>
+<section class="section board-section darkest" id="list">
+  <div class="wrap">
+    <p class="board-reality">You know when a Tuesday feels different. Alfredo is what finds out why, and what to do about it.</p>
+    <div class="board reveal">
+      <div class="board-head">
+        <div>
+          <p class="eyebrow">The weekly list</p>
+          <h2 class="board-title">Monday, the 6th<span class="board-sub">Five things worth trying this week</span></h2>
+        </div>
+        <span class="tag-sample">Illustrative example</span>
       </div>
-      <p class="body">You know your guests. You know your team. You know when a Tuesday feels different. But between service, staffing and everything else, there is rarely time to dig through the numbers and find out why.</p>
-      <hr class="rule">
-      <p class="tension-close">That is where Alfredo comes in.</p>
-      <div class="tension-space" aria-hidden="true"></div>
+
+      <p class="board-pick" id="boardPick">Pick one to read it</p>
+      <div class="board-tabs" data-tabs aria-labelledby="boardPick">
+        <button class="board-tab" type="button" data-tab="rec-0">
+          <i aria-hidden="true">01</i>
+          <span>Pairing</span>
+        </button>
+        <button class="board-tab" type="button" data-tab="rec-1">
+          <i aria-hidden="true">02</i>
+          <span>Menu placement</span>
+        </button>
+        <button class="board-tab" type="button" data-tab="rec-2">
+          <i aria-hidden="true">03</i>
+          <span>Costs</span>
+        </button>
+        <button class="board-tab" type="button" data-tab="rec-3">
+          <i aria-hidden="true">04</i>
+          <span>Prices</span>
+        </button>
+        <button class="board-tab" type="button" data-tab="rec-4">
+          <i aria-hidden="true">05</i>
+          <span>Neighborhood</span>
+        </button>
+      </div>
+      <div class="board-panel" id="rec-0">
+        <h3 class="board-name">Offer the sourdough board with the cheese plate</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>Why it came up</dt><dd>Two in three cheese plates already leave the kitchen with bread beside them.</dd></div>
+          <div><dt>How much work</dt><dd>Low</dd></div>
+          <div><dt>What it risks</dt><dd>Low</dd></div>
+          <div class="bf-wide"><dt>How to do it</dt><dd>Tell the floor on Thursday and add one line to the specials card.</dd></div>
+          <div><dt>When to check back</dt><dd>Three weeks</dd></div>
+        </dl>
+      </div>
+      <div class="board-panel" id="rec-1" hidden>
+        <h3 class="board-name">Move the lamb ragu into the top third of the mains</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>Why it came up</dt><dd>It earns more per plate than any other main and sits second from the bottom.</dd></div>
+          <div><dt>How much work</dt><dd>Low</dd></div>
+          <div><dt>What it risks</dt><dd>Low</dd></div>
+          <div class="bf-wide"><dt>How to do it</dt><dd>Reprint the mains before the weekend.</dd></div>
+          <div><dt>When to check back</dt><dd>Six weeks</dd></div>
+        </dl>
+      </div>
+      <div class="board-panel" id="rec-2" hidden>
+        <h3 class="board-name">Look again at the mushroom tart</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>Why it came up</dt><dd>What you pay for the mushrooms went up twice, and the tart is now selling for less than it costs to make.</dd></div>
+          <div><dt>How much work</dt><dd>Low</dd></div>
+          <div><dt>What it risks</dt><dd>Low</dd></div>
+          <div class="bf-wide"><dt>How to do it</dt><dd>Confirm the new costs or dismiss the flag.</dd></div>
+          <div><dt>When to check back</dt><dd>This week</dd></div>
+        </dl>
+      </div>
+      <div class="board-panel" id="rec-3" hidden>
+        <h3 class="board-name">Try fifty cents off the flatbread after nine</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>Why it came up</dt><dd>Late orders drop off sharply, and the flatbread costs little to make.</dd></div>
+          <div><dt>How much work</dt><dd>Low</dd></div>
+          <div><dt>What it risks</dt><dd>Low</dd></div>
+          <div class="bf-wide"><dt>How to do it</dt><dd>Fifty cents off from nine until close, nothing else changes.</dd></div>
+          <div><dt>When to check back</dt><dd>Two weeks</dd></div>
+        </dl>
+      </div>
+      <div class="board-panel" id="rec-4" hidden>
+        <h3 class="board-name">Hold the Thursday quiz an hour later</h3>
+        <dl class="board-fields">
+          <div class="bf-wide"><dt>Why it came up</dt><dd>The pub two streets over starts theirs at eight and takes your early crowd with it.</dd></div>
+          <div><dt>How much work</dt><dd>Medium</dd></div>
+          <div><dt>What it risks</dt><dd>Medium</dd></div>
+          <div class="bf-wide"><dt>How to do it</dt><dd>Move the start, and tell the regulars the week before.</dd></div>
+          <div><dt>When to check back</dt><dd>Four weeks</dd></div>
+        </dl>
+      </div>
+
+      <p class="board-foot">When to check back is the date you choose. Alfredo suggests one, and you can make it shorter or longer.</p>
     </div>
-    <figure class="tension-fig">
-      <picture>
-        <source type="image/webp" sizes="(max-width: 900px) 100vw, 36vw"
-                srcset="assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
-        <img src="assets/restaurant-kitchen-640.jpg" alt="A cook finishing a dish on a kitchen pass."
-             width="640" height="896" loading="lazy" decoding="async">
-      </picture>
-      <figcaption class="tension-cap">The decisions never stop when service starts.</figcaption>
-    </figure>
+    <p class="board-note">The list comes every week on every plan. How many of them you run as a measured test is what the plans differ on.</p>
   </div>
 </section>
-<section class="section dark" id="meet">
-  <div class="wrap">
-    <div class="reveal-head reveal">
-      <p class="eyebrow">03 / Meet Alfredo</p>
-      <h2 class="h2">Clarity, before the next service.</h2>
-      <p class="lead">Every week, Alfredo reads your sales, your menu and your guests, and turns what it finds into decisions you can actually act on.</p>
-    </div>
-
-    <div class="pui-shell reveal">
-      <div class="pui">
-        <div class="pui-rail" aria-hidden="true">
-          <span class="pui-mark">a</span>
-          <ul><li></li><li></li><li></li><li></li><li></li></ul>
-        </div>
-        <div>
-          <div class="pui-head">
-            <h3>Weekly briefing</h3>
-            <span class="pui-biz">Example business</span>
-          </div>
-
-          <div class="pui-tabs" data-tabs>
-            <button class="pui-tab" type="button" data-tab="stage-notice">01 / Notice</button>
-            <button class="pui-tab" type="button" data-tab="stage-decide">02 / Decide</button>
-            <button class="pui-tab" type="button" data-tab="stage-learn">03 / Learn</button>
-          </div>
-          <div class="pui-panel" id="stage-notice">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">Your quietest lunch service is Thursday.</h4>
-                <p class="pui-p">Your sales show fewer Thursday lunch orders than the other weekdays.</p>
-                <div class="pui-field">
-                  <p class="pui-label">What Alfredo suggests</p>
-                  <p class="pui-rec">Consider bringing back a Thursday lunch offer.</p>
-                </div>
-                <p class="pui-meta">
-                  <span>Effort <b>Low</b></span>
-                  <span>Risk <b>Low</b></span>
-                </p>
-              </div>
-              <div>
-                <p class="pui-label">Lunch orders by weekday</p>
-                <ul class="pui-chart" role="img" aria-label="A drawing of five weekday bars with Thursday the shortest. It shows shape only and has no scale.">
-                  <li class="tall"><i aria-hidden="true"></i><span>Mon</span></li>
-                  <li class="mid"><i aria-hidden="true"></i><span>Tue</span></li>
-                  <li class="tall"><i aria-hidden="true"></i><span>Wed</span></li>
-                  <li class="short"><i aria-hidden="true"></i><span>Thu</span></li>
-                  <li class="tall"><i aria-hidden="true"></i><span>Fri</span></li>
-                </ul>
-                <p class="pui-caption">Relative shape only. No figures sit behind this drawing, so it carries no scale.</p>
-              </div>
-            </div>
-            <p class="pui-caption" style="margin-top:16px">Also on this week's list: a pairing your receipts already show, and a price the pub down the street just changed.</p>
-          </div>
-          <div class="pui-panel" id="stage-decide">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">Try a Thursday lunch offer.</h4>
-                <p class="pui-p">A small, reversible change. Choose whether it fits your business.</p>
-                <dl class="pui-dl">
-                  <div><dt>Why this was suggested</dt><dd>Thursday lunch has been your quietest weekday service for several weeks running, and nothing on the menu changed in that time.</dd></div>
-                  <div><dt>What you could try</dt><dd>A set lunch on Thursdays only, at the price you already use the rest of the week.</dd></div>
-                  <div><dt>What to watch</dt><dd>Whether Thursday covers come up without pulling guests off the other weekdays.</dd></div>
-                  <div><dt>When to review</dt><dd>The date you choose. Alfredo suggests one, and you can make it shorter or longer.</dd></div>
-                </dl>
-              </div>
-              <div class="pui-aside">
-                <p class="sr-only">Sample controls, shown to illustrate the choice. They do nothing on this page.</p>
-                <p class="pui-controls" aria-hidden="true">
-                  <span class="pui-btn pui-btn-go">Try this</span>
-                  <span class="pui-btn pui-btn-no">Not right now</span>
-                </p>
-                <p class="pui-note"><b>Alfredo recommends. You decide.</b> Nothing on your menu moves until you say so, and anything you try can be put back.</p>
-              </div>
-            </div>
-          </div>
-          <div class="pui-panel" id="stage-learn">
-            <div class="pui-split">
-              <div>
-                <h4 class="pui-h">See what happened.</h4>
-                <p class="pui-p">On the date you chose, Alfredo comes back with one of three answers. It is as willing to tell you the change did nothing as to tell you it worked.</p>
-                <div class="pui-field">
-                  <p class="pui-label">What the test said</p>
-                  <p class="pui-rec">The Thursday lunch offer ran for five weeks. Thursday covers came up and held, and the other weekdays did not fall. After what you would have made anyway.</p>
-                </div>
-                <p class="pui-caption" style="margin-top:16px">If the time you chose is not enough to call it, Alfredo says so rather than guess.</p>
-              </div>
-              <ul class="pui-verdicts">
-                <li class="pui-verdict is-result">
-                  <i aria-hidden="true"></i>
-                  <span><b>Worked.</b> The change did what it was meant to do.</span><em>This result</em>
-                </li>
-                <li class="pui-verdict">
-                  <i aria-hidden="true"></i>
-                  <span><b>No effect.</b> Nothing moved. Worth knowing, and worth stopping.</span>
-                </li>
-                <li class="pui-verdict">
-                  <i aria-hidden="true"></i>
-                  <span><b>Backfired.</b> It went the other way, so put it back.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="pui-disclosure">Illustrative product walkthrough. Not live customer data.</p>
+<section class="strip">
+  <div class="wrap strip-inner">
+    <p class="strip-claim">Alfredo recommends. <em>You decide.</em></p>
+    <ol class="strip-steps">
+      <li>It notices what moved in your own numbers.</li>
+      <li>You decide what is worth trying.</li>
+      <li>It comes back with an honest answer.</li>
+    </ol>
   </div>
 </section>
 <section class="section paper-light">
   <div class="wrap">
     <div class="proof-head reveal">
-      <p class="eyebrow">04 / The outcome</p>
+      <p class="eyebrow">The outcome</p>
       <h2 class="h2">Not another dashboard. An answer.</h2>
       <p class="lead">Alfredo does not just suggest a change and disappear. It helps you understand whether the change worked, did nothing, or made things worse.</p>
     </div>
@@ -214,7 +184,7 @@
     <div class="ledger">
       <div class="ledger-row">
         <p class="ledger-state ledger-worked">Worked</p>
-        <p class="ledger-what">House lager promotion</p>
+        <p class="ledger-what">Fifty cents off the House Lager</p>
         <p class="ledger-why">Fifty cents off the House Lager. Three weeks later the bar took $247 more a week. After what you would have made anyway.</p>
       </div>
       <div class="ledger-row">
@@ -228,22 +198,21 @@
         <p class="ledger-why">The revised hours performed worse, so the change was reversed.</p>
       </div>
     </div>
-    <p class="proof-statement">Alfredo recommends. <em>You decide.</em></p>
+    <p class="proof-honest">If the time you chose is not enough to call it, Alfredo says so rather than guess.</p>
   </div>
 </section>
-<section class="section sand">
+<section class="section sand places-band">
   <div class="wrap">
     <div class="places-head reveal">
-      <p class="eyebrow">05 / Built for hospitality</p>
-      <h2 class="h2">Different places. The same ambition to do better.</h2>
-      <p class="lead">Whether you run a neighborhood café, a busy bar, an independent bakery, a brewery or a multi location restaurant group, your business has decisions worth understanding.</p>
+      <p class="eyebrow">Built for hospitality</p>
+      <h2 class="h3">Different places. The same ambition to do better.</h2>
     </div>
     <div class="places">
       <figure class="place pl-restaurant">
         <div class="place-img">
           <picture>
-            <source type="image/webp" sizes="(max-width: 860px) 46vw, 30vw"
-                    srcset="assets/restaurant-kitchen-320.webp 320w, assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
+            <source type="image/webp" sizes="(max-width: 860px) 46vw, 24vw"
+                    srcset="assets/restaurant-kitchen-320.webp 320w, assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w">
             <img src="assets/restaurant-kitchen-480.jpg" alt="A cook finishing a dish on a kitchen pass."
                  width="480" height="640" loading="lazy" decoding="async">
           </picture>
@@ -253,8 +222,8 @@
       <figure class="place pl-bar">
         <div class="place-img">
           <picture>
-            <source type="image/webp" sizes="(max-width: 860px) 46vw, 30vw"
-                    srcset="assets/bar-320.webp 320w, assets/bar-480.webp 480w, assets/bar-640.webp 640w, assets/bar-960.webp 960w">
+            <source type="image/webp" sizes="(max-width: 860px) 46vw, 24vw"
+                    srcset="assets/bar-320.webp 320w, assets/bar-480.webp 480w, assets/bar-640.webp 640w">
             <img src="assets/bar-480.jpg" alt="A bar at night, a drink on the counter and bottles lit behind it."
                  width="480" height="640" loading="lazy" decoding="async">
           </picture>
@@ -264,8 +233,8 @@
       <figure class="place pl-brewery">
         <div class="place-img">
           <picture>
-            <source type="image/webp" sizes="(max-width: 860px) 46vw, 30vw"
-                    srcset="assets/brewery-320.webp 320w, assets/brewery-480.webp 480w, assets/brewery-640.webp 640w, assets/brewery-960.webp 960w">
+            <source type="image/webp" sizes="(max-width: 860px) 46vw, 24vw"
+                    srcset="assets/brewery-320.webp 320w, assets/brewery-480.webp 480w, assets/brewery-640.webp 640w">
             <img src="assets/brewery-480.jpg" alt="A brewer holding a glass of beer up to the light beside the tanks."
                  width="480" height="640" loading="lazy" decoding="async">
           </picture>
@@ -275,8 +244,8 @@
       <figure class="place pl-bakery">
         <div class="place-img">
           <picture>
-            <source type="image/webp" sizes="(max-width: 860px) 46vw, 30vw"
-                    srcset="assets/bakery-320.webp 320w, assets/bakery-480.webp 480w, assets/bakery-640.webp 640w, assets/bakery-960.webp 960w">
+            <source type="image/webp" sizes="(max-width: 860px) 46vw, 24vw"
+                    srcset="assets/bakery-320.webp 320w, assets/bakery-480.webp 480w, assets/bakery-640.webp 640w">
             <img src="assets/bakery-480.jpg" alt="A baker shaping dough on a floured bench beside racks of bread."
                  width="480" height="640" loading="lazy" decoding="async">
           </picture>
@@ -284,23 +253,6 @@
         <figcaption>Cafes and bakeries</figcaption>
       </figure>
     </div>
-  </div>
-</section>
-<section class="section paper">
-  <div class="wrap">
-    <div class="trust-head reveal">
-      <hr class="trust-accent" aria-hidden="true">
-      <p class="eyebrow">06 / Built on honesty</p>
-      <h2 class="h2">We do not make up numbers.</h2>
-      <p class="body">If Alfredo does not have enough information to know whether something worked, it says so. Not every experiment succeeds. Every useful experiment teaches you something.</p>
-    </div>
-    <ul class="trust-list">
-      <li>No invented figures.</li>
-      <li>No pretending a test worked.</li>
-      <li>No changing your business without you.</li>
-    </ul>
-    <p class="body" style="margin-top:28px">Tested with a brewpub and live across a 14 location restaurant chain.</p>
-    <p class="trust-more"><a class="textlink" href="honesty.html">Read the whole promise</a></p>
   </div>
 </section>
 <section class="section invite darkest">
@@ -316,11 +268,17 @@
     <div class="invite-inner">
       <p class="eyebrow">The next chapter</p>
       <h2 class="h2">Your next chapter starts with better decisions.</h2>
-      <p class="invite-sub">See what Alfredo could uncover in your business.</p>
-      <p class="invite-sub" style="margin-top:12px">The first 10 businesses get everything free for six months.</p>
+      <p class="invite-sub">We do not make up numbers. If Alfredo does not have enough information to know whether something worked, it says so. <a class="textlink" href="honesty.html">Read the whole promise</a></p>
+      <ul class="invite-facts">
+        <li>Tested with a brewpub and live across a 14 location restaurant chain.</li>
+        <li>The first 10 businesses get everything free for six months.</li>
+      </ul>
       <div class="actions">
         <a class="btn" href="pilot.html#pilot">Request a demo</a>
-        <a class="textlink" href="product.html">Explore what Alfredo does</a>
+        <a class="nextlink nextlink-inline" href="product.html">
+          <span>Next</span>
+          <b>What Alfredo does</b>
+        </a>
       </div>
     </div>
   </div>

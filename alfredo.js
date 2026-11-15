@@ -63,13 +63,14 @@
      A real tablist: arrow keys and Home and End move between the stages,
      one tab is in the tab order at a time, and the panel each one owns is
      named by it. Nothing rotates on its own. */
-  var tabsBox = document.querySelector('[data-tabs]');
-  if (tabsBox) {
+  [].slice.call(document.querySelectorAll('[data-tabs]')).forEach(function (tabsBox) {
     var tabs = [].slice.call(tabsBox.querySelectorAll('[data-tab]'));
     var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('data-tab')); });
     if (tabs.length && panels.every(Boolean)) {
       tabsBox.setAttribute('role', 'tablist');
-      tabsBox.setAttribute('aria-label', 'Stages of the walkthrough');
+      if (!tabsBox.getAttribute('aria-labelledby')) {
+        tabsBox.setAttribute('aria-label', tabsBox.getAttribute('data-tabs') || 'Tabs');
+      }
 
       var select = function (i, moveFocus) {
         tabs.forEach(function (tab, n) {
@@ -104,7 +105,7 @@
 
       select(0, false);
     }
-  }
+  });
 
   /* ------------------------------------------------------------- form --
      Unchanged from v4: same endpoint, same field names, same messages.

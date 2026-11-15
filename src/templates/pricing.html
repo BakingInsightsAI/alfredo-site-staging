@@ -4,13 +4,13 @@
 {% block content %}
 {#- Every price, every plan name and every line of each plan is read from
     the data unchanged. Nothing here is restated by hand. #}
-<section class="pagehead darkest">
-  <div class="wrap grid12 pagehead-grid">
+<section class="pagehead darkest pagehead-price">
+  <div class="wrap">
     <div class="pagehead-copy">
       <p class="eyebrow">{{ p.eyebrow }}</p>
       <h1 class="display">{{ p.heading }}</h1>
       <p class="lead">{{ p.lede }}</p>
-      <p style="margin-top:14px;font-size:14px;color:var(--muted-light)">{{ p.heading_note }}</p>
+      <p class="head-note">{{ p.heading_note }}</p>
     </div>
   </div>
 </section>
@@ -26,84 +26,85 @@
         <p class="tier-price">{{ t.price }} <span class="tier-unit">{{ p.price_unit }}</span></p>
         <p class="tier-day">{{ t.per_day }}. {{ t.per_day_note }}</p>
         {%- if t.get('lead') %}
-        <p class="tier-day" style="margin-top:18px">{{ t.lead }}</p>
+        <p class="tier-day tier-plus">{{ t.lead }}</p>
         {%- endif %}
-        <ul class="tier-list">
-          {%- for f in t.features %}
-          <li>{{ f }}</li>
-          {%- endfor %}
-        </ul>
+        <details class="plan-details">
+          <summary>{{ p.plan_details }}</summary>
+          <ul class="tier-list">
+            {%- for f in t.features %}
+            <li>{{ f }}</li>
+            {%- endfor %}
+          </ul>
+        </details>
         <a class="btn{% if t.cta_style != 'primary' %} btn-ghost{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
       </div>
       {%- endfor %}
     </div>
 
-    <p class="tier-day" style="margin-top:30px">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
+    <p class="tier-more">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
 
     <div class="offer">
       <h2>{{ p.founding_heading }}</h2>
       <p>{{ p.founding_body }}</p>
     </div>
 
-    <p class="claim" style="margin-top:56px">{{ p.proof }}<span>Patent pending.</span></p>
+    <p class="claim claim-tight">{{ p.proof }}<span>Patent pending.</span></p>
   </div>
 </section>
 
+{#- The questions, and the comparison on request. The comparison is no
+    longer a section of its own: it is two rows behind a control, which is
+    what the length budget needed and what its evidence warrants. #}
 <section class="section paper-light">
-  <div class="wrap">
-    <div class="proof-head reveal">
-      <p class="eyebrow">{{ p.compare_eyebrow }}</p>
-      <h2 class="h2">{{ p.compare_heading }}</h2>
-    </div>
-    <table class="compare">
-      <caption class="sr-only">{{ p.compare_aria }}</caption>
-      <thead>
-        <tr><th scope="col">What it is</th><th scope="col">What it costs</th><th scope="col">What you get</th></tr>
-      </thead>
-      <tbody>
-        {%- for b in p.compare_bars %}
-        <tr>
-          <th scope="row">{{ b.name }}</th>
-          <td class="c-price">{{ b.figure }}</td>
-          <td>{{ b.note }}</td>
-        </tr>
-        {%- endfor %}
-      </tbody>
-    </table>
-    <p class="claim" style="margin-top:48px">{{ p.compare_gold }}<span>{{ p.compare_soft }}</span></p>
-  </div>
-</section>
-
-<section class="section paper">
   <div class="wrap">
     <div class="proof-head reveal">
       <p class="eyebrow">{{ p.faq_eyebrow }}</p>
       <h2 class="h2">{{ p.faq_heading }}</h2>
     </div>
-    <div class="faq">
+    <div class="faq-rows">
       {%- for f in p.faq %}
-      <div><h3>{{ f.q }}</h3><p>{{ f.a }}</p></div>
+      <details class="faq-row">
+        <summary>{{ f.q }}</summary>
+        <p>{{ f.a }}</p>
+      </details>
       {%- endfor %}
     </div>
+
+    <details class="disclose">
+      <summary>{{ p.compare_more }}</summary>
+      <div class="tbl-scroll">
+        <table class="compare">
+          <caption class="sr-only">{{ p.compare_aria }}</caption>
+          <thead>
+            <tr><th scope="col">What it is</th><th scope="col">What it costs</th><th scope="col">What you get</th></tr>
+          </thead>
+          <tbody>
+            {%- for b in p.compare_bars %}
+            <tr>
+              <th scope="row">{{ b.name }}</th>
+              <td class="c-price">{{ b.figure }}</td>
+              <td>{{ b.note }}</td>
+            </tr>
+            {%- endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="claim claim-tight">{{ p.compare_gold }}<span>{{ p.compare_soft }}</span></p>
+    </details>
   </div>
 </section>
 
+{#- The last chapter, so one invitation and no handoff. The three getting
+    started steps are not repeated here: they sit beside the form on About
+    us, which is where a reader acts on them. #}
 <section class="section close-band darkest">
-  <div class="wrap grid12 ed">
-    <div class="ed-wide">
+  <div class="wrap">
+    <div class="close-inner">
       <h2 class="h2">{{ p.cta_heading }}</h2>
-      <p>{{ p.cta_body }}</p>
+      <p class="lead">{{ p.cta_body }}</p>
       <div class="actions">
         <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
       </div>
-    </div>
-    <div class="ed-side">
-      <h3 class="h3">{{ site.getting_started.heading }}</h3>
-      <ol class="steps">
-        {%- for s in site.getting_started.steps %}
-        <li><div><b>{{ s.name }}</b> <span>{{ s.body }}</span></div></li>
-        {%- endfor %}
-      </ol>
     </div>
   </div>
 </section>

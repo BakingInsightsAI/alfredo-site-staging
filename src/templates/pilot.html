@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="pagehead darkest">
+<section class="pagehead darkest pagehead-short">
   <div class="wrap grid12 pagehead-grid">
     <div class="pagehead-copy">
       <p class="eyebrow">About us</p>
@@ -28,7 +28,9 @@
   </div>
 </section>
 
-{#- Two people, described by what they do. No portraits, no names. #}
+{#- Why Alfredo exists, how it is built, how we work, and where we are:
+    three sections merged into one. No person is described anywhere on this
+    page, by name, history, affiliation or pronoun. #}
 <section class="section paper">
   <div class="wrap">
     <div class="proof-head reveal">
@@ -39,119 +41,110 @@
       <div><h3>{{ b.name }}</h3><p>{{ b.body }}</p></div>
       {%- endfor %}
     </div>
-  </div>
-</section>
 
-<section class="section paper-light">
-  <div class="wrap">
-    <div class="proof-head reveal">
-      <h2 class="h2">{{ pilot.how_heading }}</h2>
-    </div>
+    <h3 class="h4 sub-head">{{ pilot.how_heading }}</h3>
     <div class="pairs pairs-3">
       {%- for h in pilot.how %}
-      <div><h3>{{ h.name }}</h3><p>{{ h.body }}</p></div>
+      <div><h4>{{ h.name }}</h4><p>{{ h.body }}</p></div>
       {%- endfor %}
     </div>
-    <p class="claim" style="margin-top:56px">{{ pilot.how_close }}</p>
+
+    <h3 class="h4 sub-head">{{ pilot.where_heading }}</h3>
+    <ul class="marks marks-row">
+      {%- for w in pilot.where %}
+      <li>{{ w }}</li>
+      {%- endfor %}
+    </ul>
+
+    <p class="claim claim-tight">{{ pilot.how_close }}</p>
   </div>
 </section>
 
-<section class="section sand">
-  <div class="wrap grid12 ed">
-    <div class="ed-copy reveal">
-      <p class="eyebrow">{{ pilot.where_eyebrow }}</p>
-      <h2 class="h3">{{ pilot.where_heading }}</h2>
-      <ul class="marks">
-        {%- for w in pilot.where %}
-        <li>{{ w }}</li>
-        {%- endfor %}
-      </ul>
-    </div>
-    <div class="ed-main">
-      <h3 class="h3">{{ site.getting_started.heading }}</h3>
+{#- The form, with the three steps beside it rather than in a section of
+    their own. Delivery, the access key, the staging and production
+    subjects, the field names and the submitted values are exactly what
+    they were: only the clothes changed. #}
+<section class="section paper-light" id="pilot">
+  <div class="wrap form-layout">
+    <aside class="form-aside">
+      <h2 class="h4">{{ site.getting_started.heading }}</h2>
       <ol class="steps">
         {%- for s in site.getting_started.steps %}
         <li><div><b>{{ s.name }}</b> <span>{{ s.body }}</span></div></li>
         {%- endfor %}
       </ol>
-    </div>
-  </div>
-</section>
+      <div class="contact contact-block">
+        <p class="contact-h">Or reach us directly</p>
+        <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+        <a class="social" href="{{ site.contact.instagram_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">{{ site.contact.instagram }} on Instagram</a>
+        <a class="social" href="{{ site.contact.facebook_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">{{ site.contact.facebook }} on Facebook</a>
+      </div>
+    </aside>
 
-{#- The form. Delivery, the access key, the staging subject, the field
-    names and the submitted values are exactly what they were: only the
-    clothes changed. #}
-<section class="section paper" id="pilot">
-  <div class="wrap formwrap">
-    <div class="proof-head reveal" style="margin-bottom:0">
-      <h2 class="h2">{{ pilot.form_heading }}</h2>
-      <p class="lead">{{ pilot.form_lede }}</p>
-    </div>
-    <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
-      <input type="hidden" name="access_key" value="{{ site.web3forms_key }}">
-      <input type="hidden" name="subject" value="{{ site.form_subject }}">
-      <input type="hidden" name="from_name" value="Alfredo website">
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <div class="formwrap">
+      <div class="proof-head reveal" style="margin-bottom:0">
+        <h2 class="h3">{{ pilot.form_heading }}</h2>
+        <p class="body">{{ pilot.form_lede }}</p>
+      </div>
+      <form class="demo-form" action="https://api.web3forms.com/submit" method="POST" id="demoForm" novalidate>
+        <input type="hidden" name="access_key" value="{{ site.web3forms_key }}">
+        <input type="hidden" name="subject" value="{{ site.form_subject }}">
+        <input type="hidden" name="from_name" value="Alfredo website">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
-      <p class="field">
-        <label for="f-name">Name</label>
-        <input id="f-name" type="text" name="name" required autocomplete="name"
-               placeholder="Your name" aria-describedby="nameError">
-        <span class="field-error" id="nameError" hidden
-              data-missing="Please tell us your name." data-invalid="Please tell us your name."></span>
-      </p>
-      <p class="field">
-        <label for="f-business">Business name</label>
-        <input id="f-business" type="text" name="business" required autocomplete="organization"
-               placeholder="Your restaurant, brewery, cafe, or bakery" aria-describedby="businessError">
-        <span class="field-error" id="businessError" hidden
-              data-missing="Please tell us the name of your place." data-invalid="Please tell us the name of your place."></span>
-      </p>
-      <p class="field">
-        <label for="f-email">Email</label>
-        <input id="f-email" type="email" name="email" required autocomplete="email" spellcheck="false"
-               placeholder="you@yourbusiness.com" aria-describedby="emailError">
-        <span class="field-error" id="emailError" hidden
-              data-missing="Please add an email so we can reply." data-invalid="That email does not look right. Please check it."></span>
-      </p>
-      <p class="field">
-        <label for="f-pos">POS system</label>
-        <select id="f-pos" name="pos" required aria-describedby="posError">
-          <option value="" disabled selected>Select your POS</option>
-          <option>Toast</option>
-          <option>Clover</option>
-          <option>Square</option>
-          <option>Other</option>
-        </select>
-        <span class="field-error" id="posError" hidden
-              data-missing="Please pick the system you run." data-invalid="Please pick the system you run."></span>
-        <span style="font-size:14px;color:var(--muted-dark)">{{ pilot.form_pos_note }}</span>
-      </p>
-      <fieldset class="field field-full pillset" aria-describedby="locationsError">
-        <legend>{{ pilot.form_locations.legend }}</legend>
-        <div class="pills">
-          {%- for c in pilot.form_locations.choices %}
-          <label><input type="radio" name="locations" value="{{ c }}"{% if loop.first %} required{% endif %}><span>{{ c }}</span></label>
-          {%- endfor %}
-        </div>
-        <span class="field-error" id="locationsError" hidden
-              data-missing="Please choose how many locations you run." data-invalid="Please choose how many locations you run."></span>
-      </fieldset>
-      <p class="field field-full">
-        <label for="f-message">Anything you want us to know (optional)</label>
-        <textarea id="f-message" name="message" rows="3" placeholder="Optional"></textarea>
-      </p>
+        <p class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" type="text" name="name" required autocomplete="name"
+                 placeholder="Your name" aria-describedby="nameError">
+          <span class="field-error" id="nameError" hidden
+                data-missing="Please tell us your name." data-invalid="Please tell us your name."></span>
+        </p>
+        <p class="field">
+          <label for="f-business">Business name</label>
+          <input id="f-business" type="text" name="business" required autocomplete="organization"
+                 placeholder="Your restaurant, brewery, cafe, or bakery" aria-describedby="businessError">
+          <span class="field-error" id="businessError" hidden
+                data-missing="Please tell us the name of your place." data-invalid="Please tell us the name of your place."></span>
+        </p>
+        <p class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" type="email" name="email" required autocomplete="email" spellcheck="false"
+                 placeholder="you@yourbusiness.com" aria-describedby="emailError">
+          <span class="field-error" id="emailError" hidden
+                data-missing="Please add an email so we can reply." data-invalid="That email does not look right. Please check it."></span>
+        </p>
+        <p class="field">
+          <label for="f-pos">POS system</label>
+          <select id="f-pos" name="pos" required aria-describedby="posError">
+            <option value="" disabled selected>Select your POS</option>
+            <option>Toast</option>
+            <option>Clover</option>
+            <option>Square</option>
+            <option>Other</option>
+          </select>
+          <span class="field-error" id="posError" hidden
+                data-missing="Please pick the system you run." data-invalid="Please pick the system you run."></span>
+          <span class="field-hint">{{ pilot.form_pos_note }}</span>
+        </p>
+        <fieldset class="field field-full pillset" aria-describedby="locationsError">
+          <legend>{{ pilot.form_locations.legend }}</legend>
+          <div class="pills">
+            {%- for c in pilot.form_locations.choices %}
+            <label><input type="radio" name="locations" value="{{ c }}"{% if loop.first %} required{% endif %}><span>{{ c }}</span></label>
+            {%- endfor %}
+          </div>
+          <span class="field-error" id="locationsError" hidden
+                data-missing="Please choose how many locations you run." data-invalid="Please choose how many locations you run."></span>
+        </fieldset>
+        <p class="field field-full">
+          <label for="f-message">Anything you want us to know (optional)</label>
+          <textarea id="f-message" name="message" rows="3" placeholder="Optional"></textarea>
+        </p>
 
-      <p class="form-reassure">{{ pilot.form_reassure_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
-      <button type="submit" class="btn">{{ site.cta.label }}</button>
-    </form>
-    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
-
-    <div class="contact contact-block">
-      <p class="contact-h">Or reach us directly</p>
-      <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
-      <a class="social" href="{{ site.contact.instagram_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Instagram">{{ site.contact.instagram }} on Instagram</a>
-      <a class="social" href="{{ site.contact.facebook_href }}" target="_blank" rel="noopener" aria-label="Alfredo on Facebook">{{ site.contact.facebook }} on Facebook</a>
+        <p class="form-reassure">{{ pilot.form_reassure_lead }} {{ pages.pricing.tiers[0].price }} {{ pages.pricing.price_unit }}. {{ pages.pricing.tiers[0].per_day }}.</p>
+        <button type="submit" class="btn">{{ site.cta.label }}</button>
+      </form>
+      <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 </section>
