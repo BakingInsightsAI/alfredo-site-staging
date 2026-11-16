@@ -730,3 +730,19 @@ body:not(.hero-nav) .nav { background: var(--g-void); border-bottom: 1px solid v
   .hero-short .actions { margin-top: 14px; }
   .offer-panel { margin-top: 12px; }
 }
+
+/* ============================================== THE PHONE HERO, UP TO 430
+   The photograph band comes off a phone entirely: it cost 128px of a 700px
+   first screen and the picture does its work on laptop and desktop, where
+   it runs behind the headline as it always has. Laptop and desktop are
+   untouched by everything in this block. */
+@media (max-width: 430px) {
+  .hero-short .hero-photo,
+  .hero-short .hero-veil { display: none; }
+  .hero-short { background: var(--g-void); }
+  .hero-short .hero-inner { padding-block: 26px 24px; }
+  .hero-short .hero-body { margin-top: 16px; }
+  .hero-short .hero-note { margin-top: 12px; }
+  .offer-panel { margin-top: 16px; max-width: none; }
+  .hero-short .actions { margin-top: 14px; }
+}
