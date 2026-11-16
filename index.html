@@ -77,6 +77,30 @@
   </div>
   <p class="hero-chapter" aria-hidden="true">01 / The story</p>
 </section>
+<script>
+(function () {
+  var hc = document.querySelector('.hero-copy');
+  if (!hc) return;
+  var body = hc.querySelector('.hero-body'),
+      actions = hc.querySelector('.actions'),
+      panel = hc.querySelector('.offer-panel'),
+      note = hc.querySelector('.hero-note');
+  if (!body || !actions || !panel || !note) return;
+  var mq = window.matchMedia('(max-width: 430px)');
+  function arrange() {
+    if (mq.matches) {
+      hc.insertBefore(panel, body);
+      hc.insertBefore(actions, body);
+    } else {
+      hc.insertBefore(body, actions);
+      hc.insertBefore(panel, note);
+    }
+  }
+  arrange();
+  if (mq.addEventListener) mq.addEventListener('change', arrange);
+  else if (mq.addListener) mq.addListener(arrange);
+})();
+</script>
 <section class="section board-section darkest" id="list">
   <div class="wrap">
     <p class="board-reality">You know when a Tuesday feels different. Alfredo finds out why, and what to do about it.</p>

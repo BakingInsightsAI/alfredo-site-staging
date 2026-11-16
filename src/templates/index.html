@@ -49,6 +49,39 @@
   </div>
   <p class="hero-chapter" aria-hidden="true">{{ h.chapter }}</p>
 </section>
+{#- The phone hero order, settled before anything paints.
+
+    This is parser blocking and sits directly after the hero markup, so it
+    runs while the rest of the document is still being parsed and the hero
+    is laid out once, in the right order. In the deferred bundle it ran
+    about 150ms after first contentful paint: with the entrance animation
+    on that was hidden, because the elements it moves had not faded in
+    yet, but with reduced motion, where that animation is off, the panel
+    jumped 256px and the body 283px in front of the reader. #}
+<script>
+(function () {
+  var hc = document.querySelector('.hero-copy');
+  if (!hc) return;
+  var body = hc.querySelector('.hero-body'),
+      actions = hc.querySelector('.actions'),
+      panel = hc.querySelector('.offer-panel'),
+      note = hc.querySelector('.hero-note');
+  if (!body || !actions || !panel || !note) return;
+  var mq = window.matchMedia('(max-width: 430px)');
+  function arrange() {
+    if (mq.matches) {
+      hc.insertBefore(panel, body);
+      hc.insertBefore(actions, body);
+    } else {
+      hc.insertBefore(body, actions);
+      hc.insertBefore(panel, note);
+    }
+  }
+  arrange();
+  if (mq.addEventListener) mq.addEventListener('change', arrange);
+  else if (mq.addListener) mq.addListener(arrange);
+})();
+</script>
 
 {#- ==================================================== 01b the weekly list
     The board is the product. Five selectors in a wrapping grid so all five

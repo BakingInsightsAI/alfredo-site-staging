@@ -107,36 +107,6 @@
     }
   });
 
-  /* ------------------------------------------------- the phone hero --
-     Up to 430px the offer and the actions come before the body copy, so
-     both sit above the fold of an in app browser. The nodes are moved in
-     the document rather than reordered with CSS, so what a screen reader
-     and the tab key follow is always what the eye follows. Laptop and
-     desktop keep the original order exactly. */
-  var heroCopy = document.querySelector('.hero-copy');
-  if (heroCopy) {
-    var hSub = heroCopy.querySelector('.hero-sub');
-    var hBody = heroCopy.querySelector('.hero-body');
-    var hActions = heroCopy.querySelector('.actions');
-    var hPanel = heroCopy.querySelector('.offer-panel');
-    var hNote = heroCopy.querySelector('.hero-note');
-    if (hSub && hBody && hActions && hPanel && hNote) {
-      var phone = window.matchMedia('(max-width: 430px)');
-      var arrangeHero = function () {
-        if (phone.matches) {
-          heroCopy.insertBefore(hPanel, hBody);
-          heroCopy.insertBefore(hActions, hBody);
-        } else {
-          heroCopy.insertBefore(hBody, hActions);
-          heroCopy.insertBefore(hPanel, hNote);
-        }
-      };
-      arrangeHero();
-      if (phone.addEventListener) phone.addEventListener('change', arrangeHero);
-      else window.addEventListener('resize', arrangeHero);
-    }
-  }
-
   /* ------------------------------------------------------------- form --
      Unchanged from v4: same endpoint, same field names, same messages.
      Validation is the browser's, and this only decides when to show it. */
