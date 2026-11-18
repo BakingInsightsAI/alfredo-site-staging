@@ -5,6 +5,30 @@ form_subject: "STAGING TEST demo request"
 web3forms_key: "6ce52bfe-d286-44ff-992c-bb7565c31fb6"
 app_url: "https://app.bakinginsightsai.com"
 
+# The product is called Alfredo everywhere a reader sees it. The full name
+# is for the places a machine reads: titles, og:site_name and structured
+# data. "Alfredo" on its own is also a pasta sauce, which is exactly the
+# confusion this avoids.
+brand_name: "Alfredo by BakingInsightsAI"
+site_url: "https://bakinginsightsai.com"
+
+# One sentence, written to be quoted back. It is the description in the
+# structured data, it opens llms.txt, and every meta description contains
+# it. Change it here and it changes in all of them.
+plain_sentence: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
+
+# Cloudflare Web Analytics: free, cookieless, and it reports the referrer,
+# which is how a visit from chatgpt.com or perplexity.ai becomes visible.
+# The beacon renders only when this is set and only when staging is false.
+analytics_token: "ffcafa6e6d0c4d6cb2c519c7fc777fa6"
+
+# Search console ownership. Each meta renders only when its value is set.
+# The picture a link to this site shows when it is shared.
+og_image: "assets/hero-restaurant-1280.jpg"
+
+google_site_verification: ""
+bing_site_verification: ""
+
 # How many founding places are still open. This is the only place the
 # number is written: the home panel and the pricing offer both read it, so
 # when a spot fills, one edit updates every page.
@@ -44,38 +68,45 @@ pages:
     output: index.html
     legacy: false
     hero: true
-    title: "Alfredo, every business has a story"
-    description: "Alfredo reads your sales, your menu, your guests and the places down the street, and turns them into clear, practical changes worth trying. You choose what to do."
+    title: "Restaurant analytics that says what to try next | Alfredo by BakingInsightsAI"
+    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
 
   - key: product
     template: product.html
     output: product.html
     legacy: false
-    title: "Alfredo, what it does"
-    description: "One short list of changes worth trying, every Monday. What to try, what it risks, how to do it, and an honest answer on whether it worked."
+    title: "What it does, from POS data to a weekly list | Alfredo by BakingInsightsAI"
+    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Every suggestion carries why it came up, what it risks, how to do it, and when to check back."
     next: { label: "Why you can trust the numbers", href: "honesty.html" }
 
   - key: honesty
     template: honesty.html
     output: honesty.html
     legacy: false
-    title: "Alfredo, why you can trust the numbers"
-    description: "We do not make up numbers. If the data is not there, the number is not there either. Here is the whole promise, in public."
+    title: "Why you can trust the numbers | Alfredo by BakingInsightsAI"
+    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Every figure comes from your own sales, and when there is not enough data to call a test, Alfredo says so."
     next: { label: "Why Alfredo exists", href: "pilot.html" }
 
   - key: pricing
     template: pricing.html
     output: pricing.html
     legacy: false
-    title: "Alfredo, pricing"
-    description: "Three plans: Counter at $99 a month for one location, House at $199 for up to three, Group at $299 for up to ten. One price for your whole business, not per location and not per user."
+    title: "Pricing, from $99 a month | Alfredo by BakingInsightsAI"
+    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Counter is $99 a month, House is $199 and Group is $299, one price for your whole business."
+
+  - key: faq
+    template: faq.html
+    output: faq.html
+    legacy: false
+    title: "Questions and answers | Alfredo by BakingInsightsAI"
+    description: "Answers about Alfredo by BakingInsightsAI: what it is, which POS systems it connects to, what it costs, and how it reports whether a change worked. Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
 
   - key: pilot
     template: pilot.html
     output: pilot.html
     legacy: false
-    title: "Alfredo, about us"
-    description: "Why Alfredo exists, how it was built, and where we are today."
+    title: "About us | Alfredo by BakingInsightsAI"
+    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Built with the people who run places like yours, and taking a small number of founding partners now."
     next: { label: "What it costs", href: "pricing.html" }
 
 # The three steps between a visitor and a working install. They are a real

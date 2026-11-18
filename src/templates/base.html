@@ -10,6 +10,27 @@
 {%- endif %}
 <title>{{ page.title }}</title>
 <meta name="description" content="{{ page.description }}">
+{#- One address per page, so a link with a tracking tail on it and the
+    plain link are understood to be the same page. #}
+<link rel="canonical" href="{{ canonical }}">
+{#- How the page describes itself when it is shared or read by something
+    other than a browser. The site name is the full one: "Alfredo" on its
+    own is also a sauce. #}
+<meta property="og:site_name" content="{{ site.brand_name }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ site.site_url }}/{{ site.og_image }}">
+<meta name="twitter:card" content="summary_large_image">
+{#- Ownership of the site in each search console. Each one renders only
+    once its value is filled in, so an empty slot leaves no empty tag. #}
+{%- if site.google_site_verification %}
+<meta name="google-site-verification" content="{{ site.google_site_verification }}">
+{%- endif %}
+{%- if site.bing_site_verification %}
+<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">
+{%- endif %}
 <meta name="theme-color" content="#191715">
 <link rel="icon" type="image/png" href="favicon.png">
 {#- Both families are self hosted and these two files cover the text a
@@ -27,6 +48,13 @@
     before first paint, which is what lets the stylesheet hide the blocks
     that are about to be revealed. Without it nothing is ever hidden. #}
 <script>document.documentElement.className += ' js';</script>
+{#- What the page is, in the form a machine reads. Built in build.py from
+    the same data the page is rendered from, so the two cannot disagree.
+    Organization on every page, the product and its prices on the three
+    pages that describe them, the questions on the questions page. #}
+{%- for block in jsonld %}
+<script type="application/ld+json">{{ block }}</script>
+{%- endfor %}
 {%- block head %}{% endblock %}
 </head>
 <body{% if page.get('hero') %} class="hero-nav"{% endif %}>
@@ -95,6 +123,11 @@
           {%- for item in site.nav %}
           <li><a href="{{ item.href }}">{{ item.label }}</a></li>
           {%- endfor %}
+          {#- The questions page sits outside the story, so it belongs here
+              and not in the masthead: a reader following the chapters is
+              never pulled out of them, and a reader looking for an answer
+              has the link on every page. #}
+          <li><a href="faq.html">Questions and answers</a></li>
           <li><a href="{{ site.app_url }}">Log in</a></li>
         </ul>
       </nav>
@@ -119,5 +152,13 @@
 </footer>
 
 <script src="alfredo.js" defer></script>
+{#- Visitor counts. Cookieless, and it reports which site a visit came
+    from, which is the only way a visit from an AI search tool becomes
+    visible. Deferred, so it is fetched after the page is usable and
+    cannot delay it. It is rendered only on the live site: a staging
+    visit is one of us, and would be counted as a reader. #}
+{%- if site.analytics_token and not site.staging %}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics_token }}"}'></script>
+{%- endif %}
 </body>
 </html>

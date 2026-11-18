@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{%- set f = faq %}
+
+{% block content %}
+{#- Questions and answers, outside the five chapters. There is no handoff
+    to a next page, because a reader who came here came with a question
+    rather than to read the story in order. The one thing to do at the end
+    is ask us, so that is the only thing offered.
+
+    Every answer is open. Nothing is folded behind a control: a reader
+    looking for one line should be able to find it with the page's own
+    search, and a page that reads the same to a person and to a machine is
+    the whole point of this one. #}
+<section class="pagehead darkest">
+  <div class="wrap">
+    <div class="pagehead-copy">
+      <p class="eyebrow">{{ f.eyebrow }}</p>
+      <h1 class="display">{{ f.heading }}</h1>
+      <p class="lead">{{ f.lede }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section paper-light">
+  <div class="wrap">
+    {#- The questions and the structured data on this page are built from
+        this one list, so an answer cannot be changed in one and not the
+        other. The prices and the count of open founding places are filled
+        in by build.py from the single place each of them lives. #}
+    <ul class="qa">
+      {%- for e in f.entries %}
+      <li>
+        <h2 class="qa-q">{{ e.q }}</h2>
+        <p class="qa-a">{{ e.a }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section close-band darkest">
+  <div class="wrap">
+    <div class="close-inner">
+      <h2 class="h2">{{ f.cta_heading }}</h2>
+      <p class="lead">{{ f.cta_body }}</p>
+      <div class="actions">
+        <a class="btn" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

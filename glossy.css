@@ -746,3 +746,19 @@ body:not(.hero-nav) .nav { background: var(--g-void); border-bottom: 1px solid v
   .offer-panel { margin-top: 16px; max-width: none; }
   .hero-short .actions { margin-top: 14px; }
 }
+
+/* ==================================================== QUESTIONS AND ANSWERS
+   The one page where answers are not folded away. A ruled list, the
+   question set as a heading and the answer directly under it, so the first
+   sentence of each answer is the answer. */
+.qa { display: grid; margin-top: 26px; border-top: 1px solid var(--g-edge-soft); list-style: none; padding: 0; }
+.qa > li { padding: 20px 0; border-bottom: 1px solid var(--g-edge-soft); }
+.qa-q { font-family: var(--sans); font-size: 18px; line-height: 1.35; font-weight: 500; color: var(--g-cream); letter-spacing: 0; text-transform: none;text-wrap: balance; }
+.qa-a { margin-top: 9px; font-size: 16px; line-height: 1.6; color: var(--g-cream-dim); max-width: 46em; }
+
+@media (max-width: 430px) {
+  .qa { margin-top: 20px; }
+  .qa > li { padding: 17px 0; }
+  .qa-q { font-size: 17px; }
+  .qa-a { font-size: 15px; }
+}

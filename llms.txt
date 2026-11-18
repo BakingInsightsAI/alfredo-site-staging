@@ -1,0 +1,42 @@
+# Alfredo by BakingInsightsAI
+
+> Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked.
+
+Alfredo is for restaurants, bars, breweries, cafes and bakeries that ring
+their sales through a POS. It reads your sales data and gives the owner a
+short weekly list of changes worth trying. You decide what to try. Alfredo
+then reports whether it worked, did nothing, or backfired. It recommends and
+you decide: nothing on your menu or your prices moves on its own.
+
+Toast and Clover are connected today. Other POS systems on request.
+
+## Pages
+
+- [Restaurant analytics that says what to try next](https://bakinginsightsai.com/): The opening: what Alfredo is, and a week of suggestions as an owner would see them.
+- [What it does, from POS data to a weekly list](https://bakinginsightsai.com/product.html): What it does: how a suggestion is put together, and what comes back after you try one.
+- [Why you can trust the numbers](https://bakinginsightsai.com/honesty.html): Why you can trust the numbers: what Alfredo will and will not say about a result.
+- [About us](https://bakinginsightsai.com/pilot.html): About us: why Alfredo exists and where it is today.
+- [Pricing, from $99 a month](https://bakinginsightsai.com/pricing.html): Pricing: the three plans, what is in each, and the founding offer.
+- [Questions and answers](https://bakinginsightsai.com/faq.html): Questions and answers about Alfredo, in short.
+
+## Pricing
+
+- Counter: $99 a month. For one location.
+- House: $199 a month. For one to three locations.
+- Group: $299 a month. For four to ten locations.
+
+One price for the whole business, not per location and not per user. No setup
+fee, month to month. More than ten locations is arranged directly.
+The first 10 businesses get everything free for six months, and 9 of 10 spots are still open.
+
+## Contact
+
+- Email: contact@bakinginsightsai.com
+- Instagram: https://www.instagram.com/alfredobybia/
+- Facebook: https://www.facebook.com/alfredobybia
+- Request a demo: https://bakinginsightsai.com/pilot.html#pilot
+
+## Notes
+
+Every example on the site is labeled as an illustrative example.
+Images are AI generated for illustration. No person or business shown is real.
