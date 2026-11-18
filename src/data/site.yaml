@@ -75,7 +75,7 @@ pages:
     template: product.html
     output: product.html
     legacy: false
-    title: "What it does | Alfredo by BakingInsightsAI"
+    title: "Weekly changes from POS data | Alfredo by BakingInsightsAI"
     description: "One short list of changes worth trying, every week. Each one says why it came up, what it risks, how to do it, and when to check back."
     next: { label: "Why you can trust the numbers", href: "honesty.html" }
 
