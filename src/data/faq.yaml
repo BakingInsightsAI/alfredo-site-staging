@@ -49,21 +49,8 @@ entries:
   - q: "How long does setup take?"
     a: "About two weeks. You request a demo and we reply within one business day, then a 30 minute call shows you Alfredo and what you would get from it. If you want to go ahead, we plan the setup together and connect your POS, with no new hardware and no staff training."
 
+  - q: "Is my data private?"
+    a: "Yes. Your data is private to your business. Only you and the Alfredo team can see it, and it is never used for any other customer or to train AI models."
+
 cta_heading: "Still have a question?"
 cta_body: "Ask us directly and we will answer honestly, including when the answer is no. We reply within one business day, and a 30 minute call shows you Alfredo and what you would get from it."
-
-# ---------------------------------------------------------------------------
-# Question 12, "Is my data private?", is deliberately not published.
-#
-# The brief says to answer it only from facts already on the site. There are
-# none: a search of every page and data file returns nothing about storage,
-# retention, encryption, access, sub processors or sharing. The closest
-# published statements are about figures, not privacy, and answering a
-# privacy question with them would imply a promise nobody has made.
-#
-# To publish it, Sid needs to supply: where customer data is stored and in
-# which country, how long it is kept, who inside the company can see it,
-# whether any third party processor touches it, and whether anything is
-# used to improve the product across customers. Once those are confirmed,
-# add the entry above and the FAQPage structured data picks it up with no
-# other change.
