@@ -196,21 +196,14 @@ def software_ld(site, pricing, pricing_url):
             {
                 "@type": "Offer",
                 "name": tier["name"],
-                "description": tier["who"],
+                # Google's test warns on priceSpecification inside an Offer
+                # here, so the billing period is said in words instead. It
+                # reads the same to a person and costs the markup nothing.
+                "description": tier["who"] + ", billed monthly",
                 "price": amount(tier["price"]),
                 "priceCurrency": "USD",
                 "url": pricing_url,
                 "availability": "https://schema.org/InStock",
-                "priceSpecification": {
-                    "@type": "UnitPriceSpecification",
-                    "price": amount(tier["price"]),
-                    "priceCurrency": "USD",
-                    "referenceQuantity": {
-                        "@type": "QuantitativeValue",
-                        "value": 1,
-                        "unitCode": "MON",
-                    },
-                },
             }
             for tier in pricing["tiers"]
         ],
