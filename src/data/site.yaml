@@ -68,15 +68,15 @@ pages:
     output: index.html
     legacy: false
     hero: true
-    title: "Restaurant analytics that says what to try next | Alfredo by BakingInsightsAI"
-    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
+    title: "Restaurant analytics | Alfredo by BakingInsightsAI"
+    description: "Alfredo reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
 
   - key: product
     template: product.html
     output: product.html
     legacy: false
-    title: "What it does, from POS data to a weekly list | Alfredo by BakingInsightsAI"
-    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Every suggestion carries why it came up, what it risks, how to do it, and when to check back."
+    title: "What it does | Alfredo by BakingInsightsAI"
+    description: "One short list of changes worth trying, every week. Each one says why it came up, what it risks, how to do it, and when to check back."
     next: { label: "Why you can trust the numbers", href: "honesty.html" }
 
   - key: honesty
@@ -84,7 +84,7 @@ pages:
     output: honesty.html
     legacy: false
     title: "Why you can trust the numbers | Alfredo by BakingInsightsAI"
-    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Every figure comes from your own sales, and when there is not enough data to call a test, Alfredo says so."
+    description: "Every figure comes from your own sales. When there is not enough data to call a test, Alfredo says so rather than guess. The promise, in public."
     next: { label: "Why Alfredo exists", href: "pilot.html" }
 
   - key: pricing
@@ -92,21 +92,21 @@ pages:
     output: pricing.html
     legacy: false
     title: "Pricing, from $99 a month | Alfredo by BakingInsightsAI"
-    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Counter is $99 a month, House is $199 and Group is $299, one price for your whole business."
+    description: "Counter is $99 a month, House is $199 and Group is $299. One price for your whole business, not per location and not per user, and no setup fee."
 
   - key: faq
     template: faq.html
     output: faq.html
     legacy: false
     title: "Questions and answers | Alfredo by BakingInsightsAI"
-    description: "Answers about Alfredo by BakingInsightsAI: what it is, which POS systems it connects to, what it costs, and how it reports whether a change worked. Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
+    description: "Answers about Alfredo: what it is, who it is for, which POS systems it connects to, what it costs, and how it tells you whether a change worked."
 
   - key: pilot
     template: pilot.html
     output: pilot.html
     legacy: false
     title: "About us | Alfredo by BakingInsightsAI"
-    description: "Alfredo by BakingInsightsAI is software for restaurants, bars, breweries, cafes and bakeries that reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked. Built with the people who run places like yours, and taking a small number of founding partners now."
+    description: "Why Alfredo exists, who it is built with, and where it is today. Tested with a brewpub, and live across a 14 location restaurant chain."
     next: { label: "What it costs", href: "pricing.html" }
 
 # The three steps between a visitor and a working install. They are a real

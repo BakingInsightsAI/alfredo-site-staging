@@ -152,6 +152,10 @@ def organization_ld(site):
         "@type": "Organization",
         "name": site["brand_name"],
         "alternateName": "BakingInsightsAI",
+        # the descriptions on the pages are written for a search result and
+        # are cut short there. This is the long form, on every page, where
+        # length costs nothing and a machine can take the whole sentence.
+        "description": site["plain_sentence"],
         "url": base + "/",
         "logo": base + "/alfredo_logo_cream.svg",
         "email": site["contact"]["email"],

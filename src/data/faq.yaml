@@ -44,7 +44,7 @@ entries:
     a: "Every test ends one of three ways: it worked, it did nothing, or it backfired. You choose when to check back, and Alfredo suggests a date you can make shorter or longer. If the time you chose is not enough to call it, Alfredo says so rather than guess."
 
   - q: "Does Alfredo change my menu or prices on its own?"
-    a: "No. Alfredo recommends and you decide. Nothing on your menu moves until you say so, and anything you try can be put back."
+    a: "No. Alfredo recommends and you decide. Nothing on your menu moves until you say so."
 
   - q: "How long does setup take?"
     a: "About two weeks. You request a demo and we reply within one business day, then a 30 minute call shows you Alfredo and what you would get from it. If you want to go ahead, we plan the setup together and connect your POS, with no new hardware and no staff training."

@@ -12,8 +12,8 @@ Toast and Clover are connected today. Other POS systems on request.
 
 ## Pages
 
-- [Restaurant analytics that says what to try next](https://bakinginsightsai.com/): The opening: what Alfredo is, and a week of suggestions as an owner would see them.
-- [What it does, from POS data to a weekly list](https://bakinginsightsai.com/product.html): What it does: how a suggestion is put together, and what comes back after you try one.
+- [Restaurant analytics](https://bakinginsightsai.com/): The opening: what Alfredo is, and a week of suggestions as an owner would see them.
+- [What it does](https://bakinginsightsai.com/product.html): What it does: how a suggestion is put together, and what comes back after you try one.
 - [Why you can trust the numbers](https://bakinginsightsai.com/honesty.html): Why you can trust the numbers: what Alfredo will and will not say about a result.
 - [About us](https://bakinginsightsai.com/pilot.html): About us: why Alfredo exists and where it is today.
 - [Pricing, from $99 a month](https://bakinginsightsai.com/pricing.html): Pricing: the three plans, what is in each, and the founding offer.
