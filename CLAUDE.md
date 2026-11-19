@@ -44,6 +44,9 @@ A large share of visitors arrive from Instagram and Facebook on phones.
   baselines, control items, holdouts, "compared against", or engines. For a
   result net of normal trading the approved line is exactly: "After what
   you would have made anyway."
+  Exception: data-use promises such as "never used to train AI models" are
+  allowed; they state what is not done with customer data, not how Alfredo
+  works.
 - Verdicts are: worked, no effect, backfired.
 - State Alfredo's own figures exactly, never "about". Use "about" only for
   competitor prices and the two week setup timeline.
