@@ -25,6 +25,7 @@
 
 <link rel="stylesheet" href="alfredo.css">
 <link rel="stylesheet" href="glossy.css">
+<link rel="stylesheet" href="motion.css">
 <script>document.documentElement.className += ' js';</script>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -139,6 +140,118 @@
              width="640" height="736" fetchpriority="high" decoding="async">
       </picture>
     </figure>
+  </div>
+</section>
+<section class="section paper-light demo-section" id="demo">
+  <div class="wrap">
+    <div class="proof-head reveal">
+      <p class="eyebrow">Try it here</p>
+      <h2 class="h2 demo-title">See the move. <em>Then see the answer.</em></h2>
+      <p class="lead">Pick a kind of change. Alfredo says what it noticed and what to try, and then leaves it with you. The answer comes only after you choose to try it and choose when to check back.</p>
+    </div>
+
+    <div class="tabstrip" role="tablist" aria-label="Try it here">
+      <button class="tabstrip-btn" id="dtab-0" type="button" role="tab"
+              aria-controls="demoPanel" aria-selected="true"
+              tabindex="0" data-case="0">Pairings</button>
+      <button class="tabstrip-btn" id="dtab-1" type="button" role="tab"
+              aria-controls="demoPanel" aria-selected="false"
+              tabindex="-1" data-case="1">Menu</button>
+      <button class="tabstrip-btn" id="dtab-2" type="button" role="tab"
+              aria-controls="demoPanel" aria-selected="false"
+              tabindex="-1" data-case="2">Costs</button>
+      <button class="tabstrip-btn" id="dtab-3" type="button" role="tab"
+              aria-controls="demoPanel" aria-selected="false"
+              tabindex="-1" data-case="3">Nearby</button>
+    </div>
+
+    <div class="demo" id="demoPanel" role="tabpanel" tabindex="0" aria-labelledby="dtab-0"
+         data-missing="Please choose when you want to check back.">
+      <div class="demo-top">
+        <span>Alfredo, your weekly list</span>
+        <span class="tag-sample">Illustrative example</span>
+      </div>
+      <div class="demo-script" hidden>
+        <i data-kind="Pairing" data-name="Offer the sourdough board with the cheese plate" data-why="Two in three cheese plates already leave the kitchen with bread beside them."
+           data-how="Tell the floor on Thursday and add one line to the specials card." data-effort="Low" data-risk="Low"
+           data-back="Three weeks" data-verdict="Worked." data-result="Illustrative example. After the date the owner chose, the two were ordered together more often than before."
+           data-tone="worked"></i>
+        <i data-kind="Menu placement" data-name="Move the lamb ragu into the top third of the mains" data-why="It earns more per plate than any other main and sits second from the bottom."
+           data-how="Move it higher on your menu, where guests look first." data-effort="Low" data-risk="Low"
+           data-back="Six weeks" data-verdict="No effect." data-result="Illustrative example. After the date the owner chose, the new position did not change what sold. Alfredo says so rather than dress it up."
+           data-tone="none"></i>
+        <i data-kind="Costs" data-name="Look again at the mushroom tart" data-why="What you pay for the mushrooms went up twice, and the tart is now selling for less than it costs to make."
+           data-how="Confirm the new costs or dismiss the flag." data-effort="Low" data-risk="Low"
+           data-back="This week" data-verdict="Worked." data-result="Illustrative example. The new costs were confirmed, the tart was priced to cover them, and it kept selling."
+           data-tone="worked"></i>
+        <i data-kind="Neighborhood" data-name="Hold the Thursday quiz an hour later" data-why="The pub two streets over starts theirs at eight and takes your early crowd with it."
+           data-how="Move the start, and tell the regulars the week before." data-effort="Medium" data-risk="Medium"
+           data-back="Four weeks" data-verdict="Backfired." data-result="Illustrative example. The later start lost the early crowd, and the owner moved it back."
+           data-tone="back"></i>
+      </div>
+      <div class="demo-body">
+        <div class="demo-main">
+          <p class="demo-kind" id="demoKind">Pairing</p>
+          <h3 class="demo-head" id="demoHead">Offer the sourdough board with the cheese plate</h3>
+          <p class="demo-why" id="demoWhy">Two in three cheese plates already leave the kitchen with bread beside them.</p>
+          <div class="demo-card">
+            <span>Worth trying</span>
+            <strong id="demoHow">Tell the floor on Thursday and add one line to the specials card.</strong>
+          </div>
+          <p class="demo-chips">
+            <span class="bf-chip">How much work <b id="demoEffort">Low</b></span>
+            <span class="bf-chip">What it risks <b id="demoRisk">Low</b></span>
+          </p>
+          <div class="demo-actions" id="demoActions">
+            <button class="btn" id="demoTry" type="button">Try this</button>
+            <button class="btn btn-ghost" id="demoSkip" type="button">Not right now</button>
+          </div>
+        </div>
+
+        <aside class="demo-side" aria-live="polite" aria-atomic="true">
+          <p class="eyebrow">Yours to decide</p>
+          <div id="demoReady">
+            <h4 class="demo-side-h">Nothing moves until you say so.</h4>
+            <p>This is a drawing of the product. No account is connected here and nothing is changed anywhere.</p>
+          </div>
+          <div id="demoReview" hidden>
+            <h4 class="demo-side-h">Choose when to check back.</h4>
+            <p>The date is yours. Alfredo suggests one and you can make it shorter or longer.</p>
+            <label class="demo-label" for="demoDate">Your review date</label>
+            <input class="demo-date" id="demoDate" type="date">
+            <p class="demo-hint">Suggested by Alfredo: <b id="demoBack">Three weeks</b></p>
+            <button class="btn" id="demoShow" type="button">See the example answer</button>
+          </div>
+          <div id="demoResult" hidden>
+            <h4 class="demo-side-h">After the date you chose</h4>
+            <p class="demo-verdict ledger-worked" id="demoVerdict">Worked.</p>
+            <p id="demoResultText">Illustrative example. After the date the owner chose, the two were ordered together more often than before.</p>
+            <button class="btn btn-ghost" id="demoAgain" type="button">Try another kind of change</button>
+          </div>
+          <div id="demoDeclined" hidden>
+            <h4 class="demo-side-h">Not right now.</h4>
+            <p>That is your call. It stays an idea, and there is nothing to report.</p>
+            <button class="btn btn-ghost" id="demoReconsider" type="button">Look at it again</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <p class="demo-note">Every example on this page is illustrative. No account is connected and nothing is changed.</p>
+    <div class="apart">
+      <p class="eyebrow">The difference</p>
+      <h3 class="h3 apart-h">A report tells you what happened. Alfredo tells you what happened next.</h3>
+      <div class="apart-cols">
+        <article>
+          <strong>A reporting tool</strong>
+          <p>Shows you what already happened. What to try, and whether it worked, is left to you.</p>
+        </article>
+        <article class="apart-ours">
+          <strong>Alfredo</strong>
+          <p>Suggests one change worth trying, says what it risks, leaves the decision with you, and comes back with worked, no effect, or backfired.</p>
+        </article>
+      </div>
+      <p class="apart-wider">It is not only the POS either. Your recipes and ingredient costs, once you share them, what your guests order together, and what the places down the street list publicly all feed the same weekly list.</p>
+    </div>
   </div>
 </section>
 <section class="section paper" id="board">

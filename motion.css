@@ -1,0 +1,577 @@
+/* ============================================================================
+   Alfredo v8, "service in motion".
+
+   The third and last layer: alfredo.css is the type and the grid, glossy.css
+   is the dark ground, and this is the energy. Everything here is an override
+   of something already set, so this file loads last and nothing in it needs
+   to fight for specificity with anything but itself.
+
+   What moves, moves by transform and opacity. Nothing here changes the size
+   or the position of a box that a reader has already seen, which is why the
+   film and the hero pan cost nothing in layout shift.
+   ========================================================================= */
+
+/* -------------------------------------------------------------- the type --
+   The prototype sets its emphasis lines in a heavy sans against the serif.
+   The DM Sans file already on this site is the variable one and carries the
+   whole weight axis; alfredo.css simply declared it 400 to 700, which capped
+   it. Widening that declaration unlocks 900 with no new file, no new
+   request and no new byte.
+
+   To put it back, set --heavy-weight to 700. That is the whole revert: the
+   emphasis lines keep their place and their size and simply stop being
+   heavy. Set --heavy to var(--sans) as well and nothing of v8's type
+   remains. */
+:root {
+  --heavy: 'DM Sans', 'DM Sans fallback', system-ui, -apple-system, Segoe UI, sans-serif;
+  --heavy-weight: 900;
+  --heavy-track: -.045em;
+}
+
+/* One place that says what an emphasis line is, so every one of them agrees. */
+.heavy {
+  font-family: var(--heavy);
+  font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+  line-height: 1.02;
+}
+
+/* --------------------------------------------------------- the offer bar --
+   Full width and gold, directly under the header. It is the first thing on
+   the page and it is 44px tall on a phone, which is the room it is worth. */
+.offerbar {
+  position: relative; z-index: 2;
+  background: linear-gradient(180deg, var(--g-gold) 0%, var(--g-amber) 100%);
+  color: #23140e;
+  border-bottom: 2px solid #9c6523;
+}
+.offerbar-inner {
+  display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap;
+  padding-block: 10px;
+}
+.offerbar-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #3a2010; flex: none;
+}
+.offerbar p { margin: 0; font-size: 14px; line-height: 19px; font-weight: 500; }
+.offerbar p b { font-weight: 700; }
+.offerbar-spots { font-weight: 700; white-space: nowrap; }
+.offerbar-link {
+  margin-left: auto; color: #23140e; font-size: 14px; font-weight: 700;
+  min-height: 44px; display: inline-flex; align-items: center;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.offerbar-link:hover { color: #000; }
+.offerbar-link:focus-visible { outline: 2px solid #23140e; outline-offset: 2px; }
+
+/* --------------------------------------------------------------- the hero --
+   The picture fills the section and drifts. Two frames cross fade on a slow
+   cycle, both of them absolutely placed and scaled past the edges, so the
+   movement never reaches the layout. On a phone, and for any reader who
+   asks for less motion, the second frame and the animation are both gone
+   and the first frame simply sits there. */
+.hero-motion { position: relative; isolation: isolate; overflow: hidden; }
+.hero-stage { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.hero-stage picture { display: block; }
+.hero-frame, .hero-video {
+  position: absolute; inset: -6%;
+  width: 112%; height: 112%;
+  object-fit: cover; object-position: 70% 48%;
+}
+.hero-video { inset: 0; width: 100%; height: 100%; }
+.hero-frame-b { opacity: 0; }
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 741px) {
+  .hero-frame-a { animation: heroPanA 30s ease-in-out infinite alternate; }
+  .hero-frame-b { animation: heroPanB 30s ease-in-out infinite alternate; }
+}
+@keyframes heroPanA {
+  0%, 40%   { opacity: 1; transform: scale(1.02) translate3d(0, 0, 0); }
+  60%, 100% { opacity: 0; transform: scale(1.12) translate3d(-2.5%, 0, 0); }
+}
+@keyframes heroPanB {
+  0%, 40%   { opacity: 0; transform: scale(1.1) translate3d(2.5%, 0, 0); }
+  60%, 100% { opacity: 1; transform: scale(1.01) translate3d(0, 0, 0); }
+}
+
+/* the veil starts where the words start, so the picture is still a picture
+   above them and the type still has its ground underneath */
+.hero-motion .hero-veil {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, #150d0ae8 0%, #150d0ac9 46%, #150d0a5c 100%),
+    linear-gradient(0deg, #160e0ad6 0%, transparent 62%);
+}
+.hero-motion .hero-inner { padding-block: 72px 60px; }
+.hero-motion .hero-copy { max-width: 820px; }
+.hero-eyebrow { color: var(--g-gold) !important; }
+.hero-motion .display {
+  margin-bottom: 0;
+  letter-spacing: -.03em;
+  text-wrap: pretty;
+}
+/* the second line is the sans, heavy, against the serif above it */
+.hero-motion .display .hero-sub {
+  display: block; margin-top: 14px;
+  font-family: var(--heavy);
+  font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+  font-size: clamp(25px, 3.3vw, 44px);
+  line-height: 1.05;
+  color: #fff6e6;
+  text-wrap: pretty;
+}
+.hero-motion .actions { margin-top: 26px; }
+.hero-motion .hero-body { margin-top: 22px; max-width: 520px; }
+.hero-motion .hero-note {
+  margin-top: 20px; display: flex; align-items: center; gap: 12px;
+  font-weight: 500;
+}
+.hero-rule { width: 30px; height: 1px; background: var(--g-gold); flex: none; }
+
+@media (max-width: 740px) {
+  .hero-stage .hero-frame-b { display: none; }
+  .hero-motion .hero-inner { padding-block: 24px 26px; }
+  .hero-motion .display .hero-sub { font-size: clamp(23px, 6.4vw, 30px); margin-top: 11px; }
+  .hero-motion .actions { margin-top: 18px; }
+  .hero-motion .hero-body { margin-top: 18px; }
+  .hero-motion .hero-note { margin-top: 14px; }
+}
+
+/* ---------------------------------------------------------------- the film --
+   A screen inside a frame. The only things the script touches are one
+   data-step attribute on the scene, two lines of text and one price, so
+   every state below is reached by changing a transform or an opacity.
+
+   The three overlays sit on top of the screen rather than in the flow, and
+   each is laid out at load, so the moment one of them appears nothing
+   underneath it has to move. */
+.film-section { overflow: hidden; }
+.film-head { display: grid; gap: 14px; margin-bottom: 28px; }
+.film-title {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track); line-height: 1.04;
+  text-transform: none;
+}
+.film-title em { font-style: normal; color: var(--g-gold); }
+.film-lede { color: var(--g-cream-dim); max-width: 42em; font-size: 16px; }
+
+.film {
+  border: 1px solid var(--g-edge);
+  border-radius: 14px;
+  background: linear-gradient(140deg, #2b1d15, #19110d);
+  overflow: hidden;
+}
+.film-top {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid var(--g-edge-soft);
+}
+.film-runtime { font-size: 13px; color: var(--g-cream-dim); letter-spacing: .08em; }
+
+.film-view {
+  position: relative; overflow: hidden;
+  display: grid; align-content: center; gap: 14px;
+  padding: 18px 16px;
+  min-height: 430px;
+}
+.film-screen {
+  position: relative; z-index: 1;
+  width: min(100%, 560px); margin-inline: auto;
+  background: #231914; border: 1px solid #7e6246; border-radius: 10px;
+  padding: 18px 16px 22px;
+}
+.film-screen-top {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding-bottom: 14px; border-bottom: 1px solid #7a5f45;
+}
+.film-screen-top strong {
+  font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--g-cream);
+}
+.film-screen-top span { font-size: 13px; color: var(--g-gold); letter-spacing: .1em; text-transform: uppercase; }
+.film-screen-heading { font-family: var(--serif); font-size: 31px; line-height: 1.1; margin: 18px 0 12px; color: var(--g-cream); }
+.film-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.film-row {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 10px 11px; border: 1px solid transparent; border-radius: 5px;
+  font-size: 15px; color: var(--g-cream-dim);
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+.film-row span:last-child { white-space: nowrap; }
+.film-row.is-on { background: #eeb65b1f; border-color: var(--g-amber); color: #ffdfa8; }
+
+.film-say {
+  position: relative; z-index: 1;
+  width: min(100%, 560px); margin-inline: auto;
+  background: linear-gradient(180deg, var(--g-gold) 0%, var(--g-amber) 100%);
+  color: #26150e; border-radius: 7px; padding: 12px 15px; min-height: 76px;
+}
+.film-kicker {
+  margin: 0; font-size: 12px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.film-line { margin: 5px 0 0; font-size: 16px; line-height: 1.35; font-weight: 600; }
+
+/* the three overlays */
+.film-tap, .film-pass, .film-verdict {
+  position: absolute; z-index: 5; opacity: 0; pointer-events: none;
+}
+.film-tap {
+  right: 16px; top: 42%;
+  padding: 13px 19px; border-radius: 6px;
+  background: var(--g-gold); color: #23140e; border: 2px solid #f7dfb1;
+  box-shadow: 0 0 0 10px #ffcf7e26;
+  font-weight: 700; font-size: 15px;
+  transform: scale(.86);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.film-pass, .film-verdict {
+  inset: 0; display: grid; place-content: center; justify-items: center;
+  text-align: center; gap: 12px; padding: 20px;
+  transition: opacity .3s ease;
+}
+.film-pass { background: #1e120f; color: var(--g-cream); }
+.film-pass b {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+  font-size: clamp(40px, 8vw, 72px); line-height: 1;
+  text-transform: uppercase;
+}
+.film-pass span { font-size: 15px; color: var(--g-gold); }
+.film-verdict { background: #1a100c; }
+.film-verdict b {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: -.06em;
+  font-size: clamp(50px, 10vw, 104px); line-height: 1;
+  color: var(--g-gold);
+  border: 5px solid var(--g-amber); padding: 10px 18px; border-radius: 4px;
+  transform: rotate(-7deg);
+  text-transform: uppercase;
+}
+.film-verdict span {
+  margin-top: 22px; font-size: 15px; color: var(--g-cream-dim); max-width: 34ch;
+}
+
+.film-scene[data-step="4"] .film-tap { opacity: 1; transform: scale(1); }
+.film-scene[data-step="5"] .film-pass { opacity: 1; }
+.film-scene[data-step="6"] .film-verdict { opacity: 1; }
+
+.film-controls {
+  display: grid; grid-template-columns: auto auto 1fr auto;
+  align-items: center; gap: 12px;
+  padding: 12px 16px; background: #221711; border-top: 1px solid var(--g-edge-soft);
+}
+.film-btn {
+  min-height: 44px; padding: 10px 14px; border-radius: 5px;
+  background: #35241b; color: var(--g-cream); border: 1px solid #b08a5e;
+  font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.film-btn:hover { background: #45301f; color: #fff; }
+.film-btn:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+.film-progress { height: 6px; border-radius: 4px; background: #6b5140; overflow: hidden; min-width: 40px; }
+.film-progress span { display: block; height: 100%; width: 0; background: var(--g-gold); }
+.film-time { font-size: 13px; color: var(--g-cream-dim); font-variant-numeric: tabular-nums; }
+.film-caption { margin-top: 14px; font-size: 14px; color: var(--g-cream-dim); }
+
+/* Who sees which version. Without scripting the controls would do nothing
+   and the scene would be one frozen frame, so the stages are what shows by
+   default and the scene is switched on by the same .js class that the
+   stylesheet already uses elsewhere. A reader who asked for less motion is
+   sent back to the stages whatever the script did. */
+.film-scene { display: none; }
+.js .film-scene { display: block; }
+
+/* the film as stages, for reduced motion and for no scripting at all */
+.film-calm { list-style: none; margin: 0; padding: 0; display: grid; }
+.js .film-calm { display: none; }
+.film-calm > li { padding: 16px; border-top: 1px solid var(--g-edge-soft); }
+.film-calm > li:first-child { border-top: 0; }
+.film-calm strong { display: block; color: var(--g-gold); font-size: 16px; font-weight: 600; }
+.film-calm strong:only-child { margin-bottom: 0; }
+.film-calm p { margin: 6px 0 0; font-size: 15px; color: var(--g-cream-dim); }
+.film-calm > li:last-child strong {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track); font-size: 25px;
+}
+
+@media (max-width: 740px) {
+  /* On a phone the frame is too tight for a chip that floats over the
+     list: measured at 390 it covered the middle row's tag almost entirely,
+     which reads as a mistake rather than as a gesture. The gold line under
+     the list says the same thing at that moment, so the phone gets that
+     and not a button sitting on top of the copy. */
+  .film-tap { display: none; }
+  .film-view { min-height: 400px; padding: 14px 12px; }
+  .film-screen { padding: 15px 13px 18px; }
+  .film-screen-heading { font-size: 26px; margin: 14px 0 10px; }
+  .film-row { font-size: 14px; padding: 9px 8px; }
+  .film-controls { grid-template-columns: auto auto 1fr; gap: 10px; padding: 11px 12px; }
+  .film-time { grid-column: 1 / -1; }
+  .film-say { padding: 11px 13px; min-height: 70px; }
+  .film-line { font-size: 15px; }
+}
+@media (max-width: 360px) {
+  .film-screen-heading { font-size: 23px; }
+  .film-row { font-size: 13px; padding-inline: 6px; }
+}
+
+/* a reader who asked for less motion gets the stages and never the scene */
+@media (prefers-reduced-motion: reduce) {
+  .film-scene, .js .film-scene { display: none !important; }
+  .film-calm, .js .film-calm { display: grid !important; }
+  .hero-frame-a, .hero-frame-b { animation: none !important; transform: none !important; }
+  .hero-frame-b { opacity: 0 !important; }
+  .hero-video { display: none; }
+}
+
+/* ------------------------------------------------------------- the strip --
+   One line about who decides, in place of the three steps. */
+.strip-line { color: var(--g-cream-dim); font-size: 16px; max-width: 46em; }
+
+/* ------------------------------------------------------------ the places --
+   Four even pictures: one row on a laptop, two by two on a phone. No
+   staggered margins, no tall crops, no gaps of different sizes. */
+.places-band .places {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+/* The editorial gallery gave each of these four its own column span, row
+   span and crop, which is what staggered them. v8 wants four of the same
+   thing, so every one of those is reset here by name as well as by
+   position: a row span left behind is what made the brewery sit lower than
+   the bar and the bakery start a row of its own. */
+.places-band .places > .place { grid-column: auto; grid-row: auto; margin: 0; }
+.places-band .places > .pl-restaurant,
+.places-band .places > .pl-bar,
+.places-band .places > .pl-brewery,
+.places-band .places > .pl-bakery { grid-column: auto; grid-row: auto; margin-top: 0; }
+.places-band .places > .place .place-img { aspect-ratio: 4 / 5; border-radius: 10px; }
+.places-band .place img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 740px) {
+  .places-band .places { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .places-band .places > .place .place-img { aspect-ratio: 1 / 1; }
+}
+
+/* ----------------------------------------------------- the demonstration --
+   Four kinds of change, one at a time, on What it does. The panel's height
+   is allowed to change when a reader presses something, because a reader
+   who has just pressed a button is expecting the answer to it. Nothing
+   moves on its own. */
+.demo-section .proof-head { max-width: 46rem; }
+.demo-title em { font-style: normal; color: var(--g-gold); }
+
+.tabstrip {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 26px 0 16px; padding: 0;
+}
+.tabstrip-btn {
+  flex: 0 0 auto; min-height: 46px; padding: 12px 15px;
+  border: 1px solid var(--edge-dark); border-radius: 6px;
+  background: transparent; color: var(--g-cream-dim);
+  font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.tabstrip-btn:hover { color: var(--g-cream); border-color: var(--g-gold-deep); }
+.tabstrip-btn[aria-selected="true"] {
+  background: var(--g-gold); border-color: var(--g-gold); color: #24140c;
+}
+.tabstrip-btn:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+
+.demo {
+  border: 1px solid var(--g-edge); border-radius: 13px; overflow: hidden;
+  background: linear-gradient(140deg, #2a1d15, #1d1410);
+}
+.demo:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 3px; }
+.demo-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap;
+  padding: 13px 16px; border-bottom: 1px solid var(--g-edge-soft);
+  font-size: 14px; color: var(--g-cream-dim);
+}
+.demo-body { display: grid; gap: 20px; padding: 20px 16px; }
+.demo-kind {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--g-gold); margin: 0;
+}
+.demo-head {
+  font-family: var(--serif); font-size: 29px; line-height: 1.1;
+  margin: 10px 0 12px; color: var(--g-cream); max-width: 18em;
+}
+.demo-why { font-size: 16px; line-height: 1.6; color: var(--g-cream-dim); margin: 0 0 16px; max-width: 42em; }
+.demo-card {
+  border-left: 4px solid var(--g-gold); padding: 14px 15px;
+  background: #35261b; border-radius: 0 6px 6px 0;
+}
+.demo-card span { font-size: 13px; font-weight: 700; color: var(--g-gold); letter-spacing: .06em; }
+.demo-card strong { display: block; margin-top: 6px; font-size: 17px; line-height: 1.4; font-weight: 600; color: var(--g-cream); }
+.demo-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+.demo-side {
+  padding: 18px; border: 1px solid var(--g-edge); border-radius: 8px;
+  background: #33231a; align-self: start;
+}
+.demo-side-h { font-family: var(--serif); font-size: 24px; line-height: 1.15; margin: 10px 0; color: var(--g-cream); }
+.demo-side p { font-size: 15px; line-height: 1.55; color: var(--g-cream-dim); margin: 10px 0; }
+/* the eyebrow keeps its own size: the rule above was making a 12px tracked
+   label into 15px capitals, which is running text set in caps */
+.demo-side p.eyebrow { font-size: 12px; margin: 0; }
+.demo-label { display: block; margin: 14px 0 6px; font-size: 14px; font-weight: 600; color: var(--g-gold); }
+.demo-date {
+  display: block; width: 100%; max-width: 15em; min-height: 46px;
+  padding: 11px 10px; border-radius: 5px;
+  border: 1px solid var(--edge-light); background: var(--g-cream); color: #24130d;
+  font-family: var(--sans); font-size: 16px;
+}
+.demo-date:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 2px; }
+.demo-hint { font-size: 14px; color: var(--g-cream-dim); margin: 8px 0 14px; }
+.demo-hint b { color: var(--g-cream); }
+.demo-side .btn { margin-top: 6px; }
+.demo-side p.demo-verdict {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+  font-size: clamp(31px, 4.6vw, 46px); line-height: 1; margin: 10px 0 6px;
+}
+/* the same three colours the ledger uses, at a weight that .demo-side p
+   cannot outrank. Measured against this panel's ground further down. */
+.demo-side p.ledger-worked { color: #8ec495; }
+.demo-side p.ledger-none   { color: var(--g-cream-dim); }
+.demo-side p.ledger-back   { color: #e8978a; }
+
+.demo-note { margin-top: 14px; font-size: 14px; color: var(--g-cream-dim); }
+
+/* without scripting the tabs would switch nothing and the two buttons would
+   do nothing, so neither is shown and the first case stands on its own */
+.tabstrip, .demo-actions { display: none; }
+.js .tabstrip:not([hidden]) { display: flex; }
+.js .demo-actions:not([hidden]) { display: flex; }
+.demo-actions[hidden], .tabstrip[hidden] { display: none !important; }
+
+.apart { margin-top: 48px; }
+.apart-h { margin: 12px 0 20px; max-width: 24em; }
+.apart-cols { display: grid; gap: 14px; }
+.apart-cols article {
+  padding: 18px; border: 1px solid var(--g-edge-soft); border-radius: 8px;
+  background: #241a14;
+}
+.apart-cols article strong { display: block; font-size: 18px; font-weight: 600; color: var(--g-cream-dim); }
+.apart-cols article p { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--g-cream-dim); }
+.apart-ours { border-color: var(--g-gold-deep) !important; background: #31231a !important; }
+.apart-ours strong { color: var(--g-gold) !important; }
+.apart-ours p { color: var(--g-cream) !important; }
+.apart-wider { margin-top: 18px; font-size: 15px; line-height: 1.6; color: var(--g-cream-dim); max-width: 46em; }
+
+@media (min-width: 861px) {
+  .demo-body { grid-template-columns: 1.05fr .82fr; gap: 26px; padding: 26px; }
+  .apart-cols { grid-template-columns: 1fr 1fr; gap: 18px; }
+}
+@media (max-width: 430px) {
+  .demo-head { font-size: 25px; }
+  .demo-why { font-size: 15px; }
+  .demo-side { padding: 15px; }
+  .demo-side-h { font-size: 21px; }
+}
+
+/* ------------------------------------------------------------ the verdicts --
+   Why trust it. The three words are the argument, so they are set at the
+   size of the argument and the meaning sits beside each one. */
+.verdicts-title { margin: 12px 0 14px; }
+.verdicts-title em { font-style: normal; color: var(--g-gold); }
+.verdicts { margin: 34px 0 0; border-top: 1px solid var(--g-edge-soft); }
+.verdict-row {
+  display: grid; gap: 4px 36px; align-items: baseline;
+  padding: 22px 0; border-bottom: 1px solid var(--g-edge-soft);
+}
+.verdict-word {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+  font-size: clamp(32px, 5.4vw, 58px); line-height: 1;
+  margin: 0;
+}
+.verdict-meaning { margin: 0; font-size: 16px; line-height: 1.55; color: var(--g-cream-dim); }
+.verdicts-close {
+  margin: 24px 0 0; font-size: 19px; font-weight: 600; color: var(--g-gold);
+}
+.verdicts-band .ledger-label { margin-top: 44px; }
+
+@media (min-width: 741px) {
+  .verdict-row { grid-template-columns: minmax(0, 7.2fr) minmax(0, 8fr); }
+}
+
+/* ------------------------------------------------------- the price rows --
+   Pricing. The three plans as rows rather than three tall cards: the name
+   and who it is for on one side, the price on the other, and everything
+   that was already behind the plan details control stays behind it.
+
+   No copy changes here. This is the same markup, laid out tighter. */
+.tiers { display: grid; gap: 12px; }
+.tier {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "mark  mark"
+    "name  price"
+    "who   price"
+    "day   day"
+    "plus  plus"
+    "list  list"
+    "cta   cta";
+  align-items: baseline;
+  gap: 2px 18px;
+  padding: 18px 16px;
+  border: 1px solid var(--g-edge); border-radius: 10px;
+  background: #2b1e16;
+}
+.tier-best { border-color: var(--g-gold-deep); background: #33241a; }
+.tier .tier-mark { grid-area: mark; }
+.tier .tier-name { grid-area: name; margin: 0; font-family: var(--sans); font-size: 20px; font-weight: 600; }
+.tier .tier-for { grid-area: who; margin: 2px 0 0; font-size: 14px; }
+.tier .tier-price {
+  grid-area: price; align-self: center; margin: 0; white-space: nowrap;
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track); font-size: 30px; line-height: 1;
+  color: var(--g-gold);
+}
+.tier .tier-price .tier-unit {
+  display: block; margin-top: 4px;
+  font-family: var(--sans); font-weight: 500; font-size: 13px;
+  letter-spacing: 0; color: var(--g-cream-dim);
+}
+.tier .tier-day { grid-area: day; margin-top: 10px; }
+.tier .tier-plus { grid-area: plus; }
+.tier .plan-details { grid-area: list; margin-top: 12px; }
+.tier > .btn { grid-area: cta; margin-top: 14px; justify-self: start; }
+
+@media (min-width: 861px) {
+  .tiers { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .tier { padding: 22px 20px; }
+}
+
+/* ------------------------------------------------------- the ask section --
+   Questions. Two links that send the same written question to a service we
+   do not control, and say so. The question is shown in full, because a
+   reader should see what is about to be asked on their behalf. */
+.ask-band { background: var(--g-raise-2); }
+.ask-heading { margin: 12px 0 14px; }
+.ask-body { color: var(--g-cream-dim); max-width: 46em; }
+.ask-question {
+  margin: 18px 0 0; padding: 15px 16px;
+  border-left: 3px solid var(--g-gold); background: #2e2219; border-radius: 0 6px 6px 0;
+  font-size: 15px; line-height: 1.6; color: var(--g-cream); max-width: 52em;
+}
+.ask-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.ask-note { margin-top: 14px; font-size: 14px; color: var(--g-cream-dim); max-width: 46em; }
+
+/* ------------------------------------------------------------- About us --
+   The content is untouched. What v8 gives this page is the same voice the
+   rest of the site now has: the step numbers in the heavy sans, and the
+   page's opening line tightened to match every other opening line. */
+.steps > li::before, .steps > li > .step-n {
+  font-family: var(--heavy); font-weight: var(--heavy-weight);
+  letter-spacing: var(--heavy-track);
+}
+
+/* every page's opening headline carries the v8 tracking, so the five pages
+   and the questions page read as one set rather than six */
+.pagehead .display, .hero .display { letter-spacing: -.03em; }

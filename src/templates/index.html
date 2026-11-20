@@ -9,170 +9,175 @@
 {% endblock %}
 
 {% block content %}
+{#- ====================================================== 00 founding bar
+    Full width, directly under the header, so it is inside the first phone
+    screen without taking the headline's room. The count is read from
+    site.yaml and appears nowhere else on this page. #}
+{%- set ob = home.offerbar %}
+<div class="offerbar">
+  <div class="wrap offerbar-inner">
+    <span class="offerbar-dot" aria-hidden="true"></span>
+    <p><b>{{ ob.label }}</b> {{ ob.body }} <span class="offerbar-spots">{{ site.founding_spots_open }} of 10 spots open.</span></p>
+    <a class="offerbar-link" href="{{ ob.link_href }}">{{ ob.link }}</a>
+  </div>
+</div>
+
 {#- ======================================================== 01 the opening
-    The headline and the weekly board are one screen. The photograph runs
-    behind the headline and stops where the board begins, so the product is
-    the first thing a reader meets rather than the fourth. #}
+    The photograph fills the screen and moves slowly behind the words. Two
+    frames cross fade, by transform and opacity only, so nothing reflows.
+    On a phone and under reduced motion there is one still frame and no
+    animation at all.
+
+    The order here is the order a phone wants: eyebrow, headline, the line
+    under it, both buttons, then the body. It is the same on every width, so
+    the hero is laid out once, in the right order, before anything paints.
+    Nothing reorders it afterwards. #}
 {%- set h = home.hero %}
-{%- set bd = home.board %}
-<section class="hero hero-short">
-  <div class="hero-photo">
+<section class="hero hero-motion">
+  <div class="hero-stage" aria-hidden="true">
+    {%- if site.hero_video %}
+    {#- One setting in site.yaml swaps the stills for a muted loop. The
+        first frame stays as the poster, so the hero looks the same until
+        the video can paint and identical if it never does. #}
+    <video class="hero-video" autoplay muted playsinline loop preload="metadata"
+           poster="assets/hero-restaurant-1280.jpg" src="{{ site.hero_video }}"></video>
+    {%- else %}
     <picture>
       <source type="image/webp" sizes="100vw"
               srcset="assets/hero-restaurant-640.webp 640w, assets/hero-restaurant-960.webp 960w, assets/hero-restaurant-1280.webp 1280w, assets/hero-restaurant-1672.webp 1672w">
-      <img src="assets/hero-restaurant-1280.jpg" alt="{{ h.alt }}"
+      <img class="hero-frame hero-frame-a" src="assets/hero-restaurant-1280.jpg" alt=""
            width="1672" height="941" fetchpriority="high" decoding="async">
     </picture>
+    <picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="assets/restaurant-kitchen-320.webp 320w, assets/restaurant-kitchen-480.webp 480w, assets/restaurant-kitchen-640.webp 640w, assets/restaurant-kitchen-960.webp 960w">
+      <img class="hero-frame hero-frame-b" src="assets/restaurant-kitchen-960.jpg" alt=""
+           width="960" height="1280" loading="lazy" decoding="async">
+    </picture>
+    {%- endif %}
   </div>
   <div class="hero-veil" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-copy">
-      <p class="eyebrow">{{ h.eyebrow }}</p>
-      <h1 class="display">{% for line in h.heading_lines %}{{ line }}{% if not loop.last %}<br>{% endif %}{% endfor %}</h1>
-      <p class="hero-sub">{{ h.sub }}</p>
-      <p class="hero-body">{{ h.body }}</p>
+      <p class="eyebrow hero-eyebrow">{{ h.eyebrow }}</p>
+      <h1 class="display">{% for line in h.heading_lines %}{{ line }}{% if not loop.last %}<br>{% endif %}{% endfor %}<span class="hero-sub">{{ h.sub }}</span></h1>
       <div class="actions">
         <a class="btn" href="{{ h.cta_href }}">{{ h.cta }}</a>
         <a class="btn btn-ghost" href="{{ h.cta2_href }}">{{ h.cta2 }}</a>
       </div>
-      {#- The founding offer, on the first screen. The spot count is read
-          from site.yaml so this panel and the pricing offer cannot drift.
-          The link to pricing is the one place home points past the next
-          chapter. #}
-      <div class="offer-panel">
-        <p class="offer-panel-label">{{ h.offer_label }}</p>
-        <p class="offer-panel-body">{{ h.offer_body }} <b>{{ site.founding_spots_open }} of 10 spots open.</b></p>
-        <a class="textlink" href="{{ h.offer_href }}">{{ h.offer_link }}</a>
-      </div>
-      <p class="hero-note">{{ h.note }}</p>
+      <p class="hero-body">{{ h.body }}</p>
+      <p class="hero-note"><span class="hero-rule" aria-hidden="true"></span>{{ h.note }}</p>
     </div>
   </div>
   <p class="hero-chapter" aria-hidden="true">{{ h.chapter }}</p>
 </section>
-{#- The phone hero order, settled before anything paints.
 
-    This is parser blocking and sits directly after the hero markup, so it
-    runs while the rest of the document is still being parsed and the hero
-    is laid out once, in the right order. In the deferred bundle it ran
-    about 150ms after first contentful paint: with the entrance animation
-    on that was hidden, because the elements it moves had not faded in
-    yet, but with reduced motion, where that animation is off, the panel
-    jumped 256px and the body 283px in front of the reader. #}
-<script>
-(function () {
-  var hc = document.querySelector('.hero-copy');
-  if (!hc) return;
-  var body = hc.querySelector('.hero-body'),
-      actions = hc.querySelector('.actions'),
-      panel = hc.querySelector('.offer-panel'),
-      note = hc.querySelector('.hero-note');
-  if (!body || !actions || !panel || !note) return;
-  var mq = window.matchMedia('(max-width: 430px)');
-  function arrange() {
-    if (mq.matches) {
-      hc.insertBefore(panel, body);
-      hc.insertBefore(actions, body);
-    } else {
-      hc.insertBefore(body, actions);
-      hc.insertBefore(panel, note);
-    }
-  }
-  arrange();
-  if (mq.addEventListener) mq.addEventListener('change', arrange);
-  else if (mq.addListener) mq.addListener(arrange);
-})();
-</script>
+{#- =========================================================== 02 the film
+    Fifteen seconds of a menu on a screen: three suggestions lit one at a
+    time, the owner choosing one, time passing, the answer.
 
-{#- ==================================================== 01b the weekly list
-    The board is the product. Five selectors in a wrapping grid so all five
-    are reachable at 320px without a horizontal scroller, and one detail
-    panel below them. The five records are read from product.weeklist, so
-    this page and What it does cannot drift apart: What it does explains
-    the shape of a suggestion and never names one. #}
-<section class="section board-section darkest" id="list">
+    Everything that moves is a transform or an opacity. The markup below is
+    the whole film; the script only changes one data-step attribute and the
+    three lines of text, so there is nothing to lay out again and nothing to
+    shift. With scripting off, the reader gets the stages as a list, which
+    is the same thing the reduced motion reader gets. #}
+{%- set f = home.film %}
+<section class="section film-section darkest" id="film" aria-labelledby="filmTitle">
   <div class="wrap">
-    <p class="board-reality">{{ bd.reality }}</p>
-    <div class="board reveal">
-      <div class="board-head">
-        <div>
-          <p class="eyebrow">{{ bd.eyebrow }}</p>
-          <h2 class="board-title">{{ bd.heading }}<span class="board-sub">{{ bd.sub }}</span></h2>
-        </div>
-        <span class="tag-sample">{{ bd.label }}</span>
+    <div class="film-head reveal">
+      <div>
+        <p class="eyebrow">{{ f.eyebrow }}</p>
+        <h2 class="h2 film-title" id="filmTitle">{{ f.heading }}<em>{{ f.heading_em }}</em>{{ f.heading_tail }}</h2>
       </div>
-
-      <p class="board-pick" id="boardPick">{{ bd.pick }}</p>
-      <div class="board-tabs" data-tabs aria-labelledby="boardPick">
-        {%- for r in product.weeklist.entries %}
-        <button class="board-tab" type="button" data-tab="rec-{{ loop.index0 }}">
-          <i aria-hidden="true">{{ "%02d"|format(loop.index) }}</i>
-          <span>{{ r.kind }}</span>
-        </button>
-        {%- endfor %}
-      </div>
-
-      {%- for r in product.weeklist.entries %}
-      <div class="board-panel" id="rec-{{ loop.index0 }}"{% if not loop.first %} hidden{% endif %}>
-        <h3 class="board-name">{{ r.name }}</h3>
-        <dl class="board-fields">
-          <div class="bf-wide"><dt>{{ bd.fields.why }}</dt><dd>{{ r.why }}</dd></div>
-          <div class="bf-chips">
-            <span class="bf-chip">{{ bd.fields.effort }} <b>{{ r.effort }}</b></span>
-            <span class="bf-chip">{{ bd.fields.risk }} <b>{{ r.risk }}</b></span>
-          </div>
-          <div><dt>{{ bd.fields.how }}</dt><dd>{{ r.how }}</dd></div>
-          <div><dt>{{ bd.fields.back }}</dt><dd>{{ r.back }}</dd></div>
-        </dl>
-      </div>
-      {%- endfor %}
-
+      <p class="film-lede">{{ f.lede }}</p>
     </div>
+
+    <div class="film" id="filmFrame">
+      <div class="film-top">
+        <span class="tag-sample">{{ f.label }}</span>
+        <span class="film-runtime">00:15</span>
+      </div>
+
+      {#- the moving part, hidden from a reduced motion reader entirely #}
+      <div class="film-scene" id="filmScene" data-step="0"
+           data-price-before="{{ f.price_before }}" data-price-after="{{ f.price_after }}"
+           data-play="{{ f.play }}" data-pause="{{ f.pause }}">
+        <div class="film-view">
+          <div class="film-screen">
+            <div class="film-screen-top">
+              <strong>{{ f.screen_title }}</strong>
+              <span>{{ f.day }}</span>
+            </div>
+            <h3 class="film-screen-heading">{{ f.menu_heading }}</h3>
+            <ul class="film-rows">
+              {%- for r in f.rows %}
+              <li class="film-row" id="filmRow{{ loop.index0 }}">
+                <span>{{ r.name }}</span>
+                <span{% if loop.last %} id="filmPrice"{% endif %}>{{ r.tag }}</span>
+              </li>
+              {%- endfor %}
+            </ul>
+          </div>
+          <div class="film-say">
+            <p class="film-kicker" id="filmKicker">{{ f.moments[0].kicker }}</p>
+            <p class="film-line" id="filmLine">{{ f.moments[0].line }}</p>
+          </div>
+          <div class="film-tap" aria-hidden="true">{{ f.tap }}</div>
+          <div class="film-pass" aria-hidden="true">
+            <b>{{ f.passing }}</b>
+            <span>{{ f.passing_note }}</span>
+          </div>
+          <div class="film-verdict" aria-hidden="true">
+            <b>{{ f.verdict }}</b>
+            <span>{{ f.verdict_note }}</span>
+          </div>
+        </div>
+        {#- The film, as data. One empty element per moment, carrying the
+            second it begins, which row it lights, which price the third row
+            shows and the two lines it says. The script reads these and
+            never holds a word of copy itself. #}
+        <div class="film-script" hidden>
+          {%- for m in f.moments %}
+          <i data-at="{{ m.at }}" data-row="{{ m.row }}" data-price="{{ m.price }}"
+             data-kicker="{{ m.kicker }}" data-line="{{ m.line }}"></i>
+          {%- endfor %}
+        </div>
+        <div class="film-controls">
+          <button class="film-btn" id="filmToggle" type="button" aria-pressed="false">{{ f.play }}</button>
+          <button class="film-btn" id="filmReplay" type="button">{{ f.replay }}</button>
+          <div class="film-progress"><span id="filmFill"></span></div>
+          <span class="film-time" id="filmTime">00:00 / 00:15</span>
+        </div>
+      </div>
+
+      {#- the same film as stages. Shown to a reduced motion reader and to a
+          reader with no scripting, and hidden from everyone else by the
+          script itself, so it is never the thing nobody sees. #}
+      <ol class="film-calm" id="filmCalm" aria-label="{{ f.calm_label }}">
+        {%- for c in f.calm %}
+        <li>
+          <strong>{{ c.name }}</strong>
+          <p>{{ c.body }}</p>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
+    <p class="film-caption">{{ f.caption }}</p>
   </div>
 </section>
 
-{#- =================================================== 01c ownership strip
-    The three stages the old walkthrough took a full screen to explain. The
-    brand line appears here once and nowhere else on this page. #}
+{#- ================================================== 02b who decides it #}
 {%- set st = home.strip %}
 <section class="strip">
   <div class="wrap strip-inner">
     <p class="strip-claim">{{ st.statement }}<em>{{ st.statement_em }}</em></p>
-    <ol class="strip-steps">
-      {%- for s in st.steps %}
-      <li>{{ s }}</li>
-      {%- endfor %}
-    </ol>
-  </div>
-</section>
-
-{#- ========================================================== 02 the proof
-    A ledger, not three cards: three ruled rows across the whole measure,
-    with the verdict set oversized in serif on the left. #}
-{%- set p = home.proof %}
-<section class="section paper-light">
-  <div class="wrap">
-    <div class="proof-head reveal">
-      <p class="eyebrow">{{ p.eyebrow }}</p>
-      <h2 class="h2">{{ p.heading }}</h2>
-      <p class="lead">{{ p.lede }}</p>
-    </div>
-    {#- disclosed once above the three rows rather than repeated on each #}
-    <p class="ledger-label"><span class="tag-sample">{{ p.label }}</span></p>
-    <div class="ledger">
-      {%- for r in p.rows %}
-      <div class="ledger-row">
-        <p class="ledger-state ledger-{{ r.kind }}">{{ r.state }}</p>
-        <p class="ledger-what">{{ r.what }}</p>
-        <p class="ledger-why">{{ r.why }}</p>
-      </div>
-      {%- endfor %}
-    </div>
-    <p class="proof-honest">{{ p.honest }}</p>
+    <p class="strip-line">{{ st.line }}</p>
   </div>
 </section>
 
 {#- ========================================================= 03 the places
-    One shallow band rather than two staggered rows of tall crops. #}
+    Four even pictures: one row on a laptop, two by two on a phone. No
+    staggered margins and no narrow crops, so the four read as one set. #}
 {%- set pl = home.places %}
 <section class="section sand places-band">
   <div class="wrap">
@@ -198,10 +203,7 @@
   </div>
 </section>
 
-{#- ============================================== 04 the proof and invite
-    The old trust band and the old closing scene, merged. The honesty rules
-    live in full on Why trust it; one line and the link ahead are enough
-    here. The chapter handoff is rendered by the shell after this. #}
+{#- ============================================== 04 the proof and invite #}
 {%- set cl = home.close %}
 <section class="section invite darkest">
   <div class="invite-photo" aria-hidden="true">

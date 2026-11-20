@@ -29,6 +29,118 @@
   </div>
 </section>
 
+{#- ======================================================= the demonstration
+    The centrepiece of this page. Four kinds of change, one at a time, each
+    one of the approved weekly records. The reader picks one, decides, picks
+    a date, and only then sees what Alfredo would say about it.
+
+    The suggestion, why it came up and how to do it are read from the same
+    weekly records the rest of the site uses. The verdict and the line under
+    it are the only new words, because the records stop at the suggestion
+    and this page is about what comes after.
+
+    With scripting off, the first case is on the page in full and the
+    controls are not shown, so nothing here is a dead button. #}
+{%- set dm = product.demo %}
+<section class="section paper-light demo-section" id="demo">
+  <div class="wrap">
+    <div class="proof-head reveal">
+      <p class="eyebrow">{{ dm.eyebrow }}</p>
+      <h2 class="h2 demo-title">{{ dm.heading }}<em>{{ dm.heading_em }}</em></h2>
+      <p class="lead">{{ dm.lede }}</p>
+    </div>
+
+    <div class="tabstrip" role="tablist" aria-label="{{ dm.eyebrow }}">
+      {%- for c in dm.cases %}
+      <button class="tabstrip-btn" id="dtab-{{ loop.index0 }}" type="button" role="tab"
+              aria-controls="demoPanel" aria-selected="{{ 'true' if loop.first else 'false' }}"
+              tabindex="{{ '0' if loop.first else '-1' }}" data-case="{{ loop.index0 }}">{{ c.tab }}</button>
+      {%- endfor %}
+    </div>
+
+    <div class="demo" id="demoPanel" role="tabpanel" tabindex="0" aria-labelledby="dtab-0"
+         data-missing="{{ dm.review_missing }}">
+      <div class="demo-top">
+        <span>{{ dm.strip_label }}</span>
+        <span class="tag-sample">{{ dm.label }}</span>
+      </div>
+      {#- the four cases, as data. The script reads these and holds no copy. #}
+      <div class="demo-script" hidden>
+        {%- for c in dm.cases %}
+        {%- set e = product.weeklist.entries[c.entry] %}
+        <i data-kind="{{ e.kind }}" data-name="{{ e.name }}" data-why="{{ e.why }}"
+           data-how="{{ e.how }}" data-effort="{{ e.effort }}" data-risk="{{ e.risk }}"
+           data-back="{{ e.back }}" data-verdict="{{ c.verdict }}" data-result="{{ c.result }}"
+           data-tone="{{ 'worked' if c.verdict.startswith('Worked') else ('back' if c.verdict.startswith('Backfired') else 'none') }}"></i>
+        {%- endfor %}
+      </div>
+      {%- set first = product.weeklist.entries[dm.cases[0].entry] %}
+      <div class="demo-body">
+        <div class="demo-main">
+          <p class="demo-kind" id="demoKind">{{ first.kind }}</p>
+          <h3 class="demo-head" id="demoHead">{{ first.name }}</h3>
+          <p class="demo-why" id="demoWhy">{{ first.why }}</p>
+          <div class="demo-card">
+            <span>{{ dm.worth }}</span>
+            <strong id="demoHow">{{ first.how }}</strong>
+          </div>
+          <p class="demo-chips">
+            <span class="bf-chip">{{ v.anatomy[2].name }} <b id="demoEffort">{{ first.effort }}</b></span>
+            <span class="bf-chip">{{ v.anatomy[3].name }} <b id="demoRisk">{{ first.risk }}</b></span>
+          </p>
+          <div class="demo-actions" id="demoActions">
+            <button class="btn" id="demoTry" type="button">{{ dm.try }}</button>
+            <button class="btn btn-ghost" id="demoSkip" type="button">{{ dm.skip }}</button>
+          </div>
+        </div>
+
+        <aside class="demo-side" aria-live="polite" aria-atomic="true">
+          <p class="eyebrow">{{ dm.owner_eyebrow }}</p>
+          <div id="demoReady">
+            <h4 class="demo-side-h">{{ dm.ready_heading }}</h4>
+            <p>{{ dm.ready_body }}</p>
+          </div>
+          <div id="demoReview" hidden>
+            <h4 class="demo-side-h">{{ dm.review_heading }}</h4>
+            <p>{{ dm.review_body }}</p>
+            <label class="demo-label" for="demoDate">{{ dm.review_label }}</label>
+            <input class="demo-date" id="demoDate" type="date">
+            <p class="demo-hint">{{ dm.review_hint }}: <b id="demoBack">{{ first.back }}</b></p>
+            <button class="btn" id="demoShow" type="button">{{ dm.review_go }}</button>
+          </div>
+          <div id="demoResult" hidden>
+            <h4 class="demo-side-h">{{ dm.result_heading }}</h4>
+            <p class="demo-verdict ledger-worked" id="demoVerdict">{{ dm.cases[0].verdict }}</p>
+            <p id="demoResultText">{{ dm.cases[0].result }}</p>
+            <button class="btn btn-ghost" id="demoAgain" type="button">{{ dm.result_again }}</button>
+          </div>
+          <div id="demoDeclined" hidden>
+            <h4 class="demo-side-h">{{ dm.declined_heading }}</h4>
+            <p>{{ dm.declined_body }}</p>
+            <button class="btn btn-ghost" id="demoReconsider" type="button">{{ dm.declined_back }}</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <p class="demo-note">{{ dm.note }}</p>
+
+    {#- what a report stops at, and what this page has just shown instead #}
+    <div class="apart">
+      <p class="eyebrow">{{ dm.apart_eyebrow }}</p>
+      <h3 class="h3 apart-h">{{ dm.apart_heading }}</h3>
+      <div class="apart-cols">
+        {%- for a in dm.apart %}
+        <article{% if loop.last %} class="apart-ours"{% endif %}>
+          <strong>{{ a.name }}</strong>
+          <p>{{ a.body }}</p>
+        </article>
+        {%- endfor %}
+      </div>
+      <p class="apart-wider">{{ dm.wider }}</p>
+    </div>
+  </div>
+</section>
+
 {#- The shape of a suggestion. The five suggestions themselves live on the
     home page and are deliberately not repeated here: this section explains
     what every one of them carries, without naming any. The anchor the

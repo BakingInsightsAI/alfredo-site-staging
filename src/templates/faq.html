@@ -38,6 +38,26 @@
   </div>
 </section>
 
+{#- ============================================= ask somebody independent
+    The question is written once, in the data, and both links carry the
+    same one. It is encoded at build time, so neither link needs scripting
+    to work and both are ordinary links a reader can see the target of. #}
+{%- set ak = faq.ask %}
+<section class="section ask-band">
+  <div class="wrap">
+    <p class="eyebrow">{{ ak.eyebrow }}</p>
+    <h2 class="h3 ask-heading">{{ ak.heading }}</h2>
+    <p class="body ask-body">{{ ak.body }}</p>
+    <p class="ask-question">{{ ak.question }}</p>
+    <div class="ask-links">
+      {%- for l in ak.links %}
+      <a class="btn btn-ghost" href="{{ l.base }}{{ ak.question | urlencode }}" target="_blank" rel="noopener noreferrer">{{ l.label }}</a>
+      {%- endfor %}
+    </div>
+    <p class="ask-note">{{ ak.note }}</p>
+  </div>
+</section>
+
 <section class="section close-band darkest">
   <div class="wrap">
     <div class="close-inner">

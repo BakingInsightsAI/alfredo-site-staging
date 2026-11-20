@@ -19,6 +19,41 @@ honesty:
   examples_note: "The examples on this website are labeled and invented, to show you how Alfredo behaves. The numbers inside Alfredo come from your own sales and follow the four promises above."
   bridge_heading: "Why we built it"
   bridge: "There are tools that report, tools that do your books, and tools that forecast. We could not find one that suggested what to try and then admitted when it was wrong. So we built one."
+  # ------------------------------------------------------------- v8 ---
+  # The three answers, set large. The one line under each says what the
+  # word means, so the page never has to explain it twice.
+  verdicts_eyebrow: "The three answers"
+  verdicts_heading: "A good idea is useful. "
+  verdicts_heading_em: "An honest answer is better."
+  verdicts_lede: "Every test Alfredo reports on ends as one of three words, and each of them means the same thing every time."
+  verdicts:
+    - word: "Worked."
+      kind: "worked"
+      meaning: "The change helped, on the information available."
+    - word: "No effect."
+      kind: "none"
+      meaning: "Nothing moved enough to call it a difference."
+    - word: "Backfired."
+      kind: "back"
+      meaning: "The change made things worse, and Alfredo says so."
+  verdicts_close: "Alfredo recommends. You decide."
+  # the three illustrations that used to sit on the home page, unchanged
+  examples_label: "Illustrative examples"
+  examples_honest: "If the time you chose is not enough to call it, Alfredo says so rather than guess."
+  examples:
+    - state: "Worked"
+      kind: "worked"
+      what: "Fifty cents off the House Lager"
+      why: "Three weeks later the bar took $247 more a week. After what you would have made anyway."
+    - state: "No effect"
+      kind: "none"
+      what: "Calamari moved to the top of the starters"
+      why: "It sold the same. Alfredo said so, and the top spot went to something that does move."
+    - state: "Backfired"
+      kind: "back"
+      what: "Happy hour pushed an hour later"
+      why: "The early crowd did not come back and the later hour did not fill. It went back the same night."
+
   quotes_heading: "The rule, in practice"
   quotes:
     # the first card is a paraphrase, so it carries no quotation and no gloss

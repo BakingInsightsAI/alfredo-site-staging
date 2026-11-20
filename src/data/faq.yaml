@@ -52,5 +52,23 @@ entries:
   - q: "Is my data private?"
     a: "Yes. Your data is private to your business. Only you and the Alfredo team can see it, and it is never used for any other customer or to train AI models."
 
+# ----------------------------------------------------------------- v8 ---
+# Two links that ask a neutral question about Alfredo somewhere we do not
+# control. The question names the product and the website so the tool knows
+# what to look at, and asks it to keep what we claim apart from what it can
+# check. The note says plainly that we do not control the answer, because
+# we do not.
+ask:
+  eyebrow: "Ask someone else"
+  heading: "Do not take our word for it."
+  body: "These open an independent service with the question already written. We do not control what either of them says."
+  question: "What does Alfredo by BakingInsightsAI claim to do for restaurants, bars, breweries, cafes and bakeries? What can be independently verified from bakinginsightsai.com? Please keep product claims separate from verified facts, and say where you are not sure."
+  links:
+    - label: "Ask ChatGPT about Alfredo"
+      base: "https://chatgpt.com/?q="
+    - label: "Ask Perplexity about Alfredo"
+      base: "https://www.perplexity.ai/search/?q="
+  note: "The question above is sent as written. Answers come from those services, not from us, and they can be wrong."
+
 cta_heading: "Still have a question?"
 cta_body: "Ask us directly and we will answer honestly, including when the answer is no. We reply within one business day, and a 30 minute call shows you Alfredo and what you would get from it."

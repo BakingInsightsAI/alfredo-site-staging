@@ -167,4 +167,258 @@
       });
     });
   }
+
+  /* ------------------------------------------------------------- film --
+     Fifteen seconds of a weekly list, on the home page.
+
+     Three rules it keeps. It plays only while it is on screen, so nothing
+     animates behind a reader who has scrolled past it. It never changes
+     anything that affects layout: the only things that move are a class on
+     three rows, two lines of text inside boxes with a reserved height, and
+     three overlays that were laid out at load and only change opacity. And
+     a reader who asked for less motion never gets here at all, because the
+     stylesheet hides the scene and shows the stages instead.
+
+     Every word and every time comes from the markup, which comes from the
+     data. There is no copy in this file. */
+  var filmFrame = document.getElementById('filmFrame');
+  var scene = document.getElementById('filmScene');
+  if (filmFrame && scene && !reduce) {
+    var toggle2 = document.getElementById('filmToggle');
+    var replay = document.getElementById('filmReplay');
+    var fill = document.getElementById('filmFill');
+    var clock = document.getElementById('filmTime');
+    var kicker = document.getElementById('filmKicker');
+    var line = document.getElementById('filmLine');
+    var price = document.getElementById('filmPrice');
+    var rows = [0, 1, 2].map(function (i) { return document.getElementById('filmRow' + i); });
+    var marks = [].slice.call(scene.querySelectorAll('.film-script > i')).map(function (el) {
+      return {
+        at: parseFloat(el.getAttribute('data-at')),
+        row: el.getAttribute('data-row'),
+        price: el.getAttribute('data-price'),
+        kicker: el.getAttribute('data-kicker'),
+        line: el.getAttribute('data-line')
+      };
+    });
+    var priceBefore = scene.getAttribute('data-price-before');
+    var priceAfter = scene.getAttribute('data-price-after');
+    var sayPlay = scene.getAttribute('data-play');
+    var sayPause = scene.getAttribute('data-pause');
+    var RUN = 15;
+
+    if (marks.length && toggle2 && replay && fill && clock && kicker && line) {
+      var head = 0, running = false, onScreen = false, held = false, frame = 0, prev = 0, shown = -1;
+
+      var two = function (n) { return (n < 10 ? '0' : '') + n; };
+
+      var paint = function (t) {
+        var step = 0;
+        for (var i = 0; i < marks.length; i++) { if (t >= marks[i].at) { step = i; } }
+        if (step !== shown) {
+          shown = step;
+          var m = marks[step];
+          scene.setAttribute('data-step', String(step));
+          kicker.textContent = m.kicker;
+          line.textContent = m.line;
+          if (price) { price.textContent = m.price === 'after' ? priceAfter : priceBefore; }
+          rows.forEach(function (el, i) {
+            if (el) { el.classList.toggle('is-on', String(i) === m.row); }
+          });
+        }
+        fill.style.width = ((t / RUN) * 100).toFixed(2) + '%';
+        clock.textContent = '00:' + two(Math.floor(t)) + ' / 00:' + RUN;
+      };
+
+      var halt = function () {
+        running = false; prev = 0;
+        if (frame) { cancelAnimationFrame(frame); frame = 0; }
+        toggle2.textContent = sayPlay;
+        toggle2.setAttribute('aria-pressed', 'false');
+      };
+
+      var tick = function (now) {
+        if (!running || !onScreen) { halt(); return; }
+        if (prev) { head += (now - prev) / 1000; }
+        prev = now;
+        if (head >= RUN) { head = 0; shown = -1; }
+        paint(head);
+        frame = requestAnimationFrame(tick);
+      };
+
+      var run = function (byHand) {
+        if (!onScreen) { return; }
+        if (byHand) { held = false; }
+        if (running) { return; }
+        running = true; prev = 0;
+        toggle2.textContent = sayPause;
+        toggle2.setAttribute('aria-pressed', 'true');
+        frame = requestAnimationFrame(tick);
+      };
+
+      toggle2.addEventListener('click', function () {
+        if (running) { held = true; halt(); } else { run(true); }
+      });
+      replay.addEventListener('click', function () {
+        head = 0; shown = -1; paint(0); run(true);
+      });
+
+      /* on screen means a fifth of it is showing, which is enough of the
+         frame to be worth playing and little enough that a phone starts it
+         as the section arrives rather than after it has gone by */
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            onScreen = e.isIntersecting && e.intersectionRatio >= 0.2;
+            if (!onScreen) { halt(); } else if (!held) { run(false); }
+          });
+        }, { threshold: [0, 0.2, 0.4] }).observe(filmFrame);
+      } else {
+        onScreen = true;
+        run(false);
+      }
+
+      /* a reader who turns reduced motion on while the page is open gets the
+         stages from the stylesheet; this stops the clock behind them */
+      if (window.matchMedia) {
+        var less = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var onLess = function () { if (less.matches) { held = true; halt(); } };
+        if (less.addEventListener) { less.addEventListener('change', onLess); }
+        else if (less.addListener) { less.addListener(onLess); }
+      }
+
+      paint(0);
+    }
+  }
+
+  /* ----------------------------------------------- the demonstration --
+     What it does. Four kinds of change, one shown at a time, and a reader
+     who decides. The four cases are in the markup as data, so there is no
+     copy in this file and the page and the script cannot disagree.
+
+     Arrow keys move between the tabs, which is what a tablist is expected
+     to do. Choosing a tab puts the panel back to its first state, because
+     a verdict left over from the last case would be a verdict for the
+     wrong suggestion. */
+  var panel = document.getElementById('demoPanel');
+  if (panel) {
+    var tabs = [].slice.call(document.querySelectorAll('.tabstrip-btn'));
+    var cases = [].slice.call(panel.querySelectorAll('.demo-script > i')).map(function (el) {
+      var d = {};
+      ['kind', 'name', 'why', 'how', 'effort', 'risk', 'back', 'verdict', 'result', 'tone']
+        .forEach(function (k) { d[k] = el.getAttribute('data-' + k); });
+      return d;
+    });
+    var out = {
+      kind: document.getElementById('demoKind'),
+      name: document.getElementById('demoHead'),
+      why: document.getElementById('demoWhy'),
+      how: document.getElementById('demoHow'),
+      effort: document.getElementById('demoEffort'),
+      risk: document.getElementById('demoRisk'),
+      back: document.getElementById('demoBack'),
+      verdict: document.getElementById('demoVerdict'),
+      result: document.getElementById('demoResultText')
+    };
+    var steps = {
+      ready: document.getElementById('demoReady'),
+      review: document.getElementById('demoReview'),
+      result: document.getElementById('demoResult'),
+      declined: document.getElementById('demoDeclined')
+    };
+    var acts = document.getElementById('demoActions');
+    var date = document.getElementById('demoDate');
+    var tryIt = document.getElementById('demoTry');
+    var skip = document.getElementById('demoSkip');
+    var show = document.getElementById('demoShow');
+    var again = document.getElementById('demoAgain');
+    var back = document.getElementById('demoReconsider');
+    var missing = panel.getAttribute('data-missing') || '';
+
+    if (tabs.length && cases.length && out.name && steps.ready && acts) {
+      var at = 0;
+
+      var step = function (which) {
+        Object.keys(steps).forEach(function (k) {
+          if (steps[k]) { steps[k].hidden = k !== which; }
+        });
+        acts.hidden = which !== 'ready';
+      };
+
+      var pick = function (i, moveFocus) {
+        at = i;
+        var c = cases[i];
+        out.kind.textContent = c.kind;
+        out.name.textContent = c.name;
+        out.why.textContent = c.why;
+        out.how.textContent = c.how;
+        if (out.effort) { out.effort.textContent = c.effort; }
+        if (out.risk) { out.risk.textContent = c.risk; }
+        if (out.back) { out.back.textContent = c.back; }
+        if (out.verdict) {
+          out.verdict.textContent = c.verdict;
+          out.verdict.className = 'demo-verdict ledger-' + c.tone;
+        }
+        if (out.result) { out.result.textContent = c.result; }
+        tabs.forEach(function (b, n) {
+          var on = n === i;
+          b.setAttribute('aria-selected', String(on));
+          b.tabIndex = on ? 0 : -1;
+          if (on) {
+            panel.setAttribute('aria-labelledby', b.id);
+            if (moveFocus) { b.focus(); }
+          }
+        });
+        if (date) { date.value = ''; date.setCustomValidity(''); }
+        step('ready');
+      };
+
+      tabs.forEach(function (b, i) {
+        b.addEventListener('click', function () { pick(i, false); });
+        b.addEventListener('keydown', function (e) {
+          var next = null;
+          if (e.key === 'ArrowRight') { next = (i + 1) % tabs.length; }
+          if (e.key === 'ArrowLeft') { next = (i + tabs.length - 1) % tabs.length; }
+          if (e.key === 'Home') { next = 0; }
+          if (e.key === 'End') { next = tabs.length - 1; }
+          if (next !== null) { e.preventDefault(); pick(next, true); }
+        });
+      });
+
+      if (tryIt) {
+        tryIt.addEventListener('click', function () {
+          step('review');
+          if (date) { date.focus(); }
+        });
+      }
+      if (skip) { skip.addEventListener('click', function () { step('declined'); }); }
+      if (back) {
+        back.addEventListener('click', function () {
+          step('ready');
+          if (tryIt) { tryIt.focus(); }
+        });
+      }
+      if (show && date) {
+        show.addEventListener('click', function () {
+          if (!date.value) {
+            date.setCustomValidity(missing);
+            if (date.reportValidity) { date.reportValidity(); }
+            date.focus();
+            return;
+          }
+          date.setCustomValidity('');
+          step('result');
+        });
+        date.addEventListener('input', function () { date.setCustomValidity(''); });
+      }
+      if (again) {
+        again.addEventListener('click', function () {
+          step('ready');
+          tabs[at].focus();
+        });
+      }
+
+      pick(0, false);
+    }
+  }
 })();

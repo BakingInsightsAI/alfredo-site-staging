@@ -18,6 +18,43 @@
   </div>
 </section>
 
+{#- ========================================================= the verdicts
+    The three words, set as large as they deserve. This is the page's
+    argument, so it comes before the promises that back it up, and the
+    three illustrations underneath are the ones that used to sit on the
+    home page: the film shows a verdict now, and this is where the written
+    examples belong. #}
+<section class="section verdicts-band darkest">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">{{ h.verdicts_eyebrow }}</p>
+      <h2 class="h2 verdicts-title">{{ h.verdicts_heading }}<em>{{ h.verdicts_heading_em }}</em></h2>
+      <p class="lead">{{ h.verdicts_lede }}</p>
+    </div>
+    <dl class="verdicts">
+      {%- for v in h.verdicts %}
+      <div class="verdict-row">
+        <dt class="verdict-word ledger-{{ v.kind }}">{{ v.word }}</dt>
+        <dd class="verdict-meaning">{{ v.meaning }}</dd>
+      </div>
+      {%- endfor %}
+    </dl>
+    <p class="verdicts-close">{{ h.verdicts_close }}</p>
+
+    <p class="ledger-label"><span class="tag-sample">{{ h.examples_label }}</span></p>
+    <div class="ledger">
+      {%- for r in h.examples %}
+      <div class="ledger-row">
+        <p class="ledger-state ledger-{{ r.kind }}">{{ r.state }}</p>
+        <p class="ledger-what">{{ r.what }}</p>
+        <p class="ledger-why">{{ r.why }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+    <p class="proof-honest">{{ h.examples_honest }}</p>
+  </div>
+</section>
+
 <section class="section paper">
   <div class="wrap">
     <div class="proof-head reveal">

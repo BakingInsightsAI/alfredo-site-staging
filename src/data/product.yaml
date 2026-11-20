@@ -161,3 +161,68 @@ weeklist:
       risk: "Medium"
       how: "Move the start, and tell the regulars the week before."
       back: "Four weeks"
+
+# ---------------------------------------------------------------- v8 ----
+# The demonstration, which is what this page now opens with. Four of the
+# five weekly records above, one per tab, each read from `weeklist` rather
+# than restated: the suggestion, why it came up and how to do it are the
+# approved lines, unchanged.
+#
+# What is new here is the verdict and the sentence under it, because the
+# weekly records stop at the suggestion and the point of this page is what
+# Alfredo says afterwards. No figure is invented in any of them.
+#
+# The film on the home page uses three different suggestions, so no
+# suggestion is shown on two pages.
+demo:
+  eyebrow: "Try it here"
+  heading: "See the move. "
+  heading_em: "Then see the answer."
+  lede: "Pick a kind of change. Alfredo says what it noticed and what to try, and then leaves it with you. The answer comes only after you choose to try it and choose when to check back."
+  label: "Illustrative example"
+  strip_label: "Alfredo, your weekly list"
+  worth: "Worth trying"
+  owner_eyebrow: "Yours to decide"
+  ready_heading: "Nothing moves until you say so."
+  ready_body: "This is a drawing of the product. No account is connected here and nothing is changed anywhere."
+  try: "Try this"
+  skip: "Not right now"
+  review_heading: "Choose when to check back."
+  review_body: "The date is yours. Alfredo suggests one and you can make it shorter or longer."
+  review_label: "Your review date"
+  review_hint: "Suggested by Alfredo"
+  review_go: "See the example answer"
+  review_missing: "Please choose when you want to check back."
+  result_heading: "After the date you chose"
+  result_again: "Try another kind of change"
+  declined_heading: "Not right now."
+  declined_body: "That is your call. It stays an idea, and there is nothing to report."
+  declined_back: "Look at it again"
+  note: "Every example on this page is illustrative. No account is connected and nothing is changed."
+  # which weekly record each tab shows, and what Alfredo says afterwards
+  cases:
+    - tab: "Pairings"
+      entry: 0
+      verdict: "Worked."
+      result: "Illustrative example. After the date the owner chose, the two were ordered together more often than before."
+    - tab: "Menu"
+      entry: 1
+      verdict: "No effect."
+      result: "Illustrative example. After the date the owner chose, the new position did not change what sold. Alfredo says so rather than dress it up."
+    - tab: "Costs"
+      entry: 2
+      verdict: "Worked."
+      result: "Illustrative example. The new costs were confirmed, the tart was priced to cover them, and it kept selling."
+    - tab: "Nearby"
+      entry: 4
+      verdict: "Backfired."
+      result: "Illustrative example. The later start lost the early crowd, and the owner moved it back."
+  # What a reporting tool stops at, and what this page is showing instead.
+  apart_eyebrow: "The difference"
+  apart_heading: "A report tells you what happened. Alfredo tells you what happened next."
+  apart:
+    - name: "A reporting tool"
+      body: "Shows you what already happened. What to try, and whether it worked, is left to you."
+    - name: "Alfredo"
+      body: "Suggests one change worth trying, says what it risks, leaves the decision with you, and comes back with worked, no effect, or backfired."
+  wider: "It is not only the POS either. Your recipes and ingredient costs, once you share them, what your guests order together, and what the places down the street list publicly all feed the same weekly list."

@@ -26,6 +26,12 @@ analytics_token: "ffcafa6e6d0c4d6cb2c519c7fc777fa6"
 # The picture a link to this site shows when it is shared.
 og_image: "assets/hero-restaurant-1280.jpg"
 
+# The hero can play a muted video instead of the two still frames. Set this
+# to the file's address and the hero swaps; leave it empty and the stills
+# stay. That is the whole switch. The first still remains the poster, so a
+# video that never arrives looks like no change at all.
+hero_video: ""
+
 google_site_verification: ""
 bing_site_verification: ""
 
@@ -67,7 +73,6 @@ pages:
     template: index.html
     output: index.html
     legacy: false
-    hero: true
     title: "Restaurant analytics | Alfredo by BakingInsightsAI"
     description: "Alfredo reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
 
