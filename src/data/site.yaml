@@ -40,6 +40,15 @@ bing_site_verification: ""
 # when a spot fills, one edit updates every page.
 founding_spots_open: 9
 
+# The founding offer, in Sid's words, written once. The home teaser, the
+# pricing card and the questions page all read it from here, so the three
+# cannot drift apart. The count above fills the dots and the sentence.
+founding:
+  label: "Founding offer."
+  body: "The first 10 businesses get every feature, with no limits, free for six months."
+  support: "However many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
+  spots_tail: "spots open"
+
 footer_line: "\u00a9 2026 Alfredo, a BakingInsights AI product. Patent pending. We do not inflate numbers."
 
 # The images are generated, and saying so on every page is a condition of

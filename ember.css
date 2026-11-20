@@ -1,0 +1,1027 @@
+/* ============================================================================
+   Alfredo v9, "ember".
+
+   The third layer. alfredo.css is the structure and the grid, glossy.css
+   puts everything on a dark ground, and this is the design: the ink
+   palette, the ember glow, Newsreader and Inter, and the product surfaces.
+
+   Most of the restyle is the token block below. glossy.css draws every
+   section, panel, rule and label from its own variables, so redefining
+   those variables moves the whole site onto the new palette at once,
+   instead of a hundred overrides that could each be missed.
+
+   Everything that moves, moves by transform and opacity. Nothing animates
+   off screen: the ember, the photograph and the film all stop when their
+   section leaves the viewport.
+   ========================================================================= */
+
+/* ------------------------------------------------------------- the type --
+   Both families are variable fonts, cut down to what this site asks for:
+   Newsreader at one weight and one optical size, Inter from 400 to 700.
+   The latin range is untouched, so no copy change can land on a missing
+   glyph. Self hosted, one file per subset, no third party stylesheet. */
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 500;
+  font-display: swap; src: url('fonts/newsreader-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader'; font-style: normal; font-weight: 500;
+  font-display: swap; src: url('fonts/newsreader-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 400 700;
+  font-display: swap; src: url('fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 400 700;
+  font-display: swap; src: url('fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* The fallback each family swaps from, squeezed to the same advance width
+   so a headline or a row of controls cannot change width when the real
+   file lands. The percentages are measured on the strings that actually sit in the
+   masthead and the hero: Inter runs 6.5 per cent wider than the local
+   fallback at 400 and 9.6 per cent wider at 700, Newsreader 2.3 per cent.
+   Two sans fallbacks, because the local face has no weight axis and its
+   bold runs wider than its regular by a different amount than Inter does. */
+@font-face {
+  font-family: 'Newsreader fallback';
+  src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
+  ascent-override: 96%; descent-override: 26%; line-gap-override: 0%; size-adjust: 105.4%;
+}
+@font-face {
+  font-family: 'Inter fallback'; font-weight: 400 600;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  ascent-override: 97%; descent-override: 24%; line-gap-override: 0%; size-adjust: 107.5%;
+}
+@font-face {
+  font-family: 'Inter fallback'; font-weight: 700 1000;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  ascent-override: 97%; descent-override: 24%; line-gap-override: 0%; size-adjust: 109.6%;
+}
+
+/* ----------------------------------------------------------- the palette --
+   Redefining the variables the two layers below already draw from. Every
+   section ground, rule, label and panel moves with these. */
+:root {
+  color-scheme: dark;
+
+  /* the prototype's values, unchanged */
+  --ink-bg: #090B12;
+  --ink-deeper: #070910;
+  --ink-panel: #111620;
+  --ink-panel-alt: #171D2B;
+  --ink-raised: #1A1E2D;
+  --text: #F7F8FB;
+  --text-muted: #C5CBD6;
+  --text-subtle: #ADB6C6;
+  --hair: rgba(231,237,248,.14);
+  --hair-strong: rgba(231,237,248,.24);
+
+  --plum: #7B2A6B;
+  --raspberry: #D8436A;
+  --amber: #F4A340;
+  --label: #F9C47D;
+  --glow-1: #FF8DA8;
+  --glow-2: #FFCE80;
+
+  /* the four verdicts, which never borrow an ember colour */
+  --worked: #83E1B6;
+  --noeffect: #D9DFE9;
+  --backfired: #FFAB96;
+  --pending: #C4D0E1;
+
+  /* glossy.css draws the whole site from these, so the site moves with them */
+  --g-void: #070910;
+  --g-obsidian: #090B12;
+  --g-ink: #0B0E16;
+  --g-raise: #111620;
+  --g-raise-2: #171D2B;
+  --g-surface: #1A1E2D;
+  --g-cream: #F7F8FB;
+  --g-cream-dim: #C5CBD6;
+  --g-amber: #F4A340;
+  --g-gold: #F9C47D;
+  --g-gold-deep: #9A5F86;
+  --g-edge: rgba(231,237,248,.24);
+  --g-edge-soft: rgba(231,237,248,.14);
+
+  /* And alfredo.css, whose tokens keep their polarity on purpose. In that
+     layer --ink is a dark ground and --paper is the light text standing on
+     it, in nineteen places and twenty two respectively. Swapping the two
+     would turn the masthead, the footer, the handoff and every page head
+     near white and their text near black. So --ink stays dark and --paper
+     stays light, and the sections that used to carry a light ground are
+     darkened by name further down instead. */
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', 'Inter fallback', system-ui, -apple-system, Segoe UI, sans-serif;
+  --ink: #090B12;
+  --paper: #F7F8FB;
+  --paper-light: #FFFFFF;
+  --sand: #0B0E16;
+  --muted-light: #C5CBD6;
+  --muted-dark: #C5CBD6;
+  --line-light: rgba(231,237,248,.14);
+  --line-dark: rgba(231,237,248,.14);
+  --edge-light: #8E97A8;
+  --edge-dark: #8E97A8;
+}
+
+html { background: var(--ink-bg); }
+body {
+  background: var(--ink-bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One continuous dark page: no section carries a light ground any more. */
+.paper, .paper-light, .sand, .dark, .darkest,
+.section, .section-tight, .pagehead, .next, .footer {
+  background: var(--ink-bg);
+  color: var(--text);
+}
+.paper-light, .sand { background: var(--ink-deeper); }
+.next { border-top: 1px solid var(--hair); }
+
+/* Headlines are the serif at one weight; everything else is Inter. */
+.display, .h2, .h3, .h4, h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -.014em;
+  font-optical-sizing: auto;
+  color: var(--text);
+}
+.display { letter-spacing: -.017em; line-height: 1.04; }
+.lead { color: var(--text-muted); }
+.body, p { color: var(--text-muted); }
+.eyebrow, .paper .eyebrow, .paper-light .eyebrow, .sand .eyebrow {
+  font-family: var(--sans);
+  font-weight: 600; font-size: 12px; line-height: 1.3;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--label);
+}
+/* prices, dates and clocks line up in columns */
+.price-value, .tier-price, .ledger-date, .film-time, .v9-date,
+.record-date, .plan-price, .demo-date, .film-clock { font-variant-numeric: tabular-nums; }
+
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid #FFE0A6; outline-offset: 3px;
+}
+
+/* ----------------------------------------------------------- the masthead */
+.nav, body:not(.hero-nav) .nav {
+  background: rgba(9,11,18,.84);
+  border-bottom: 1px solid var(--hair);
+  -webkit-backdrop-filter: blur(17px); backdrop-filter: blur(17px);
+}
+.wordmark img { height: 26px; width: auto; }
+.nav .btn {
+  background: #FFFFFF; color: #0B0E17; border-color: #FFFFFF;
+  font-weight: 600;
+}
+.nav .btn:hover { background: #FFFFFF; box-shadow: 0 8px 24px rgba(255,255,255,.12); }
+
+/* --------------------------------------------------------------- buttons */
+.btn {
+  min-height: 48px; border-radius: 6px;
+  font-family: var(--sans); font-weight: 600; font-size: 15px;
+  border: 1px solid transparent;
+  transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+}
+.btn:not(.btn-ghost) { background: #FFFFFF; color: #0E111B; border-color: #FFFFFF; }
+.btn:not(.btn-ghost):hover { background: #FFFFFF; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(0,0,0,.15); }
+.btn-ghost {
+  background: rgba(9,11,18,.30); border-color: rgba(255,255,255,.26); color: var(--text);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.07); color: var(--text); transform: translateY(-1px); }
+.btn-ember {
+  background: linear-gradient(104deg, #6F285D, #B33366);
+  border-color: rgba(255,183,213,.28); color: #FFFFFF;
+}
+.btn-ember:hover { box-shadow: 0 9px 22px rgba(174,51,106,.27); }
+.btn:active, .week-row:active { transform: translateY(1px) scale(.99); }
+
+/* ------------------------------------------------------------- the ember --
+   Three soft discs behind the hero, two behind the founding card and two
+   behind the closing section. Nowhere else. They are painted into their own
+   layer, they only ever move by transform and opacity, and they animate
+   only while their section is on screen, which the script decides. */
+.ember-field {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.ember {
+  position: absolute; border-radius: 50%;
+  will-change: transform, opacity; contain: paint;
+}
+.ember-field::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,9,16,.38), rgba(8,9,16,.20) 55%, rgba(8,9,16,.12));
+}
+@keyframes emberA { 0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .82 } 50% { transform: translate3d(42px,34px,0) scale(1.06); opacity: 1 } }
+@keyframes emberB { 0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .72 } 50% { transform: translate3d(-36px,27px,0) scale(1.07); opacity: .91 } }
+@keyframes emberC { 0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .48 } 50% { transform: translate3d(44px,-22px,0) scale(1.06); opacity: .67 } }
+.is-glowing .ember-a { animation: emberA 19s ease-in-out infinite both; }
+.is-glowing .ember-b { animation: emberB 23s ease-in-out infinite both; }
+.is-glowing .ember-c { animation: emberC 26s ease-in-out infinite both; }
+
+/* ---------------------------------------------------------------- the hero */
+.hero-surface {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(160deg, #090B12 0%, #0D0E19 60%, #090B12 100%);
+}
+.hero-surface .ember-a {
+  top: -240px; left: -235px; width: 800px; height: 800px; opacity: .92;
+  background: radial-gradient(circle at 50% 48%, rgba(166,37,99,.82) 0%, rgba(106,31,90,.71) 30%, rgba(61,21,64,.42) 51%, transparent 72%);
+}
+.hero-surface .ember-b {
+  top: -135px; right: -285px; width: 670px; height: 670px; opacity: .77;
+  background: radial-gradient(circle at 50% 50%, rgba(242,149,67,.68) 0%, rgba(217,71,105,.48) 34%, rgba(117,39,98,.20) 55%, transparent 72%);
+}
+.hero-surface .ember-c {
+  top: 230px; left: -270px; width: 650px; height: 650px; opacity: .57;
+  background: radial-gradient(circle, rgba(114,37,102,.66), rgba(76,35,102,.25) 50%, transparent 70%);
+}
+.hero-layout { position: relative; z-index: 1; padding-block: 28px 55px; display: grid; gap: 29px; }
+.hero-copy { position: relative; min-width: 0; max-width: 640px; }
+
+.founding-pill {
+  min-height: 44px; max-width: 100%;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 9px 13px; border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(11,14,23,.64);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
+  font-size: 13px; font-weight: 500; line-height: 1.3; color: #FFFFFF;
+  text-decoration: none;
+}
+.founding-pill:hover { border-color: rgba(255,255,255,.44); color: #FFFFFF; }
+.founding-pill .spark {
+  width: 7px; height: 7px; border-radius: 50%; flex: none;
+  background: #FFD58E; box-shadow: 0 0 12px rgba(255,193,95,.35);
+}
+.hero-heading {
+  margin: 19px 0 0;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(38px, 10vw, 43px); line-height: 1.065; letter-spacing: -.014em;
+  text-wrap: pretty; color: #FAFBFF;
+}
+/* the second sentence carries the ember, as a gradient in the text itself */
+.hero-heading .gradient-line {
+  display: block; margin-top: .05em;
+  background: linear-gradient(105deg, var(--glow-1) 0%, #F6A98B 55%, var(--glow-2) 100%);
+  background-clip: text; -webkit-background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+.hero-sub { margin: 16px 0 0; max-width: 33ch; font-size: 16px; line-height: 1.55; color: #D6DAE3; }
+.hero-actions { margin-top: 21px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.hero-aside { position: relative; min-width: 0; }
+
+/* ------------------------------------------------------- the product window
+   This is the hero object: the weekly list as the product shows it. Every
+   state below is a class or an attribute, so choosing a row or opening the
+   date step never reflows anything above it. */
+.app-window {
+  position: relative; border-radius: 11px; overflow: hidden;
+  border: 1px solid rgba(234,239,249,.23);
+  background: linear-gradient(155deg, #1A1E2D, #0F131D 53%, #0B1019 100%);
+  box-shadow: 0 22px 55px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.app-top {
+  min-height: 56px; display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; padding: 13px 16px;
+  border-bottom: 1px solid var(--hair); background: rgba(255,255,255,.025);
+}
+.app-top h2 { font-family: var(--sans); font-size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+.app-top .example-tag { font-size: 12px; color: #E6D5DF; white-space: nowrap; }
+.app-inner { display: grid; min-width: 0; }
+.week-list { min-width: 0; }
+.week-row {
+  position: relative; width: 100%; text-align: left;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 15px; min-height: 70px;
+  background: transparent; border: 0; border-bottom: 1px solid var(--hair);
+  border-radius: 0; color: var(--text); cursor: pointer;
+  font-family: var(--sans);
+  transition: transform .18s ease, opacity .3s ease, background-color .18s ease;
+}
+.week-row:hover { background: rgba(255,255,255,.045); }
+.week-row[aria-pressed="true"] { background: rgba(255,255,255,.075); }
+.week-row[aria-pressed="true"]::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 2px; background: #FFB982;
+}
+.week-row .row-text { min-width: 0; display: grid; gap: 4px; }
+.week-row .category {
+  font-weight: 600; font-size: 12px; line-height: 1.25;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--label);
+}
+.week-row[aria-pressed="false"] .category { color: #B9BECA; }
+.week-row .row-title { font-weight: 500; font-size: 15px; line-height: 1.36; max-width: 42ch; }
+.week-row .row-chevron {
+  display: block; width: 7px; height: 7px; flex: none;
+  border-top: 1.5px solid #BAC4D2; border-right: 1.5px solid #BAC4D2;
+  transform: rotate(45deg);
+}
+.app-details { padding: 19px 17px 18px; background: #0C111A; min-width: 0; }
+.detail-overline {
+  font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--label); margin: 0 0 6px;
+}
+.detail-name {
+  font-family: var(--serif); font-weight: 500; font-size: 25px; line-height: 1.11;
+  letter-spacing: -.014em; color: #FCF9FB; margin: 0 0 17px;
+}
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 13px; margin: 0; }
+.detail { display: grid; gap: 5px; min-width: 0; }
+.detail-wide { grid-column: 1 / -1; }
+.detail dt { color: #BCC6D5; font-size: 13px; line-height: 1.25; }
+.detail dd { margin: 0; color: var(--text); font-size: 14px; line-height: 1.5; }
+.detail-actions { display: flex; gap: 9px; margin-top: 20px; }
+.small-button {
+  min-height: 44px; padding: 0 14px; font-size: 14px; font-weight: 600;
+  border-radius: 6px; cursor: pointer; font-family: var(--sans);
+  transition: transform .16s ease;
+  /* Not right now must never wrap, at any width */
+  white-space: nowrap;
+}
+.small-button.primary {
+  flex: 1; background: linear-gradient(95deg, #75265D, #B73266);
+  color: #FFFFFF; border: 1px solid rgba(255,173,199,.3);
+}
+.small-button.secondary {
+  flex: 1; background: transparent; color: #FFFFFF; border: 1px solid var(--hair-strong);
+}
+.small-button:active { transform: translateY(1px) scale(.99); }
+.owner-line { padding: 13px 0 0; margin: 0 0 0 2px; color: #C4CAD5; font-size: 14px; }
+.owner-line strong { color: #FFFFFF; font-weight: 600; }
+
+/* the decision, staged: a date, then Pending, then an illustrative answer */
+.decision-panel {
+  display: none; margin-top: 18px; padding: 15px;
+  border: 1px solid rgba(255,194,147,.24); border-radius: 7px; background: #171A27;
+}
+.decision-panel[data-open="true"] { display: block; }
+.decision-label { display: block; margin-bottom: 9px; font-size: 14px; line-height: 1.4; font-weight: 500; color: #EFF1F7; }
+.date-row { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.date-row input {
+  color-scheme: dark; min-height: 44px; min-width: 0; flex: 1 1 135px;
+  background: #0B0F18; color: #FAFBFF; border: 1px solid rgba(255,255,255,.3);
+  padding: 0 10px; border-radius: 5px; font-size: 16px; font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+.date-row .small-button { flex: 1 1 128px; }
+.decision-hint { margin: 9px 0 0; font-size: 14px; line-height: 1.45; color: #C4CAD5; }
+.decision-feedback {
+  display: none; align-items: center; gap: 10px; margin-top: 14px; padding: 12px;
+  border: 1px solid rgba(220,234,251,.16); background: rgba(255,255,255,.025); border-radius: 6px;
+}
+.decision-feedback[data-show="true"] { display: flex; }
+.feedback-label { flex: 1; min-width: 0; font-size: 14px; color: #E1E6F0; margin: 0; }
+.decision-result { display: none; margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: #E7ECF6; }
+.decision-result[data-show="true"] { display: block; }
+.result-preview {
+  display: none; min-height: 44px; width: 100%; margin-top: 11px; padding: 7px 10px;
+  background: transparent; color: #FFE4E9; border: 1px solid rgba(251,184,210,.35);
+  border-radius: 5px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--sans);
+}
+.result-preview[data-show="true"] { display: block; }
+
+/* --------------------------------------------------------- the verdicts --
+   A word and a dot, in its own colour, everywhere a verdict appears. Never
+   an ember colour, and never a stamp. */
+.status-pill, .ledger-verdict, .v9-verdict {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--sans); font-weight: 600; font-size: 14px; line-height: 1.45;
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.status-pill::before, .ledger-verdict::before, .v9-verdict::before {
+  content: ""; display: inline-block; vertical-align: middle;
+  width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none;
+}
+.status-pill[data-phase="worked"], .ledger-verdict.worked, .v9-verdict.worked { color: var(--worked); }
+.status-pill[data-phase="none"],   .ledger-verdict.none,   .v9-verdict.none   { color: var(--noeffect); }
+.status-pill[data-phase="back"],   .ledger-verdict.back,   .v9-verdict.back   { color: var(--backfired); }
+.status-pill[data-phase="pending"],.ledger-verdict.pending,.v9-verdict.pending{ color: var(--pending); }
+.status-pill.is-changing { opacity: 0; transform: translateY(5px); }
+
+/* the list arriving, once, as the window reaches the screen */
+.js .week-row:not(.arrived) { opacity: 0; transform: translateY(12px); }
+.js .week-row.arrived {
+  opacity: 1; transform: translateY(0);
+  transition: opacity .39s ease, transform .39s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--row-delay, 0ms);
+}
+
+/* ------------------------------------------------------ the photo band --
+   One picture, a slow swell, and the heading over it. The swell runs once
+   and only while the band is on screen. Setting site.yaml's hero_video
+   swaps the picture for a muted loop with the picture as its poster, so a
+   video that never arrives looks like no change at all. */
+.photo-band {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 325px; background: #181620;
+}
+.photo-band img, .photo-band video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 53% 46%; transform: scale(1.025);
+}
+@keyframes photoSwell {
+  0%   { transform: scale(1.025) translate3d(0,0,0); }
+  100% { transform: scale(1.10) translate3d(-1%, .5%, 0); }
+}
+.photo-band.is-glowing img { animation: photoSwell 18s ease-out 1 both; }
+.photo-band::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,11,19,.12) 0%, rgba(8,11,19,.4) 32%, rgba(8,11,19,.92) 100%);
+}
+.photo-content {
+  position: relative; z-index: 1; display: flex; min-height: 325px;
+  flex-direction: column; justify-content: end; padding-block: 60px 29px;
+}
+.photo-content h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(33px, 9vw, 44px); line-height: 1.08; letter-spacing: -.014em;
+  max-width: 16ch; margin: 0;
+}
+
+/* ------------------------------------------------------- the three lines */
+.outcomes { padding-block: 29px 41px; }
+.outcome-row { padding: 18px 0; border-bottom: 1px solid var(--hair); display: grid; gap: 5px; }
+.outcome-row:first-child { border-top: 1px solid var(--hair); }
+.outcome-row h3 {
+  font-family: var(--sans); font-size: 17px; font-weight: 500;
+  line-height: 1.38; letter-spacing: -.012em; margin: 0; color: var(--text);
+}
+.outcome-row p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-muted); }
+
+/* ------------------------------------------------------------- the film --
+   Fifteen seconds in which one row of the real list changes state. The list
+   never leaves the screen; what changes is a data-scene attribute, the row's
+   state word, and which of five panels is showing. The panels are stacked
+   in a box of fixed height, so no scene costs a reflow. */
+.film-section {
+  padding-block: 46px 48px; background: #0B0E16;
+  border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+}
+.section-intro { max-width: 640px; margin-bottom: 22px; }
+.section-intro .eyebrow { margin-bottom: 10px; }
+.section-intro h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(32px, 8.5vw, 42px); line-height: 1.1; letter-spacing: -.012em; margin: 0;
+}
+.section-intro p { margin: 9px 0 0; font-size: 16px; color: #D0D5DF; }
+/* the rule above was blowing the eyebrow up to 16px, which turns a small
+   tracked label into capitals at reading size */
+.section-intro p.eyebrow { font-size: 12px; margin: 0 0 10px; }
+.film-frame {
+  border: 1px solid var(--hair-strong); border-radius: 10px; overflow: hidden;
+  background: linear-gradient(155deg, #151A28, #0F121C);
+  box-shadow: 0 20px 48px rgba(0,0,0,.22);
+}
+.film-topline {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 16px; gap: 10px; border-bottom: 1px solid var(--hair);
+  font-size: 12px; letter-spacing: .045em; color: #D7DAE5; font-weight: 600;
+}
+.film-area { min-height: 360px; padding: 17px 15px 18px; }
+.film-stage { width: 100%; max-width: 640px; margin: auto; }
+.film-app {
+  overflow: hidden; border: 1px solid rgba(235,240,248,.22); border-radius: 7px;
+  background: #0D121C; box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+.film-app-top {
+  min-height: 41px; display: flex; justify-content: space-between; gap: 8px;
+  align-items: center; padding: 9px 12px; background: #171B28; border-bottom: 1px solid var(--hair);
+}
+.film-app-top strong { font-size: 14px; font-weight: 600; color: #F8F9FC; }
+.film-app-top span { font-size: 12px; color: #C5CEDC; }
+.film-list { display: grid; }
+.film-row {
+  display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center;
+  gap: 10px; padding: 9px 12px; min-height: 52px;
+  border-bottom: 1px solid var(--hair); color: #EFF1F8;
+  transition: opacity .26s ease, transform .26s ease, background-color .26s ease;
+}
+.film-row-copy { display: grid; gap: 2px; min-width: 0; }
+.film-kind { font-size: 12px; line-height: 1.2; text-transform: uppercase; letter-spacing: .09em; color: #BAC5D5; }
+.film-row-title { font-size: 14px; line-height: 1.35; font-weight: 500; }
+.film-row:not(.film-focus-row) { opacity: .72; }
+.film-focus-row { position: relative; background: rgba(255,255,255,.025); }
+.film-focus-row::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: #FFB982; opacity: 0; transition: opacity .2s ease;
+}
+.film-stage[data-scene] .film-focus-row::before { opacity: 1; }
+.film-row-state {
+  font-size: 12px; font-weight: 600; color: #EBC59D; white-space: nowrap;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.film-row-state::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px;
+  border-radius: 50%; background: currentColor; vertical-align: middle;
+}
+.film-stage[data-scene="0"] .film-focus-row { background: rgba(236,168,93,.065); }
+.film-stage[data-scene="1"] .film-focus-row,
+.film-stage[data-scene="2"] .film-focus-row { background: rgba(190,117,189,.08); }
+.film-stage[data-scene="3"] .film-focus-row,
+.film-stage[data-scene="4"] .film-focus-row { background: rgba(131,225,182,.075); }
+.film-stage[data-scene="1"] .film-row-state,
+.film-stage[data-scene="2"] .film-row-state { color: #FFD49B; }
+.film-stage[data-scene="3"] .film-row-state,
+.film-stage[data-scene="4"] .film-row-state { color: var(--worked); }
+
+.film-extra { height: 121px; position: relative; background: #101521; overflow: hidden; }
+.film-panel {
+  position: absolute; inset: 0; padding: 13px 14px;
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+  opacity: 0; visibility: hidden; transform: translateY(7px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.film-stage[data-scene="0"] .film-panel-suggest,
+.film-stage[data-scene="1"] .film-panel-try,
+.film-stage[data-scene="2"] .film-panel-review,
+.film-stage[data-scene="3"] .film-panel-verdict,
+.film-stage[data-scene="4"] .film-panel-record { opacity: 1; visibility: visible; transform: translateY(0); }
+.film-small-label { font-size: 12px; color: #CED6E3; letter-spacing: .035em; }
+.film-summary { font-size: 14px; color: #F1F3F8; line-height: 1.35; margin: 0; }
+.film-mock-action {
+  align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
+  padding: 8px 16px; border-radius: 4px;
+  background: linear-gradient(95deg, #75265D, #B73266);
+  color: #FFFFFF; font-size: 14px; font-weight: 600; transform-origin: center;
+}
+@keyframes filmTap { 0% { transform: scale(1); opacity: 1 } 35% { transform: scale(.94); opacity: .87 } 100% { transform: scale(1); opacity: 1 } }
+.film-stage[data-scene="1"] .film-mock-action { animation: filmTap .55s ease-out both; }
+.film-date { font-size: 14px; font-weight: 600; color: #F7F8FC; font-variant-numeric: tabular-nums; }
+.film-date span { font-weight: 400; color: #C8CFDD; }
+.film-wait-bar { margin-top: 3px; width: 100%; height: 2px; background: rgba(255,255,255,.18); overflow: hidden; }
+.film-wait-fill { height: 100%; width: 100%; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, #BB597F, #FFC483); }
+.film-verdict-word {
+  font-size: 18px; font-weight: 600; color: var(--worked);
+  display: inline-flex; align-items: center; gap: 9px;
+}
+.film-verdict-word::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.film-record-row {
+  display: grid; grid-template-columns: 52px minmax(0,1fr) auto; gap: 10px; align-items: center;
+  padding: 10px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.film-record-title { font-size: 13px; line-height: 1.3; color: #F3F5F9; }
+.film-record-state { font-size: 12px; color: var(--worked); font-weight: 600; white-space: nowrap; }
+.film-record-state::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  margin-right: 5px; vertical-align: middle; background: currentColor;
+}
+@keyframes filmLedgerDrop { from { opacity: 0; transform: translateY(-18px) } to { opacity: 1; transform: translateY(0) } }
+.film-stage[data-scene="4"] .film-record-row { animation: filmLedgerDrop .6s cubic-bezier(.2,.7,.2,1) both; }
+.film-frame[data-playing="false"] .film-mock-action,
+.film-frame[data-playing="false"] .film-record-row { animation-play-state: paused; }
+.film-step-line { margin: 9px 0 0; font-size: 14px; line-height: 1.45; color: #D3D9E5; min-height: 20px; }
+.film-foot { padding: 12px 16px 15px; border-top: 1px solid var(--hair); }
+.film-track { height: 2px; background: rgba(255,255,255,.15); overflow: hidden; transform: translateZ(0); }
+.film-progress { width: 100%; height: 100%; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, #DB587F, #FFCB77); will-change: transform; }
+.film-controls { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.film-controls button {
+  min-height: 44px; padding: 0 13px; border: 1px solid var(--hair-strong);
+  color: var(--text); background: rgba(255,255,255,.035);
+  font-family: var(--sans); font-weight: 600; font-size: 14px; border-radius: 6px; cursor: pointer;
+}
+.film-controls button:hover { background: rgba(255,255,255,.08); }
+.film-clock { margin-left: auto; color: #CDD4DF; font-size: 14px; }
+
+/* the same five steps, for a reader who asked for less motion or has no
+   scripting: a complete sequence, never a frozen frame */
+.film-reduced { display: grid; list-style: none; margin: 0; padding: 16px 16px 3px; }
+.js .film-reduced { display: none; }
+.film-reduced li {
+  padding: 10px 0; border-bottom: 1px solid var(--hair);
+  display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; align-items: center;
+  color: #F3F5F9; font-size: 14px; line-height: 1.42;
+}
+.film-reduced li:last-child { border-bottom: 0; }
+.film-reduced li b { font-weight: 500; color: #FFD59F; }
+.film-reduced li span { color: #C7D0DE; font-size: 13px; }
+.film-reduced li .worked { color: var(--worked); }
+.film-stage { display: none; }
+.js .film-stage { display: block; }
+.film-foot { display: none; }
+.js .film-foot { display: block; }
+
+/* ------------------------------------------------------- the track record */
+.record-section { padding-block: 49px 56px; background: #0A0D15; }
+.record-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+.record-heading h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(35px, 8.7vw, 48px); line-height: 1.06; letter-spacing: -.012em; margin: 0;
+}
+.record-heading .illustrative { font-size: 12px; color: #D4D9E4; text-align: right; max-width: 105px; }
+.record-intro { margin: 10px 0 0; color: #D3D9E3; max-width: 52ch; font-size: 16px; line-height: 1.55; }
+.ledger-v9 { margin-top: 23px; border-top: 1px solid var(--hair-strong); }
+.ledger-row-v9 {
+  display: grid; grid-template-columns: 60px minmax(0,1fr) auto; gap: 10px;
+  padding: 16px 0; border-bottom: 1px solid var(--hair); align-items: start; min-width: 0;
+}
+.ledger-date { font-family: var(--sans); font-weight: 500; font-size: 14px; line-height: 1.45; color: #D0D5DE; }
+.ledger-action { font-size: 14px; line-height: 1.44; min-width: 0; color: var(--text); }
+.js .ledger-row-v9:not(.arrived) { opacity: 0; transform: translateY(13px); }
+.js .ledger-row-v9.arrived {
+  opacity: 1; transform: translateY(0);
+  transition: opacity .42s ease, transform .42s ease; transition-delay: var(--ledger-delay, 0ms);
+}
+.js .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 0; transform: translateX(7px); }
+.js .ledger-row-v9 .ledger-verdict.resolved { opacity: 1; transform: translateX(0); transition: opacity .22s ease, transform .22s ease; }
+.record-proof { margin: 18px 0 0; font-size: 14px; line-height: 1.55; color: #CDD3DE; }
+
+/* --------------------------------------------------- the founding offer --
+   One card, used on the home teaser and on Pricing. The ember appears here
+   because this is one of the three approved places for it. The dots and the
+   count both read from site.yaml, and the dots never appear without the
+   words beside them. */
+.founding-block {
+  position: relative; isolation: isolate; margin-top: 25px; overflow: hidden;
+  border: 1px solid rgba(240,172,178,.4); border-radius: 10px;
+  background: #141321; box-shadow: 0 10px 28px rgba(0,0,0,.21);
+}
+.founding-block::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  border: 1px solid rgba(255,197,171,.22); border-radius: inherit;
+}
+.founding-block .ember-field { z-index: 0; }
+.founding-block .offer-orb-a {
+  width: 640px; height: 490px; top: -270px; left: -190px; opacity: .75;
+  background: radial-gradient(circle, rgba(194,54,111,.65), rgba(112,40,104,.35) 47%, transparent 73%);
+}
+.founding-block .offer-orb-b {
+  width: 470px; height: 470px; right: -215px; top: -255px; opacity: .65;
+  background: radial-gradient(circle, rgba(244,168,91,.62), rgba(175,62,111,.21) 43%, transparent 70%);
+}
+.founding-block.is-glowing .offer-orb-a { animation: emberA 22s ease-in-out infinite both; }
+.founding-block.is-glowing .offer-orb-b { animation: emberB 26s ease-in-out infinite both; }
+.founding-content {
+  position: relative; z-index: 2; padding: 22px 20px 21px;
+  background: linear-gradient(180deg, rgba(11,13,23,.30), rgba(11,13,23,.46));
+}
+.founding-content h3 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(26px, 6.9vw, 37px); line-height: 1.08; letter-spacing: -.012em;
+  color: #FFF9FD; margin: 0;
+}
+.founding-content p { font-size: 16px; line-height: 1.5; color: #F4EAF1; margin: 9px 0 0; max-width: 52ch; }
+.spots { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+.spot-dots { display: flex; align-items: center; gap: 6px; }
+.spot-dots i {
+  display: block; flex: 0 0 auto; width: 10px; height: 10px; border-radius: 50%;
+  background: #F2B783; box-shadow: inset 0 0 0 1px rgba(255,255,255,.13);
+}
+.spot-dots i.is-taken { background: transparent; border: 1px solid rgba(236,227,234,.67); box-shadow: none; }
+.spots strong { font-size: 14px; color: #FFF0DD; font-weight: 600; line-height: 1.4; }
+
+/* ----------------------------------------------------------- the prices --
+   Ruled rows, the plan in the serif and the figure in tabular numerals. */
+.price-list { margin-top: 28px; border-top: 1px solid var(--hair-strong); }
+.price-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 20px 0; border-bottom: 1px solid var(--hair);
+}
+.price-label { min-width: 0; color: var(--text); }
+.price-plan {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(26px, 6.8vw, 35px); line-height: 1.06; letter-spacing: -.012em;
+  color: var(--text); margin: 0;
+}
+.price-label small { display: block; font: 400 14px/1.5 var(--sans); color: #C7D0DD; margin-top: 6px; }
+.price-value {
+  flex: none; text-align: right; white-space: nowrap;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(31px, 8.2vw, 39px); line-height: 1; letter-spacing: -.018em;
+  color: var(--text); margin: 0;
+}
+.price-value small { display: block; font: 500 12px/1.35 var(--sans); letter-spacing: 0; color: #C7D0DD; margin-top: 5px; }
+.house-note { display: inline-block; margin-top: 7px; color: #FFBCDB; font: 600 12px/1.35 var(--sans); }
+.price-fine { font-size: 14px; line-height: 1.55; color: #C7D0DD; margin: 17px 0 0; }
+
+/* -------------------------------------------------------- the closing --
+   The same ember as the hero, at the other end of the page. */
+.closing-band {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: linear-gradient(160deg, #090B12, #0D0E19 65%, #090B12);
+}
+.closing-band .ember-a {
+  top: -260px; left: -260px; width: 860px; height: 820px; opacity: .82;
+  background: radial-gradient(circle, rgba(166,37,99,.72), rgba(113,38,99,.42) 43%, transparent 71%);
+}
+.closing-band .ember-b {
+  top: -260px; right: -335px; width: 690px; height: 690px; opacity: .73;
+  background: radial-gradient(circle, rgba(233,151,86,.49), rgba(218,71,106,.28) 45%, transparent 72%);
+}
+.closing-band .ember-field::after { background: linear-gradient(90deg, rgba(8,9,15,.28), rgba(8,9,15,.18)); }
+.closing-inner { position: relative; z-index: 1; padding-block: 55px 48px; }
+.closing-inner h2 {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(38px, 9vw, 61px); line-height: 1.06; letter-spacing: -.015em;
+  max-width: 13ch; margin: 0;
+}
+.closing-inner p { font-size: 16px; line-height: 1.55; color: #F0DFEB; margin: 13px 0 0; max-width: 36ch; }
+.closing-inner .btn { margin-top: 23px; }
+
+/* ------------------------------------------------- reveals, used sparingly
+   Composition groups only. Never a run of reading text inside a card. */
+.js .reveal:not(.is-revealed) { opacity: 0; transform: translateY(16px); }
+.js .reveal.is-revealed {
+  opacity: 1; transform: translateY(0);
+  transition: opacity .58s ease, transform .58s cubic-bezier(.2,.7,.2,1);
+}
+
+/* ------------------------------------------- the pages that keep their work
+   What it does keeps its tabbed demonstration, Why trust it its verdicts,
+   Pricing its plan details. They move onto the new palette with the tokens
+   above; what is left here is the handful of places that named a colour. */
+.demo-verdict, .verdict-word {
+  font-family: var(--sans) !important; font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  display: inline-flex; align-items: center; gap: 9px;
+}
+.demo-verdict::before, .verdict-word::before {
+  content: ""; display: inline-block; width: .34em; height: .34em;
+  border-radius: 50%; background: currentColor; flex: none;
+}
+.demo-side p.ledger-worked, .ledger-worked { color: var(--worked) !important; }
+.demo-side p.ledger-none,   .ledger-none   { color: var(--noeffect) !important; }
+.demo-side p.ledger-back,   .ledger-back   { color: var(--backfired) !important; }
+.tabstrip-btn[aria-selected="true"] { background: #FFFFFF; border-color: #FFFFFF; color: #0E111B; }
+.demo, .film, .qa, .tier, .demo-side, .board, .offer-panel {
+  border-color: var(--hair-strong);
+}
+.tier, .demo, .demo-side { background: var(--ink-panel); }
+.tier-best { border-color: rgba(240,172,178,.4); background: #141321; }
+.tier .tier-price { font-family: var(--serif); letter-spacing: -.018em; color: var(--text); }
+.qa-q { font-family: var(--sans); }
+.ask-question { border-left-color: var(--amber); background: var(--ink-panel-alt); }
+
+/* ------------------------------------------------------------ the widths */
+@media (min-width: 680px) {
+  .hero-layout { padding-block: 70px 85px; gap: 40px; }
+  .hero-heading { font-size: clamp(58px, 6vw, 78px); line-height: 1.01; max-width: 11.4ch; }
+  .hero-sub { font-size: 17px; max-width: 38ch; margin-top: 22px; }
+  .hero-actions { margin-top: 27px; }
+  .hero-surface .ember-a { top: -260px; left: -195px; width: 1050px; height: 960px; }
+  .hero-surface .ember-b { top: -155px; right: -210px; width: 850px; height: 790px; }
+  .hero-surface .ember-c { top: 185px; left: 12%; width: 720px; height: 680px; }
+  .photo-band, .photo-content { min-height: 480px; }
+  .photo-content { padding-block: 60px 48px; }
+  .photo-content h2 { font-size: clamp(50px, 5.5vw, 73px); }
+  .outcomes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 26px; padding-block: 40px 56px; }
+  .outcome-row, .outcome-row:first-child { border-top: 1px solid var(--hair); padding-top: 20px; }
+  .film-section { padding-block: 72px; }
+  .section-intro h2 { font-size: 49px; }
+  .film-area { min-height: 305px; }
+  .record-section { padding-block: 70px 90px; }
+  .record-heading h2 { font-size: 54px; }
+  .ledger-row-v9 { grid-template-columns: 105px minmax(0,1fr) 140px; gap: 23px; padding: 21px 0; }
+  .ledger-date, .ledger-action, .ledger-row-v9 .ledger-verdict { font-size: 15px; }
+  .founding-content { padding: 28px 32px 30px; }
+  .price-row { padding: 23px 0; }
+  .closing-inner { padding-block: 80px 60px; }
+}
+@media (min-width: 1060px) {
+  .hero-layout {
+    grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr);
+    gap: clamp(30px, 3vw, 48px); align-items: center; padding-block: 95px 130px;
+  }
+  .hero-copy { max-width: none; }
+  .hero-heading { font-size: clamp(54px, 4.4vw, 64px); max-width: 100%; letter-spacing: -.017em; }
+  .app-inner { grid-template-columns: 46% 54%; }
+  .week-row { min-height: 95px; }
+  .app-details { padding: 26px 24px; }
+  .detail-name { font-size: 29px; }
+  .detail-grid { gap: 18px 15px; }
+  .photo-band, .photo-content { min-height: 510px; }
+  .photo-content h2 { font-size: clamp(64px, 5.3vw, 82px); }
+  .film-section .wrap { display: grid; grid-template-columns: .75fr 1.25fr; align-items: center; gap: 60px; }
+  .film-section .section-intro { margin-bottom: 0; }
+}
+@media (max-width: 370px) {
+  .hero-heading { font-size: 37px; letter-spacing: -.012em; }
+  .hero-layout { padding-top: 23px; }
+  .hero-sub { margin-top: 12px; }
+  .hero-actions { margin-top: 16px; }
+  .founding-pill { font-size: 12px; padding-inline: 11px; }
+  .week-row { padding-inline: 13px; }
+  .app-details { padding-inline: 13px; }
+  .ledger-row-v9 { grid-template-columns: 52px minmax(0,1fr) auto; gap: 8px; }
+}
+
+/* ------------------------------------------------------- reduced motion --
+   Every one of the seven moving pieces has a still version. The ember and
+   the photograph stop where they are, the film hands over to its five
+   steps, and every arrival and reveal is simply already there. */
+@media (prefers-reduced-motion: reduce) {
+  .ember { will-change: auto; animation: none !important; }
+  .photo-band img, .photo-band video { animation: none !important; transform: scale(1.025) !important; }
+  .js .film-stage { display: none !important; }
+  .js .film-reduced { display: grid !important; }
+  .js .film-foot { display: none !important; }
+  .js .week-row:not(.arrived), .js .ledger-row-v9:not(.arrived),
+  .js .reveal:not(.is-revealed) { opacity: 1 !important; transform: none !important; }
+  .js .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 1 !important; transform: none !important; }
+  .status-pill.is-changing { opacity: 1 !important; transform: none !important; }
+}
+
+/* the founding card's heading is an h2 on Pricing and an h3 on home: one
+   rule so both read the same size */
+.founding-content .founding-head {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(26px, 6.9vw, 37px); line-height: 1.08; letter-spacing: -.012em;
+  color: #FFF9FD; margin: 0;
+}
+
+/* The menu button's bars were drawn in --paper, which used to be the light
+   ground and is now the near black one: black bars on a black button. */
+.nav-toggle { border: 1px solid var(--hair-strong); background: rgba(255,255,255,.035); border-radius: 6px; }
+.nav-toggle b { background: var(--text); }
+.nav-links a[aria-current="page"] { color: #FFFFFF; }
+.nav-links a { color: var(--text-muted); }
+.nav-links a:hover { color: #FFFFFF; }
+@media (max-width: 1000px) {
+  .nav-links { background: var(--ink-panel); border-top: 1px solid var(--hair-strong); }
+  .nav-links li { border-bottom: 1px solid var(--hair); }
+  .nav-links li:last-child { border-bottom: 0; }
+  .nav-links a { color: var(--text); }
+}
+
+/* ------------------------------------------------- the plans on Pricing --
+   The same ruled rows as the home teaser, but each one still carries its
+   daily line, its approved feature list behind the control it was already
+   behind, and its own call to action. Nothing is a card any more. */
+.tiers {
+  display: grid; gap: 0; margin-top: 28px;
+  border-top: 1px solid var(--hair-strong);
+}
+.tier {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "mark  price"
+    "name  price"
+    "who   price"
+    "day   day"
+    "plus  plus"
+    "list  list"
+    "cta   cta";
+  align-items: start; gap: 0 20px;
+  padding: 22px 0; border: 0; border-bottom: 1px solid var(--hair);
+  border-radius: 0; background: transparent; box-shadow: none;
+}
+.tier-best { background: transparent; border-color: var(--hair); }
+.tier .tier-mark {
+  grid-area: mark; margin: 0 0 7px; min-height: 0;
+  font-family: var(--sans); font-weight: 600; font-size: 12px; line-height: 1.35;
+  letter-spacing: .09em; text-transform: uppercase; color: #FFBCDB;
+}
+.tier .tier-name {
+  grid-area: name; margin: 0;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(26px, 6.8vw, 35px); line-height: 1.06; letter-spacing: -.012em;
+  color: var(--text);
+}
+.tier .tier-for { grid-area: who; margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: #C7D0DD; }
+.tier .tier-price {
+  grid-area: price; align-self: start; margin: 0; text-align: right; white-space: nowrap;
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(31px, 8.2vw, 39px); line-height: 1; letter-spacing: -.018em;
+  color: var(--text);
+}
+.tier .tier-price .tier-unit {
+  display: block; margin-top: 5px;
+  font: 500 12px/1.35 var(--sans); letter-spacing: 0; color: #C7D0DD; text-align: right;
+}
+.tier .tier-day { grid-area: day; margin-top: 12px; font-size: 14px; line-height: 1.5; color: #C7D0DD; }
+.tier .tier-plus { grid-area: plus; color: var(--text); }
+.tier .plan-details { grid-area: list; margin-top: 12px; }
+.tier .plan-details > summary { color: var(--text); font-weight: 500; }
+.tier > .btn { grid-area: cta; margin-top: 16px; justify-self: start; }
+
+/* ------------------------------------------------- what the v8 layer held
+   Two rules that lived in the file v9 replaces, and are still needed. */
+
+/* the tab controls on What it does were 46px tall there and 32px without it */
+.tabstrip-btn { min-height: 46px; padding: 12px 15px; border-radius: 6px; }
+
+/* At 320 the footer's three columns leave the contact block 5px past the
+   right gutter. Below 420 it stacks, which is what it does at 360 anyway
+   once the email no longer fits beside the navigation. */
+@media (max-width: 420px) {
+  .footer-top { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .footer .contact { min-width: 0; }
+  .footer .contact a { word-break: break-word; }
+}
+
+/* ===========================================================================
+   The three sections the v8 layer styled, rebuilt in the ember system.
+   Dropping that file left them with markup and no rules, which the pixel
+   sweep caught as text at 1.00 against its own ground.
+   ========================================================================= */
+
+/* ------------------------------------ the demonstration on What it does */
+.demo-section .proof-head { max-width: 46rem; }
+.demo-title em { font-style: normal; color: var(--glow-1); }
+.tabstrip { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 16px; padding: 0; }
+.demo-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; padding: 13px 16px;
+  border-bottom: 1px solid var(--hair); font-size: 14px; color: var(--text-muted);
+}
+.demo-body { display: grid; gap: 20px; padding: 20px 16px; }
+.demo-kind {
+  margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--label);
+}
+.demo-head {
+  font-family: var(--serif); font-weight: 500; font-size: 29px; line-height: 1.11;
+  letter-spacing: -.014em; margin: 10px 0 12px; color: var(--text); max-width: 18em;
+}
+.demo-why { font-size: 16px; line-height: 1.6; color: var(--text-muted); margin: 0 0 16px; max-width: 42em; }
+.demo-card {
+  border-left: 3px solid var(--amber); padding: 14px 15px;
+  background: var(--ink-panel-alt); border-radius: 0 6px 6px 0;
+}
+.demo-card span { font-size: 13px; font-weight: 600; color: var(--label); letter-spacing: .06em; }
+.demo-card strong { display: block; margin-top: 6px; font-size: 17px; line-height: 1.4; font-weight: 500; color: var(--text); }
+.demo-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.demo-side-h { font-family: var(--serif); font-weight: 500; font-size: 24px; line-height: 1.15; margin: 10px 0; color: var(--text); }
+.demo-label { display: block; margin: 14px 0 6px; font-size: 14px; font-weight: 600; color: var(--label); }
+.demo-hint { font-size: 14px; color: var(--text-muted); margin: 8px 0 14px; }
+.demo-hint b { color: var(--text); }
+.demo-note { margin-top: 14px; font-size: 14px; color: var(--text-muted); }
+
+.apart { margin-top: 48px; }
+.apart-h { margin: 12px 0 20px; max-width: 24em; }
+.apart-cols { display: grid; gap: 14px; }
+.apart-cols article {
+  padding: 18px; border: 1px solid var(--hair); border-radius: 8px; background: var(--ink-panel);
+}
+.apart-cols article strong { display: block; font-size: 18px; font-weight: 600; color: var(--text-muted); }
+.apart-cols article p { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--text-muted); }
+.apart-ours { border-color: rgba(240,172,178,.4); background: #141321; }
+.apart-ours strong { color: var(--glow-2); }
+.apart-ours p { color: var(--text); }
+.apart-wider { margin-top: 18px; font-size: 15px; line-height: 1.6; color: var(--text-muted); max-width: 46em; }
+
+/* ------------------------------------- the three answers on Why trust it
+   Words with dots, in their own colours. No stamp. */
+.verdicts-band { background: var(--ink-deeper); }
+.verdicts-title { margin: 12px 0 14px; }
+.verdicts-title em { font-style: normal; color: var(--glow-1); }
+.verdicts { margin: 34px 0 0; border-top: 1px solid var(--hair-strong); }
+.verdict-row {
+  display: grid; gap: 6px 36px; align-items: baseline;
+  padding: 22px 0; border-bottom: 1px solid var(--hair);
+}
+.verdict-word {
+  font-family: var(--sans); font-weight: 600;
+  font-size: clamp(28px, 4.4vw, 40px); line-height: 1.1; letter-spacing: -.012em;
+  margin: 0;
+}
+.verdict-word::before { width: .26em; height: .26em; }
+.verdict-meaning { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-muted); }
+.verdicts-close { margin: 24px 0 0; font-size: 18px; font-weight: 600; color: var(--glow-2); }
+.verdicts-band .ledger-label { margin-top: 44px; }
+@media (min-width: 741px) { .verdict-row { grid-template-columns: minmax(0, 6fr) minmax(0, 9fr); } }
+
+/* --------------------------------------- the research links on Questions */
+.ask-band { background: var(--ink-deeper); }
+.ask-heading { margin: 12px 0 14px; }
+.ask-body { color: var(--text-muted); max-width: 46em; }
+.ask-question {
+  margin: 18px 0 0; padding: 15px 16px;
+  border-left: 3px solid var(--amber); background: var(--ink-panel-alt); border-radius: 0 6px 6px 0;
+  font-size: 15px; line-height: 1.6; color: var(--text); max-width: 52em;
+}
+.ask-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.ask-note { margin-top: 14px; font-size: 14px; color: var(--text-muted); max-width: 46em; }
+
+@media (min-width: 861px) {
+  .demo-body { grid-template-columns: 1.05fr .82fr; gap: 26px; padding: 26px; }
+  .apart-cols { grid-template-columns: 1fr 1fr; gap: 18px; }
+}
+
+/* the anatomy numerals were drawn in the deep gold, which on this ground
+   measured 4.00 against a floor of 4.5 */
+.anatomy .an-n { color: var(--label); }

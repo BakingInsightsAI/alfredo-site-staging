@@ -162,18 +162,37 @@ weeklist:
       how: "Move the start, and tell the regulars the week before."
       back: "Four weeks"
 
-# ---------------------------------------------------------------- v8 ----
-# The demonstration, which is what this page now opens with. Four of the
-# five weekly records above, one per tab, each read from `weeklist` rather
-# than restated: the suggestion, why it came up and how to do it are the
-# approved lines, unchanged.
+# ---------------------------------------------------------------- v9 ----
+# The demonstration on this page. Its four suggestions are deliberately not
+# the four in the window on the home page: the home window shows weekly
+# records 0, 1, 2 and 4, and this shows record 3 plus the three written
+# below, so no suggestion is named on two pages.
 #
-# What is new here is the verdict and the sentence under it, because the
-# weekly records stop at the suggestion and the point of this page is what
-# Alfredo says afterwards. No figure is invented in any of them.
-#
-# The film on the home page uses three different suggestions, so no
-# suggestion is shown on two pages.
+# The three new records carry the same six things every weekly record
+# carries, so a reader cannot tell which came from where.
+demo_entries:
+  - kind: "Pairing"
+    name: "Suggest the carrot cake with the house IPA"
+    why: "The two leave the kitchen together more often than anything else on the dessert list."
+    effort: "Low"
+    risk: "Low"
+    how: "Tell the floor, and put the two side by side on the dessert card."
+    back: "Three weeks"
+  - kind: "Menu placement"
+    name: "Move the crab linguine higher on the menu"
+    why: "It earns well and sits below the fold on a long list of mains."
+    effort: "Low"
+    risk: "Low"
+    how: "Move it up with the other mains guests read first."
+    back: "Four weeks"
+  - kind: "Neighborhood"
+    name: "Start the Sunday roast an hour earlier"
+    why: "The two places nearest you both list a midday sitting, and yours starts after theirs."
+    effort: "Low"
+    risk: "Low"
+    how: "Open the kitchen an hour earlier on Sunday, and say so where your hours are listed."
+    back: "Three weeks"
+
 demo:
   eyebrow: "Try it here"
   heading: "See the move. "
@@ -199,25 +218,27 @@ demo:
   declined_body: "That is your call. It stays an idea, and there is nothing to report."
   declined_back: "Look at it again"
   note: "Every example on this page is illustrative. No account is connected and nothing is changed."
-  # which weekly record each tab shows, and what Alfredo says afterwards
   cases:
     - tab: "Pairings"
+      from: "demo"
       entry: 0
       verdict: "Worked."
       result: "Illustrative example. After the date the owner chose, the two were ordered together more often than before."
     - tab: "Menu"
+      from: "demo"
       entry: 1
       verdict: "No effect."
       result: "Illustrative example. After the date the owner chose, the new position did not change what sold. Alfredo says so rather than dress it up."
-    - tab: "Costs"
-      entry: 2
+    - tab: "Prices"
+      from: "weeklist"
+      entry: 3
       verdict: "Worked."
-      result: "Illustrative example. The new costs were confirmed, the tart was priced to cover them, and it kept selling."
+      result: "Illustrative example. After the date the owner chose, late orders picked up and the lower price more than paid for itself."
     - tab: "Nearby"
-      entry: 4
+      from: "demo"
+      entry: 2
       verdict: "Backfired."
-      result: "Illustrative example. The later start lost the early crowd, and the owner moved it back."
-  # What a reporting tool stops at, and what this page is showing instead.
+      result: "Illustrative example. The earlier sitting drew nobody, and the owner put the time back."
   apart_eyebrow: "The difference"
   apart_heading: "A report tells you what happened. Alfredo tells you what happened next."
   apart:

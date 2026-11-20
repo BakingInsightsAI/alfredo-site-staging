@@ -74,8 +74,9 @@ pricing:
   heading: "Less than $10 a day, whichever plan you pick."
   heading_note: "Based on a year of the monthly price."
   lede: "One price for your whole business, not per location and not per user. No setup fee, and month to month."
-  founding_heading: "The first 10 businesses get everything free for six months."
-  founding_body: "Restaurants, cafes, bakeries, breweries and bars. Every feature, however many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
+  # the heading and the body now come from site.founding, so this page and
+  # the home teaser and the questions page say the same thing
+  founding_who: "Restaurants, cafes, bakeries, breweries and bars."
   # Every price on the site comes from here. The unit is the same for all
   # three, so it is written once rather than three times.
   price_unit: "a month"

@@ -67,14 +67,14 @@
       {#- the four cases, as data. The script reads these and holds no copy. #}
       <div class="demo-script" hidden>
         {%- for c in dm.cases %}
-        {%- set e = product.weeklist.entries[c.entry] %}
+        {%- set e = (product.demo_entries if c.from == 'demo' else product.weeklist.entries)[c.entry] %}
         <i data-kind="{{ e.kind }}" data-name="{{ e.name }}" data-why="{{ e.why }}"
            data-how="{{ e.how }}" data-effort="{{ e.effort }}" data-risk="{{ e.risk }}"
            data-back="{{ e.back }}" data-verdict="{{ c.verdict }}" data-result="{{ c.result }}"
            data-tone="{{ 'worked' if c.verdict.startswith('Worked') else ('back' if c.verdict.startswith('Backfired') else 'none') }}"></i>
         {%- endfor %}
       </div>
-      {%- set first = product.weeklist.entries[dm.cases[0].entry] %}
+      {%- set first = (product.demo_entries if dm.cases[0].from == 'demo' else product.weeklist.entries)[dm.cases[0].entry] %}
       <div class="demo-body">
         <div class="demo-main">
           <p class="demo-kind" id="demoKind">{{ first.kind }}</p>

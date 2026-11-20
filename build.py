@@ -157,7 +157,7 @@ def organization_ld(site):
         # length costs nothing and a machine can take the whole sentence.
         "description": site["plain_sentence"],
         "url": base + "/",
-        "logo": base + "/alfredo_logo_cream.svg",
+        "logo": base + "/alfredo_logo_ember.svg",
         "email": site["contact"]["email"],
         "contactPoint": [{
             "@type": "ContactPoint",

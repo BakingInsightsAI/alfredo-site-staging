@@ -31,23 +31,23 @@
 {%- if site.bing_site_verification %}
 <meta name="msvalidate.01" content="{{ site.bing_site_verification }}">
 {%- endif %}
-<meta name="theme-color" content="#191715">
+<meta name="theme-color" content="#090B12">
 <link rel="icon" type="image/png" href="favicon.png">
 {#- Both families are self hosted and these two files cover the text a
     reader meets first. Fonts are fetched in CORS mode even from our own
     origin, so crossorigin is required or the preload is thrown away. #}
-<link rel="preload" href="fonts/instrumentserif-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 {%- block preload %}{% endblock %}
 <link rel="stylesheet" href="alfredo.css">
 {#- The condensed glossy layer, over the editorial system rather than
     replacing it. It must load second: every rule in it is an override
     of something alfredo.css already sets. #}
 <link rel="stylesheet" href="glossy.css">
-{#- v8. The energy layer: the founding bar, the moving hero, the film, the
-    demonstration and the verdicts. It loads last because every rule in it
-    is an override of something the two files above already set. #}
-<link rel="stylesheet" href="motion.css">
+{#- v9, "ember". The design: the ink palette, the glow, Newsreader and
+    Inter, and the product surfaces. It loads last because most of it is a
+    redefinition of the variables the two files above already draw from. #}
+<link rel="stylesheet" href="ember.css">
 {#- The only inline script on the site. It marks the document as scripted
     before first paint, which is what lets the stylesheet hide the blocks
     that are about to be revealed. Without it nothing is ever hidden. #}
@@ -74,7 +74,7 @@
           typeset. The cream cut is the one for a dark masthead; the
           intrinsic size is on the element so the row cannot shift
           while the file is still arriving. #}
-      <img src="alfredo_logo_cream.svg" alt="Alfredo" width="3909" height="1484" decoding="async">
+      <img src="alfredo_logo_ember.svg" alt="Alfredo" width="3909" height="1484" decoding="async">
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Main">
       <ul>
@@ -119,7 +119,7 @@
               typeset. The cream cut is the one for a dark masthead; the
               intrinsic size is on the element so the row cannot shift
               while the file is still arriving. #}
-          <img src="alfredo_logo_cream.svg" alt="Alfredo" width="3909" height="1484" decoding="async">
+          <img src="alfredo_logo_ember.svg" alt="Alfredo" width="3909" height="1484" decoding="async">
         </a>
       </div>
       <nav aria-label="Footer">

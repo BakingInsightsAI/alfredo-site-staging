@@ -43,10 +43,26 @@
 
     <p class="tier-more">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
 
-    <div class="offer">
-      <h2>{{ p.founding_heading }}</h2>
-      <p>{{ p.founding_body }}</p>
-      <p class="offer-spots">{{ site.founding_spots_open }} of 10 spots open.</p>
+    {#- The founding offer, in the same card the home teaser shows, with the
+        same words and the same count. The dots are a picture of the count
+        and never appear without it written out beside them. #}
+    <div class="founding-block" id="foundingOffer">
+      <div class="ember-field" aria-hidden="true">
+        <i class="ember offer-orb-a"></i><i class="ember offer-orb-b"></i>
+      </div>
+      <div class="founding-content">
+        <h2 class="founding-head">{{ site.founding.label }}</h2>
+        <p>{{ site.founding.body }}</p>
+        <p>{{ p.founding_who }} {{ site.founding.support }}</p>
+        <div class="spots">
+          <span class="spot-dots" aria-hidden="true">
+            {%- for n in range(1, 11) %}
+            <i{% if n > site.founding_spots_open %} class="is-taken"{% endif %}></i>
+            {%- endfor %}
+          </span>
+          <strong>{{ site.founding_spots_open }} of 10 {{ site.founding.spots_tail }}</strong>
+        </div>
+      </div>
     </div>
 
     <p class="claim claim-tight">{{ p.proof }}<span>Patent pending.</span></p>

@@ -32,7 +32,7 @@ entries:
     a: "Counter is {counter} {unit} for one location, House is {house} {unit} for one to three locations, and Group is {group} {unit} for four to ten. That is one price for your whole business, not per location and not per user, with no setup fee and month to month. If you run more than ten locations, talk to us and we will put together an arrangement that fits your group."
 
   - q: "Is there a free trial or founding offer?"
-    a: "The first 10 businesses get everything free for six months, and {spots} of 10 spots are still open. Every feature is included, however many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
+    a: "The first 10 businesses get every feature, with no limits, free for six months, and {spots} of 10 spots are still open. However many locations you run. After that you pay the price for your size, month to month, and that price stays locked for a full year."
 
   - q: "How is Alfredo different from a restaurant analytics dashboard?"
     a: "A dashboard shows you what happened and leaves the next move to you. Alfredo suggests what to try, as one short list each week, and then comes back with a verdict: it worked, it did nothing, or it backfired. Results stay hidden until a test is finished, so nobody calls it early."

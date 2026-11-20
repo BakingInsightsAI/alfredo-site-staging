@@ -1,172 +1,189 @@
-# The home page, v8 "service in motion".
+# The home page, v9 "ember".
 #
-# The weekly board has left this page. The film replaces it: the same idea,
-# shown rather than listed. The board's five records still live in
-# product.yaml and now render on What it does, inside the demonstration, so
-# no suggestion is printed twice.
+# Order: the hero with the product window in it, the photograph, three
+# outcome lines, the film, the track record, the pricing teaser, the
+# closing, the handoff.
 #
-# Order on the page: the founding bar, the hero, the film, one line about
-# who decides, the four places, the invitation, the handoff.
+# Where the examples live, so nothing is shown twice:
+#   this page   the four weekly records 0, 1, 2 and 4 in the product window
+#               and the film, which follows record 0 through to a verdict
+#   What it does  three different suggestions and record 3, in its demo
+#   the record  five finished tests, none of which is a current suggestion
+#               except the one the film is in the middle of
 
-# ----------------------------------------------------------- 00 offer bar --
-# Full width, directly under the header, inside the first phone screen. The
-# count comes from site.yaml and is never written here.
-offerbar:
-  label: "Founding offer."
-  body: "The first 10 businesses get everything free for six months."
-  link: "See pricing"
-  link_href: "pricing.html"
-
-# ------------------------------------------------------------ 01 opening --
+# ------------------------------------------------------------ 01 the hero --
 hero:
-  eyebrow: "Built for the next shift"
-  heading_lines: ["Every business", "has a story."]
-  sub: "Your numbers know what comes next."
-  body: "Alfredo reads your sales, your menu, your guests and the places down the street, and turns them into clear, practical changes worth trying. You choose what to do. Alfredo helps you see what actually worked."
-  cta: "Watch the film"
-  cta_href: "#film"
-  cta2: "Request a demo"
-  cta2_href: "pilot.html#pilot"
-  note: "For restaurants, bars, breweries, cafes and bakeries."
+  pill_label: "Founding offer."
+  pill_tail: "spots open"
+  pill_href: "pricing.html"
+  heading: "Every business has a story."
+  heading_glow: "Your numbers know what comes next."
+  sub: "Alfredo tells you what to try each week, then tells you honestly whether it worked."
+  cta: "Request a demo"
+  cta_href: "pilot.html#pilot"
+  cta2: "See this week"
+  cta2_href: "#week"
   chapter: "01 / The story"
-  # Two frames for the slow pan. The second is the kitchen, so the pan moves
-  # from the room to the work rather than between two versions of the same
-  # picture.
-  alt: "A dining room at the end of service, lit by low pendant lights."
-  alt_b: "A cook finishing a dish on a kitchen pass."
 
-# --------------------------------------------------------------- 02 film --
-# Fifteen seconds. A menu on a screen, three suggestions lit one at a time,
-# the owner choosing one, time passing, and the verdict.
-#
-# None of these three appears anywhere else on the site. The demonstration on
-# What it does uses the four approved weekly records instead, and the House
-# Lager walkthrough on that page is the result of this price change, told
-# afterwards rather than offered as a suggestion.
-film:
-  eyebrow: "Alfredo in fifteen seconds"
-  heading: "One suggestion. "
-  heading_em: "One choice."
-  heading_tail: " One honest answer."
-  lede: "A week of suggestions, the one the owner picks, and what Alfredo says about it afterwards."
+# --------------------------------------------------- 01b the weekly window --
+# The product, as the hero object. The four suggestions are weekly records
+# 0, 1, 2 and 4, read from product.yaml rather than copied. What is written
+# here is only what the record does not carry: the answer a reader sees
+# after choosing a date, which is this page's own illustration.
+week:
+  title: "This week"
   label: "Illustrative example"
-  screen_title: "This week"
-  day: "Monday"
-  menu_heading: "Worth a closer look."
-  play: "Play the film"
-  pause: "Pause the film"
+  group_label: "Choose a suggestion"
+  overline: "Recommendation"
+  fields:
+    why: "Why it came up"
+    effort: "How much work"
+    risk: "What it risks"
+    how: "How to do it"
+  try: "Try this"
+  skip: "Not right now"
+  date_label: "Choose when to check back"
+  date_set: "Set review date"
+  date_hint: "You choose the date. This is an illustrative example."
+  date_missing: "Please choose when you want to check back."
+  scheduled: "Review set"
+  pending: "Pending"
+  preview: "Preview an illustrative answer"
+  tail: "This preview skips ahead to the date you chose. Illustrative example."
+  owner: "Alfredo recommends. "
+  owner_em: "You decide."
+  entries: [0, 1, 2, 4]
+  answers:
+    - verdict: "Worked"
+      kind: "worked"
+      body: "In this illustrative result, the two were ordered together more often than before."
+    - verdict: "No effect"
+      kind: "none"
+      body: "In this illustrative result, the new position did not change what sold."
+    - verdict: "Worked"
+      kind: "worked"
+      body: "In this illustrative result, the costs were confirmed and the tart was priced to cover them."
+    - verdict: "Backfired"
+      kind: "back"
+      body: "In this illustrative result, the later start lost the early crowd."
+
+# --------------------------------------------------------- 02 the photograph
+photo:
+  heading: "You run the room. Alfredo watches the numbers."
+  stem: "bar"
+  alt: "A bar at night, a drink on the counter and bottles lit behind it."
+
+# ---------------------------------------------------- 03 the three outcomes
+outcomes:
+  - name: "Sell more of what already sells together."
+    body: "Pairings your guests are already ordering."
+  - name: "Catch a cost before it eats the week."
+    body: "The ingredient that went up, and the plate it is squeezing."
+  - name: "Know what the place down the street is doing."
+    body: "Their prices, their hours, and what their guests say."
+
+# --------------------------------------------------------------- 04 the film
+# Fifteen seconds in which one row of the same list goes from suggested to a
+# verdict and into the record. The row it follows is weekly record 0, which
+# is also the first row of the window above: the film is that suggestion
+# carried forward, which is the point of it.
+film:
+  eyebrow: "In 15 seconds"
+  heading: "A suggestion. A decision. An answer."
+  lede: "The owner chooses what to try and when to review. Alfredo comes back with the answer."
+  topline: "How Alfredo follows through"
+  label: "Illustrative example"
+  app_title: "This week"
+  focus: 0
+  others: [1, 2]
+  review_date: "Nov 24"
+  review_tail: "Time passes"
+  play: "Play"
+  pause: "Pause"
   replay: "Replay"
   progress_label: "How far through the film"
-  caption: "Illustrative example. The film is a drawing of the product, not a recording of anyone's account."
-  calm_label: "The same film, as a list"
-  rows:
-    - name: "Carrot cake with the house IPA"
-      tag: "Pairing"
-    - name: "The crab linguine, higher on the menu"
-      tag: "Menu"
-    - name: "House lager"
-      tag: "$7.00"
-  # The price on the third row changes to this when that moment arrives. It
-  # only ever goes down.
-  price_before: "$7.00"
-  price_after: "$6.50"
-  # at: the second the moment begins. row: which of the three rows is lit,
-  # or none. price: which of the two prices the third row shows. The film
-  # is fifteen seconds and these are the only times in it, so the timing is
-  # data like everything else rather than a number buried in the script.
-  moments:
+  states:
+    suggested: "Suggested"
+    trying: "Trying"
+    worked: "Worked"
+  scenes:
     - at: 0
-      row: none
-      price: before
-      kicker: "Your weekly list"
-      line: "Three changes worth trying. You choose what fits."
-    - at: 2
-      row: 0
-      price: before
-      kicker: "01 / Pairing"
-      line: "Suggest the carrot cake with the house IPA."
-    - at: 4.3
-      row: 1
-      price: before
-      kicker: "02 / Menu"
-      line: "Move the crab linguine higher on the menu."
-    - at: 6.6
-      row: 2
-      price: after
-      kicker: "03 / Price"
-      line: "Fifty cents off the house lager. From $7.00 to $6.50."
-    - at: 9
-      row: 2
-      price: after
-      kicker: "Your choice"
-      line: "You decide whether to try it."
-    - at: 11
-      row: 2
-      price: after
-      kicker: "Your review date"
-      line: "You choose when to check back."
-    - at: 13
-      row: 2
-      price: after
-      kicker: "The honest answer"
-      line: "Worked."
-  tap: "Try this"
-  passing: "Weeks pass"
-  passing_note: "The owner chooses when to check back"
-  verdict: "Worked."
-  verdict_note: "Illustrative example. The other two answers are no effect and backfired."
-  # Reduced motion gets the whole story as stages, not a frozen frame.
-  calm:
-    - name: "1. The weekly list."
-      body: "Alfredo lights up a pairing, a menu move and fifty cents off the house lager, from $7.00 to $6.50."
-    - name: "2. Your choice."
-      body: "You decide which one to try, and nothing moves until you do."
-    - name: "3. Your review date."
-      body: "You choose when to check back. Alfredo suggests a date and you can change it."
-    - name: "Worked."
-      body: "Illustrative example. The other two answers are no effect and backfired."
+      step: "01 / A suggestion appears."
+      label: "Why it came up"
+      body: "Guests already order these together."
+      action: "Try this"
+    - at: 3100
+      step: "02 / The owner chooses Try this."
+      label: "The owner decides"
+      body: "Nothing moves until the owner says so."
+      action: "Try this"
+    - at: 6200
+      step: "03 / The owner picks a review date. Time passes."
+      label: "Review date, chosen by the owner"
+    - at: 9700
+      step: "04 / The answer is Worked."
+      label: "The review date arrives"
+      body: "The suggestion has a clear result."
+    - at: 12000
+      step: "05 / It goes into the track record."
+      label: "Track record, new entry"
+  reduced:
+    - name: "01 / This week"
+      state: "Suggested"
+    - name: "02 / The owner chooses Try this"
+      state: "Trying"
+    - name: "03 / The owner sets Nov 24 to review"
+      state: "Review date"
+    - name: "04 / The result arrives"
+      state: "Worked"
+      kind: "worked"
+    - name: "05 / A new track record entry"
+      state: "Worked"
+      kind: "worked"
 
-# ---------------------------------------------------- 02b who decides it --
-strip:
-  statement: "Alfredo recommends. "
-  statement_em: "You decide."
-  line: "You choose what to try, and you choose when to check back. Alfredo suggests a date, and you can change it."
-
-# --------------------------------------------------------------- 03 places --
-places:
-  eyebrow: "Built for hospitality"
-  heading: "Different places. The same ambition to do better."
-  cards:
-    - cls: "pl-restaurant"
-      stem: "restaurant-kitchen"
-      label: "Restaurants"
-      alt: "A cook finishing a dish on a kitchen pass."
-    - cls: "pl-bar"
-      stem: "bar"
-      label: "Bars"
-      alt: "A bar at night, a drink on the counter and bottles lit behind it."
-    - cls: "pl-brewery"
-      stem: "brewery"
-      label: "Breweries"
-      alt: "A brewer holding a glass of beer up to the light beside the tanks."
-    # there is no cafe picture in the repository, so the bakery one carries
-    # both, which is what its label says
-    - cls: "pl-bakery"
-      stem: "bakery"
-      label: "Cafes and bakeries"
-      alt: "A baker shaping dough on a floured bench beside racks of bread."
-
-# ----------------------------------------------------- 04 proof and invite --
-close:
-  eyebrow: "The next chapter"
-  heading: "Your next chapter starts with better decisions."
-  body: "We do not make up numbers. If Alfredo does not have enough information to know whether something worked, it says so."
-  link: "Read the whole promise"
-  link_href: "honesty.html"
+# ------------------------------------------------------- 05 the track record
+# Five finished tests. None of them is a suggestion on any page: the four
+# current ones are in the window above and on What it does, and these are
+# what happened to earlier ones. The dates are illustrative, like the rows.
+record:
+  heading: "Track record"
+  label: "Illustrative example"
+  intro: "Every suggestion ends in one of three words. The ones that did not work stay on the record too."
   proof: "Tested with a brewpub and live across a 14 location restaurant chain."
-  offer: "The first 10 businesses get everything free for six months."
+  rows:
+    - date: "Nov 3"
+      action: "Thursday set lunch"
+      verdict: "Pending"
+      kind: "pending"
+    - date: "Oct 27"
+      action: "Fifty cents off the house lager"
+      verdict: "Worked"
+      kind: "worked"
+    - date: "Oct 20"
+      action: "Calamari moved to the top of the starters"
+      verdict: "No effect"
+      kind: "none"
+    - date: "Oct 13"
+      action: "Happy hour pushed an hour later"
+      verdict: "Backfired"
+      kind: "back"
+    - date: "Oct 6"
+      action: "Coffee offered with dessert after eight"
+      verdict: "Worked"
+      kind: "worked"
+
+# ------------------------------------------------------ 06 the pricing teaser
+teaser:
+  heading: "One price for your whole business."
+  link: "See what is included"
+  link_href: "pricing.html"
+  fine: "No setup fee. Month to month."
+
+# ----------------------------------------------------------- 07 the closing
+close:
+  heading: "See it on your own numbers."
+  body: "A short conversation about what Alfredo could help you try."
   cta: "Request a demo"
   cta_href: "pilot.html#pilot"
   next_label: "What Alfredo does"
   next_href: "product.html"
-  alt: "A bar at night, a drink on the counter and bottles lit behind it."

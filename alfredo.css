@@ -22,75 +22,11 @@
    declaration used to say 400 700, which capped it; v8 sets emphasis lines
    in 900 and that range is what lets them render. No new file is fetched:
    it is the same woff2 that was already being downloaded. */
-@font-face {
-  font-family: 'Instrument Serif'; font-style: normal; font-weight: 400;
-  font-display: swap; src: url('fonts/instrumentserif-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Instrument Serif'; font-style: normal; font-weight: 400;
-  font-display: swap; src: url('fonts/instrumentserif-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
-    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
-    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Instrument Serif'; font-style: italic; font-weight: 400;
-  font-display: swap; src: url('fonts/instrumentserif-italic-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Instrument Serif'; font-style: italic; font-weight: 400;
-  font-display: swap; src: url('fonts/instrumentserif-italic-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
-    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
-    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'DM Sans'; font-style: normal; font-weight: 400 1000;
-  font-display: swap; src: url('fonts/dmsans-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'DM Sans'; font-style: normal; font-weight: 400 1000;
-  font-display: swap; src: url('fonts/dmsans-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
-    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
-    U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* Swap targets. Instrument Serif runs narrow, 0.336em a character against
-   roughly 0.50em for Georgia on the same string, so the fallback is squeezed
-   to match rather than left to reflow a 124px headline. */
-/* Two fallbacks, not one. The local face has no weight axis, so its bold
-   is drawn thicker by the browser and runs wider than its regular by a
-   different amount than DM Sans does. Measured at 40px on the strings that
-   actually sit in the masthead and the founding bar, DM Sans is 2.9 per
-   cent wider than this fallback at 500 and 6.7 per cent wider at 700. One
-   size-adjust cannot be right for both, and the gap is what made the
-   header and the bar reflow when the real file landed. */
-@font-face {
-  font-family: 'DM Sans fallback';
-  font-weight: 400 600;
-  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
-  ascent-override: 99%; descent-override: 31%; line-gap-override: 0%; size-adjust: 105%;
-}
-@font-face {
-  font-family: 'DM Sans fallback';
-  font-weight: 700 1000;
-  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
-  ascent-override: 99%; descent-override: 31%; line-gap-override: 0%; size-adjust: 108.9%;
-}
-@font-face {
-  font-family: 'Instrument fallback';
-  src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
-  ascent-override: 99%; descent-override: 31%; line-gap-override: 0%; size-adjust: 76%;
-}
+/* The faces live in ember.css now: Newsreader and Inter, both self hosted,
+   both with a metric matched fallback measured against the strings that
+   actually sit in the masthead and the hero. The six files the old pair
+   used are deleted; the frozen v5 and v6 folders carry their own copies
+   and are unaffected. */
 
 /* --------------------------------------------------------------- tokens --
    The brief's palette, unchanged, plus the measured corrections. */
@@ -130,8 +66,8 @@
   --edge-light: #8E8275;
   --edge-dark: #827567;
 
-  --serif: 'Instrument Serif', 'Instrument fallback', Georgia, 'Times New Roman', serif;
-  --sans: 'DM Sans', 'DM Sans fallback', system-ui, -apple-system, Segoe UI, sans-serif;
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', 'Inter fallback', system-ui, -apple-system, Segoe UI, sans-serif;
 
   --gutter: var(--gutter-desktop);
   --section: 128px;

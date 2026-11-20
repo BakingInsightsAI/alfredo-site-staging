@@ -1,32 +1,25 @@
 Alfredo site fonts
 ==================
-Instrument Serif and DM Sans, both licensed under the SIL Open Font
-License 1.1 (OFL.txt in this folder), both served from here rather than
-from a font CDN: a third party stylesheet would have to be fetched before
-the first font request could even be made, and it would tell someone else
-who is reading this site.
+Newsreader and Inter, both licensed under the SIL Open Font License 1.1.
+OFL.txt carries the licence text.
 
-v5 uses Instrument Serif for the voice and DM Sans for the information:
+Both are the variable files Google serves, cut down to what this site
+asks for and nothing else:
 
-  instrumentserif-latin.woff2, instrumentserif-latin-ext.woff2
-  instrumentserif-italic-latin.woff2, instrumentserif-italic-latin-ext.woff2
-  dmsans-latin.woff2, dmsans-latin-ext.woff2
+  newsreader-*.woff2   pinned to one weight (500) and one optical size
+                       (36), which is the only way the serif is set here.
+                       132 KB to 24 KB for the latin subset.
+  inter-*.woff2        limited to weights 400 to 700, which is the range
+                       the interface uses. 48 KB to 36 KB for latin.
 
-Instrument Serif has one weight and one italic, which is the whole family;
-DM Sans ships as one variable file per subset, so a single file covers
-every weight the site uses. The two files a reader meets first are
-preloaded in the head of every page.
+The character set is untouched: the latin and latin-ext ranges are whole,
+so a copy change can never land on a missing glyph. Only the axes were
+narrowed, with fontTools.varLib.instancer.
 
-Instrument Serif runs narrow, about 0.336em a character against roughly
-0.50em for Georgia on the same string, so the fallback face in alfredo.css
-carries a size-adjust of 76% as well as ascent and descent overrides. The
-measured layout shift on all five pages is zero.
+Each family has a metric matched fallback declared in ember.css, measured
+against the strings that actually sit in the masthead and the hero, so a
+line cannot change width when the real file arrives.
 
-Playfair Display was the v4 display family. Its four files are still here
-because nothing else in the repository needs re-rendering to drop them,
-and they are not referenced by alfredo.css:
-
-  playfair-latin.woff2, playfair-latin-ext.woff2
-  playfair-italic-latin.woff2, playfair-italic-latin-ext.woff2
-
-Geist was the design before that and went with it.
+The pair this replaced, Instrument Serif and DM Sans, is gone from this
+folder. The frozen v5 and v6 preview folders carry their own copies and
+are unaffected.

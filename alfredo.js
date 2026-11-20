@@ -168,128 +168,289 @@
     });
   }
 
-  /* ------------------------------------------------------------- film --
-     Fifteen seconds of a weekly list, on the home page.
 
-     Three rules it keeps. It plays only while it is on screen, so nothing
-     animates behind a reader who has scrolled past it. It never changes
-     anything that affects layout: the only things that move are a class on
-     three rows, two lines of text inside boxes with a reserved height, and
-     three overlays that were laid out at load and only change opacity. And
-     a reader who asked for less motion never gets here at all, because the
-     stylesheet hides the scene and shows the stages instead.
+  /* The v9 blocks below keep their own scope. This file is one function,
+     every name in it is a var, and a var declared later in the file
+     reassigns the same binding: the demonstration further down declares
+     its own `panel`, which left this one holding null by the time anyone
+     pressed Try this. Names like show, step, at and cases collide the same
+     way. A closure of their own is cheaper than renaming twenty things. */
+  (function () {
+  /* ------------------------------------------------ the product window --
+     The weekly list on the home page, as the product shows it. Four
+     suggestions, one open at a time, and a decision the reader makes: try
+     it, pick a date, then see an illustrative answer.
 
-     Every word and every time comes from the markup, which comes from the
-     data. There is no copy in this file. */
-  var filmFrame = document.getElementById('filmFrame');
-  var scene = document.getElementById('filmScene');
-  if (filmFrame && scene && !reduce) {
-    var toggle2 = document.getElementById('filmToggle');
-    var replay = document.getElementById('filmReplay');
-    var fill = document.getElementById('filmFill');
-    var clock = document.getElementById('filmTime');
-    var kicker = document.getElementById('filmKicker');
-    var line = document.getElementById('filmLine');
-    var price = document.getElementById('filmPrice');
-    var rows = [0, 1, 2].map(function (i) { return document.getElementById('filmRow' + i); });
-    var marks = [].slice.call(scene.querySelectorAll('.film-script > i')).map(function (el) {
-      return {
-        at: parseFloat(el.getAttribute('data-at')),
-        row: el.getAttribute('data-row'),
-        price: el.getAttribute('data-price'),
-        kicker: el.getAttribute('data-kicker'),
-        line: el.getAttribute('data-line')
-      };
+     Every word comes from the markup, which comes from the approved weekly
+     records. Choosing a row swaps text inside boxes that already exist, so
+     the window keeps its height and nothing below it moves. */
+  var week = document.querySelector('.week-list');
+  if (week) {
+    var wRows = [].slice.call(week.querySelectorAll('.week-row'));
+    var wCases = [].slice.call(document.querySelectorAll('.week-script > i')).map(function (el) {
+      var d = {};
+      ['kind', 'name', 'why', 'effort', 'risk', 'how', 'verdict', 'phase', 'body']
+        .forEach(function (k) { d[k] = el.getAttribute('data-' + k); });
+      return d;
     });
-    var priceBefore = scene.getAttribute('data-price-before');
-    var priceAfter = scene.getAttribute('data-price-after');
-    var sayPlay = scene.getAttribute('data-play');
-    var sayPause = scene.getAttribute('data-pause');
-    var RUN = 15;
+    var wOut = {
+      overline: document.getElementById('detailOverline'),
+      name: document.getElementById('detailName'),
+      why: document.getElementById('detailWhy'),
+      effort: document.getElementById('detailEffort'),
+      risk: document.getElementById('detailRisk'),
+      how: document.getElementById('detailHow')
+    };
+    var panel = document.getElementById('decisionPanel');
+    var feedback = document.getElementById('decisionFeedback');
+    var feedCopy = document.getElementById('feedbackCopy');
+    var statusPill = document.getElementById('decisionStatus');
+    var previewBtn = document.getElementById('previewResult');
+    var resultLine = document.getElementById('decisionResult');
+    var dateField = document.getElementById('reviewDate');
+    var tryBtn = document.getElementById('tryButton');
+    var skipBtn = document.getElementById('dismissButton');
+    var setBtn = document.getElementById('setDateButton');
 
-    if (marks.length && toggle2 && replay && fill && clock && kicker && line) {
-      var head = 0, running = false, onScreen = false, held = false, frame = 0, prev = 0, shown = -1;
+    if (wRows.length && wCases.length && wOut.name && panel) {
+      var overlineWord = (wOut.overline.textContent || '').split(' ')[0];
+      var sayMissing = panel.getAttribute('data-missing') || '';
+      var sayScheduled = panel.getAttribute('data-scheduled') || '';
+      var sayPending = panel.getAttribute('data-pending') || '';
+      var sayTail = panel.getAttribute('data-tail') || '';
+      var chosen = 0, settle = null;
 
-      var two = function (n) { return (n < 10 ? '0' : '') + n; };
-
-      var paint = function (t) {
-        var step = 0;
-        for (var i = 0; i < marks.length; i++) { if (t >= marks[i].at) { step = i; } }
-        if (step !== shown) {
-          shown = step;
-          var m = marks[step];
-          scene.setAttribute('data-step', String(step));
-          kicker.textContent = m.kicker;
-          line.textContent = m.line;
-          if (price) { price.textContent = m.price === 'after' ? priceAfter : priceBefore; }
-          rows.forEach(function (el, i) {
-            if (el) { el.classList.toggle('is-on', String(i) === m.row); }
-          });
-        }
-        fill.style.width = ((t / RUN) * 100).toFixed(2) + '%';
-        clock.textContent = '00:' + two(Math.floor(t)) + ' / 00:' + RUN;
+      var clearDecision = function () {
+        if (settle) { clearTimeout(settle); settle = null; }
+        panel.setAttribute('data-open', 'false');
+        feedback.setAttribute('data-show', 'false');
+        previewBtn.setAttribute('data-show', 'false');
+        resultLine.setAttribute('data-show', 'false');
+        resultLine.textContent = '';
+        statusPill.textContent = sayPending;
+        statusPill.setAttribute('data-phase', 'pending');
+        statusPill.classList.remove('is-changing');
+        if (dateField) { dateField.value = ''; dateField.setCustomValidity(''); }
       };
 
-      var halt = function () {
-        running = false; prev = 0;
-        if (frame) { cancelAnimationFrame(frame); frame = 0; }
-        toggle2.textContent = sayPlay;
-        toggle2.setAttribute('aria-pressed', 'false');
+      var openRow = function (i) {
+        chosen = i;
+        var c = wCases[i];
+        wOut.overline.textContent = overlineWord + ' ' + (i < 9 ? '0' : '') + (i + 1) + ' / ' + c.kind;
+        wOut.name.textContent = c.name;
+        wOut.why.textContent = c.why;
+        wOut.effort.textContent = c.effort;
+        wOut.risk.textContent = c.risk;
+        wOut.how.textContent = c.how;
+        wRows.forEach(function (r, n) { r.setAttribute('aria-pressed', String(n === i)); });
+        clearDecision();
       };
 
-      var tick = function (now) {
-        if (!running || !onScreen) { halt(); return; }
-        if (prev) { head += (now - prev) / 1000; }
-        prev = now;
-        if (head >= RUN) { head = 0; shown = -1; }
-        paint(head);
-        frame = requestAnimationFrame(tick);
-      };
-
-      var run = function (byHand) {
-        if (!onScreen) { return; }
-        if (byHand) { held = false; }
-        if (running) { return; }
-        running = true; prev = 0;
-        toggle2.textContent = sayPause;
-        toggle2.setAttribute('aria-pressed', 'true');
-        frame = requestAnimationFrame(tick);
-      };
-
-      toggle2.addEventListener('click', function () {
-        if (running) { held = true; halt(); } else { run(true); }
+      wRows.forEach(function (r, i) {
+        r.addEventListener('click', function () { openRow(i); });
       });
-      replay.addEventListener('click', function () {
-        head = 0; shown = -1; paint(0); run(true);
-      });
+      if (tryBtn) {
+        tryBtn.addEventListener('click', function () {
+          panel.setAttribute('data-open', 'true');
+          feedback.setAttribute('data-show', 'false');
+          previewBtn.setAttribute('data-show', 'false');
+          resultLine.setAttribute('data-show', 'false');
+          if (dateField && dateField.focus) { dateField.focus({ preventScroll: true }); }
+        });
+      }
+      if (skipBtn) {
+        skipBtn.addEventListener('click', function () {
+          clearDecision();
+          if (tryBtn) { tryBtn.focus({ preventScroll: true }); }
+        });
+      }
+      if (setBtn && dateField) {
+        setBtn.addEventListener('click', function () {
+          if (!dateField.value) {
+            dateField.setCustomValidity(sayMissing);
+            if (dateField.reportValidity) { dateField.reportValidity(); }
+            dateField.focus();
+            return;
+          }
+          dateField.setCustomValidity('');
+          var when = new Date(dateField.value + 'T12:00:00');
+          var shown = isNaN(when.getTime()) ? dateField.value
+            : when.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+          feedCopy.textContent = sayScheduled + ' ' + shown;
+          feedback.setAttribute('data-show', 'true');
+          statusPill.setAttribute('data-phase', 'pending');
+          statusPill.textContent = sayPending;
+          previewBtn.setAttribute('data-show', 'true');
+          resultLine.setAttribute('data-show', 'false');
+        });
+        dateField.addEventListener('input', function () { dateField.setCustomValidity(''); });
+      }
+      if (previewBtn) {
+        previewBtn.addEventListener('click', function () {
+          var c = wCases[chosen];
+          previewBtn.setAttribute('data-show', 'false');
+          statusPill.classList.add('is-changing');
+          settle = setTimeout(function () {
+            statusPill.setAttribute('data-phase', c.phase);
+            statusPill.textContent = c.verdict;
+            statusPill.classList.remove('is-changing');
+            resultLine.textContent = c.body + ' ' + sayTail;
+            resultLine.setAttribute('data-show', 'true');
+          }, reduce ? 0 : 350);
+        });
+      }
+      openRow(0);
+    }
+  }
 
-      /* on screen means a fifth of it is showing, which is enough of the
-         frame to be worth playing and little enough that a phone starts it
-         as the section arrives rather than after it has gone by */
-      if ('IntersectionObserver' in window) {
+  /* ---------------------------------------------------------- the film --
+     Fifteen seconds. One row of the same list goes from suggested, to
+     trying, to a review date the owner picked, to a verdict, and into the
+     track record. The script changes one attribute, one word and one
+     progress bar; everything else is the stylesheet.
+
+     It plays only while it is on screen and only once on its own. A reader
+     who asked for less motion never reaches here: the stylesheet shows the
+     five steps as a list instead. */
+  var filmFrame = document.getElementById('filmFrame');
+  var stage = document.getElementById('filmStage');
+  if (filmFrame && stage) {
+    var area = document.getElementById('filmArea');
+    var stepLine = document.getElementById('filmStepLine');
+    var waitFill = document.getElementById('filmWaitFill');
+    var bar = document.getElementById('filmProgress');
+    var clock = document.getElementById('filmClock');
+    var track = document.getElementById('filmTrack');
+    var rowState = document.getElementById('filmRowState');
+    var script = filmFrame.querySelector('.film-script');
+    var scenes = [].slice.call(filmFrame.querySelectorAll('.film-script > i')).map(function (el) {
+      return { at: parseInt(el.getAttribute('data-at'), 10), step: el.getAttribute('data-step') };
+    });
+    var words = script ? {
+      0: script.getAttribute('data-suggested'),
+      1: script.getAttribute('data-trying'),
+      2: script.getAttribute('data-trying'),
+      3: script.getAttribute('data-worked'),
+      4: script.getAttribute('data-worked')
+    } : null;
+    var RUN = 15000;
+
+    if (scenes.length === 5 && stepLine && bar && clock && words) {
+      var at = 0, shownScene = -1, playing = false, onScreen = false;
+      var started = false, done = false, raf = 0, last = null;
+
+      var show = function (i) {
+        if (shownScene === i) { return; }
+        shownScene = i;
+        stage.setAttribute('data-scene', String(i));
+        stepLine.textContent = scenes[i].step;
+        if (rowState) { rowState.textContent = words[i]; }
+      };
+      var paint = function (ms) {
+        at = Math.min(RUN, Math.max(0, ms));
+        var i = scenes.length - 1;
+        while (i > 0 && at < scenes[i].at) { i--; }
+        show(i);
+        var between = Math.max(0, Math.min(1, (at - scenes[2].at) / (scenes[3].at - scenes[2].at)));
+        if (waitFill) { waitFill.style.transform = 'scaleX(' + between + ')'; }
+        bar.style.transform = 'scaleX(' + (at / RUN) + ')';
+        var s = Math.floor(at / 1000);
+        clock.textContent = '00:' + (s < 10 ? '0' : '') + s + ' / 00:15';
+        if (track) { track.setAttribute('aria-valuenow', String(Math.round(at / 1000))); }
+      };
+      var stop = function () {
+        if (raf) { cancelAnimationFrame(raf); raf = 0; }
+        playing = false; last = null;
+        filmFrame.setAttribute('data-playing', 'false');
+      };
+      var step = function (now) {
+        if (!playing) { return; }
+        if (!onScreen || document.hidden) { stop(); return; }
+        if (last !== null) { paint(at + (now - last)); }
+        last = now;
+        if (at >= RUN) { stop(); done = true; return; }
+        raf = requestAnimationFrame(step);
+      };
+      var play = function () {
+        if (reduce || !onScreen || document.hidden || playing) { return; }
+        if (done) { paint(0); done = false; }
+        playing = true; last = null;
+        filmFrame.setAttribute('data-playing', 'true');
+        raf = requestAnimationFrame(step);
+      };
+
+      var playBtn = document.getElementById('filmPlay');
+      var pauseBtn = document.getElementById('filmPause');
+      var replayBtn = document.getElementById('filmReplay');
+      if (playBtn) { playBtn.addEventListener('click', play); }
+      if (pauseBtn) { pauseBtn.addEventListener('click', stop); }
+      if (replayBtn) {
+        replayBtn.addEventListener('click', function () { stop(); done = false; paint(0); play(); });
+      }
+
+      if ('IntersectionObserver' in window && area) {
         new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
-            onScreen = e.isIntersecting && e.intersectionRatio >= 0.2;
-            if (!onScreen) { halt(); } else if (!held) { run(false); }
+            onScreen = e.isIntersecting;
+            if (!onScreen) { stop(); }
+            else if (!started && !reduce) { started = true; play(); }
           });
-        }, { threshold: [0, 0.2, 0.4] }).observe(filmFrame);
+        }, { threshold: 0.35 }).observe(area);
       } else {
-        onScreen = true;
-        run(false);
+        onScreen = true; started = true; play();
       }
-
-      /* a reader who turns reduced motion on while the page is open gets the
-         stages from the stylesheet; this stops the clock behind them */
-      if (window.matchMedia) {
-        var less = window.matchMedia('(prefers-reduced-motion: reduce)');
-        var onLess = function () { if (less.matches) { held = true; halt(); } };
-        if (less.addEventListener) { less.addEventListener('change', onLess); }
-        else if (less.addListener) { less.addListener(onLess); }
-      }
-
+      document.addEventListener('visibilitychange', function () { if (document.hidden) { stop(); } });
       paint(0);
     }
   }
+
+  /* ------------------------------------------- the glow, and the arrivals
+     The ember and the photograph animate only while their own section is on
+     screen, and stop when the tab is hidden. The list and the ledger arrive
+     once each. Under reduced motion none of this runs: the stylesheet has
+     already put everything in its final place. */
+  var glowing = [].slice.call(document.querySelectorAll('.hero-surface, .photo-band, .founding-block, .closing-band'));
+  if ('IntersectionObserver' in window) {
+    if (glowing.length && !reduce) {
+      var ambient = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          e.target.classList.toggle('is-glowing', e.isIntersecting && !document.hidden);
+        });
+      }, { threshold: 0.03 });
+      glowing.forEach(function (el) { ambient.observe(el); });
+      document.addEventListener('visibilitychange', function () {
+        glowing.forEach(function (el) {
+          if (document.hidden) { el.classList.remove('is-glowing'); return; }
+          var r = el.getBoundingClientRect();
+          el.classList.toggle('is-glowing', r.bottom > 0 && r.top < window.innerHeight);
+        });
+      });
+    }
+
+    var arrive = function (holder, childSel, markVerdicts) {
+      if (!holder) { return; }
+      var once = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) { return; }
+          e.target.querySelectorAll(childSel).forEach(function (c) { c.classList.add('arrived'); });
+          if (markVerdicts) {
+            e.target.querySelectorAll('.ledger-verdict').forEach(function (v, i) {
+              setTimeout(function () { v.classList.add('resolved'); }, reduce ? 0 : 420 + i * 105);
+            });
+          }
+          once.unobserve(e.target);
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
+      once.observe(holder);
+    };
+    arrive(document.querySelector('.app-window'), '.week-row', false);
+    arrive(document.getElementById('ledger'), '.ledger-row-v9', true);
+  } else {
+    document.querySelectorAll('.week-row, .ledger-row-v9').forEach(function (e) { e.classList.add('arrived'); });
+    document.querySelectorAll('.ledger-verdict').forEach(function (e) { e.classList.add('resolved'); });
+    glowing.forEach(function (el) { el.classList.add('is-glowing'); });
+  }
+  }());
 
   /* ----------------------------------------------- the demonstration --
      What it does. Four kinds of change, one shown at a time, and a reader
