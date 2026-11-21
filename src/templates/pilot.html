@@ -62,6 +62,34 @@
     their own. Delivery, the access key, the staging and production
     subjects, the field names and the submitted values are exactly what
     they were: only the clothes changed. #}
+{#- The four places. They used to sit on the home page, which v9 gave to
+    the product window and one photograph; they belong with who we build
+    this for, which is this page. Four even tiles, no staggered spans. #}
+{%- set pl = pilot.places %}
+<section class="section places-band">
+  <div class="wrap">
+    <div class="places-head reveal">
+      <p class="eyebrow">{{ pl.eyebrow }}</p>
+      <h2 class="h3">{{ pl.heading }}</h2>
+    </div>
+    <div class="places">
+      {%- for c in pl.cards %}
+      <figure class="place">
+        <div class="place-img">
+          <picture>
+            <source type="image/webp" sizes="(max-width: 740px) 46vw, 24vw"
+                    srcset="assets/{{ c.stem }}-320.webp 320w, assets/{{ c.stem }}-480.webp 480w, assets/{{ c.stem }}-640.webp 640w">
+            <img src="assets/{{ c.stem }}-480.jpg" alt="{{ c.alt }}"
+                 width="480" height="640" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption>{{ c.label }}</figcaption>
+      </figure>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
 <section class="section paper-light" id="pilot">
   <div class="wrap form-layout">
     <aside class="form-aside">

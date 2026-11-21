@@ -741,9 +741,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .closing-inner .btn { margin-top: 23px; }
 
 /* ------------------------------------------------- reveals, used sparingly
-   Composition groups only. Never a run of reading text inside a card. */
-.js .reveal:not(.is-revealed) { opacity: 0; transform: translateY(16px); }
-.js .reveal.is-revealed {
+   Composition groups only. Never a run of reading text inside a card.
+
+   The class is `in`, which is the one alfredo.js adds and alfredo.css has
+   always used. This file briefly invented a second name, is-revealed, that
+   nothing ever added: the two rules had equal specificity, this file loads
+   last, and the result was that every block carrying .reveal stayed at
+   opacity 0 for as long as the page was open. One class, one observer. */
+.js .reveal { opacity: 0; transform: translateY(16px); }
+.js .reveal.in {
   opacity: 1; transform: translateY(0);
   transition: opacity .58s ease, transform .58s cubic-bezier(.2,.7,.2,1);
 }
@@ -838,7 +844,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   .js .film-reduced { display: grid !important; }
   .js .film-foot { display: none !important; }
   .js .week-row:not(.arrived), .js .ledger-row-v9:not(.arrived),
-  .js .reveal:not(.is-revealed) { opacity: 1 !important; transform: none !important; }
+  .js .reveal, .js .reveal.in { opacity: 1 !important; transform: none !important; transition: none !important; }
   .js .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 1 !important; transform: none !important; }
   .status-pill.is-changing { opacity: 1 !important; transform: none !important; }
 }
@@ -1025,3 +1031,31 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 /* the anatomy numerals were drawn in the deep gold, which on this ground
    measured 4.00 against a floor of 4.5 */
 .anatomy .an-n { color: var(--label); }
+
+/* who it is for, under the support line */
+.hero-who {
+  margin: 10px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-subtle);
+}
+
+/* ------------------------------------------------- the four places ------
+   On About us now. Four even tiles: one row on a laptop, two by two on a
+   phone. The editorial gallery's column spans, row spans and per picture
+   crops are all reset, by name as well as by position. */
+.places-band .places {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+}
+.places-band .places > .place { grid-column: auto; grid-row: auto; margin: 0; }
+.places-band .places > .place .place-img {
+  aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--hair);
+}
+.places-band .places > .place .place-img img { width: 100%; height: 100%; object-fit: cover; }
+.places-band figcaption {
+  margin-top: 10px; font-size: 14px; font-weight: 500; color: var(--text-muted);
+  letter-spacing: 0; text-transform: none;
+}
+.places-head { max-width: 40rem; margin-bottom: 28px; }
+@media (max-width: 740px) {
+  .places-band .places { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .places-band .places > .place .place-img { aspect-ratio: 1 / 1; }
+}

@@ -19,6 +19,7 @@ hero:
   heading: "Every business has a story."
   heading_glow: "Your numbers know what comes next."
   sub: "Alfredo tells you what to try each week, then tells you honestly whether it worked."
+  note: "For restaurants, bars, breweries, cafes and bakeries."
   cta: "Request a demo"
   cta_href: "pilot.html#pilot"
   cta2: "See this week"
@@ -185,5 +186,3 @@ close:
   body: "A short conversation about what Alfredo could help you try."
   cta: "Request a demo"
   cta_href: "pilot.html#pilot"
-  next_label: "What Alfredo does"
-  next_href: "product.html"

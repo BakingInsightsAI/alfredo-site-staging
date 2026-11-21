@@ -84,6 +84,7 @@ pages:
     legacy: false
     title: "Restaurant analytics | Alfredo by BakingInsightsAI"
     description: "Alfredo reads your POS sales and turns them into a short weekly list of changes worth trying, then tells you honestly whether each one worked."
+    next: { label: "What Alfredo does", href: "product.html" }
 
   - key: product
     template: product.html

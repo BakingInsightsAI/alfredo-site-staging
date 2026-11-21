@@ -34,3 +34,25 @@ form_reassure_lead: "Plans from"
 form_locations:
   legend: "Locations"
   choices: ["1", "2 to 3", "4 to 10", "More than 10"]
+
+# The four places, restored from the home page. Same pictures, same labels,
+# same heading, in the v9 style: four even tiles, one row on a laptop and
+# two by two on a phone.
+places:
+  eyebrow: "Built for hospitality"
+  heading: "Different places. The same ambition to do better."
+  cards:
+    - stem: "restaurant-kitchen"
+      label: "Restaurants"
+      alt: "A cook finishing a dish on a kitchen pass."
+    - stem: "bar"
+      label: "Bars"
+      alt: "A bar at night, a drink on the counter and bottles lit behind it."
+    - stem: "brewery"
+      label: "Breweries"
+      alt: "A brewer holding a glass of beer up to the light beside the tanks."
+    # there is no cafe picture in the repository, so the bakery one carries
+    # both, which is what its label says
+    - stem: "bakery"
+      label: "Cafes and bakeries"
+      alt: "A baker shaping dough on a floured bench beside racks of bread."
