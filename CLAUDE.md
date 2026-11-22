@@ -47,6 +47,15 @@ A large share of visitors arrive from Instagram and Facebook on phones.
   Exception: data-use promises such as "never used to train AI models" are
   allowed; they state what is not done with customer data, not how Alfredo
   works.
+- **Banned phrases**, which are how mechanism talk comes back in words that
+  are innocent one at a time: "starting point", "baseline", "four weeks
+  before", "counts the". Do not state a fixed number of weeks, what is
+  treated as the point to measure from, or how Alfredo counts or compares.
+  A reader is told what they see and what they decide. qa.js fails on all
+  four.
+- **One date format.** Dates are written the way the track record writes
+  them, "Dec 1" and "Nov 24", everywhere on the site, prose included. Never
+  "1 December" beside a "Dec 1".
 - **The POS, everywhere, is "the POS system you already use."** Never name a
   POS system in anything a reader can see: not in copy, not in structured
   data, not in llms.txt. The one exception is the demo form's own menu of

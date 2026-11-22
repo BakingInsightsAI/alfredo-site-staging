@@ -312,9 +312,9 @@
      Four steps, about 3.75 seconds each. Each one appears and stays, so at
      the end all four are on screen.
 
-     The script sets one attribute on the stage and one on the row of weeks,
-     and moves one progress bar. Everything else is the stylesheet. Nothing
-     it touches is laid out, so the card is one size throughout.
+     The script sets one attribute on the stage and moves one progress bar.
+     Everything else is the stylesheet. Nothing it touches is laid out, so
+     the card is one size throughout.
 
      The steps only wait their turn once the film is actually playing: the
      stage is given data-mode="steps" on the first play and not before, so
@@ -327,7 +327,6 @@
     var bar = document.getElementById('filmProgress');
     var clock = document.getElementById('filmClock');
     var track = document.getElementById('filmTrack');
-    var weeks = document.getElementById('filmWeeks');
     var scenes = [].slice.call(filmFrame.querySelectorAll('.film-script > i')).map(function (el) {
       return parseInt(el.getAttribute('data-at'), 10);
     });
@@ -342,24 +341,11 @@
         shown = i;
         stage.setAttribute('data-scene', String(i));
       };
-      // the four weeks fill one by one across the step that counts them
-      var fillWeeks = function () {
-        if (!weeks) { return; }
-        var from = scenes[1], to = scenes.length > 2 ? scenes[2] : RUN;
-        var n;
-        if (at < from) { n = 0; }
-        else if (at >= to) { n = 4; }
-        else { n = Math.min(4, Math.floor((at - from) / ((to - from) / 4)) + 1); }
-        if (weeks.getAttribute('data-filled') !== String(n)) {
-          weeks.setAttribute('data-filled', String(n));
-        }
-      };
       var paint = function (ms) {
         at = Math.min(RUN, Math.max(0, ms));
         var i = scenes.length - 1;
         while (i > 0 && at < scenes[i]) { i--; }
         show(i);
-        fillWeeks();
         bar.style.transform = 'scaleX(' + (at / RUN) + ')';
         var sec = Math.floor(at / 1000);
         clock.textContent = '00:' + (sec < 10 ? '0' : '') + sec + ' / 00:15';

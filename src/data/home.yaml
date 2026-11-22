@@ -103,13 +103,18 @@ outcomes:
 # next. Four steps, about 3.75 seconds each, and each one stays on screen,
 # so at the end all four are there to read.
 #
+# What it does not say is as deliberate as what it does. No number of weeks,
+# no starting point, nothing about counting or comparing: that is how
+# Alfredo works, and this page is about what an owner sees. The owner chose
+# the date, and the date is written the way every date on this site is
+# written, the way the record below writes it.
+#
 # The steps are laid out from the first paint and only fade in, so the card
 # is the same height throughout and the animation cannot move the page.
 # Before it plays, without scripting, and for a reader who asked for less
 # motion, all four are simply visible.
 #
-# The figures are illustrative and sit under the card's own label. They add
-# up: 31 of 120 is 26 percent, 18 of 118 is 15 percent.
+# The figures are illustrative and sit under the card's own label.
 film:
   eyebrow: "In 15 seconds"
   heading: "A suggestion. A decision. An answer."
@@ -118,7 +123,6 @@ film:
   label: "Illustrative example"
   origin_label: "Picks up from the board above"
   origin_name: "Offer the sourdough board with the cheese plate"
-  weeks: ["Week 1", "Week 2", "Week 3", "Week 4"]
   play: "Play"
   pause: "Pause"
   replay: "Replay"
@@ -127,16 +131,16 @@ film:
     - at: 0
       label: "01 / You tap Try this"
       title: "Test started"
-      text: "The four weeks before today are recorded as the starting point. The answer is due on 1 December."
+      text: "You chose to check back on Dec 1."
     - at: 3750
-      label: "02 / Four weeks of orders"
-      text: "Alfredo counts the cheese plate orders, and how many of them add the sourdough board."
+      label: "02 / Service runs as normal"
+      text: "Nothing changes on your menu unless you say so."
     - at: 7500
       label: "03 / The answer"
       verdict: "Worked"
       kind: "worked"
-      text: "31 of 120 cheese plate orders added the sourdough board, up from 18 of 118 in the four weeks before."
-      fine: "That is 26%, up from 15%."
+      text: "26% of cheese plate orders added the sourdough board, up from 15%."
+      fine: "After what you would have sold anyway."
     - at: 11250
       label: "04 / It goes on your record"
       row:

@@ -534,24 +534,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .film-step-text { margin: 0; font-size: 14px; line-height: 1.42; color: #F1F3F8; }
 .film-step-fine { margin: 0; font-size: 13px; line-height: 1.4; color: #C8D0DE; }
 
-/* the four weeks, filling one by one through step 02 */
-.film-weeks {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px; width: 100%;
-}
-.film-week {
-  min-width: 0; padding: 7px 4px; border-radius: 4px; text-align: center;
-  font-size: 12px; line-height: 1.2; color: #BFC8D6;
-  background: rgba(255,255,255,.05); border: 1px solid var(--hair);
-  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
-}
-.film-weeks[data-filled="1"] .film-week:nth-child(-n+1),
-.film-weeks[data-filled="2"] .film-week:nth-child(-n+2),
-.film-weeks[data-filled="3"] .film-week:nth-child(-n+3),
-.film-weeks[data-filled="4"] .film-week:nth-child(-n+4) {
-  background: rgba(244,163,64,.18); border-color: rgba(249,196,125,.5); color: #FFE2BC;
-}
-
 /* The track record row inside the card is the real thing, markup and all.
    The arrival the record section runs on its own rows must not reach it,
    which is why those two rules name #ledger rather than every row. */

@@ -203,13 +203,6 @@
                 {%- if st.get('verdict') %}
                 <span class="ledger-verdict {{ st.kind }}">{{ st.verdict }}</span>
                 {%- endif %}
-                {%- if loop.index0 == 1 %}
-                <div class="film-weeks" id="filmWeeks" data-filled="0" aria-hidden="true">
-                  {%- for w in f.weeks %}
-                  <span class="film-week">{{ w }}</span>
-                  {%- endfor %}
-                </div>
-                {%- endif %}
                 {%- if st.get('text') %}
                 <p class="film-step-text">{{ st.text }}</p>
                 {%- endif %}
