@@ -41,6 +41,11 @@ week:
     effort: "How much work"
     risk: "What it risks"
     how: "How to do it"
+  # The introduction that sits above the board, in the board's own column.
+  # The label is sentence case here and set in capitals by the stylesheet,
+  # like every other label on this site.
+  intro_label: "What you see each week"
+  intro_body: "A short list of things to try, picked from your own sales. Open one to see why it came up and how to do it."
   try: "Try this"
   skip: "Not right now"
   date_label: "Choose when to check back"
@@ -93,65 +98,52 @@ outcomes:
     body: "About you, and about the place down the street."
 
 # --------------------------------------------------------------- 04 the film
-# Fifteen seconds in which one row of the same list goes from suggested to a
-# verdict and into the record. The row it follows is weekly record 0, which
-# is also the first row of the window above: the film is that suggestion
-# carried forward, which is the point of it.
+# Fifteen seconds that pick up where the board above leaves off: the owner
+# has tapped Try this on the first suggestion, and this is what happens
+# next. Four steps, about 3.75 seconds each, and each one stays on screen,
+# so at the end all four are there to read.
+#
+# The steps are laid out from the first paint and only fade in, so the card
+# is the same height throughout and the animation cannot move the page.
+# Before it plays, without scripting, and for a reader who asked for less
+# motion, all four are simply visible.
+#
+# The figures are illustrative and sit under the card's own label. They add
+# up: 31 of 120 is 26 percent, 18 of 118 is 15 percent.
 film:
   eyebrow: "In 15 seconds"
   heading: "A suggestion. A decision. An answer."
   lede: "The owner chooses what to try and when to review. Alfredo comes back with the answer."
   topline: "How Alfredo follows through"
   label: "Illustrative example"
-  app_title: "This week"
-  # The film shows the window's list, unchanged, and follows its first row
-  # from suggested to a verdict.
-  focus: sourdough_board
-  others: [costs_tart, guests_quiet, reviews_speed, quiz_later]
-  review_date: "Nov 24"
-  review_tail: "Time passes"
+  origin_label: "Picks up from the board above"
+  origin_name: "Offer the sourdough board with the cheese plate"
+  weeks: ["Week 1", "Week 2", "Week 3", "Week 4"]
   play: "Play"
   pause: "Pause"
   replay: "Replay"
   progress_label: "How far through the film"
-  states:
-    suggested: "Suggested"
-    trying: "Trying"
-    worked: "Worked"
-  scenes:
+  steps:
     - at: 0
-      step: "01 / A suggestion appears."
-      label: "Why it came up"
-      body: "Guests already order these together."
-      action: "Try this"
-    - at: 3100
-      step: "02 / The owner chooses Try this."
-      label: "The owner decides"
-      body: "Nothing moves until the owner says so."
-      action: "Try this"
-    - at: 6200
-      step: "03 / The owner picks a review date. Time passes."
-      label: "Review date, chosen by the owner"
-    - at: 9700
-      step: "04 / The answer is Worked."
-      label: "The review date arrives"
-      body: "The suggestion has a clear result."
-    - at: 12000
-      step: "05 / It goes into the track record."
-      label: "Track record, new entry"
-  reduced:
-    - name: "01 / This week"
-      state: "Suggested"
-    - name: "02 / The owner chooses Try this"
-      state: "Trying"
-    - name: "03 / The owner sets Nov 24 to review"
-      state: "Review date"
-    - name: "04 / The result arrives"
-      state: "Worked"
+      label: "01 / You tap Try this"
+      title: "Test started"
+      text: "The four weeks before today are recorded as the starting point. The answer is due on 1 December."
+    - at: 3750
+      label: "02 / Four weeks of orders"
+      text: "Alfredo counts the cheese plate orders, and how many of them add the sourdough board."
+    - at: 7500
+      label: "03 / The answer"
+      verdict: "Worked"
       kind: "worked"
-    - name: "05 / A new track record entry"
-      state: "Worked"
-      kind: "worked"
+      text: "31 of 120 cheese plate orders added the sourdough board, up from 18 of 118 in the four weeks before."
+      fine: "That is 26%, up from 15%."
+    - at: 11250
+      label: "04 / It goes on your record"
+      row:
+        date: "Dec 1"
+        action: "Sourdough board with the cheese plate"
+        verdict: "Worked"
+        kind: "worked"
 
 # ------------------------------------------------------- 05 the track record
 # Five finished tests. None of them is a suggestion on any page: the four
