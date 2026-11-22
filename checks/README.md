@@ -1,6 +1,6 @@
-# Two checks that live with the site
+# The checks that live with the site
 
-Everything else that tests this site is a scratch harness. These two are here
+Everything else that tests this site is a scratch harness. These are here
 because each one exists to stop a bug that reached a review, and a check kept
 somewhere temporary is not a check.
 
@@ -30,6 +30,33 @@ It exits non-zero when anything is invisible. To see it catch the original bug,
 change the stylesheet's `.js .reveal.in` back to `.js .reveal:not(.is-revealed)`
 and run it again.
 
+## noshift.js
+
+Nothing should move while a page loads. On an ordinary connection nothing
+does, which is why this went unnoticed: the fonts arrive before first paint
+and a quick measurement sees zero. On a genuinely slow phone the real font
+lands seconds later, and a line that fits in one font and wraps in the other
+takes everything under it with it.
+
+That is what the hero's audience line did. Between about 386 and 395 wide,
+which contains 390, it was one line in Inter and two in the fallback, so when
+Inter arrived the buttons and the product window jumped up 21px. The line is
+now narrowed in that band so it is two lines in both.
+
+    node checks/noshift.js                 # every page
+    node checks/noshift.js index.html      # one of them
+
+Each page loads at 390 at 400 kbps with a 4x slower processor, with the
+observer installed before navigation, and every shift is printed with the
+elements the browser blames and how far they moved.
+
+What each page is allowed is written into the file, page by page, rather than
+hidden under one round number. Everything is zero except two pages that
+already shifted before this week: the heading on What it does drops 9px at
+the font swap on roughly one load in four, and About us does the same. Both
+are under 0.005, both are intermittent, and neither is explained yet. They
+are printed on every run.
+
 ## fold.js
 
 The phone first screen is 700px tall, and the pill, the headline and Request a
@@ -41,8 +68,11 @@ pushes on that, so it gets measured again every time.
 A missing element counts as a failure, so a renamed class cannot quietly turn
 the check into a check of nothing.
 
-## Both
+## All three
 
     BASE=http://127.0.0.1:8806/alfredo-site-staging/   where the built site is served
+                                                       (noshift.js wants the
+                                                       production shaped build,
+                                                       without the preview banner)
     CHROME=/path/to/chrome                             a browser, if not the usual one
     OUT=out/scroll                                     where visible.js writes screenshots

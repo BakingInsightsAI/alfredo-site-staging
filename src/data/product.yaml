@@ -14,6 +14,11 @@ chat_chips:
   - q: "What do you recommend?"
     a: "Three things on this week's list: a small price cut on your mozzarella sticks, a pairing nudge for loaded nachos with your house IPA, and one competitor pattern worth reading. Want to start with the one worth the most?"
 
+# The kinds of change Alfredo suggests. All seven are here, in the order the
+# page lists them. Costs used to be written into the template by hand, which
+# is why the heading and the list could drift apart; it is data now, like the
+# rest, so the count in the heading and the count on the page cannot differ
+# without someone meaning it.
 board_types:
   - name: "Prices"
     body: "Which items could sell more at a slightly lower price."
@@ -23,6 +28,12 @@ board_types:
     body: "What to show off on the menu and what to quietly move down."
   - name: "How you run the day"
     body: "Opening and closing times, busy and quiet hours, and how long people stay."
+  - name: "Costs"
+    body: "Which ingredients went up, which plates they are squeezing, and what to do about it."
+  - name: "Guests"
+    body: "Regulars who have gone quiet, and what might bring them back, where your POS records who is who."
+  - name: "Reviews"
+    body: "What guests say about you in public reviews, and what they say about the places nearby."
 
 # The House Lager walkthrough, printed once on this page and quoted on the
 # home page as a finished test. One figure, the same in both places. Every
@@ -85,7 +96,7 @@ v4:
       body: "The steps, and who needs to know."
     - name: "When to check back"
       body: "The date you choose. Alfredo suggests one, and you can change it."
-  kinds_heading: "Five kinds of changes, and one on the way."
+  kinds_heading: "Seven kinds of changes, and one on the way."
   kinds_lede: "Price is one of them, not the whole of it."
   inventory:
     name: "Inventory"
@@ -116,76 +127,105 @@ v4:
   chat_heading: "Questions in plain words, answered from your own numbers."
   chat_lede: "No report to build and no chart to read. Ask the way you would ask a manager. The answers come from the numbers you have connected, and if Alfredo does not know, it says so."
 
-# The weekly list itself, which is what this page is for. Five suggestions
-# as they would land on a Monday, each carrying the six things the section
-# beside it promises. None of these appears on the home page: the home page
-# shows the range, this is the thing itself.
+# Every weekly record the site draws on, named rather than numbered. Pages
+# pick the ones they show by name, which is the only way the rule that no
+# suggestion appears on two pages can be read at a glance:
+#
+#   the home window and film   sourdough_board, costs_tart, guests_quiet,
+#                              reviews_speed, quiz_later
+#   What it does, its demo     flatbread_late, and the three below it
+#
+# lamb_ragu is shown nowhere at present. It came off the home window when
+# that went to five rows, and it is kept here rather than deleted because it
+# is approved copy.
+#
+# Each record carries the same six things, so a reader cannot tell which was
+# written for which page.
 weeklist:
-  title: "Monday, the 6th"
-  sub: "Five things worth trying this week"
   label: "Illustrative example"
   note: "The list comes every week on every plan. How many of them you run as a measured test is what the plans differ on."
   entries:
-    - kind: "Pairing"
+    sourdough_board:
+      kind: "Pairing"
       name: "Offer the sourdough board with the cheese plate"
       why: "Two in three cheese plates already leave the kitchen with bread beside them."
       effort: "Low"
       risk: "Low"
       how: "Tell the floor on Thursday and add one line to the specials card."
       back: "Three weeks"
-    - kind: "Menu placement"
-      name: "Move the lamb ragu into the top third of the mains"
-      why: "It earns more per plate than any other main and sits second from the bottom."
-      effort: "Low"
-      risk: "Low"
-      how: "Move it higher on your menu, where guests look first."
-      back: "Six weeks"
-    - kind: "Costs"
+    costs_tart:
+      kind: "Costs"
       name: "Look again at the mushroom tart"
       why: "What you pay for the mushrooms went up twice, and the tart is now selling for less than it costs to make."
       effort: "Low"
       risk: "Low"
       how: "Confirm the new costs or dismiss the flag."
       back: "This week"
-    - kind: "Prices"
-      name: "Try fifty cents off the flatbread after nine"
-      why: "Late orders drop off sharply, and the flatbread costs little to make."
+    guests_quiet:
+      kind: "Guests"
+      name: "Win back 14 regulars who have gone quiet"
+      why: "They came in most weeks until September and have not been back in six weeks."
       effort: "Low"
       risk: "Low"
-      how: "Fifty cents off from nine until close, nothing else changes."
-      back: "Two weeks"
-    - kind: "Neighborhood"
+      how: "Send them a short note with something worth coming back for."
+      back: "Three weeks"
+    reviews_speed:
+      kind: "Reviews"
+      name: "Put your speed on the lunch menu"
+      why: "Guests at the place two doors down keep mentioning slow lunch service. Your reviews keep praising how fast you are."
+      effort: "Low"
+      risk: "Low"
+      how: "Add one line to the lunch menu this week."
+      back: "Three weeks"
+    quiz_later:
+      kind: "Neighborhood"
       name: "Hold the Thursday quiz an hour later"
       why: "The pub two streets over starts theirs at eight and takes your early crowd with it."
       effort: "Medium"
       risk: "Medium"
       how: "Move the start, and tell the regulars the week before."
       back: "Four weeks"
+    flatbread_late:
+      kind: "Prices"
+      name: "Try fifty cents off the flatbread after nine"
+      why: "Late orders drop off sharply, and the flatbread costs little to make."
+      effort: "Low"
+      risk: "Low"
+      how: "Fifty cents off from nine until close, nothing else changes."
+      back: "Two weeks"
+    lamb_ragu:
+      kind: "Menu placement"
+      name: "Move the lamb ragu into the top third of the mains"
+      why: "It earns more per plate than any other main and sits second from the bottom."
+      effort: "Low"
+      risk: "Low"
+      how: "Move it higher on your menu, where guests look first."
+      back: "Six weeks"
 
 # ---------------------------------------------------------------- v9 ----
 # The demonstration on this page. Its four suggestions are deliberately not
-# the four in the window on the home page: the home window shows weekly
-# records 0, 1, 2 and 4, and this shows record 3 plus the three written
-# below, so no suggestion is named on two pages.
-#
-# The three new records carry the same six things every weekly record
-# carries, so a reader cannot tell which came from where.
+# the five in the window on the home page: this one shows flatbread_late
+# from the pool above plus the three written below, so no suggestion is
+# named on two pages.
 demo_entries:
-  - kind: "Pairing"
+  carrot_cake:
+    kind: "Pairing"
     name: "Suggest the carrot cake with the house IPA"
     why: "The two leave the kitchen together more often than anything else on the dessert list."
     effort: "Low"
     risk: "Low"
     how: "Tell the floor, and put the two side by side on the dessert card."
     back: "Three weeks"
-  - kind: "Menu placement"
+  crab_linguine:
+    kind: "Menu placement"
     name: "Move the crab linguine higher on the menu"
     why: "It earns well and sits below the fold on a long list of mains."
     effort: "Low"
     risk: "Low"
     how: "Move it up with the other mains guests read first."
     back: "Four weeks"
-  - kind: "Neighborhood"
+  sunday_roast:
+    kind: "Neighborhood"
     name: "Start the Sunday roast an hour earlier"
     why: "The two places nearest you both list a midday sitting, and yours starts after theirs."
     effort: "Low"
@@ -220,23 +260,19 @@ demo:
   note: "Every example on this page is illustrative. No account is connected and nothing is changed."
   cases:
     - tab: "Pairings"
-      from: "demo"
-      entry: 0
+      entry: "carrot_cake"
       verdict: "Worked."
       result: "Illustrative example. After the date the owner chose, the two were ordered together more often than before."
     - tab: "Menu"
-      from: "demo"
-      entry: 1
+      entry: "crab_linguine"
       verdict: "No effect."
       result: "Illustrative example. After the date the owner chose, the new position did not change what sold. Alfredo says so rather than dress it up."
     - tab: "Prices"
-      from: "weeklist"
-      entry: 3
+      entry: "flatbread_late"
       verdict: "Worked."
       result: "Illustrative example. After the date the owner chose, late orders picked up and the lower price more than paid for itself."
     - tab: "Nearby"
-      from: "demo"
-      entry: 2
+      entry: "sunday_roast"
       verdict: "Backfired."
       result: "Illustrative example. The earlier sitting drew nobody, and the owner put the time back."
   apart_eyebrow: "The difference"

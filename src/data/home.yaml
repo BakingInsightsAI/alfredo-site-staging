@@ -5,9 +5,9 @@
 # closing, the handoff.
 #
 # Where the examples live, so nothing is shown twice:
-#   this page   the four weekly records 0, 1, 2 and 4 in the product window
-#               and the film, which follows record 0 through to a verdict
-#   What it does  three different suggestions and record 3, in its demo
+#   this page   five weekly records in the product window and the film,
+#               which follows the first of them through to a verdict
+#   What it does  three suggestions of its own and flatbread_late, in its demo
 #   the record  five finished tests, none of which is a current suggestion
 #               except the one the film is in the middle of
 
@@ -53,17 +53,22 @@ week:
   tail: "This preview skips ahead to the date you chose. Illustrative example."
   owner: "Alfredo recommends. "
   owner_em: "You decide."
-  entries: [0, 1, 2, 4]
+  # The five rows, in the order a reader meets them, each named rather than
+  # numbered. The answers below are in the same order: one per row.
+  entries: [sourdough_board, costs_tart, guests_quiet, reviews_speed, quiz_later]
   answers:
     - verdict: "Worked"
       kind: "worked"
       body: "In this illustrative result, the two were ordered together more often than before."
-    - verdict: "No effect"
-      kind: "none"
-      body: "In this illustrative result, the new position did not change what sold."
     - verdict: "Worked"
       kind: "worked"
       body: "In this illustrative result, the costs were confirmed and the tart was priced to cover them."
+    - verdict: "Worked"
+      kind: "worked"
+      body: "In this illustrative result, most of them came back before the date you chose."
+    - verdict: "Worked"
+      kind: "worked"
+      body: "In this illustrative result, lunch covers came up."
     - verdict: "Backfired"
       kind: "back"
       body: "In this illustrative result, the later start lost the early crowd."
@@ -74,7 +79,7 @@ photo:
   stem: "bar"
   alt: "A bar at night, a drink on the counter and bottles lit behind it."
 
-# ---------------------------------------------------- 03 the three outcomes
+# --------------------------------------------------------- 03 the outcomes
 outcomes:
   - name: "Sell more of what already sells together."
     body: "Pairings your guests are already ordering."
@@ -82,6 +87,10 @@ outcomes:
     body: "The ingredient that went up, and the plate it is squeezing."
   - name: "Know what the place down the street is doing."
     body: "Their prices, their hours, and what their guests say."
+  - name: "Win back the regulars who have gone quiet."
+    body: "Who stopped coming, and what might bring them back."
+  - name: "Hear what guests are saying."
+    body: "About you, and about the place down the street."
 
 # --------------------------------------------------------------- 04 the film
 # Fifteen seconds in which one row of the same list goes from suggested to a
@@ -95,8 +104,10 @@ film:
   topline: "How Alfredo follows through"
   label: "Illustrative example"
   app_title: "This week"
-  focus: 0
-  others: [1, 2]
+  # The film shows the window's list, unchanged, and follows its first row
+  # from suggested to a verdict.
+  focus: sourdough_board
+  others: [costs_tart, guests_quiet, reviews_speed, quiz_later]
   review_date: "Nov 24"
   review_tail: "Time passes"
   play: "Play"
