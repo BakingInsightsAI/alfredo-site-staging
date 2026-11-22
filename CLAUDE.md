@@ -43,7 +43,9 @@ A large share of visitors arrive from Instagram and Facebook on phones.
 - **No mechanism talk.** Never models, matching, ranking, training,
   baselines, control items, holdouts, "compared against", or engines. For a
   result net of normal trading the approved line is exactly: "After what
-  you would have made anyway."
+  you would have made anyway." Where the figure is a count rather than
+  money, a share of orders for instance, it is "After what you would have
+  sold anyway." Those two, and no third wording.
   Exception: data-use promises such as "never used to train AI models" are
   allowed; they state what is not done with customer data, not how Alfredo
   works.

@@ -1,8 +1,11 @@
 # The checks that live with the site
 
-Everything else that tests this site is a scratch harness. These are here
-because each one exists to stop a bug that reached a review, and a check kept
-somewhere temporary is not a check.
+Four checks. Three are here because each one exists to stop a bug that
+reached a review. The fourth, words.js, is here because it holds the rules
+the site is written to, and a check kept somewhere temporary is not a check.
+
+The rest of the battery, contrast, focus, widths, the form and the rest, is
+still a scratch harness run by checks.sh.
 
 ## visible.js
 
@@ -29,6 +32,26 @@ is never an excuse.
 It exits non-zero when anything is invisible. To see it catch the original bug,
 change the stylesheet's `.js .reveal.in` back to `.js .reveal:not(.is-revealed)`
 and run it again.
+
+## words.js
+
+Every copy rule in CLAUDE.md section 3, measured in a browser on the built
+pages: the banned words, the banned phrases, no contractions, no em or en
+dashes, no arrows, and no capitals except the two shapes the design calls
+for, a small tracked label and a short display stamp.
+
+These rules used to live in the scratch harness beside the contrast sweep,
+which meant the rules the site is written to could be wiped with a temporary
+folder. Everything a reader sees is read as rendered, alt text included, so
+a rule cannot be slipped past by putting the words in an attribute or by
+setting them in capitals from the stylesheet.
+
+    node checks/words.js                   # every page
+    node checks/words.js index.html        # one of them
+
+The banned phrases are checked as phrases, not words, because each word in
+them is innocent on its own: "starting point", "baseline", "four weeks
+before", "counts the". Each is reported with the sentence it sits in.
 
 ## noshift.js
 
@@ -68,7 +91,7 @@ pushes on that, so it gets measured again every time.
 A missing element counts as a failure, so a renamed class cannot quietly turn
 the check into a check of nothing.
 
-## All three
+## All four
 
     BASE=http://127.0.0.1:8806/alfredo-site-staging/   where the built site is served
                                                        (noshift.js wants the
