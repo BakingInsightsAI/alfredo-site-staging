@@ -16,6 +16,7 @@
 
    Usage: node checks/noshift.js [page ...]                               */
 const { chromium } = require('playwright');
+const { stubBeacon } = require('./stub-beacon.js');
 const EXE = process.env.CHROME || '/opt/pw-browsers/chromium-1243/chrome-linux64/chrome';
 const BASE = process.env.BASE || 'http://127.0.0.1:8817/alfredo-prod/';
 const PAGES = process.argv.slice(2).filter(a => a.endsWith('.html'));
@@ -41,6 +42,7 @@ const ALLOWED = { 'product.html': 0.004, 'pilot.html': 0.005 };
     await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 400,
       downloadThroughput: 400 * 1024 / 8, uploadThroughput: 400 * 1024 / 8 });
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    await stubBeacon(pg);          // opt in, one host, see stub-beacon.js
     await pg.addInitScript(() => {
       window.__shifts = [];
       try {

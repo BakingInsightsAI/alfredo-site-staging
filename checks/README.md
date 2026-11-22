@@ -1,8 +1,10 @@
 # The checks that live with the site
 
-Four checks. Three are here because each one exists to stop a bug that
-reached a review. The fourth, words.js, is here because it holds the rules
-the site is written to, and a check kept somewhere temporary is not a check.
+Five checks. Three are here because each one exists to stop a bug that
+reached a review. words.js is here because it holds the rules the site is
+written to, and pixels.js because it spent weeks measuring a 404 page and
+reporting that everything passed. A check kept somewhere temporary is not
+a check.
 
 The rest of the battery, contrast, focus, widths, the form and the rest, is
 still a scratch harness run by checks.sh.
@@ -53,6 +55,30 @@ The banned phrases are checked as phrases, not words, because each word in
 them is innocent on its own: "starting point", "baseline", "four weeks
 before", "counts the". Each is reported with the sentence it sits in.
 
+## pixels.js
+
+Contrast measured off the rendered pixels, for the runs no walk of the DOM
+can read: text sitting on a photograph, and text whose colour comes from a
+gradient clipped to the glyphs. The page is captured as painted, captured
+again with every glyph made transparent, and the ground under each run is
+read from the second capture.
+
+It is here because of how it failed. Its address used to end in the folder
+name, so the moment the runner began passing the folder as an argument as
+well it fetched `.../alfredo-site-staging/alfredo-site-stagingindex.html`,
+which is a 404 page. Playwright does not throw on a 404, so the sweep
+measured the server's error page, found 78 runs of text on it, and reported
+that every one cleared its floor.
+
+    node checks/pixels.js alfredo-site-staging
+    node checks/pixels.js alfredo-site-staging --open     # disclosures open
+    node checks/pixels.js prod9 390 1440
+
+The address is the server root now and the folder is a separate argument,
+and the sweep stops with CANNOT READ if any page answers with anything but
+200. On the real build it measures about two thousand runs, not seventy
+eight.
+
 ## noshift.js
 
 Nothing should move while a page loads. On an ordinary connection nothing
@@ -91,7 +117,27 @@ pushes on that, so it gets measured again every time.
 A missing element counts as a failure, so a renamed class cannot quietly turn
 the check into a check of nothing.
 
-## All four
+## STUB_BEACON, a test switch
+
+The analytics beacon is served from `static.cloudflareinsights.com`. Some
+machines cannot reach that host, and a build carrying the beacon then fails
+checks that watch for failed requests, reporting the machine rather than the
+site. Sixty failures on the first production run were all this one host.
+
+    STUB_BEACON=1 node checks/noshift.js
+
+With the variable set, that one host is answered locally with an empty
+script, so the page loads the way it will in the world. It is opt in: with
+the variable unset nothing is intercepted at all, which is the default
+everywhere, and the staging build carries no beacon in any case.
+
+It is defined once, in `stub-beacon.js`, and matches on the parsed hostname
+exactly rather than on a glob, so nothing else is ever intercepted. Nothing
+is sent anywhere either way. The only other interception anywhere in the
+battery is the form test's, which exists so that no demo request can leave
+the machine.
+
+## All five
 
     BASE=http://127.0.0.1:8806/alfredo-site-staging/   where the built site is served
                                                        (noshift.js wants the
