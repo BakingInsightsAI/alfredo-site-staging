@@ -114,7 +114,7 @@ pages:
     output: faq.html
     legacy: false
     title: "Questions and answers | Alfredo by BakingInsightsAI"
-    description: "Answers about Alfredo: what it is, who it is for, which POS systems it connects to, what it costs, and how it tells you whether a change worked."
+    description: "Answers about Alfredo: what it is, who it is for, how it works with your POS, what it costs, and how it tells you whether a change worked."
 
   - key: pilot
     template: pilot.html

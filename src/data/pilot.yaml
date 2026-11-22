@@ -26,7 +26,7 @@ where:
 form_heading: "Request a demo"
 form_lede: "Tell us a little about your place and we will reply within one business day."
 # the price in this line is read from the pricing data
-form_pos_note: "We connect Toast and Clover today. Choose anything else and we will tell you honestly whether yours is ready yet."
+form_pos_note: "Choose your system. We will confirm your setup on the demo call."
 form_reassure_lead: "Plans from"
 # The location choices match the plans, so the answer Sid reads in the
 # email is the band the business falls into. The submitted value is the

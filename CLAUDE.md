@@ -47,6 +47,18 @@ A large share of visitors arrive from Instagram and Facebook on phones.
   Exception: data-use promises such as "never used to train AI models" are
   allowed; they state what is not done with customer data, not how Alfredo
   works.
+- **The POS, everywhere, is "the POS system you already use."** Never name a
+  POS system in anything a reader can see: not in copy, not in structured
+  data, not in llms.txt. The one exception is the demo form's own menu of
+  choices, which has to name them so a person can pick one. Never promise
+  that Alfredo works with every POS either. What the site says is that
+  Alfredo connects to the system you already use and that we will confirm
+  your setup on the demo call, which is true whichever one it is.
+- **Never claim an inventory system is connected** until Sid says it is.
+  Inventory is "coming soon" on What it does and nothing more. Alfredo can
+  be said to bring in information from other tools you rely on, such as
+  recipe and ingredient costs, because that is what sharing those costs
+  already means.
 - Verdicts are: worked, no effect, backfired.
 - State Alfredo's own figures exactly, never "about". Use "about" only for
   competitor prices and the two week setup timeline.

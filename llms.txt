@@ -8,7 +8,8 @@ short weekly list of changes worth trying. You decide what to try. Alfredo
 then reports whether it worked, did nothing, or backfired. It recommends and
 you decide: nothing on your menu or your prices moves on its own.
 
-Toast and Clover are connected today. Other POS systems on request.
+Alfredo connects to the POS system you already use, with no new hardware and
+no staff training.
 
 ## Pages
 

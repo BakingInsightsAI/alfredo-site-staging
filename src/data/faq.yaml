@@ -2,7 +2,9 @@
 # the question outright, because that is the sentence a model quotes.
 #
 # Category phrases are allowed on this page by Sid's decision: restaurant
-# analytics, menu engineering, POS data, sales data, Toast, Clover.
+# analytics, menu engineering, POS data, sales data. No POS system is named
+# anywhere a reader can see: the wording is always "the POS system you
+# already use", which promises nothing about a particular one.
 # "Intelligence" is still banned here as everywhere else, and so is every
 # other house rule: no contractions, no dashes, no mechanism talk, the
 # owner chooses the review window, prices only ever shown going down.
@@ -25,8 +27,8 @@ entries:
   - q: "What does Alfredo do with my sales data?"
     a: "Alfredo reads your POS sales and turns what it finds into a few changes worth trying each week. It also looks at your menu, your guests as far as your POS records who is who, and what the places down the street list publicly. Every figure it reports comes from your own sales, and if it cannot trace a number you do not see it."
 
-  - q: "Does Alfredo work with Toast? With Clover? With Square or another POS?"
-    a: "Toast and Clover are connected today. If you run Square or another POS system, get in touch and we will tell you honestly whether yours is ready yet. Connecting your POS needs no new hardware and no staff training."
+  - q: "Does Alfredo work with my POS?"
+    a: "Alfredo connects to the POS system you already use, with no new hardware and no staff training. It can also bring in information from other tools you rely on, such as your recipe and ingredient costs. Tell us what you run, and we will confirm your setup on the demo call."
 
   - q: "How much does Alfredo cost?"
     a: "Counter is {counter} {unit} for one location, House is {house} {unit} for one to three locations, and Group is {group} {unit} for four to ten. That is one price for your whole business, not per location and not per user, with no setup fee and month to month. If you run more than ten locations, talk to us and we will put together an arrangement that fits your group."

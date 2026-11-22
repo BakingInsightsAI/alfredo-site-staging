@@ -151,8 +151,8 @@ pricing:
   faq_eyebrow: "Questions"
   faq_heading: "What owners ask first."
   faq:
-    - q: "Which POS systems does Alfredo support?"
-      a: "Toast and Clover today. If you run a different system, get in touch and we will tell you honestly whether yours is ready yet."
+    - q: "Does Alfredo work with my POS?"
+      a: "Alfredo connects to the POS system you already use, with no new hardware and no staff training. It can also bring in information from other tools you rely on, such as your recipe and ingredient costs. Tell us what you run, and we will confirm your setup on the demo call."
     - q: "Is there a contract?"
       a: "No long term contract. Month to month. We would rather earn the next month than lock you in."
     - q: "What counts as a location?"
