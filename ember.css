@@ -367,8 +367,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   flex: 1; background: transparent; color: #FFFFFF; border: 1px solid var(--hair-strong);
 }
 .small-button:active { transform: translateY(1px) scale(.99); }
-.owner-line { padding: 13px 0 0; margin: 0 0 0 2px; color: #C4CAD5; font-size: 14px; }
-.owner-line strong { color: #FFFFFF; font-weight: 600; }
+/* The board is introduced before a reader meets it. The last line here is
+   the one that used to sit under the board, which is why it is set in the
+   headline face: it is the sentence the whole section rests on. */
+.board-intro { margin: 0 2px 15px; }
+.board-intro .eyebrow { margin: 0 0 8px; }
+.board-intro-body { margin: 0; font-size: 15px; line-height: 1.5; color: #C9CFDA; }
+.board-intro-line {
+  margin: 11px 0 0; font-family: var(--serif); font-weight: 500;
+  font-size: 20px; line-height: 1.25; letter-spacing: -.008em; color: #C9CFDA;
+}
+.board-intro-line strong { font-weight: 500; color: #FFFFFF; }
 
 /* the decision, staged: a date, then Pending, then an illustrative answer */
 .decision-panel {
@@ -501,98 +510,51 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 .film-area { min-height: 360px; padding: 17px 15px 18px; }
 .film-stage { width: 100%; max-width: 640px; margin: auto; }
-.film-app {
-  overflow: hidden; border: 1px solid rgba(235,240,248,.22); border-radius: 7px;
+/* The four steps. Every one of them is laid out from the first paint and
+   only ever changes opacity and transform, so the card is one size from
+   beginning to end and the animation cannot move the page. */
+.film-origin { padding: 0 2px 11px; border-bottom: 1px solid var(--hair); }
+.film-origin .eyebrow { margin: 0 0 6px; }
+.film-origin-name {
+  margin: 0; font-size: 15px; line-height: 1.35; font-weight: 500; color: var(--text);
+}
+/* one gap, set once: the grid's. A margin on the step as well put 28px
+   between them and made the card a good deal taller than a phone screen. */
+.film-steps { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 11px; }
+.film-step-label {
+  margin: 0 0 6px 2px; font-size: 12px; font-weight: 600; line-height: 1.3;
+  letter-spacing: .035em; color: #CBD3E0; font-variant-numeric: tabular-nums;
+}
+.film-step-panel {
+  border: 1px solid rgba(235,240,248,.2); border-radius: 7px;
   background: #0D121C; box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  padding: 11px 13px; display: grid; gap: 7px; justify-items: start;
 }
-.film-app-top {
-  min-height: 41px; display: flex; justify-content: space-between; gap: 8px;
-  align-items: center; padding: 9px 12px; background: #171B28; border-bottom: 1px solid var(--hair);
-}
-.film-app-top strong { font-size: 14px; font-weight: 600; color: #F8F9FC; }
-.film-app-top span { font-size: 12px; color: #C5CEDC; }
-.film-list { display: grid; }
-.film-row {
-  display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center;
-  gap: 10px; padding: 9px 12px; min-height: 52px;
-  border-bottom: 1px solid var(--hair); color: #EFF1F8;
-  transition: opacity .26s ease, transform .26s ease, background-color .26s ease;
-}
-.film-row-copy { display: grid; gap: 2px; min-width: 0; }
-.film-kind { font-size: 12px; line-height: 1.2; text-transform: uppercase; letter-spacing: .09em; color: #BAC5D5; }
-.film-row-title { font-size: 14px; line-height: 1.35; font-weight: 500; }
-.film-row:not(.film-focus-row) { opacity: .72; }
-.film-focus-row { position: relative; background: rgba(255,255,255,.025); }
-.film-focus-row::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-  background: #FFB982; opacity: 0; transition: opacity .2s ease;
-}
-.film-stage[data-scene] .film-focus-row::before { opacity: 1; }
-.film-row-state {
-  font-size: 12px; font-weight: 600; color: #EBC59D; white-space: nowrap;
-  transition: opacity .2s ease, transform .2s ease;
-}
-.film-row-state::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px;
-  border-radius: 50%; background: currentColor; vertical-align: middle;
-}
-.film-stage[data-scene="0"] .film-focus-row { background: rgba(236,168,93,.065); }
-.film-stage[data-scene="1"] .film-focus-row,
-.film-stage[data-scene="2"] .film-focus-row { background: rgba(190,117,189,.08); }
-.film-stage[data-scene="3"] .film-focus-row,
-.film-stage[data-scene="4"] .film-focus-row { background: rgba(131,225,182,.075); }
-.film-stage[data-scene="1"] .film-row-state,
-.film-stage[data-scene="2"] .film-row-state { color: #FFD49B; }
-.film-stage[data-scene="3"] .film-row-state,
-.film-stage[data-scene="4"] .film-row-state { color: var(--worked); }
+.film-step-title { margin: 0; font-size: 14px; font-weight: 600; color: #F8F9FC; }
+.film-step-text { margin: 0; font-size: 14px; line-height: 1.42; color: #F1F3F8; }
+.film-step-fine { margin: 0; font-size: 13px; line-height: 1.4; color: #C8D0DE; }
 
-.film-extra { height: 121px; position: relative; background: #101521; overflow: hidden; }
-.film-panel {
-  position: absolute; inset: 0; padding: 13px 14px;
-  display: flex; flex-direction: column; justify-content: center; gap: 8px;
-  opacity: 0; visibility: hidden; transform: translateY(7px);
-  transition: opacity .25s ease, transform .25s ease;
+/* The track record row inside the card is the real thing, markup and all.
+   The arrival the record section runs on its own rows must not reach it,
+   which is why those two rules name #ledger rather than every row. */
+/* named through the panel so these beat the record section's own rules,
+   which are written later in this file */
+.film-step-panel .ledger-v9 { margin-top: 0; width: 100%; border-top: 0; }
+.film-step-panel .ledger-row-v9 { padding: 2px 0; border-bottom: 0; }
+
+/* Only once the film is actually playing do the later steps wait their turn.
+   Until then, and with no scripting, and under reduced motion, all four are
+   visible, which is the state this section has to read correctly in. */
+.film-stage[data-mode="steps"] .film-step {
+  opacity: 0; transform: translateY(9px);
+  transition: opacity .4s ease, transform .4s cubic-bezier(.2,.7,.2,1);
 }
-.film-stage[data-scene="0"] .film-panel-suggest,
-.film-stage[data-scene="1"] .film-panel-try,
-.film-stage[data-scene="2"] .film-panel-review,
-.film-stage[data-scene="3"] .film-panel-verdict,
-.film-stage[data-scene="4"] .film-panel-record { opacity: 1; visibility: visible; transform: translateY(0); }
-.film-small-label { font-size: 12px; color: #CED6E3; letter-spacing: .035em; }
-.film-summary { font-size: 14px; color: #F1F3F8; line-height: 1.35; margin: 0; }
-.film-mock-action {
-  align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
-  padding: 8px 16px; border-radius: 4px;
-  background: linear-gradient(95deg, #75265D, #B73266);
-  color: #FFFFFF; font-size: 14px; font-weight: 600; transform-origin: center;
+.film-stage[data-mode="steps"][data-scene="0"] .film-step:nth-child(-n+1),
+.film-stage[data-mode="steps"][data-scene="1"] .film-step:nth-child(-n+2),
+.film-stage[data-mode="steps"][data-scene="2"] .film-step:nth-child(-n+3),
+.film-stage[data-mode="steps"][data-scene="3"] .film-step:nth-child(-n+4) {
+  opacity: 1; transform: translateY(0);
 }
-@keyframes filmTap { 0% { transform: scale(1); opacity: 1 } 35% { transform: scale(.94); opacity: .87 } 100% { transform: scale(1); opacity: 1 } }
-.film-stage[data-scene="1"] .film-mock-action { animation: filmTap .55s ease-out both; }
-.film-date { font-size: 14px; font-weight: 600; color: #F7F8FC; font-variant-numeric: tabular-nums; }
-.film-date span { font-weight: 400; color: #C8CFDD; }
-.film-wait-bar { margin-top: 3px; width: 100%; height: 2px; background: rgba(255,255,255,.18); overflow: hidden; }
-.film-wait-fill { height: 100%; width: 100%; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, #BB597F, #FFC483); }
-.film-verdict-word {
-  font-size: 18px; font-weight: 600; color: var(--worked);
-  display: inline-flex; align-items: center; gap: 9px;
-}
-.film-verdict-word::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-.film-record-row {
-  display: grid; grid-template-columns: 52px minmax(0,1fr) auto; gap: 10px; align-items: center;
-  padding: 10px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
-  font-size: 12px; font-variant-numeric: tabular-nums;
-}
-.film-record-title { font-size: 13px; line-height: 1.3; color: #F3F5F9; }
-.film-record-state { font-size: 12px; color: var(--worked); font-weight: 600; white-space: nowrap; }
-.film-record-state::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  margin-right: 5px; vertical-align: middle; background: currentColor;
-}
-@keyframes filmLedgerDrop { from { opacity: 0; transform: translateY(-18px) } to { opacity: 1; transform: translateY(0) } }
-.film-stage[data-scene="4"] .film-record-row { animation: filmLedgerDrop .6s cubic-bezier(.2,.7,.2,1) both; }
-.film-frame[data-playing="false"] .film-mock-action,
-.film-frame[data-playing="false"] .film-record-row { animation-play-state: paused; }
-.film-step-line { margin: 9px 0 0; font-size: 14px; line-height: 1.45; color: #D3D9E5; min-height: 20px; }
 .film-foot { padding: 12px 16px 15px; border-top: 1px solid var(--hair); }
 .film-track { height: 2px; background: rgba(255,255,255,.15); overflow: hidden; transform: translateZ(0); }
 .film-progress { width: 100%; height: 100%; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, #DB587F, #FFCB77); will-change: transform; }
@@ -605,21 +567,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .film-controls button:hover { background: rgba(255,255,255,.08); }
 .film-clock { margin-left: auto; color: #CDD4DF; font-size: 14px; }
 
-/* the same five steps, for a reader who asked for less motion or has no
-   scripting: a complete sequence, never a frozen frame */
-.film-reduced { display: grid; list-style: none; margin: 0; padding: 16px 16px 3px; }
-.js .film-reduced { display: none; }
-.film-reduced li {
-  padding: 10px 0; border-bottom: 1px solid var(--hair);
-  display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; align-items: center;
-  color: #F3F5F9; font-size: 14px; line-height: 1.42;
-}
-.film-reduced li:last-child { border-bottom: 0; }
-.film-reduced li b { font-weight: 500; color: #FFD59F; }
-.film-reduced li span { color: #C7D0DE; font-size: 13px; }
-.film-reduced li .worked { color: var(--worked); }
-.film-stage { display: none; }
-.js .film-stage { display: block; }
+/* The card is shown in every case now. There is no second list for readers
+   without scripting: the four steps are the list, and the controls are the
+   only part that needs scripting to mean anything. */
 .film-foot { display: none; }
 .js .film-foot { display: block; }
 
@@ -639,13 +589,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 .ledger-date { font-family: var(--sans); font-weight: 500; font-size: 14px; line-height: 1.45; color: #D0D5DE; }
 .ledger-action { font-size: 14px; line-height: 1.44; min-width: 0; color: var(--text); }
-.js .ledger-row-v9:not(.arrived) { opacity: 0; transform: translateY(13px); }
-.js .ledger-row-v9.arrived {
+.js #ledger .ledger-row-v9:not(.arrived) { opacity: 0; transform: translateY(13px); }
+.js #ledger .ledger-row-v9.arrived {
   opacity: 1; transform: translateY(0);
   transition: opacity .42s ease, transform .42s ease; transition-delay: var(--ledger-delay, 0ms);
 }
-.js .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 0; transform: translateX(7px); }
-.js .ledger-row-v9 .ledger-verdict.resolved { opacity: 1; transform: translateX(0); transition: opacity .22s ease, transform .22s ease; }
+.js #ledger .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 0; transform: translateX(7px); }
+.js #ledger .ledger-row-v9 .ledger-verdict.resolved { opacity: 1; transform: translateX(0); transition: opacity .22s ease, transform .22s ease; }
 .record-proof { margin: 18px 0 0; font-size: 14px; line-height: 1.55; color: #CDD3DE; }
 
 /* --------------------------------------------------- the founding offer --
@@ -845,12 +795,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 @media (prefers-reduced-motion: reduce) {
   .ember { will-change: auto; animation: none !important; }
   .photo-band img, .photo-band video { animation: none !important; transform: scale(1.025) !important; }
-  .js .film-stage { display: none !important; }
-  .js .film-reduced { display: grid !important; }
+  /* the card stays and all four steps are simply there, with nothing
+     moving and nothing to drive */
+  .js .film-stage .film-step { opacity: 1 !important; transform: none !important; transition: none !important; }
   .js .film-foot { display: none !important; }
-  .js .week-row:not(.arrived), .js .ledger-row-v9:not(.arrived),
+  .js .week-row:not(.arrived), .js #ledger .ledger-row-v9:not(.arrived),
   .js .reveal, .js .reveal.in { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .js .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 1 !important; transform: none !important; }
+  .js #ledger .ledger-row-v9 .ledger-verdict:not(.resolved) { opacity: 1 !important; transform: none !important; }
   .status-pill.is-changing { opacity: 1 !important; transform: none !important; }
 }
 

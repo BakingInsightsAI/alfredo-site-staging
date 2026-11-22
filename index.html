@@ -139,6 +139,11 @@
       </div>
     </div>
     <div class="hero-aside" id="week">
+      <div class="board-intro">
+        <p class="eyebrow">What you see each week</p>
+        <p class="board-intro-body">A short list of things to try, picked from your own sales. Open one to see why it came up and how to do it.</p>
+        <p class="board-intro-line">Alfredo recommends. <strong>You decide.</strong></p>
+      </div>
       <article class="app-window" aria-label="A week of suggestions, as an illustrative example">
         <div class="app-top">
           <h2>This week</h2>
@@ -242,7 +247,6 @@
           </div>
         </div>
       </article>
-      <p class="owner-line">Alfredo recommends. <strong>You decide.</strong></p>
     </div>
   </div>
 </section>
@@ -292,109 +296,53 @@
         <span>Illustrative example</span>
       </div>
       <div class="film-area" id="filmArea">
-        <div class="film-script" hidden
-             data-suggested="Suggested" data-trying="Trying" data-worked="Worked">
-          <i data-at="0" data-step="01 / A suggestion appears."></i>
-          <i data-at="3100" data-step="02 / The owner chooses Try this."></i>
-          <i data-at="6200" data-step="03 / The owner picks a review date. Time passes."></i>
-          <i data-at="9700" data-step="04 / The answer is Worked."></i>
-          <i data-at="12000" data-step="05 / It goes into the track record."></i>
+        <div class="film-script" hidden>
+          <i data-at="0"></i>
+          <i data-at="3750"></i>
+          <i data-at="7500"></i>
+          <i data-at="11250"></i>
         </div>
         <div class="film-stage" id="filmStage" data-scene="0">
-          <div class="film-app">
-            <div class="film-app-top">
-              <strong>This week</strong>
-              <span>Illustrative example</span>
-            </div>
-            <div class="film-list">
-              <div class="film-row film-focus-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">Pairing</span>
-                  <span class="film-row-title">Offer the sourdough board with the cheese plate</span>
-                </div>
-                <span class="film-row-state" id="filmRowState">Suggested</span>
-              </div>
-              <div class="film-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">Costs</span>
-                  <span class="film-row-title">Look again at the mushroom tart</span>
-                </div>
-              </div>
-              <div class="film-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">Guests</span>
-                  <span class="film-row-title">Win back 14 regulars who have gone quiet</span>
-                </div>
-              </div>
-              <div class="film-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">Reviews</span>
-                  <span class="film-row-title">Put your speed on the lunch menu</span>
-                </div>
-              </div>
-              <div class="film-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">Neighborhood</span>
-                  <span class="film-row-title">Hold the Thursday quiz an hour later</span>
-                </div>
-              </div>
-            </div>
-            <div class="film-extra">
-              <div class="film-panel film-panel-suggest">
-                <span class="film-small-label">Why it came up</span>
-                <p class="film-summary">Guests already order these together.</p>
-                <span class="film-mock-action">Try this</span>
-              </div>
-              <div class="film-panel film-panel-try">
-                <span class="film-small-label">The owner decides</span>
-                <p class="film-summary">Nothing moves until the owner says so.</p>
-                <span class="film-mock-action">Try this</span>
-              </div>
-              <div class="film-panel film-panel-review">
-                <span class="film-small-label">Review date, chosen by the owner</span>
-                <div class="film-date">Nov 24 <span>· Time passes</span></div>
-                <div class="film-wait-bar"><div class="film-wait-fill" id="filmWaitFill"></div></div>
-              </div>
-              <div class="film-panel film-panel-verdict">
-                <span class="film-small-label">The review date arrives</span>
-                <strong class="film-verdict-word">Worked</strong>
-                <p class="film-summary">The suggestion has a clear result.</p>
-              </div>
-              <div class="film-panel film-panel-record">
-                <span class="film-small-label">Track record, new entry</span>
-                <div class="film-record-row">
-                  <span>Nov 24</span>
-                  <span class="film-record-title">Offer the sourdough board with the cheese plate</span>
-                  <span class="film-record-state">Worked</span>
-                </div>
-              </div>
-            </div>
+          <div class="film-origin">
+            <p class="eyebrow">Picks up from the board above</p>
+            <p class="film-origin-name">Offer the sourdough board with the cheese plate</p>
           </div>
-          <p class="film-step-line" id="filmStepLine">01 / A suggestion appears.</p>
+          <ol class="film-steps">
+            <li class="film-step">
+              <p class="film-step-label">01 / You tap Try this</p>
+              <div class="film-step-panel">
+                <p class="film-step-title">Test started</p>
+                <p class="film-step-text">You chose to check back on Dec 1.</p>
+              </div>
+            </li>
+            <li class="film-step">
+              <p class="film-step-label">02 / Service runs as normal</p>
+              <div class="film-step-panel">
+                <p class="film-step-text">Nothing changes on your menu unless you say so.</p>
+              </div>
+            </li>
+            <li class="film-step">
+              <p class="film-step-label">03 / The answer</p>
+              <div class="film-step-panel">
+                <span class="ledger-verdict worked">Worked</span>
+                <p class="film-step-text">26% of cheese plate orders added the sourdough board, up from 15%.</p>
+                <p class="film-step-fine">After what you would have sold anyway.</p>
+              </div>
+            </li>
+            <li class="film-step">
+              <p class="film-step-label">04 / It goes on your record</p>
+              <div class="film-step-panel">
+                <div class="ledger-v9 film-ledger">
+                  <div class="ledger-row-v9">
+                    <span class="ledger-date">Dec 1</span>
+                    <span class="ledger-action">Sourdough board with the cheese plate</span>
+                    <span class="ledger-verdict worked">Worked</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
         </div>
-
-        <ol class="film-reduced" aria-label="The same example, in five steps">
-          <li>
-            <b>01 / This week</b>
-            <span>Suggested</span>
-          </li>
-          <li>
-            <b>02 / The owner chooses Try this</b>
-            <span>Trying</span>
-          </li>
-          <li>
-            <b>03 / The owner sets Nov 24 to review</b>
-            <span>Review date</span>
-          </li>
-          <li>
-            <b>04 / The result arrives</b>
-            <span class="worked">Worked</span>
-          </li>
-          <li>
-            <b>05 / A new track record entry</b>
-            <span class="worked">Worked</span>
-          </li>
-        </ol>
       </div>
       <div class="film-foot">
         <div class="film-track" id="filmTrack" role="progressbar"

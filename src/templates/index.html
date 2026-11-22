@@ -46,6 +46,15 @@
         in the panel beside it; it never adds or removes an element, so the
         window keeps its height and nothing below it moves. #}
     <div class="hero-aside" id="week">
+      {#- The board is the product, so it is introduced before a reader meets
+          it rather than explained after. The line that used to sit under the
+          board, "Alfredo recommends. You decide.", is the last line here, so
+          it is read going in and appears once. #}
+      <div class="board-intro">
+        <p class="eyebrow">{{ wk.intro_label }}</p>
+        <p class="board-intro-body">{{ wk.intro_body }}</p>
+        <p class="board-intro-line">{{ wk.owner }}<strong>{{ wk.owner_em }}</strong></p>
+      </div>
       <article class="app-window" aria-label="A week of suggestions, as an illustrative example">
         <div class="app-top">
           <h2>{{ wk.title }}</h2>
@@ -113,7 +122,6 @@
           </div>
         </div>
       </article>
-      <p class="owner-line">{{ wk.owner }}<strong>{{ wk.owner_em }}</strong></p>
     </div>
   </div>
 </section>
@@ -151,11 +159,15 @@
 </section>
 
 {#- ========================================================== 04 the film
-    The same list stays on screen for all fifteen seconds. One row changes
-    state, a panel of fixed height changes under it, and that is the whole
-    film: no element is added, removed or resized, so it cannot shift the
-    page. A reader who asked for less motion, or who has no scripting, gets
-    the five steps as a list instead, which is the same story. #}
+    The second half of the story. The board above ends at Try this; this is
+    what happens after it. Four steps, each one appearing and staying, so by
+    the end all four are on screen together.
+
+    Every step is laid out from the first paint and only ever changes in
+    opacity and transform, so the card is one size throughout and nothing
+    here can move the page. That is also why it reads correctly before it
+    plays, with no scripting at all, and for a reader who asked for less
+    motion: in each of those cases all four steps are simply visible. #}
 {%- set f = home.film %}
 <section class="film-section" id="film">
   <div class="wrap">
@@ -170,79 +182,50 @@
         <span>{{ f.label }}</span>
       </div>
       <div class="film-area" id="filmArea">
-        <div class="film-script" hidden
-             data-suggested="{{ f.states.suggested }}" data-trying="{{ f.states.trying }}" data-worked="{{ f.states.worked }}">
-          {%- for s in f.scenes %}
-          <i data-at="{{ s.at }}" data-step="{{ s.step }}"></i>
+        <div class="film-script" hidden>
+          {%- for st in f.steps %}
+          <i data-at="{{ st.at }}"></i>
           {%- endfor %}
         </div>
         <div class="film-stage" id="filmStage" data-scene="0">
-          <div class="film-app">
-            <div class="film-app-top">
-              <strong>{{ f.app_title }}</strong>
-              <span>{{ f.label }}</span>
-            </div>
-            <div class="film-list">
-              {%- set fr = recs[f.focus] %}
-              <div class="film-row film-focus-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">{{ fr.kind }}</span>
-                  <span class="film-row-title">{{ fr.name }}</span>
-                </div>
-                <span class="film-row-state" id="filmRowState">{{ f.states.suggested }}</span>
-              </div>
-              {%- for i in f.others %}
-              {%- set o = recs[i] %}
-              <div class="film-row">
-                <div class="film-row-copy">
-                  <span class="film-kind">{{ o.kind }}</span>
-                  <span class="film-row-title">{{ o.name }}</span>
-                </div>
-              </div>
-              {%- endfor %}
-            </div>
-            <div class="film-extra">
-              <div class="film-panel film-panel-suggest">
-                <span class="film-small-label">{{ f.scenes[0].label }}</span>
-                <p class="film-summary">{{ f.scenes[0].body }}</p>
-                <span class="film-mock-action">{{ f.scenes[0].action }}</span>
-              </div>
-              <div class="film-panel film-panel-try">
-                <span class="film-small-label">{{ f.scenes[1].label }}</span>
-                <p class="film-summary">{{ f.scenes[1].body }}</p>
-                <span class="film-mock-action">{{ f.scenes[1].action }}</span>
-              </div>
-              <div class="film-panel film-panel-review">
-                <span class="film-small-label">{{ f.scenes[2].label }}</span>
-                <div class="film-date">{{ f.review_date }} <span>· {{ f.review_tail }}</span></div>
-                <div class="film-wait-bar"><div class="film-wait-fill" id="filmWaitFill"></div></div>
-              </div>
-              <div class="film-panel film-panel-verdict">
-                <span class="film-small-label">{{ f.scenes[3].label }}</span>
-                <strong class="film-verdict-word">{{ f.states.worked }}</strong>
-                <p class="film-summary">{{ f.scenes[3].body }}</p>
-              </div>
-              <div class="film-panel film-panel-record">
-                <span class="film-small-label">{{ f.scenes[4].label }}</span>
-                <div class="film-record-row">
-                  <span>{{ f.review_date }}</span>
-                  <span class="film-record-title">{{ fr.name }}</span>
-                  <span class="film-record-state">{{ f.states.worked }}</span>
-                </div>
-              </div>
-            </div>
+          <div class="film-origin">
+            <p class="eyebrow">{{ f.origin_label }}</p>
+            <p class="film-origin-name">{{ f.origin_name }}</p>
           </div>
-          <p class="film-step-line" id="filmStepLine">{{ f.scenes[0].step }}</p>
+          <ol class="film-steps">
+            {%- for st in f.steps %}
+            <li class="film-step">
+              <p class="film-step-label">{{ st.label }}</p>
+              <div class="film-step-panel">
+                {%- if st.get('title') %}
+                <p class="film-step-title">{{ st.title }}</p>
+                {%- endif %}
+                {%- if st.get('verdict') %}
+                <span class="ledger-verdict {{ st.kind }}">{{ st.verdict }}</span>
+                {%- endif %}
+                {%- if st.get('text') %}
+                <p class="film-step-text">{{ st.text }}</p>
+                {%- endif %}
+                {%- if st.get('fine') %}
+                <p class="film-step-fine">{{ st.fine }}</p>
+                {%- endif %}
+                {%- if st.get('row') %}
+                {#- the same markup and the same styles as a row of the track
+                    record further down the page, so an entry looks the same
+                    wherever a reader meets it #}
+                <div class="ledger-v9 film-ledger">
+                  <div class="ledger-row-v9">
+                    <span class="ledger-date">{{ st.row.date }}</span>
+                    <span class="ledger-action">{{ st.row.action }}</span>
+                    <span class="ledger-verdict {{ st.row.kind }}">{{ st.row.verdict }}</span>
+                  </div>
+                </div>
+                {%- endif %}
+              </div>
+            </li>
+            {%- endfor %}
+          </ol>
         </div>
-
-        <ol class="film-reduced" aria-label="The same example, in five steps">
-          {%- for r in f.reduced %}
-          <li>
-            <b>{{ r.name }}</b>
-            <span{% if r.get('kind') %} class="{{ r.kind }}"{% endif %}>{{ r.state }}</span>
-          </li>
-          {%- endfor %}
-        </ol>
       </div>
       <div class="film-foot">
         <div class="film-track" id="filmTrack" role="progressbar"

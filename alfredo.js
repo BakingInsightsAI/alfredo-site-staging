@@ -308,58 +308,47 @@
   }
 
   /* ---------------------------------------------------------- the film --
-     Fifteen seconds. One row of the same list goes from suggested, to
-     trying, to a review date the owner picked, to a verdict, and into the
-     track record. The script changes one attribute, one word and one
-     progress bar; everything else is the stylesheet.
+     Fifteen seconds that pick up where the board in the hero leaves off.
+     Four steps, about 3.75 seconds each. Each one appears and stays, so at
+     the end all four are on screen.
 
-     It plays only while it is on screen and only once on its own. A reader
-     who asked for less motion never reaches here: the stylesheet shows the
-     five steps as a list instead. */
+     The script sets one attribute on the stage and moves one progress bar.
+     Everything else is the stylesheet. Nothing it touches is laid out, so
+     the card is one size throughout.
+
+     The steps only wait their turn once the film is actually playing: the
+     stage is given data-mode="steps" on the first play and not before, so
+     before that, without scripting, and under reduced motion, all four
+     steps are visible and the section reads in full. */
   var filmFrame = document.getElementById('filmFrame');
   var stage = document.getElementById('filmStage');
   if (filmFrame && stage) {
     var area = document.getElementById('filmArea');
-    var stepLine = document.getElementById('filmStepLine');
-    var waitFill = document.getElementById('filmWaitFill');
     var bar = document.getElementById('filmProgress');
     var clock = document.getElementById('filmClock');
     var track = document.getElementById('filmTrack');
-    var rowState = document.getElementById('filmRowState');
-    var script = filmFrame.querySelector('.film-script');
     var scenes = [].slice.call(filmFrame.querySelectorAll('.film-script > i')).map(function (el) {
-      return { at: parseInt(el.getAttribute('data-at'), 10), step: el.getAttribute('data-step') };
+      return parseInt(el.getAttribute('data-at'), 10);
     });
-    var words = script ? {
-      0: script.getAttribute('data-suggested'),
-      1: script.getAttribute('data-trying'),
-      2: script.getAttribute('data-trying'),
-      3: script.getAttribute('data-worked'),
-      4: script.getAttribute('data-worked')
-    } : null;
     var RUN = 15000;
 
-    if (scenes.length === 5 && stepLine && bar && clock && words) {
-      var at = 0, shownScene = -1, playing = false, onScreen = false;
-      var started = false, done = false, raf = 0, last = null;
+    if (scenes.length >= 2 && bar && clock) {
+      var at = 0, shown = -1, playing = false, onScreen = false;
+      var done = false, raf = 0, last = null, heldByHand = false;
 
       var show = function (i) {
-        if (shownScene === i) { return; }
-        shownScene = i;
+        if (shown === i) { return; }
+        shown = i;
         stage.setAttribute('data-scene', String(i));
-        stepLine.textContent = scenes[i].step;
-        if (rowState) { rowState.textContent = words[i]; }
       };
       var paint = function (ms) {
         at = Math.min(RUN, Math.max(0, ms));
         var i = scenes.length - 1;
-        while (i > 0 && at < scenes[i].at) { i--; }
+        while (i > 0 && at < scenes[i]) { i--; }
         show(i);
-        var between = Math.max(0, Math.min(1, (at - scenes[2].at) / (scenes[3].at - scenes[2].at)));
-        if (waitFill) { waitFill.style.transform = 'scaleX(' + between + ')'; }
         bar.style.transform = 'scaleX(' + (at / RUN) + ')';
-        var s = Math.floor(at / 1000);
-        clock.textContent = '00:' + (s < 10 ? '0' : '') + s + ' / 00:15';
+        var sec = Math.floor(at / 1000);
+        clock.textContent = '00:' + (sec < 10 ? '0' : '') + sec + ' / 00:15';
         if (track) { track.setAttribute('aria-valuenow', String(Math.round(at / 1000))); }
       };
       var stop = function () {
@@ -375,8 +364,15 @@
         if (at >= RUN) { stop(); done = true; return; }
         raf = requestAnimationFrame(step);
       };
-      var play = function () {
-        if (reduce || !onScreen || document.hidden || playing) { return; }
+      // byHand is a press of Play or Replay. The on screen test exists so the
+      // film does not animate where nobody is looking; a press is somebody
+      // looking. On a phone the card is taller than the screen, so holding a
+      // press to the same test meant pressing Play and nothing happening.
+      var play = function (byHand) {
+        if (reduce || document.hidden || playing) { return; }
+        if (!onScreen && !byHand) { return; }
+        // from here on the steps arrive one at a time
+        stage.setAttribute('data-mode', 'steps');
         if (done) { paint(0); done = false; }
         playing = true; last = null;
         filmFrame.setAttribute('data-playing', 'true');
@@ -386,22 +382,30 @@
       var playBtn = document.getElementById('filmPlay');
       var pauseBtn = document.getElementById('filmPause');
       var replayBtn = document.getElementById('filmReplay');
-      if (playBtn) { playBtn.addEventListener('click', play); }
-      if (pauseBtn) { pauseBtn.addEventListener('click', stop); }
+      if (playBtn) { playBtn.addEventListener('click', function () { heldByHand = false; play(true); }); }
+      // a press of Pause is a decision, and it survives scrolling away
+      if (pauseBtn) { pauseBtn.addEventListener('click', function () { heldByHand = true; stop(); }); }
       if (replayBtn) {
-        replayBtn.addEventListener('click', function () { stop(); done = false; paint(0); play(); });
+        replayBtn.addEventListener('click', function () {
+          stop(); done = false; heldByHand = false;
+          stage.setAttribute('data-mode', 'steps');
+          paint(0); play(true);
+        });
       }
 
       if ('IntersectionObserver' in window && area) {
         new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
             onScreen = e.isIntersecting;
+            // The card is taller than a phone screen, so a reader scrolling
+            // through it leaves and re-enters. It stops while it is away and
+            // picks up where it was, unless the reader pressed Pause.
             if (!onScreen) { stop(); }
-            else if (!started && !reduce) { started = true; play(); }
+            else if (!done && !heldByHand && !reduce) { play(); }
           });
-        }, { threshold: 0.35 }).observe(area);
+        }, { threshold: 0 }).observe(area);
       } else {
-        onScreen = true; started = true; play();
+        onScreen = true; play();
       }
       document.addEventListener('visibilitychange', function () { if (document.hidden) { stop(); } });
       paint(0);
