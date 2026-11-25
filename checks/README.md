@@ -1,10 +1,11 @@
 # The checks that live with the site
 
-Five checks. Three are here because each one exists to stop a bug that
-reached a review. words.js is here because it holds the rules the site is
-written to, and pixels.js because it spent weeks measuring a 404 page and
-reporting that everything passed. A check kept somewhere temporary is not
-a check.
+Six checks. Four are here because each one exists to stop a bug that
+reached a review, and cards.js because one of those reached the live
+site. words.js is here because it holds the rules the site is written
+to, and pixels.js because it spent weeks measuring a 404 page and
+reporting that everything passed. A check kept somewhere temporary is
+not a check.
 
 The rest of the battery, contrast, focus, widths, the form and the rest, is
 still a scratch harness run by checks.sh.
@@ -117,6 +118,32 @@ pushes on that, so it gets measured again every time.
 A missing element counts as a failure, so a renamed class cannot quietly turn
 the check into a check of nothing.
 
+## cards.js
+
+The three plans on Pricing were redesigned as full width ruled rows, which
+is right on a phone. The layer underneath still said the plan grid was three
+columns with no gutter, and the new rules never said otherwise, so on a
+laptop three full width rows were laid out in three columns touching each
+other: "$99 a month" sat on top of "THE FULL PICTURE / House", "$199" on top
+of "Group", and each disclosure's plus sign touched the next column. It went
+live. Nothing caught it, because every run of text still cleared its
+contrast floor, no page scrolled sideways and nothing was invisible.
+
+Wherever the plan grid has more than one column, this asks three things:
+
+    every card keeps at least 24px between its box and the next card's
+    nothing inside a card reaches into another card's box at all
+    the Request a demo buttons in one row share a top edge
+
+with the feature lists closed and again with them open, because a card that
+grows when a disclosure opens can push its button off the line.
+
+    node checks/cards.js                   # 320 through 1680
+    node checks/cards.js 1366 1440
+
+Where the grid is a single column it says so and checks nothing, which is
+the phone layout and is meant to be a stack of ruled rows.
+
 ## STUB_BEACON, a test switch
 
 The analytics beacon is served from `static.cloudflareinsights.com`. Some
@@ -137,7 +164,7 @@ is sent anywhere either way. The only other interception anywhere in the
 battery is the form test's, which exists so that no demo request can leave
 the machine.
 
-## All five
+## All six
 
     BASE=http://127.0.0.1:8806/alfredo-site-staging/   where the built site is served
                                                        (noshift.js wants the

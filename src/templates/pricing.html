@@ -17,32 +17,6 @@
 
 <section class="section paper">
   <div class="wrap">
-    <div class="tiers">
-      {%- for t in p.tiers %}
-      <div class="tier{% if t.get('flag') %} tier-best{% endif %}">
-        <p class="tier-mark">{{ t.get('flag', '') }}</p>
-        <h2 class="tier-name">{{ t.name }}</h2>
-        <p class="tier-for">{{ t.who }}</p>
-        <p class="tier-price">{{ t.price }} <span class="tier-unit">{{ p.price_unit }}</span></p>
-        <p class="tier-day">{{ t.per_day }}. {{ t.per_day_note }}</p>
-        {%- if t.get('lead') %}
-        <p class="tier-day tier-plus">{{ t.lead }}</p>
-        {%- endif %}
-        <details class="plan-details">
-          <summary>{{ p.plan_details }}</summary>
-          <ul class="tier-list">
-            {%- for f in t.features %}
-            <li>{{ f }}</li>
-            {%- endfor %}
-          </ul>
-        </details>
-        <a class="btn{% if t.cta_style != 'primary' %} btn-ghost{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
-      </div>
-      {%- endfor %}
-    </div>
-
-    <p class="tier-more">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
-
     {#- The founding offer, in the same card the home teaser shows, with the
         same words and the same count. The dots are a picture of the count
         and never appear without it written out beside them. #}
@@ -64,6 +38,37 @@
         </div>
       </div>
     </div>
+
+    <div class="tiers">
+      {%- for t in p.tiers %}
+      <div class="tier{% if t.get('flag') %} tier-best{% endif %}">
+        <p class="tier-mark">{{ t.get('flag', '') }}</p>
+        <h2 class="tier-name">{{ t.name }}</h2>
+        {#- The price reads under the name, which is the order a reader asks
+            the question in: what is it called, what does it cost, who is it
+            for. On a phone the stylesheet still places it in the right hand
+            column of the row, which is the approved layout there. #}
+        <p class="tier-price">{{ t.price }} <span class="tier-unit">{{ p.price_unit }}</span></p>
+        <p class="tier-for">{{ t.who }}</p>
+        <p class="tier-day">{{ t.per_day }}. {{ t.per_day_note }}</p>
+        {%- if t.get('lead') %}
+        <p class="tier-day tier-plus">{{ t.lead }}</p>
+        {%- endif %}
+        <details class="plan-details">
+          <summary>{{ p.plan_details }}</summary>
+          <ul class="tier-list">
+            {%- for f in t.features %}
+            <li>{{ f }}</li>
+            {%- endfor %}
+          </ul>
+        </details>
+        <a class="btn{% if t.cta_style != 'primary' %} btn-ghost{% endif %}" href="{{ site.cta.href }}">{{ site.cta.label }}</a>
+      </div>
+      {%- endfor %}
+    </div>
+
+    <p class="tier-more">{{ p.more_lead }} <a class="textlink" href="{{ site.cta.href }}">{{ p.more_link }}</a> {{ p.more_tail }}</p>
+
 
     <p class="claim claim-tight">{{ p.proof }}<span>Patent pending.</span></p>
   </div>

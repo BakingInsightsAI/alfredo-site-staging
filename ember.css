@@ -879,6 +879,67 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .tier .plan-details > summary { color: var(--text); font-weight: 500; }
 .tier > .btn { grid-area: cta; margin-top: 16px; justify-self: start; }
 
+/* ----------------------------------------- the plans, once there is room
+   Above the stacking width the plans are three cards side by side. They
+   were not: the layer underneath this one says the plan grid is three
+   columns with gap 0, and the rules above never said otherwise, so three
+   full width rows were laid out in three columns with no gutter at all.
+   "$99 a month" landed on top of "THE FULL PICTURE / House", "$199" on top
+   of "Group", and each disclosure's plus sign touched the next column.
+   checks/cards.js is the check that now refuses that.
+
+   The cards share their rows through subgrid, so the name, the price, the
+   month, the locations, the daily line, the "everything in" line, the
+   disclosure and the button each sit on one line across all three however
+   the text wraps. The row the disclosure sits in takes the slack, which is
+   what puts the three buttons on the same line whether the lists are open
+   or closed. Each child names its own row rather than being placed in
+   order, because Counter has no "everything in" line and anything placed
+   in order would ride up a row in that card alone. */
+@media (min-width: 901px) {
+  .tiers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 clamp(32px, 2.6vw, 44px);
+    grid-template-rows: auto auto auto auto auto auto 1fr auto;
+    align-items: stretch;
+    border-top: 0; margin-top: 34px;
+  }
+  .tier {
+    grid-row: 1 / -1;
+    display: grid; grid-template-rows: subgrid; grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: none; gap: 0;
+    padding: 26px 24px 28px;
+    border: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+    border-radius: 10px; background: var(--ink-panel);
+  }
+  /* the one with the badge wears the ember edge, so "The full picture"
+     reads as its badge and not as a stray line of pink */
+  .tier-best {
+    border-color: rgba(240,172,178,.4); background: #141321;
+  }
+  .tier .tier-mark  { grid-row: 1; min-height: 1.35em; margin: 0 0 10px; }
+  .tier .tier-name  { grid-row: 2; font-size: clamp(27px, 2.1vw, 33px); }
+  .tier .tier-price {
+    grid-row: 3; text-align: left; margin-top: 12px;
+    font-size: clamp(33px, 2.6vw, 41px);
+  }
+  .tier .tier-price .tier-unit { text-align: left; }
+  .tier .tier-for   { grid-row: 4; margin-top: 12px; }
+  .tier .tier-day:not(.tier-plus) { grid-row: 5; margin-top: 12px; }
+  .tier .tier-plus  { grid-row: 6; margin-top: 12px; }
+  .tier .plan-details { grid-row: 7; margin-top: 16px; align-self: start; }
+  .tier > .btn { grid-row: 8; margin-top: 20px; justify-self: stretch; text-align: center; }
+}
+
+/* Without subgrid the rows cannot line up across cards, but each card can
+   still carry the same row structure, so nothing collides and the buttons
+   still sit at the foot of cards that stretch to one height. */
+@supports not (grid-template-rows: subgrid) {
+  @media (min-width: 901px) {
+    .tier { grid-template-rows: auto auto auto auto auto auto 1fr auto; }
+  }
+}
+
 /* ------------------------------------------------- what the v8 layer held
    Two rules that lived in the file v9 replaces, and are still needed. */
 
